@@ -1,6 +1,6 @@
-# ujian-online-ci
+# Ujian Online CBT (Computer Based Test)
 
-Aplikasi Ujian Online Menggunakan CodeIgniter 3
+Aplikasi Ujian Online CBT Menggunakan CodeIgniter 3
 
 <h1>Catatan</h1>
 <p>Disarankan menggunakan PHP versi 7</p>
