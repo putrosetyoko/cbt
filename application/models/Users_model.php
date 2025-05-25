@@ -9,9 +9,9 @@ class Users_model extends CI_Model {
         $this->datatables->from('users_groups');
         $this->datatables->join('users', 'users_groups.user_id=users.id');
         $this->datatables->join('groups', 'users_groups.group_id=groups.id');
-        if($id !== null){
-            $this->datatables->where('users.id !=', $id);
-        }
+        // if($id !== null){
+        //     $this->datatables->where('users.id !=', $id);
+        // }
         return $this->datatables->generate();
     }
 }

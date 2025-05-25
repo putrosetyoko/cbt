@@ -8,13 +8,13 @@
     </div>
     <div class="box-body">
         <div class="mt-2 mb-3">
-            <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-refresh"></i> Reload</button>
-            <div class="pull-right">
+            <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat btn-default"><i class="fa fa-refresh"></i> Reload</button>
+            <!-- <div class="pull-right">
                 <label for="show_me">
                     <input type="checkbox" id="show_me">
                     Tampilkan saya
                 </label>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="table-responsive px-4 pb-3" style="border: 0">

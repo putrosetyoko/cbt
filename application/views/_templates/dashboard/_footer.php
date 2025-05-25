@@ -7,10 +7,19 @@
 			<footer class="main-footer">
 				<!-- To the right -->
 				<div class="pull-right hidden-xs">
-					Ujian Online
+					CBT v1.0
 				</div>
 				<!-- Default to the left -->
-				<strong>Copyright &copy; 2023. By <a href="https://instagram.com/bang.anang.1213">Team Code</a>. </strong> All rights reserved
+				&copy; 2025 <span id="current-year"></span> Dibuat dengan bangga di Bumi Etam
+        • Ujian Online CBT by
+        <a
+          href="https://www.linkedin.com/in/putrosetyoko"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-500 hover:underline"
+        >
+          <strong>Putro Setyoko</strong>
+        </a>
 			</footer>
 
 			</div>

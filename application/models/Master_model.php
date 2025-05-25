@@ -81,6 +81,7 @@ class Master_model extends CI_Model
 
     public function getDataMahasiswa()
     {
+        // Bagian ini sudah benar karena Anda menggunakan alias 'a', 'b', 'c'
         $this->datatables->select('a.id_mahasiswa, a.nama, a.nim, a.email, b.nama_kelas, c.nama_jurusan');
         $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nim) AS ada');
         $this->datatables->from('mahasiswa a');
@@ -91,11 +92,15 @@ class Master_model extends CI_Model
 
     public function getMahasiswaById($id)
     {
-        $this->db->select('*');
+        $this->db->select(
+            'mahasiswa.*, ' . // Ambil semua kolom dari tabel mahasiswa
+            'kelas.id_kelas, kelas.nama_kelas, ' . // Pilih kolom dari tabel kelas
+            'jurusan.id_jurusan, jurusan.nama_jurusan' // Pilih kolom dari tabel jurusan
+        );
         $this->db->from('mahasiswa');
-        $this->db->join('kelas', 'kelas_id=id_kelas');
-        $this->db->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->db->where(['id_mahasiswa' => $id]);
+        $this->db->join('kelas', 'mahasiswa.kelas_id = kelas.id_kelas');
+        $this->db->join('jurusan', 'mahasiswa.jurusan_id = jurusan.id_jurusan');
+        $this->db->where('mahasiswa.id_mahasiswa', $id);
         return $this->db->get()->row();
     }
 

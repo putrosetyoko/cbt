@@ -74,7 +74,11 @@ class Ujian_model extends CI_Model {
         $ujian = $this->getUjianById($id);
         $order = $ujian->jenis==="acak" ? 'rand()' : 'id_soal';
 
-        $this->db->select('id_soal, soal, file, tipe_file, opsi_a, opsi_b, opsi_c, opsi_d, opsi_e, jawaban');
+        $this->db->select('
+        id_soal, soal, file, tipe_file, opsi_a, opsi_b, opsi_c, 
+        opsi_d, opsi_e,
+        file_a, file_b, file_c, file_d, file_e, 
+        jawaban');
         $this->db->from('tb_soal');
         $this->db->where('dosen_id', $ujian->dosen_id);
         $this->db->where('matkul_id', $ujian->matkul_id);

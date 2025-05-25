@@ -37,25 +37,31 @@
                     </div>
                     <div class="form-group">
                         <label for="jurusan">Jurusan</label>
-                        <select id="jurusan" name="jurusan" class="form-control select2">
-                            <option value="" disabled selected>-- Pilih --</option>
-                            <?php foreach ($jurusan as $j) : ?>
-                            <option <?=$mahasiswa->id_jurusan === $j->id_jurusan ? "selected" : "" ?> value="<?=$j->id_jurusan?>">
-                                <?=$j->nama_jurusan?>
-                            </option>
-                            <?php endforeach ?>
+                        <select name="jurusan" id="jurusan" class="form-control">
+                            <option value="">Pilih Jurusan</option>
+                            <?php foreach ($jurusan as $j) : // Loop untuk semua jurusan yang tersedia ?>
+                                <option value="<?= $j->id_jurusan ?>"
+                                    <?php if ($j->id_jurusan == $mahasiswa->jurusan_id) : // Bandingkan dengan jurusan_id dari mahasiswa yang diedit ?>
+                                        selected
+                                    <?php endif; ?>>
+                                    <?= $j->nama_jurusan ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                         <small class="help-block"></small>
                     </div>
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
-                        <select id="kelas" name="kelas" class="form-control select2">
-                            <option value="" disabled selected>-- Pilih --</option>
-                            <?php foreach ($kelas as $k) : ?>
-                            <option <?=$mahasiswa->id_kelas === $k->id_kelas ? "selected" : "" ?> value="<?=$k->id_kelas?>">
-                                <?=$k->nama_kelas?>
-                            </option>
-                            <?php endforeach ?>
+                        <select name="kelas" id="kelas" class="form-control">
+                            <option value="">Pilih Kelas</option>
+                            <?php foreach ($kelas as $k) : // Loop untuk semua kelas yang tersedia ?>
+                                <option value="<?= $k->id_kelas ?>"
+                                    <?php if ($k->id_kelas == $mahasiswa->kelas_id) : // Bandingkan dengan kelas_id dari mahasiswa yang diedit ?>
+                                        selected
+                                    <?php endif; ?>>
+                                    <?= $k->nama_kelas ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                         <small class="help-block"></small>
                     </div>

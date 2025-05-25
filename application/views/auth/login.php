@@ -2,9 +2,9 @@
 	<!-- /.login-logo -->
 	<div class="login-box-body">
 	<h3 class="text-center mt-0 mb-4">
-		<b>U</b>jian <b>B</b>ased <b>T</b>est
+		<b>Ujian Online CBT</b>
 	</h3> 
-	<p class="login-box-msg">Login to start session</p>
+	<p class="login-box-msg">Log In Untuk Memulai Sesi</p>
 
 	<div id="infoMessage" class="text-center"><?php echo $message;?></div>
 

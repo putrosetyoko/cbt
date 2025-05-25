@@ -27,8 +27,8 @@ class Dosen extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Dosen',
-			'subjudul' => 'Data Dosen'
+			'judul'	=> 'Guru',
+			'subjudul' => 'Data Guru'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
 		$this->load->view('master/dosen/data');
@@ -44,8 +44,8 @@ class Dosen extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Tambah Dosen',
-			'subjudul' => 'Tambah Data Dosen',
+			'judul'	=> 'Tambah Guru',
+			'subjudul' => 'Tambah Data Guru',
 			'matkul'	=> $this->master->getAllMatkul()
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
@@ -57,8 +57,8 @@ class Dosen extends CI_Controller
 	{
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Edit Dosen',
-			'subjudul'	=> 'Edit Data Dosen',
+			'judul'		=> 'Edit Guru',
+			'subjudul'	=> 'Edit Data Guru',
 			'matkul'	=> $this->master->getAllMatkul(),
 			'data' 		=> $this->master->getDosenById($id)
 		];
@@ -152,18 +152,18 @@ class Dosen extends CI_Controller
 		if ($this->ion_auth->username_check($username)) {
 			$data = [
 				'status' => false,
-				'msg'	 => 'Username tidak tersedia (sudah digunakan).'
+				'msg'	 => 'Gagal Aktif! NIP sudah digunakan.'
 			];
 		} else if ($this->ion_auth->email_check($email)) {
 			$data = [
 				'status' => false,
-				'msg'	 => 'Email tidak tersedia (sudah digunakan).'
+				'msg'	 => 'Gagal Aktif! Email sudah digunakan.'
 			];
 		} else {
 			$this->ion_auth->register($username, $password, $email, $additional_data, $group);
 			$data = [
 				'status'	=> true,
-				'msg'	 => 'User berhasil dibuat. NIP digunakan sebagai password pada saat login.'
+				'msg'	 => 'User berhasil diaktifkan. NIP digunakan sebagai password pada saat login.'
 			];
 		}
 		$this->output_json($data);
@@ -173,8 +173,8 @@ class Dosen extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Dosen',
-			'subjudul' => 'Import Data Dosen',
+			'judul'	=> 'Guru',
+			'subjudul' => 'Import Data Guru',
 			'matkul' => $this->master->getAllMatkul()
 		];
 		if ($import_data != null) $data['import'] = $import_data;

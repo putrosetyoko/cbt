@@ -5,15 +5,15 @@
 	<section class="sidebar">
 
 		<!-- Sidebar user panel (optional) -->
-		<div class="user-panel">
-			<div class="pull-left image">
+		<!-- <div class="user-panel"> -->
+			<!-- <div class="pull-left image">
 				<img src="<?=base_url()?>assets/dist/img/user1.png" class="img-circle" alt="User Image">
-			</div>
-			<div class="pull-left info">
+			</div> -->
+			<!-- <div class="pull-left info">
 				<p><?=$user->username?></p>
 				<small><?=$user->email?></small>
-			</div>
-		</div>
+			</div> -->
+		<!-- </div> -->
 		
 		<ul class="sidebar-menu" data-widget="tree">
 			<li class="header">MAIN MENU</li>
@@ -48,19 +48,19 @@
 					<li class="<?=$page==='matkul'?"active":""?>">
 						<a href="<?=base_url('matkul')?>">
 							<i class="fa fa-circle-o"></i>
-							Mata Kuliah
+							Mata Pelajaran
 						</a>
 					</li>
 					<li class="<?=$page==='dosen'?"active":""?>">
 						<a href="<?=base_url('dosen')?>">
 							<i class="fa fa-circle-o"></i>
-							Dosen
+							Guru
 						</a>
 					</li>
 					<li class="<?=$page==='mahasiswa'?"active":""?>">
 						<a href="<?=base_url('mahasiswa')?>">
 							<i class="fa fa-circle-o"></i>
-							Mahasiswa
+							Siswa
 						</a>
 					</li>
 				</ul>
@@ -75,13 +75,13 @@
 					<li class="<?=$page==='kelasdosen'?"active":""?>">
 						<a href="<?=base_url('kelasdosen')?>">
 							<i class="fa fa-circle-o"></i>
-							Kelas - Dosen
+							Kelas - Guru
 						</a>
 					</li>
 					<li class="<?=$page==='jurusanmatkul'?"active":""?>">
 						<a href="<?=base_url('jurusanmatkul')?>">
 							<i class="fa fa-circle-o"></i>
-							Jurusan - Mata Kuliah
+							Jurusan - Mata Pelajaran
 						</a>
 					</li>
 				</ul>

@@ -27,8 +27,8 @@ class Mahasiswa extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Mahasiswa',
-			'subjudul' => 'Data Mahasiswa'
+			'judul'	=> 'Siswa',
+			'subjudul' => 'Data Siswa'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
 		$this->load->view('master/mahasiswa/data');
@@ -44,8 +44,8 @@ class Mahasiswa extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Mahasiswa',
-			'subjudul' => 'Tambah Data Mahasiswa'
+			'judul'	=> 'Siswa',
+			'subjudul' => 'Tambah Data Siswa'
 		];
 		$this->load->view('_templates/dashboard/_header.php', $data);
 		$this->load->view('master/mahasiswa/add');
@@ -57,8 +57,8 @@ class Mahasiswa extends CI_Controller
 		$mhs = $this->master->getMahasiswaById($id);
 		$data = [
 			'user' 		=> $this->ion_auth->user()->row(),
-			'judul'		=> 'Mahasiswa',
-			'subjudul'	=> 'Edit Data Mahasiswa',
+			'judul'		=> 'Siswa',
+			'subjudul'	=> 'Edit Data Siswa',
 			'jurusan'	=> $this->master->getJurusan(),
 			'kelas'		=> $this->master->getKelasByJurusan($mhs->jurusan_id),
 			'mahasiswa' => $mhs
@@ -116,6 +116,7 @@ class Mahasiswa extends CI_Controller
 				'nama' 			=> $this->input->post('nama', true),
 				'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
 				'kelas_id' 		=> $this->input->post('kelas', true),
+				'jurusan_id'    => $this->input->post('jurusan', true),
 			];
 			if ($method === 'add') {
 				$action = $this->master->create('mahasiswa', $input);
@@ -159,23 +160,23 @@ class Mahasiswa extends CI_Controller
 			'first_name'	=> $first_name,
 			'last_name'		=> $last_name
 		];
-		$group = array('3'); // Sets user to dosen.
+		$group = array('3'); // Sets user to Mahasiswa.
 
 		if ($this->ion_auth->username_check($username)) {
 			$data = [
 				'status' => false,
-				'msg'	 => 'Username tidak tersedia (sudah digunakan).'
+				'msg'	 => 'Gagal Aktif! NIM sudah digunakan.'
 			];
 		} else if ($this->ion_auth->email_check($email)) {
 			$data = [
 				'status' => false,
-				'msg'	 => 'Email tidak tersedia (sudah digunakan).'
+				'msg'	 => 'Gagal Aktif! Email sudah digunakan.'
 			];
 		} else {
 			$this->ion_auth->register($username, $password, $email, $additional_data, $group);
 			$data = [
 				'status'	=> true,
-				'msg'	 => 'User berhasil dibuat. NIP digunakan sebagai password pada saat login.'
+				'msg'	 => 'User berhasil diaktifkan. NIM digunakan sebagai password pada saat login.'
 			];
 		}
 		$this->output_json($data);
@@ -185,8 +186,8 @@ class Mahasiswa extends CI_Controller
 	{
 		$data = [
 			'user' => $this->ion_auth->user()->row(),
-			'judul'	=> 'Mahasiswa',
-			'subjudul' => 'Import Data Mahasiswa',
+			'judul'	=> 'Siswa',
+			'subjudul' => 'Import Data Siswa',
 			'kelas' => $this->master->getAllKelas()
 		];
 		if ($import_data != null) $data['import'] = $import_data;
