@@ -6,14 +6,14 @@ Aplikasi Ujian Online Menggunakan CodeIgniter 3
 <p>Disarankan menggunakan PHP versi 7</p>
 
 <h1>Cara Install</h1>
-    Buat database dengan nama <kbd>ci_online_test</kbd>. Kemudian import database pada folder <kbd>sql</kbd>. Jangan lupa setting lagi file <kbd>config.php</kbd> nya. 
+    Buat database dengan nama <kbd>cbt</kbd>. Kemudian import database cbt.sql. Jangan lupa setting lagi file <kbd>config.php</kbd> nya. 
     dan juga ubah date_default_timezone_set pada config.php sesuai dgn waktu daerah masing-masing.<br/>
 
 jika sudah mengikuti langkah diatas dengan benar seharusnya aplikasi sudah berjalan dengan baik. Pastikan pada console browser tidak terdapat error.
 
 <h3>User</h3>
 <ul>
-<li>Administrator <br/> Email: admin@admin.com <br/> Password : password </li>
+<li>Administrator <br/> Email: admin@gmail.com <br/> Password : admin </li>
   
 </ul>
 
