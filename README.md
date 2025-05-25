@@ -6,8 +6,8 @@ Aplikasi Ujian Online CBT Menggunakan CodeIgniter 3
 <p>Disarankan menggunakan PHP versi 7</p>
 
 <h1>Cara Install</h1>
-    Buat database dengan nama <kbd>cbt</kbd>. Kemudian import database cbt.sql. Jangan lupa setting lagi file <kbd>config.php</kbd> nya. 
-    dan juga ubah date_default_timezone_set pada config.php sesuai dgn waktu daerah masing-masing.<br/>
+    Buat database dengan nama <kbd>cbt</kbd>. Kemudian import database cbt.sql. Jangan lupa setting lagi file <kbd>config.php</kbd>nya, termasuk date_default_timezone_set 
+    sesuai dgn waktu daerah masing-masing.<br/>
 
 jika sudah mengikuti langkah diatas dengan benar seharusnya aplikasi sudah berjalan dengan baik. Pastikan pada console browser tidak terdapat error.
 
