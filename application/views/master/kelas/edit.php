@@ -25,8 +25,7 @@
                         <tr>
                             <th># No</th>
                             <th>Kelas</th>
-                            <th>Jurusan</th>
-                        </tr>
+                            </tr>
                     </thead>
                     <tbody>
                         <?php 
@@ -42,22 +41,11 @@
                                         <small class="help-block text-right"></small>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="form-group">
-                                        <select required="required" name="jurusan_id[<?=$i?>]" class="input-sm form-control select2" style="width: 100%!important">
-                                            <option value="" disabled>-- Pilih --</option>
-                                            <?php foreach ($jurusan as $j) : ?>
-                                                <option <?= $row->jurusan_id == $j->id_jurusan ? "selected='selected'" : "" ?> value="<?=$j->id_jurusan?>"><?=$j->nama_jurusan?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                        <small class="help-block text-right"></small>
-                                    </div>
-                                </td>
-                            </tr>
+                                </tr>
                         <?php $i++;endforeach; ?>
                     </tbody>
                 </table>
-                <button id="submit"  type="submit" class="mb-4 btn btn-block btn-flat bg-purple">
+                <button id="submit"   type="submit" class="mb-4 btn btn-block btn-flat bg-purple">
                     <i class="fa fa-edit"></i> Simpan Perubahan
                 </button>
                 <?=form_close()?>

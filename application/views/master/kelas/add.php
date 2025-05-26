@@ -25,8 +25,7 @@
                         <tr>
                             <th># No</th>
                             <th>Kelas</th>
-                            <th>Jurusan</th>
-                        </tr>
+                            </tr>
                     </thead>
                     <tbody>
                         <?php for ($i=1; $i <= $banyak; $i++) : ?> 
@@ -39,18 +38,7 @@
                                         <small class="help-block text-right"></small>
                                     </div>
                                 </td>
-                                <td width="200">
-                                    <div class="form-group">
-                                        <select required="required" name="jurusan_id[<?=$i?>]" class="form-control input-sm select2" style="width: 100%!important">
-                                            <option value="" disabled selected>-- Pilih --</option>
-                                            <?php foreach ($jurusan as $j) : ?>
-                                                <option value="<?=$j->id_jurusan?>"><?=$j->nama_jurusan?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                        <small class="help-block text-right"></small>
-                                    </div>
-                                </td>
-                            </tr>
+                                </tr>
                         <?php endfor; ?>
                     </tbody>
                 </table>

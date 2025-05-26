@@ -88,8 +88,8 @@ Dolore distinctio, at consequuntur magnam cupiditate voluptate hic ratione ea il
 <h2>Data Ujian</h2>
 <table id="data-hasil">
     <tr>
-        <th>Mata Kuliah</th>
-        <td>{$ujian->nama_matkul}</td>
+        <th>Mata Pelajaran</th>
+        <td>{$ujian->nama_mapel}</td>
     </tr>
     <tr>
         <th>Nama Ujian</th>

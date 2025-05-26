@@ -44,12 +44,12 @@
             <div class="col-sm-6">
                 <table class="table w-100">
                     <tr>
-                        <th>Mata Kuliah</th>
-                        <td><?=$ujian->nama_matkul?></td>
+                        <th>Mata Pelajaran</th>
+                        <td><?=$ujian->nama_mapel?></td>
                     </tr>
                     <tr>
-                        <th>Dosen</th>
-                        <td><?=$ujian->nama_dosen?></td>
+                        <th>Guru</th>
+                        <td><?=$ujian->nama_guru?></td>
                     </tr>
                     <tr>
                         <th>Nilai Terendah</th>
@@ -74,7 +74,6 @@
                 <th>No.</th>
                 <th>Nama</th>
                 <th>Kelas</th>
-                <th>Jurusan</th>
                 <th>Jumlah Benar</th>
                 <th>Nilai</th>
             </tr>        
@@ -84,7 +83,6 @@
                 <th>No.</th>
                 <th>Nama</th>
                 <th>Kelas</th>
-                <th>Jurusan</th>
                 <th>Jumlah Benar</th>
                 <th>Nilai</th>
             </tr>

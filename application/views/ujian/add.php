@@ -11,16 +11,16 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="alert bg-purple">
-                    <h4>Mata Kuliah <i class="fa fa-book pull-right"></i></h4>
-                    <p><?=$matkul->nama_matkul?></p>
+                    <h4>Mata Pelajaran <i class="fa fa-book pull-right"></i></h4>
+                    <p><?=$mapel->nama_mapel?></p>
                 </div>
                 <div class="alert bg-purple">
-                    <h4>Dosen <i class="fa fa-address-book-o pull-right"></i></h4>
-                    <p><?=$dosen->nama_dosen?></p>
+                    <h4>Guru <i class="fa fa-address-book-o pull-right"></i></h4>
+                    <p><?=$guru->nama_guru?></p>
                 </div>
             </div>
             <div class="col-sm-4">
-                <?=form_open('ujian/save', array('id'=>'formujian'), array('method'=>'add','dosen_id'=>$dosen->id_dosen, 'matkul_id'=>$matkul->matkul_id))?>
+                <?=form_open('ujian/save', array('id'=>'formujian'), array('method'=>'add','guru_id'=>$guru->id_guru, 'mapel_id'=>$mapel->mapel_id))?>
                 <div class="form-group">
                     <label for="nama_ujian">Nama Ujian</label>
                     <input autofocus="autofocus" onfocus="this.select()" placeholder="Nama Ujian" type="text" class="form-control" name="nama_ujian">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label for="waktu">Waktu</label>
-                    <input placeholder="menit" type="number" class="form-control" name="waktu">
+                    <input placeholder="Menit" type="number" class="form-control" name="waktu">
                     <small class="help-block"></small>
                 </div>
                 <div class="form-group">

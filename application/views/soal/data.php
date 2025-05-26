@@ -13,15 +13,15 @@
 			</div>
 			<div class="form-group col-sm-4 text-center">
 				<?php if ( $this->ion_auth->is_admin() ) : ?>
-					<select id="matkul_filter" class="form-control select2" style="width:100% !important">
-						<option value="all">Semua Matkul</option>
-						<?php foreach ($matkul as $m) :?>
-							<option value="<?=$m->id_matkul?>"><?=$m->nama_matkul?></option>
+					<select id="mapel_filter" class="form-control select2" style="width:100% !important">
+						<option value="all">Semua Mata Pelajatan</option>
+						<?php foreach ($mapel as $m) :?>
+							<option value="<?=$m->id_mapel?>"><?=$m->nama_mapel?></option>
 						<?php endforeach; ?>
 					</select>
 				<?php endif; ?>
-				<?php if ( $this->ion_auth->in_group('dosen') ) : ?>				
-					<input id="matkul_id" value="<?=$matkul->nama_matkul;?>" type="text" readonly="readonly" class="form-control">
+				<?php if ( $this->ion_auth->in_group('guru') ) : ?>				
+					<input id="mapel_id" value="<?=$mapel->nama_mapel;?>" type="text" readonly="readonly" class="form-control">
 				<?php endif; ?>
 			</div>
 			<div class="col-sm-4">
@@ -41,10 +41,10 @@
 					<input type="checkbox" class="select_all">
 				</th>
                 <th width="25">No.</th>
-				<th>Dosen</th>
-                <th>Mata Kuliah</th>
+				<th>Guru</th>
+                <th>Mata Pelajaran</th>
 				<th>Soal</th>
-				<th>Tgl Dibuat</th>
+				<th>Tanggal Dibuat</th>
 				<th class="text-center">Aksi</th>
             </tr>        
         </thead>
@@ -58,13 +58,13 @@
 <?php if ( $this->ion_auth->is_admin() ) : ?>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#matkul_filter').on('change', function(){
-		let id_matkul = $(this).val();
+	$('#mapel_filter').on('change', function(){
+		let id_mapel = $(this).val();
 		let src = '<?=base_url()?>soal/data';
 		let url;
 
-		if(id_matkul !== 'all'){
-			let src2 = src + '/' + id_matkul;
+		if(id_mapel !== 'all'){
+			let src2 = src + '/' + id_mapel;
 			url = $(this).prop('checked') === true ? src : src2;
 		}else{
 			url = src;
@@ -74,13 +74,13 @@ $(document).ready(function(){
 });
 </script>
 <?php endif; ?>
-<?php if ( $this->ion_auth->in_group('dosen') ) : ?>
+<?php if ( $this->ion_auth->in_group('guru') ) : ?>
 <script type="text/javascript">
 $(document).ready(function(){
-	let id_matkul = '<?=$matkul->matkul_id?>';
-	let id_dosen = '<?=$matkul->id_dosen?>';
+	let id_mapel = '<?=$mapel->mapel_id?>';
+	let id_guru = '<?=$mapel->id_guru?>';
 	let src = '<?=base_url()?>soal/data';
-	let url = src + '/' + id_matkul + '/' + id_dosen;
+	let url = src + '/' + id_mapel + '/' + id_guru;
 
 	table.ajax.url(url).load();
 });

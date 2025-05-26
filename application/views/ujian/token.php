@@ -16,12 +16,12 @@
                         <td><?=$mhs->nama?></td>
                     </tr>
                     <tr>
-                        <th>Dosen</th>
-                        <td><?=$ujian->nama_dosen?></td>
+                        <th>Guru</th>
+                        <td><?=$ujian->nama_guru?></td>
                     </tr>
                     <tr>
-                        <th>Kelas/Jurusan</th>
-                        <td><?=$mhs->nama_kelas?> / <?=$mhs->nama_jurusan?></td>
+                        <th>Kelas</th>
+                        <td><?=$mhs->nama_kelas?></td>
                     </tr>
                     <tr>
                         <th>Nama Ujian</th>
@@ -80,7 +80,7 @@
                         <?php else : ?>
                         <div class="callout callout-danger">
                             Waktu untuk menekan tombol <strong>"MULAI"</strong> sudah habis.<br/>
-                            Silahkan hubungi dosen anda untuk bisa mengikuti ujian pengganti.
+                            Silahkan hubungi guru anda untuk bisa mengikuti ujian pengganti.
                         </div>
                         <?php endif;?>
                     </div>

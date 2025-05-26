@@ -18,7 +18,7 @@
     <?php endforeach; ?>
 </div>
 
-<?php elseif( $this->ion_auth->in_group('dosen') ) : ?>
+<?php elseif( $this->ion_auth->in_group('guru') ) : ?>
 
 <div class="row">
     <div class="col-sm-4">
@@ -29,19 +29,19 @@
             <table class="table table-hover">
                 <tr>
                     <th>Nama</th>
-                    <td><?=$dosen->nama_dosen?></td>
+                    <td><?=$guru->nama_guru?></td>
                 </tr>
                 <tr>
-                    <th>NIP</th>
-                    <td><?=$dosen->nip?></td>
+                    <th>NIP/NIK/NUPTK</th>
+                    <td><?=$guru->nip?></td>
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><?=$dosen->email?></td>
+                    <td><?=$guru->email?></td>
                 </tr>
                 <tr>
-                    <th>Mata Kuliah</th>
-                    <td><?=$dosen->nama_matkul?></td>
+                    <th>Mata Pelajaran</th>
+                    <td><?=$guru->nama_mapel?></td>
                 </tr>
                 <tr>
                     <th>Daftar Kelas</th>
@@ -64,9 +64,9 @@
             <div class="box-body">
                 <p>Sebelum membuat Ujian jangan lupa.</p>
                 <ul class="pl-4">
-                    <li>Buatlah soal yang mudah</li>
-                    <li>jangan buat soal yang membingungkan</li>
-                    <li>soal jangan banyak-banyak</li>
+                    <li>Wajib Buat Soal!</li>
+                    <li>Hindari Membuat Soal Ambigu atau Membingungkan Siswa</li>
+                    <li>Jumlah Soal Sesuaikan Dengan Waktu</li>
                 </ul>
             </div>
         </div>
@@ -83,28 +83,24 @@
             </div>
             <table class="table table-hover">
                 <tr>
-                    <th>NIM</th>
-                    <td><?=$mahasiswa->nim?></td>
+                    <th>NISN</th>
+                    <td><?=$siswa->nisn?></td>
                 </tr>
                 <tr>
                     <th>Nama</th>
-                    <td><?=$mahasiswa->nama?></td>
+                    <td><?=$siswa->nama?></td>
                 </tr>
                 <tr>
                     <th>Jenis Kelamin</th>
-                    <td><?=$mahasiswa->jenis_kelamin === 'L' ? "Laki-laki" : "Perempuan" ;?></td>
+                    <td><?=$siswa->jenis_kelamin === 'L' ? "Laki-laki" : "Perempuan" ;?></td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>Email</th>
-                    <td><?=$mahasiswa->email?></td>
-                </tr>
-                <tr>
-                    <th>Jurusan</th>
-                    <td><?=$mahasiswa->nama_jurusan?></td>
-                </tr>
+                    <td><?=$siswa->email?></td>
+                </tr> -->
                 <tr>
                     <th>Kelas</th>
-                    <td><?=$mahasiswa->nama_kelas?></td>
+                    <td><?=$siswa->nama_kelas?></td>
                 </tr>
             </table>
         </div>
@@ -117,9 +113,9 @@
             <div class="box-body">
                 <p>Sebelum Ujian jangan lupa.</p>
                 <ul class="pl-4">
-                    <li>Cari tempat yang aman untuk mengerjakan</li>
+                    <li>Cari tempat yang aman dan kondusif untuk mengerjakan</li>
                     <li>Siapkan alat yang dibutuhkan (bukan contekan)</li>
-                    <li>Tenangkan kosongkan fikiran</li>
+                    <li>Tenangkan pikiran</li>
                     <li>Berdoa</li>
                 </ul>
             </div>

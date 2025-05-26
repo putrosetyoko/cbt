@@ -40,10 +40,11 @@ class Master_model extends CI_Model
 
     public function getDataKelas()
     {
-        $this->datatables->select('id_kelas, nama_kelas, id_jurusan, nama_jurusan');
+        // Menghapus join ke tabel jurusan karena tidak lagi relevan
+        $this->datatables->select('id_kelas, nama_kelas');
         $this->datatables->from('kelas');
-        $this->datatables->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_kelas, nama_kelas, id_jurusan, nama_jurusan');
+        // $this->datatables->join('jurusan', 'jurusan_id=id_jurusan'); // Dihapus
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_kelas, nama_kelas'); // Menyesuaikan kolom
         return $this->datatables->generate();
     }
 
@@ -55,242 +56,145 @@ class Master_model extends CI_Model
         return $query;
     }
 
-    /**
-     * Data Jurusan
-     */
-
-    public function getDataJurusan()
-    {
-        $this->datatables->select('id_jurusan, nama_jurusan');
-        $this->datatables->from('jurusan');
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_jurusan, nama_jurusan');
-        return $this->datatables->generate();
-    }
-
-    public function getJurusanById($id)
-    {
-        $this->db->where_in('id_jurusan', $id);
-        $this->db->order_by('nama_jurusan');
-        $query = $this->db->get('jurusan')->result();
-        return $query;
-    }
+    // Fungsi-fungsi terkait Jurusan dihapus karena tabel jurusan tidak ada lagi
+    // public function getDataJurusan() { ... }
+    // public function getJurusanById() { ... }
+    // public function getJurusan() { ... }
+    // public function getAllJurusan() { ... }
+    // public function getKelasByJurusan() { ... }
 
     /**
-     * Data Mahasiswa
+     * Data Siswa
      */
 
-    public function getDataMahasiswa()
+    public function getDataSiswa() // Mengganti getDataMahasiswa menjadi getDataSiswa
     {
-        // Bagian ini sudah benar karena Anda menggunakan alias 'a', 'b', 'c'
-        $this->datatables->select('a.id_mahasiswa, a.nama, a.nim, a.email, b.nama_kelas, c.nama_jurusan');
-        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nim) AS ada');
-        $this->datatables->from('mahasiswa a');
+        $this->datatables->select('a.id_siswa, a.nama, a.nisn, a.jenis_kelamin, b.nama_kelas'); // Menyesuaikan kolom: id_siswa, nisn, jenis_kelamin, tanpa email dan jurusan
+        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nisn) AS ada'); // Mengubah a.nim ke a.nisn dan menghapus a.email
+        $this->datatables->from('siswa a'); // Mengganti mahasiswa a menjadi siswa a
         $this->datatables->join('kelas b', 'a.kelas_id=b.id_kelas');
-        $this->datatables->join('jurusan c', 'b.jurusan_id=c.id_jurusan');
+        // $this->datatables->join('jurusan c', 'b.jurusan_id=c.id_jurusan'); // Dihapus karena siswa tidak lagi terhubung ke jurusan
         return $this->datatables->generate();
     }
 
-    public function getMahasiswaById($id)
+    public function getSiswaById($id) // Mengganti getMahasiswaById menjadi getSiswaById
     {
         $this->db->select(
-            'mahasiswa.*, ' . // Ambil semua kolom dari tabel mahasiswa
-            'kelas.id_kelas, kelas.nama_kelas, ' . // Pilih kolom dari tabel kelas
-            'jurusan.id_jurusan, jurusan.nama_jurusan' // Pilih kolom dari tabel jurusan
+            'siswa.*, ' . // Mengambil semua kolom dari tabel siswa
+            'kelas.id_kelas, kelas.nama_kelas' // Pilih kolom dari tabel kelas
+            // Kolom jurusan dihapus
         );
-        $this->db->from('mahasiswa');
-        $this->db->join('kelas', 'mahasiswa.kelas_id = kelas.id_kelas');
-        $this->db->join('jurusan', 'mahasiswa.jurusan_id = jurusan.id_jurusan');
-        $this->db->where('mahasiswa.id_mahasiswa', $id);
+        $this->db->from('siswa'); // Mengganti mahasiswa menjadi siswa
+        $this->db->join('kelas', 'siswa.kelas_id = kelas.id_kelas');
+        // $this->db->join('jurusan', 'mahasiswa.jurusan_id = jurusan.id_jurusan'); // Dihapus
+        $this->db->where('siswa.id_siswa', $id); // Mengganti id_mahasiswa menjadi id_siswa
         return $this->db->get()->row();
     }
 
-    public function getJurusan()
-    {
-        $this->db->select('id_jurusan, nama_jurusan');
-        $this->db->from('kelas');
-        $this->db->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->db->order_by('nama_jurusan', 'ASC');
-        $this->db->group_by('id_jurusan');
-        $query = $this->db->get();
-        return $query->result();
-    }
-
-    public function getAllJurusan($id = null)
-    {
-        if ($id === null) {
-            $this->db->order_by('nama_jurusan', 'ASC');
-            return $this->db->get('jurusan')->result();
-        } else {
-            $this->db->select('jurusan_id');
-            $this->db->from('jurusan_matkul');
-            $this->db->where('matkul_id', $id);
-            $jurusan = $this->db->get()->result();
-            $id_jurusan = [];
-            foreach ($jurusan as $j) {
-                $id_jurusan[] = $j->jurusan_id;
-            }
-            if ($id_jurusan === []) {
-                $id_jurusan = null;
-            }
-            
-            $this->db->select('*');
-            $this->db->from('jurusan');
-            $this->db->where_not_in('id_jurusan', $id_jurusan);
-            $matkul = $this->db->get()->result();
-            return $matkul;
-        }
-    }
-
-    public function getKelasByJurusan($id)
-    {
-        $query = $this->db->get_where('kelas', array('jurusan_id'=>$id));
-        return $query->result();
-    }
-
     /**
-     * Data Dosen
+     * Data Guru
      */
 
-    public function getDataDosen()
+    public function getDataGuru() // Mengganti getDataDosen menjadi getDataGuru
     {
-        $this->datatables->select('a.id_dosen,a.nip, a.nama_dosen, a.email, a.matkul_id, b.nama_matkul, (SELECT COUNT(id) FROM users WHERE username = a.nip OR email = a.email) AS ada');
-        $this->datatables->from('dosen a');
-        $this->datatables->join('matkul b', 'a.matkul_id=b.id_matkul');
+        $this->datatables->select('a.id_guru,a.nip, a.nama_guru, a.email, a.mapel_id, b.nama_mapel, (SELECT COUNT(id) FROM users WHERE username = a.nip) AS ada'); // Menyesuaikan kolom email dan mengganti matkul/nama_matkul menjadi mapel/nama_mapel
+        $this->datatables->from('guru a'); // Mengganti dosen a menjadi guru a
+        $this->datatables->join('mapel b', 'a.mapel_id=b.id_mapel'); // Mengganti matkul b menjadi mapel b
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"></div>', 'id_guru'); // Changed id_dosen
         return $this->datatables->generate();
     }
 
-    public function getDosenById($id)
+    public function getGuruById($id) // Mengganti getDosenById menjadi getGuruById
     {
-        $query = $this->db->get_where('dosen', array('id_dosen'=>$id));
+        $query = $this->db->get_where('guru', array('id_guru'=>$id)); // Mengganti dosen menjadi guru dan id_dosen menjadi id_guru
         return $query->row();
     }
 
     /**
-     * Data Matkul
+     * Data Mapel
      */
 
-    public function getDataMatkul()
+    public function getDataMapel() // Mengganti getDataMatkul menjadi getDataMapel
     {
-        $this->datatables->select('id_matkul, nama_matkul');
-        $this->datatables->from('matkul');
+        $this->datatables->select('id_mapel, nama_mapel'); // Mengganti id_matkul, menjadi id_mapel, nama_mapel
+        $this->datatables->from('mapel'); // Mengganti matkul menjadi mapel
         return $this->datatables->generate();
     }
 
-    public function getAllMatkul()
+    public function getAllMapel() // Mengganti getAllMatkul menjadi getAllMapel
     {
-        return $this->db->get('matkul')->result();
+        return $this->db->get('mapel')->result(); // Mengganti matkul menjadi mapel
     }
 
-    public function getMatkulById($id, $single = false)
+    public function getMapelById($id, $single = false) // Mengganti getMatkulById menjadi getMapelById
     {
         if ($single === false) {
-            $this->db->where_in('id_matkul', $id);
-            $this->db->order_by('nama_matkul');
-            $query = $this->db->get('matkul')->result();
+            $this->db->where_in('id_mapel', $id); // Mengganti id_matkul menjadi id_mapel
+            $this->db->order_by('nama_mapel'); // Mengganti nama_matkul menjadi nama_mapel
+            $query = $this->db->get('mapel')->result(); // Mengganti matkul menjadi mapel
         } else {
-            $query = $this->db->get_where('matkul', array('id_matkul'=>$id))->row();
+            $query = $this->db->get_where('mapel', array('id_mapel'=>$id))->row(); // Mengganti matkul menjadi mapel dan id_matkul menjadi id_mapel
         }
         return $query;
     }
 
     /**
-     * Data Kelas Dosen
+     * Data Kelas Guru
      */
 
-    public function getKelasDosen()
+    public function getKelasGuru() // Mengganti getKelasDosen menjadi getKelasGuru
     {
-        $this->datatables->select('kelas_dosen.id, dosen.id_dosen, dosen.nip, dosen.nama_dosen, GROUP_CONCAT(kelas.nama_kelas) as kelas');
-        $this->datatables->from('kelas_dosen');
+        $this->datatables->select('kelas_guru.id, guru.id_guru, guru.nip, guru.nama_guru, GROUP_CONCAT(kelas.nama_kelas) as kelas'); // Mengganti dosen.* menjadi guru.*
+        $this->datatables->from('kelas_guru'); // Mengganti kelas_dosen menjadi kelas_guru
         $this->datatables->join('kelas', 'kelas_id=id_kelas');
-        $this->datatables->join('dosen', 'dosen_id=id_dosen');
-        $this->datatables->group_by('dosen.nama_dosen');
+        $this->datatables->join('guru', 'guru_id=id_guru'); // Mengganti dosen menjadi guru
+        $this->datatables->group_by('guru.nama_guru'); // Mengganti dosen.nama_dosen menjadi guru.nama_guru
         return $this->datatables->generate();
     }
 
-    public function getAllDosen($id = null)
+    public function getAllGuru($id = null) // Mengganti getAllDosen menjadi getAllGuru
     {
-        $this->db->select('dosen_id');
-        $this->db->from('kelas_dosen');
+        $this->db->select('guru_id'); // Mengganti dosen_id menjadi guru_id
+        $this->db->from('kelas_guru'); // Mengganti kelas_dosen menjadi kelas_guru
         if ($id !== null) {
-            $this->db->where_not_in('dosen_id', [$id]);
+            $this->db->where_not_in('guru_id', [$id]); // Mengganti dosen_id menjadi guru_id
         }
-        $dosen = $this->db->get()->result();
-        $id_dosen = [];
-        foreach ($dosen as $d) {
-            $id_dosen[] = $d->dosen_id;
+        $guru = $this->db->get()->result(); // Mengganti $dosen menjadi $guru
+        $id_guru = []; // Mengganti $id_dosen menjadi $id_guru
+        foreach ($guru as $g) { // Mengganti $d menjadi $g
+            $id_guru[] = $g->guru_id; // Mengganti dosen_id menjadi guru_id
         }
-        if ($id_dosen === []) {
-            $id_dosen = null;
+        if ($id_guru === []) {
+            $id_guru = null;
         }
 
-        $this->db->select('id_dosen, nip, nama_dosen');
-        $this->db->from('dosen');
-        $this->db->where_not_in('id_dosen', $id_dosen);
+        $this->db->select('id_guru, nip, nama_guru, email, mapel_id'); // Mengganti id_dosen, nip, nama_dosen menjadi id_guru, nip, nama_guru
+        $this->db->from('guru'); // Mengganti dosen menjadi guru
+        $this->db->where_not_in('id_guru', $id_guru); // Mengganti id_dosen menjadi id_guru
         return $this->db->get()->result();
     }
-
     
     public function getAllKelas()
     {
-        $this->db->select('id_kelas, nama_kelas, nama_jurusan');
+        $this->db->select('id_kelas, nama_kelas'); // Menghapus nama_jurusan
         $this->db->from('kelas');
-        $this->db->join('jurusan', 'jurusan_id=id_jurusan');
+        // $this->db->join('jurusan', 'jurusan_id=id_jurusan'); // Dihapus
         $this->db->order_by('nama_kelas');
         return $this->db->get()->result();
     }
     
-    public function getKelasByDosen($id)
+    public function getKelasByGuru($id) // Mengganti getKelasByDosen menjadi getKelasByGuru
     {
         $this->db->select('kelas.id_kelas');
-        $this->db->from('kelas_dosen');
-        $this->db->join('kelas', 'kelas_dosen.kelas_id=kelas.id_kelas');
-        $this->db->where('dosen_id', $id);
+        $this->db->from('kelas_guru'); // Mengganti kelas_dosen menjadi kelas_guru
+        $this->db->join('kelas', 'kelas_guru.kelas_id=kelas.id_kelas'); // Mengganti kelas_dosen menjadi kelas_guru
+        $this->db->where('guru_id', $id); // Mengganti dosen_id menjadi guru_id
         $query = $this->db->get()->result();
         return $query;
     }
-    /**
-     * Data Jurusan Matkul
-     */
 
-    public function getJurusanMatkul()
-    {
-        $this->datatables->select('jurusan_matkul.id, matkul.id_matkul, matkul.nama_matkul, jurusan.id_jurusan, GROUP_CONCAT(jurusan.nama_jurusan) as nama_jurusan');
-        $this->datatables->from('jurusan_matkul');
-        $this->datatables->join('matkul', 'matkul_id=id_matkul');
-        $this->datatables->join('jurusan', 'jurusan_id=id_jurusan');
-        $this->datatables->group_by('matkul.nama_matkul');
-        return $this->datatables->generate();
-    }
-
-    public function getMatkul($id = null)
-    {
-        $this->db->select('matkul_id');
-        $this->db->from('jurusan_matkul');
-        if ($id !== null) {
-            $this->db->where_not_in('matkul_id', [$id]);
-        }
-        $matkul = $this->db->get()->result();
-        $id_matkul = [];
-        foreach ($matkul as $d) {
-            $id_matkul[] = $d->matkul_id;
-        }
-        if ($id_matkul === []) {
-            $id_matkul = null;
-        }
-
-        $this->db->select('id_matkul, nama_matkul');
-        $this->db->from('matkul');
-        $this->db->where_not_in('id_matkul', $id_matkul);
-        return $this->db->get()->result();
-    }
-
-    public function getJurusanByIdMatkul($id)
-    {
-        $this->db->select('jurusan.id_jurusan');
-        $this->db->from('jurusan_matkul');
-        $this->db->join('jurusan', 'jurusan_matkul.jurusan_id=jurusan.id_jurusan');
-        $this->db->where('matkul_id', $id);
-        $query = $this->db->get()->result();
-        return $query;
-    }
+    // Fungsi-fungsi terkait Jurusan Matkul dihapus karena tabel jurusan_matkul tidak ada lagi
+    // public function getJurusanMatkul() { ... }
+    // public function getMatkul() { ... }
+    // public function getJurusanByIdMatkul() { ... }
 }
