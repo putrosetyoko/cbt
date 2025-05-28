@@ -18,7 +18,7 @@ $(document).ready(function () {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + 'hasilujian/NilaiMhs/' + id,
+      url: base_url + 'hasilujian/NilaiSiswa/' + id,
       type: 'POST',
     },
     columns: [

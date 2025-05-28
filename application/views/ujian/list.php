@@ -39,6 +39,7 @@
                     <tr>
                         <th>No.</th>
                         <th>Nama Ujian</th>
+						<th>Mata Pelajaran</th>
 						<th>Guru</th>
                         <th>Jumlah Soal</th>
                         <th>Waktu</th>

@@ -36,6 +36,46 @@ $(document).ready(function () {
       { data: 'nama_mapel' },
       { data: 'jumlah_soal' },
       { data: 'waktu' },
+      {
+        // Kolom baru: Tanggal Mulai
+        data: 'tgl_mulai',
+        render: function (data, type, row) {
+          if (data) {
+            var date = new Date(data);
+            var options = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit', // Tampilkan jam dalam 2 digit
+              minute: '2-digit', // Tampilkan menit dalam 2 digit
+              hour12: false, // Gunakan format 24 jam
+            };
+            return date.toLocaleDateString('id-ID', options) + ' WITA'; // Asumsi WIB
+          }
+          return '';
+        },
+      },
+      {
+        // Kolom baru: Tanggal Selesai
+        data: 'tgl_selesai', // Pastikan nama data ini sesuai dengan yang diambil dari model
+        render: function (data, type, row) {
+          if (data) {
+            var date = new Date(data);
+            var options = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit', // Tampilkan jam dalam 2 digit
+              minute: '2-digit', // Tampilkan menit dalam 2 digit
+              hour12: false, // Gunakan format 24 jam
+            };
+            return date.toLocaleDateString('id-ID', options) + ' WITA'; // Asumsi WIB
+          }
+          return '';
+        },
+      },
       { data: 'jenis' },
       {
         data: 'token',
@@ -48,31 +88,31 @@ $(document).ready(function () {
         data: 'id_ujian',
         render: function (data, type, row, meta) {
           return `<div class="text-center">
-									<input name="checked[]" class="check" value="${data}" type="checkbox">
-								</div>`;
+                                <input name="checked[]" class="check" value="${data}" type="checkbox">
+                            </div>`;
         },
       },
       {
-        targets: 7,
+        targets: 9, // Indeks token bergeser dari 7 menjadi 9
         data: 'token',
         render: function (data, type, row, meta) {
           return `<div class="text-center">
-								<strong class="badge bg-purple">${data}</strong>
-								</div>`;
+                                <strong class="badge bg-purple">${data}</strong>
+                            </div>`;
         },
       },
       {
-        targets: 8,
+        targets: 10, // Indeks aksi bergeser dari 8 menjadi 10
         data: 'id_ujian',
         render: function (data, type, row, meta) {
           return `<div class="text-center">
-									<button type="button" data-id="${data}" class="btn btn-token btn-xs bg-purple">
-										<i class="fa fa-refresh"></i>
-									</button>
-									<a href="${base_url}ujian/edit/${data}" class="btn btn-xs btn-warning">
-										<i class="fa fa-edit"></i>
-									</a>
-								</div>`;
+                                <button type="button" data-id="${data}" class="btn btn-token btn-xs bg-purple">
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                                <a href="${base_url}ujian/edit/${data}" class="btn btn-xs btn-warning">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </div>`;
         },
       },
     ],

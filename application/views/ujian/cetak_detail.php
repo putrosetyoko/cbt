@@ -22,7 +22,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Nicola Asuni');
+$pdf->SetAuthor('Putro Setyoko');
 $pdf->SetTitle('Hasil Ujian');
 
 // set default header data
@@ -73,7 +73,7 @@ Dolore distinctio, at consequuntur magnam cupiditate voluptate hic ratione ea il
     <tr>
         <th>Nama Ujian</th>
         <td>{$ujian->nama_ujian}</td>
-        <th>Mata Kuliah</th>
+        <th>Mata Pelajaran</th>
         <td>{$ujian->nama_mapel}</td> 
     </tr>
     <tr>
@@ -95,7 +95,7 @@ Dolore distinctio, at consequuntur magnam cupiditate voluptate hic ratione ea il
         <td>{$nilai->max_nilai}</td>
     </tr>
     <tr>
-        <th>Tanggal Selasi</th>
+        <th>Tanggal Selesai</th>
         <td>{$selesai}</td>
         <th>Rata-rata Nilai</th>
         <td>{$nilai->avg_nilai}</td>
@@ -111,7 +111,6 @@ $html .= <<<EOD
             <th width="5%">No.</th>
             <th width="35%">Nama</th>
             <th width="15%">Kelas</th>
-            <th width="25%">Jurusan</th>
             <th width="10%">Jumlah Benar</th>
             <th width="10%">Nilai</th>
         </tr>        
@@ -126,7 +125,6 @@ $html .= <<<EOD
         <td align="center" width="5%">{$no}</td>
         <td width="35%">{$row->nama}</td>
         <td width="15%">{$row->nama_kelas}</td>
-        <td width="25%">{$row->nama_jurusan}</td>
         <td width="10%">{$row->jml_benar}</td>
         <td width="10%">{$row->nilai}</td>
     </tr>
@@ -145,5 +143,17 @@ $pdf->writeHTML($html, true, 0, true, 0);
 $pdf->lastPage();
 // ---------------------------------------------------------
 
+// Ambil nama kelas dan guru dari data yang diteruskan
+// Berikan nilai default jika variabel tidak ada (untuk keamanan)
+$nama_kelas_untuk_file = isset($nama_kelas_pdf) ? $nama_kelas_pdf : 'Kelas';
+$nama_guru_untuk_file  = isset($nama_guru_pdf) ? $nama_guru_pdf : 'Guru';
+
+// Bersihkan nama untuk digunakan di nama file
+$nama_kelas_bersih = preg_replace("/[^a-zA-Z0-9_]/", "", str_replace(" ", "_", $nama_kelas_untuk_file));
+$nama_guru_bersih  = preg_replace("/[^a-zA-Z0-9_]/", "", str_replace(" ", "_", $nama_guru_untuk_file));
+
+// Buat nama file PDF
+$filename = "HasilUjian_{$nama_kelas_bersih}_{$nama_guru_bersih}.pdf";
+
 //Close and output PDF document
-$pdf->Output('tes.pdf', 'I');
+$pdf->Output($filename, 'I');

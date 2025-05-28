@@ -1,12 +1,12 @@
 var table;
 
 $(document).ready(function () {
-  ajaxcsrf();
+  ajaxcsrf(); // Pastikan fungsi ajaxcsrf() tersedia
 
   table = $('#guru').DataTable({
     initComplete: function () {
       var api = this.api();
-      $('#guru_filter input')
+      $('#guru_filter input') // Sesuaikan ID filter jika ada
         .off('.DT')
         .on('keyup.DT', function (e) {
           api.search(this.value).draw();
@@ -19,7 +19,7 @@ $(document).ready(function () {
     buttons: [
       {
         extend: 'copy',
-        exportOptions: { columns: [1, 2, 3, 4] },
+        exportOptions: { columns: [1, 2, 3, 4] }, // Sesuaikan kolom yang diekspor
       },
       {
         extend: 'print',
@@ -40,12 +40,13 @@ $(document).ready(function () {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + 'guru/data',
+      url: base_url + 'guru/data', // Pastikan ini mengarah ke controller Guru/data
       type: 'POST',
+      // data: csrf // Jika csrf diaktifkan, pastikan ini tidak dikomentari
     },
     columns: [
       {
-        data: 'id_guru',
+        data: 'id_guru', // Data yang akan di-render untuk kolom No.
         orderable: false,
         searchable: false,
       },
@@ -56,8 +57,7 @@ $(document).ready(function () {
     ],
     columnDefs: [
       {
-        searchable: false,
-        targets: 5,
+        targets: 5, // Index kolom Aksi (sesuaikan jika ada perubahan kolom)
         data: {
           id_guru: 'id_guru',
           ada: 'ada',
@@ -65,27 +65,27 @@ $(document).ready(function () {
         render: function (data, type, row, meta) {
           let btn;
           if (data.ada > 0) {
-            btn = '';
+            btn = ''; // Jika sudah ada user, tidak perlu tombol aktifkan
           } else {
-            btn = `<button type="button" class="btn btn-aktif btn-primary btn-xs" data-id="${data.id_guru}">
-								<i class="fa fa-user-plus"></i> Aktif
-							</button>`;
+            btn = `<button data-id="${data.id_guru}" type="button" class="btn btn-xs btn-primary btn-aktif">
+                             <i class="fa fa-user-plus"></i> Aktif
+                         </button>`;
           }
           return `<div class="text-center">
-							<a href="${base_url}guru/edit/${data.id_guru}" class="btn btn-xs btn-warning">
-								<i class="fa fa-pencil"></i> Edit
-							</a>
-							${btn}
-						</div>`;
+                             <a class="btn btn-xs btn-warning" href="${base_url}guru/edit/${data.id_guru}">
+                                 <i class="fa fa-pencil"></i> Edit
+                             </a>
+                             ${btn}
+                         </div>`;
         },
       },
       {
-        targets: 6,
+        targets: 6, // Index kolom Checkbox (sesuaikan jika ada perubahan kolom)
         data: 'id_guru',
         render: function (data, type, row, meta) {
           return `<div class="text-center">
-									<input name="checked[]" class="check" value="${data}" type="checkbox">
-								</div>`;
+                             <input name="checked[]" class="check" value="${data}" type="checkbox">
+                         </div>`;
         },
       },
     ],
@@ -155,7 +155,7 @@ $(document).ready(function () {
       error: function () {
         Swal({
           title: 'Gagal',
-          text: 'Ada data yang sedang digunakan',
+          text: 'Terjadi kesalahan saat menghapus data.',
           type: 'error',
         });
       },
@@ -180,6 +180,13 @@ $(document).ready(function () {
           });
         }
         reload_ajax();
+      },
+      error: function () {
+        Swal({
+          title: 'Gagal',
+          text: 'Terjadi kesalahan saat mengaktifkan user.',
+          type: 'error',
+        });
       },
     });
   });
@@ -207,4 +214,72 @@ function bulk_delete() {
       }
     });
   }
+}
+
+function bulk_activate() {
+  var checked_ids = [];
+  $('#guru tbody tr .check:checked').each(function () {
+    checked_ids.push($(this).val());
+  });
+
+  if (checked_ids.length === 0) {
+    Swal({
+      title: 'Gagal',
+      text: 'Tidak ada data guru yang dipilih untuk diaktifkan!',
+      type: 'error',
+    });
+    return;
+  }
+
+  Swal({
+    title: 'Anda yakin?',
+    text: 'Akun guru yang dipilih akan diaktifkan!',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Aktifkan!',
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        url: base_url + 'guru/bulk_create_user',
+        type: 'POST',
+        data: {
+          ids: checked_ids,
+          // csrf_token: csrf // Aktifkan jika CSRF diaktifkan
+        },
+        success: function (respon) {
+          if (respon.status) {
+            Swal({
+              title: 'Berhasil',
+              text:
+                respon.total_success +
+                ' dari ' +
+                respon.total_processed +
+                ' akun guru berhasil diaktifkan.',
+              type: 'success',
+            });
+          } else {
+            Swal({
+              title: 'Gagal',
+              text:
+                respon.msg || 'Terjadi kesalahan saat mengaktifkan akun guru.',
+              type: 'error',
+            });
+          }
+          reload_ajax();
+          $('.select_all').prop('checked', false);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.error('AJAX Error:', textStatus, errorThrown);
+          console.error('Response Text:', jqXHR.responseText);
+          Swal({
+            title: 'Gagal',
+            text: 'Terjadi kesalahan jaringan atau server saat mengaktifkan akun guru. Cek console log.',
+            type: 'error',
+          });
+        },
+      });
+    }
+  });
 }

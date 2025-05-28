@@ -26,6 +26,8 @@
                 <th>Mata Pelajaran</th>
                 <th>Jumlah Soal</th>
                 <th>Waktu</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
                 <th>Acak Soal</th>
 				<th	class="text-center">Token</th>
 				<th class="text-center">Aksi</th>

@@ -1,6 +1,16 @@
 <div class="callout callout-info">
-    <h4>Peraturan Ujian!</h4>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime minus dolores accusantium fugiat debitis modi voluptates non consequuntur nemo expedita nihil laudantium commodi voluptatum voluptatem molestiae consectetur incidunt animi, qui exercitationem? Nisi illo, magnam perferendis commodi consequuntur impedit, et nihil excepturi quas iste cum sunt debitis odio beatae placeat nemo..</p>
+    <h4>INFORMASI UJIAN</h4>
+    <ul>
+        <li>Peserta ujian diwajibkan mengerjakan soal secara jujur dan mandiri. Segala bentuk kecurangan akan dikenakan <b>SANKSI TEGAS</b>.</li>
+        <li>Waktu pengerjaan ujian terbatas sesuai dengan durasi yang telah ditentukan. Pastikan Anda menyelesaikan ujian sebelum waktu berakhir.</li>
+        <li>Peserta ujian disarankan menggunakan device/perangkat Laptop.</li>
+        <li>Tombol <b>"MULAI"</b> akan muncul jika ujian sudah dapat dimulai.</li>
+        <li>Pastikan koneksi internet Anda stabil selama ujian berlangsung untuk menghindari gangguan teknis.</li>
+        <li>Selama ujian berlangsung, peserta dilarang untuk keluar dari halaman ujian atau beralih ke aplikasi/browser lain. Pelanggaran dapat menyebabkan ujian otomatis berakhir atau dianggap <b>TIDAK LULUS</b>.</li>
+        <li>Sebelum menyelesaikan ujian, pastikan Anda telah memeriksa kembali semua jawaban Anda.</li>
+        <li>Setelah selesai mengerjakan, pastikan Anda menekan tombol <b>"Selesai"</b>.</li>
+        <li>Jika terjadi kendala teknis atau hal lain yang tidak terduga, segera hubungi pengawas.</li>
+    </ul>
 </div>
 <div class="box box-primary">
     <div class="box-header with-border">
@@ -12,16 +22,16 @@
             <div class="col-sm-6">
                 <table class="table table-bordered">
                     <tr>
-                        <th>Nama</th>
-                        <td><?=$mhs->nama?></td>
+                        <th>Nama Siswa / NISN</th>
+                        <td><?=$siswa->nama?> / <?=$siswa->nisn?></td>
                     </tr>
                     <tr>
-                        <th>Guru</th>
+                        <th>Nama Guru</th>
                         <td><?=$ujian->nama_guru?></td>
                     </tr>
                     <tr>
                         <th>Kelas</th>
-                        <td><?=$mhs->nama_kelas?></td>
+                        <td><?=$siswa->nama_kelas?></td>
                     </tr>
                     <tr>
                         <th>Nama Ujian</th>
@@ -32,15 +42,29 @@
                         <td><?=$ujian->jumlah_soal?></td>
                     </tr>
                     <tr>
-                        <th>Waktu</th>
-                        <td><?=$ujian->waktu?> Menit</td>
+                        <th>Mulai</th>
+                        <td>
+                            <?php
+                                // Atur locale jika belum diatur secara global (bisa di awal script atau di config)
+                                // setlocale(LC_TIME, 'id_ID.utf8', 'id_ID', 'id'); 
+                                $timestamp_mulai = strtotime($ujian->tgl_mulai);
+                                echo strftime('%d %B %Y', $timestamp_mulai) . date(' H:i', $timestamp_mulai) . ' WITA';
+                            ?>
+                        </td>
                     </tr>
                     <tr>
-                        <th>Terlambat</th>
+                        <th>Batas Akhir</th>
                         <td>
-                            <?=strftime('%d %B %Y', strtotime($ujian->terlambat))?> 
-                            <?=date('H:i:s', strtotime($ujian->terlambat))?>
+                            <?php
+                                // Mengubah format tanggal dari YYYY-MM-DD HH:MM:SS menjadi DD Month YYYY HH:MM
+                                $timestamp_terlambat = strtotime($ujian->terlambat); // Menggunakan kolom 'terlambat' sebagai 'tgl_selesai'
+                                echo strftime('%d %B %Y', $timestamp_terlambat) . date(' H:i', $timestamp_terlambat) . ' WITA'; // Tambahkan WITA secara manual
+                                ?>
                         </td>
+                    </tr>
+                    <tr>
+                        <th>Durasi</th>
+                        <td><?=$ujian->waktu?> Menit</td>
                     </tr>
                     <tr>
                         <th style="vertical-align:middle">Token</th>
@@ -55,7 +79,12 @@
                     <div class="box-body pb-0">
                         <div class="callout callout-info">
                             <p>
-                                Waktu boleh mengerjakan ujian adalah saat tombol "MULAI" berwarna hijau.
+                                <b>Token</b> ujian diberikan oleh Guru.
+                            </p>
+                        </div>
+                        <div class="callout callout-warning">
+                            <p>
+                                Waktu boleh mengerjakan ujian adalah saat tombol <b>"MULAI"</b> muncul.
                             </p>
                         </div>
                         <?php
@@ -70,18 +99,19 @@
                             <span class="countdown" data-time="<?=date('Y-m-d H:i:s', strtotime($ujian->tgl_mulai))?>">00 Hari, 00 Jam, 00 Menit, 00 Detik</strong><br/>
                         </div>
                         <?php elseif( $terlambat > $now ) : ?>
-                        <button id="btncek" data-id="<?=$ujian->id_ujian?>" class="btn btn-success btn-lg mb-4">
+                        <div class="callout callout-danger">
+                            Batas waktu klik tombol mulai.<br/>
+                            <i class="fa fa-clock-o"></i> <strong class="countdown" data-time="<?=date('Y-m-d H:i:s', strtotime($ujian->terlambat))?>">00 Hari, 00 Jam, 00 Menit, 00 Detik</strong>
+                        </div>
+                        <button id="btncek" data-id="<?=$ujian->id_ujian?>" class="btn btn-success btn-lg mb-4 ml-auto d-block">
                             <i class="fa fa-pencil"></i> Mulai
                         </button>
-                        <div class="callout callout-danger">
-                            <i class="fa fa-clock-o"></i> <strong class="countdown" data-time="<?=date('Y-m-d H:i:s', strtotime($ujian->terlambat))?>">00 Hari, 00 Jam, 00 Menit, 00 Detik</strong><br/>
-                            Batas waktu menekan tombol mulai.
-                        </div>
                         <?php else : ?>
                         <div class="callout callout-danger">
-                            Waktu untuk menekan tombol <strong>"MULAI"</strong> sudah habis.<br/>
-                            Silahkan hubungi guru anda untuk bisa mengikuti ujian pengganti.
+                            Waktu ujian sudah habis.<br/>
+                            Silakan hubungi guru anda untuk bisa mengikuti ujian pengganti.
                         </div>
+                        
                         <?php endif;?>
                     </div>
                 </div>

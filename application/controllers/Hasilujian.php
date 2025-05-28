@@ -86,20 +86,31 @@ class HasilUjian extends CI_Controller {
   }
 
   public function cetak_detail($id)
-  {
-    $this->load->library('Pdf');
+    {
+        $this->load->library('Pdf');
 
-    $ujian = $this->ujian->getUjianById($id);
-    $nilai = $this->ujian->bandingNilai($id);
-    $hasil = $this->ujian->HslUjianById($id)->result();
+        $ujian = $this->ujian->getUjianById($id);
+        $nilai = $this->ujian->bandingNilai($id);
+        $hasil = $this->ujian->HslUjianById($id)->result();
 
-    $data = [
-      'ujian' => $ujian,
-      'nilai' => $nilai,
-      'hasil' => $hasil
-    ];
+        // Ambil nama guru dari objek ujian
+        $nama_guru = $ujian->nama_guru; 
+        
+        // Ambil nama kelas dari hasil siswa pertama (asumsi ujian ini terkait dengan satu kelas utama untuk penamaan)
+        $nama_kelas = 'Umum'; // Default value jika tidak ada siswa
+        if (!empty($hasil)) {
+            $nama_kelas = $hasil[0]->nama_kelas; // Ambil nama kelas dari siswa pertama
+        }
 
-    $this->load->view('ujian/cetak_detail', $data);
-  }
+        $data = [
+            'ujian' => $ujian,
+            'nilai' => $nilai,
+            'hasil' => $hasil,
+            'nama_kelas_pdf' => $nama_kelas, // Teruskan nama kelas ke view PDF
+            'nama_guru_pdf'  => $nama_guru   // Teruskan nama guru ke view PDF
+        ];
+
+        $this->load->view('ujian/cetak_detail', $data);
+    }
   
 }

@@ -8,13 +8,19 @@ class Siswa extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        // if (!function_exists('output_json')) {
+        //     function output_json($data) {
+        //         header('Content-Type: application/json');
+        //         echo json_encode($data);
+        //     }
+        // }
         // Adjust access control: Only Admin or Guru can access this page
         if (!$this->ion_auth->logged_in()) {
             redirect('auth');
         } else if (!$this->ion_auth->is_admin() && !$this->ion_auth->in_group('guru')) { // Allow Guru to access if needed
             show_error('Hanya Administrator atau Guru yang diberi hak untuk mengakses halaman ini, <a href="' . base_url('dashboard') . '">Kembali ke menu awal</a>', 403, 'Akses Terlarang');
         }
-        $this->load->library(['datatables', 'form_validation']); // Load Library Ignited-Datatables
+        $this->load->library(['datatables', 'ion_auth', 'form_validation']); // Load Library Ignited-Datatables
         $this->load->model('Master_model', 'master'); // Master_model handles data for master tables
         $this->form_validation->set_error_delimiters('', '');
     }
@@ -30,16 +36,18 @@ class Siswa extends CI_Controller
         $data = [
             'user' => $this->ion_auth->user()->row(),
             'judul' => 'Siswa',
-            'subjudul' => 'Data Siswa'
+            'subjudul' => 'Data Siswa',
+            'kelas'     => $this->master->getAllKelas()
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
         $this->load->view('master/siswa/data'); // Changed view path
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
-    public function data()
+    // Fungsi DataTables untuk mengambil data siswa
+    public function data($id_kelas = null) // Tambahkan parameter $id_kelas
     {
-        $this->output_json($this->master->getDataSiswa(), false); // Changed function name
+        echo $this->master->getDataSiswa($id_kelas);
     }
 
     public function add()
@@ -48,7 +56,6 @@ class Siswa extends CI_Controller
             'user' => $this->ion_auth->user()->row(),
             'judul' => 'Siswa',
             'subjudul' => 'Tambah Data Siswa',
-            // 'jurusan' => $this->master->getJurusan(), // Remove if jurusan is completely removed
             'kelas' => $this->master->getAllKelas() // Get all classes if jurusan is removed
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
@@ -63,8 +70,6 @@ class Siswa extends CI_Controller
             'user'      => $this->ion_auth->user()->row(),
             'judul'     => 'Siswa',
             'subjudul'  => 'Edit Data Siswa',
-            // 'jurusan' => $this->master->getJurusan(), // Remove if jurusan is completely removed
-            // 'kelas'   => $this->master->getKelasByJurusan($siswa->jurusan_id), // Remove if jurusan is completely removed, adjust if kelas is filtered by something else
             'kelas' => $this->master->getAllKelas(), // Get all classes if jurusan is removed
             'siswa'     => $siswa // Changed variable name
         ];
@@ -107,9 +112,7 @@ class Siswa extends CI_Controller
                 'errors'    => [
                     'nisn' => form_error('nisn'), // Changed field name
                     'nama' => form_error('nama'),
-                    // 'email' => form_error('email'), // Removed
                     'jenis_kelamin' => form_error('jenis_kelamin'),
-                    // 'jurusan' => form_error('jurusan'), // Removed
                     'kelas' => form_error('kelas'),
                 ]
             ];
@@ -117,11 +120,9 @@ class Siswa extends CI_Controller
         } else {
             $input = [
                 'nisn'          => $this->input->post('nisn', true), // Changed field name
-                // 'email'         => $this->input->post('email', true), // Removed
                 'nama'          => $this->input->post('nama', true),
                 'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
                 'kelas_id'      => $this->input->post('kelas', true),
-                // 'jurusan_id'    => $this->input->post('jurusan', true), // Removed
             ];
             if ($method === 'add') {
                 $action = $this->master->create('siswa', $input); // Changed table name
@@ -150,54 +151,110 @@ class Siswa extends CI_Controller
         }
     }
 
-    // This function is for creating an Ion_auth user for a student.
-    // Given the new student login (NISN/Token), this might be redundant or require re-evaluation.
-    // The 'siswa' table no longer has an 'email' column, which Ion_auth's register often needs.
-    // If you intend for students to *also* have Ion_auth accounts, you might need to re-add 'email' to 'siswa' table or generate/use a dummy email.
     public function create_user()
     {
-        $id = $this->input->get('id', true);
-        $data = $this->master->getSiswaById($id); // Changed function call
+        // Fungsi ini akan tetap ada untuk aktivasi tunggal
+        $id = $this->input->get('id', true); // Menggunakan GET untuk single activation
+
+        // Modifikasi kecil: ubah pemanggilan output_json menjadi fungsi helper jika ada
+        $this->_create_single_user($id);
+    }
+
+    /**
+     * Helper function untuk logika aktivasi user tunggal
+     * Ini dipisah agar bisa dipanggil dari create_user() atau bulk_create_user()
+     */
+    private function _create_single_user($id_siswa)
+    {
+        $response = ['status' => false, 'msg' => ''];
+
+        $data = $this->master->getSiswaById($id_siswa);
+
+        if (empty($data)) {
+            $response['msg'] = 'Gagal Aktif! Data siswa dengan ID ' . $id_siswa . ' tidak ditemukan.';
+            return $response; // Mengembalikan array respons
+        }
+
         $nama = explode(' ', $data->nama);
         $first_name = $nama[0];
         $last_name = end($nama);
 
-        $username = $data->nisn; // Changed to NISN
-        $password = $data->nisn; // Password from NISN
-        // $email = $data->email; // Removed as 'siswa' table no longer has 'email'
+        $username = $data->nisn;
+        $password = $data->nisn;
+
+        // Generate email dari NISN (pastikan unik)
+        $nisn_str = (string) $data->nisn;
+        $email = $nisn_str . '@gmail.com'; // Ubah '@gmail.com' menjadi '@example.com' atau domain default Anda untuk menghindari konflik nyata dengan Gmail
 
         $additional_data = [
             'first_name'    => $first_name,
-            'last_name'     => $last_name
-            // Consider if other data like 'phone' or 'address' is needed by Ion_auth
+            'last_name'     => $last_name,
+            // Anda bisa menambahkan kolom lain yang dibutuhkan Ion Auth di sini,
+            // seperti 'phone', 'company', dll.
         ];
-        $group = array('3'); // Assuming '3' is the group ID for Students in Ion_auth's 'groups' table
+        $group = array('3'); // Asumsi '3' adalah group ID untuk Siswa
 
         if ($this->ion_auth->username_check($username)) {
-            $data = [
-                'status' => false,
-                'msg'    => 'Gagal Aktif! NISN sudah digunakan.' // Changed message
-            ];
-        } 
-        // else if ($this->ion_auth->email_check($email)) { // Removed email check
-        //     $data = [
-        //         'status' => false,
-        //         'msg'    => 'Gagal Aktif! Email sudah digunakan.'
-        //     ];
-        // } 
-        else {
-            // Ion_auth's register method typically requires an email parameter.
-            // If the 'siswa' table no longer has an email, you might need to:
-            // 1. Add an email column back to the 'siswa' table.
-            // 2. Generate a dummy email for the student (e.g., $username . '@example.com').
-            // For now, I'm passing a placeholder empty string for email, which might cause issues if Ion_auth strictly validates it.
-            $this->ion_auth->register($username, $password, '', $additional_data, $group); // Pass empty string or generate email
-            $data = [
-                'status'    => true,
-                'msg'    => 'User berhasil diaktifkan.' // Changed message
-            ];
+            $response['msg'] = 'Gagal Aktif! Username (NISN: ' . $username . ') sudah pernah diaktifkan.';
+        } else if ($this->ion_auth->email_check($email)) {
+            $response['msg'] = 'Gagal Aktif! Email yang digenerate (' . $email . ') sudah pernah digenerate.';
+        } else {
+            // Cek apakah Ion Auth berhasil register user
+            if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
+                $response = [
+                    'status'    => true,
+                    'msg'       => 'User untuk NISN ' . $username . ' berhasil diaktifkan.'
+                ];
+            } else {
+                $response['msg'] = 'Gagal Aktif! Error saat registrasi Ion Auth: ' . $this->ion_auth->errors();
+            }
         }
-        $this->output_json($data);
+        return $response; // Mengembalikan array respons
+    }
+
+
+    public function bulk_create_user()
+    {
+        // Pastikan request adalah POST dan ada data 'ids'
+        if ($this->input->method() === 'post' && $this->input->post('ids')) {
+            $siswa_ids = $this->input->post('ids', true); // Dapatkan array ID siswa
+            $total_processed = count($siswa_ids);
+            $total_success = 0;
+            $failed_messages = [];
+
+            foreach ($siswa_ids as $id_siswa) {
+                $result = $this->_create_single_user($id_siswa); // Panggil helper function
+                if ($result['status']) {
+                    $total_success++;
+                } else {
+                    $failed_messages[] = $result['msg']; // Kumpulkan pesan kegagalan
+                }
+            }
+
+            if ($total_success > 0) {
+                output_json([
+                    'status'          => true,
+                    'total_processed' => $total_processed,
+                    'total_success'   => $total_success,
+                    'failed_messages' => $failed_messages, // Opsional: kirim pesan kegagalan
+                    'msg'             => ($total_success === $total_processed) ? 'Semua akun siswa berhasil diaktifkan.' : $total_success . ' dari ' . $total_processed . ' akun siswa berhasil diaktifkan.'
+                ]);
+            } else {
+                output_json([
+                    'status'          => false,
+                    'total_processed' => $total_processed,
+                    'total_success'   => $total_success,
+                    'failed_messages' => $failed_messages,
+                    'msg'             => 'Tidak ada akun siswa yang berhasil diaktifkan. ' . implode(', ', $failed_messages)
+                ]);
+            }
+
+        } else {
+            output_json([
+                'status' => false,
+                'msg'    => 'Request tidak valid atau tidak ada ID yang dikirim.'
+            ]);
+        }
     }
 
     public function import($import_data = null)
@@ -253,7 +310,6 @@ class Siswa extends CI_Controller
                 $data[] = [
                     'nisn'          => $sheetData[$i][0], // Changed to nisn
                     'nama'          => $sheetData[$i][1],
-                    // 'email'         => $sheetData[$i][2], // Removed as 'siswa' table no longer has 'email'
                     'jenis_kelamin' => $sheetData[$i][2], // Shifted index if email removed
                     'kelas_id'      => $sheetData[$i][3] // Shifted index if email removed
                 ];
@@ -273,7 +329,6 @@ class Siswa extends CI_Controller
             $data[] = [
                 'nisn'          => $d->nisn, // Changed to nisn
                 'nama'          => $d->nama,
-                // 'email'         => $d->email, // Removed
                 'jenis_kelamin' => $d->jenis_kelamin,
                 'kelas_id'      => $d->kelas_id
             ];

@@ -5,7 +5,7 @@ class Ujian_model extends CI_Model {
     
     public function getDataUjian($id)
     {
-        $this->datatables->select('a.id_ujian, a.token, a.nama_ujian, b.nama_mapel, a.jumlah_soal, CONCAT(a.tgl_mulai, " <br/> (", a.waktu, " Menit)") as waktu, a.jenis'); // Changed matkul to mapel
+        $this->datatables->select('a.id_ujian, a.token, a.nama_ujian, b.nama_mapel, a.jumlah_soal, a.terlambat as tgl_selesai, a.tgl_mulai, CONCAT(a.waktu, " Menit") as waktu, a.jenis');
         $this->datatables->from('m_ujian a');
         $this->datatables->join('mapel b', 'a.mapel_id = b.id_mapel'); // Changed matkul to mapel
         if($id!==null){
@@ -16,7 +16,7 @@ class Ujian_model extends CI_Model {
     
     public function getListUjian($id, $kelas)
     {
-        $this->datatables->select("a.id_ujian, e.nama_guru, d.nama_kelas, a.nama_ujian, b.nama_mapel, a.jumlah_soal, CONCAT(a.tgl_mulai, ' <br/> (', a.waktu, ' Menit)') as waktu,  (SELECT COUNT(id) FROM h_ujian h WHERE h.siswa_id = {$id} AND h.ujian_id = a.id_ujian) AS ada"); // Changed nama_dosen to nama_guru, nama_matkul to nama_mapel, mahasiswa_id to siswa_id
+        $this->datatables->select("a.id_ujian, e.nama_guru, d.nama_kelas, a.nama_ujian, b.nama_mapel, a.jumlah_soal, CONCAT(a.waktu, ' Menit') as waktu,  (SELECT COUNT(id) FROM h_ujian h WHERE h.siswa_id = {$id} AND h.ujian_id = a.id_ujian) AS ada"); // Changed nama_dosen to nama_guru, nama_matkul to nama_mapel, mahasiswa_id to siswa_id
         $this->datatables->from('m_ujian a');
         $this->datatables->join('mapel b', 'a.mapel_id = b.id_mapel'); // Changed matkul to mapel
         $this->datatables->join('kelas_guru c', "a.guru_id = c.guru_id"); // Changed kelas_dosen to kelas_guru, dosen_id to guru_id
@@ -106,12 +106,12 @@ class Ujian_model extends CI_Model {
 
     public function getHasilUjian($nip = null)
     {
-        $this->datatables->select('b.id_ujian, b.nama_ujian, b.jumlah_soal, CONCAT(b.waktu, " Menit") as waktu, b.tgl_mulai');
-        $this->datatables->select('c.nama_mapel, d.nama_guru'); // Changed nama_matkul to nama_mapel, nama_dosen to nama_guru
+        $this->datatables->select('b.id_ujian, b.nama_ujian, b.jumlah_soal, CONCAT(b.waktu, " Menit") as waktu, b.tgl_mulai, b.terlambat'); // Tambahkan b.tgl_selesai di sini
+        $this->datatables->select('c.nama_mapel, d.nama_guru');
         $this->datatables->from('h_ujian a');
         $this->datatables->join('m_ujian b', 'a.ujian_id = b.id_ujian');
-        $this->datatables->join('mapel c', 'b.mapel_id = c.id_mapel'); // Changed matkul to mapel
-        $this->datatables->join('guru d', 'b.guru_id = d.id_guru'); // Changed dosen to guru, id_dosen to id_guru
+        $this->datatables->join('mapel c', 'b.mapel_id = c.id_mapel');
+        $this->datatables->join('guru d', 'b.guru_id = d.id_guru');
         $this->datatables->group_by('b.id_ujian');
         if($nip !== null){
             $this->datatables->where('d.nip', $nip);

@@ -7,6 +7,14 @@
         </div>
     </div>
     <div class="box-body">
+        <?php if ($this->session->flashdata('error_message')) : ?>
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                <?= $this->session->flashdata('error_message'); ?>
+            </div>
+        <?php endif; ?>
+
         <ul class="alert alert-info" style="padding-left: 40px">
             <li>Silahkan import data dari excel, menggunakan format yang sudah disediakan</li>
             <li>Data tidak boleh ada yang kosong, harus terisi semua.</li>
@@ -21,15 +29,14 @@
             <label for="file" class="col-sm-offset-1 col-sm-3 text-right">Pilih File</label>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <input type="file" name="upload_file">
-                </div>
+                    <input type="file" name="upload_file" required> </div>
             </div>
             <div class="col-sm-3">
                 <button name="preview" type="submit" class="btn btn-sm btn-success">Preview</button>
             </div>
             <?= form_close(); ?>
             <div class="col-sm-6 col-sm-offset-3">
-                <?php if (isset($_POST['preview'])) : ?>
+                <?php if (isset($show_preview) && $show_preview) : ?>
                     <br>
                     <h4>Preview Data</h4>
                     <table class="table table-bordered">
@@ -39,43 +46,44 @@
                                 <td>NIP</td>
                                 <td>Nama</td>
                                 <td>Email</td>
-                                <td>ID Mata Pelajaran</td>
-                            </tr>
+                                <td>Mata Pelajaran</td> </tr>
                         </thead>
                         <tbody>
                             <?php
                                 $status = true;
                                 if (empty($import)) {
-                                    echo '<tr><td colspan="2" class="text-center">Data kosong! pastikan anda menggunakan format yang telah disediakan.</td></tr>';
+                                    echo '<tr><td colspan="5" class="text-center">Data kosong atau format file tidak valid! Pastikan anda menggunakan format yang telah disediakan.</td></tr>';
                                 } else {
                                     $no = 1;
-                                    foreach ($import as $data) :
-                                        ?>
+                                    foreach ($import as $data_row) :
+                                        // Anda bisa menggunakan $data_row['nama_mapel'] yang sudah di-pass dari controller
+                                        $display_mapel = ($data_row['mapel_id'] == null) ? 'BELUM DIISI' : (isset($data_row['nama_mapel']) ? $data_row['nama_mapel'] : 'ID tidak ditemukan');
+                                        // Tambahan pengecekan untuk memastikan $data_row['nama_mapel'] ada
+                            ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td class="<?= $data['nip'] == null ? 'bg-danger' : ''; ?>">
-                                                <?= $data['nip'] == null ? 'BELUM DIISI' : $data['nip']; ?>
+                                            <td class="<?= $data_row['nip'] == null ? 'bg-danger' : ''; ?>">
+                                                <?= $data_row['nip'] == null ? 'BELUM DIISI' : $data_row['nip']; ?>
                                             </td>
-                                            <td class="<?= $data['nama_guru'] == null ? 'bg-danger' : ''; ?>">
-                                                <?= $data['nama_guru'] == null ? 'BELUM DIISI' : $data['nama_guru'];; ?>
+                                            <td class="<?= $data_row['nama_guru'] == null ? 'bg-danger' : ''; ?>">
+                                                <?= $data_row['nama_guru'] == null ? 'BELUM DIISI' : $data_row['nama_guru']; ?>
                                             </td>
-                                            <td class="<?= $data['email'] == null ? 'bg-danger' : ''; ?>">
-                                                <?= $data['email'] == null ? 'BELUM DIISI' : $data['email'];; ?>
+                                            <td class="<?= $data_row['email'] == null ? 'bg-danger' : ''; ?>">
+                                                <?= $data_row['email'] == null ? 'BELUM DIISI' : $data_row['email']; ?>
                                             </td>
-                                            <td class="<?= $data['mapel_id'] == null ? 'bg-danger' : ''; ?>">
-                                                <?= $data['mapel_id'] == null ? 'BELUM DIISI' : $data['mapel_id'];; ?>
-                                            </td>
+                                            <td class="<?= $data_row['mapel_id'] == null ? 'bg-danger' : ''; ?>">
+                                                <?= $display_mapel; ?> </td>
                                         </tr>
-                                <?php
-                                        if ($data['nip'] == null || $data['nama_guru'] == null || $data['email'] == null || $data['mapel_id'] == null) {
+                            <?php
+                                        if ($data_row['nip'] == null || $data_row['nama_guru'] == null || $data_row['email'] == null || $data_row['mapel_id'] == null) {
                                             $status = false;
                                         }
                                     endforeach;
                                 }
-                                ?>
+                            ?>
                         </tbody>
                     </table>
-                    <?php if ($status) : ?>
+                    <?php if ($status && !empty($import)) : ?>
 
                         <?= form_open('guru/do_import', null, ['data' => json_encode($import)]); ?>
                         <button type='submit' class='btn btn-block btn-flat bg-purple'>Import</button>

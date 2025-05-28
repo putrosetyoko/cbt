@@ -22,7 +22,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Nicola Asuni');
+$pdf->SetAuthor('Putro Setyoko');
 $pdf->SetTitle('Hasil Ujian');
 
 // set default header data
@@ -70,19 +70,15 @@ Dolore distinctio, at consequuntur magnam cupiditate voluptate hic ratione ea il
 <table id="data-peserta">
     <tr>
         <th>NIM</th>
-        <td>{$mhs->nim}</td>
+        <td>{$siswa->nisn}</td>
     </tr>
     <tr>
         <th>Nama</th>
-        <td>{$mhs->nama}</td>
+        <td>{$siswa->nama}</td>
     </tr>
     <tr>
         <th>Kelas</th>
-        <td>{$mhs->nama_kelas}</td>
-    </tr>
-    <tr>
-        <th>Jurusan</th>
-        <td>{$mhs->nama_jurusan}</td>
+        <td>{$siswa->nama_kelas}</td>
     </tr>
 </table>
 <h2>Data Ujian</h2>
@@ -119,4 +115,4 @@ $pdf->lastPage();
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output($ujian->nama_ujian.'_'.$mhs->nim.'.pdf', 'I');
+$pdf->Output($ujian->nama_ujian.'_'.$siswa->nisn.'.pdf', 'I');

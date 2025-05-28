@@ -35,8 +35,8 @@
                         <th>Tanggal Mulai</th>
                         <td><?=strftime('%A, %d %B %Y', strtotime($ujian->tgl_mulai))?></td>
                     </tr>
-                    <tr>
-                        <th>Tanggal Selasi</th>
+                    <tr>    
+                        <th>Tanggal Selesai</th>
                         <td><?=strftime('%A, %d %B %Y', strtotime($ujian->terlambat))?></td>
                     </tr>
                 </table>

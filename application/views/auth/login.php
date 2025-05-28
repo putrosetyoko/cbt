@@ -20,22 +20,22 @@
 			<span class="help-block"></span>
 		</div>
 		<div class="row">
-			<div class="col-xs-8">
+			<!-- <div class="col-xs-8">
 			<div class="checkbox icheck">
 				<label>
 				<?= form_checkbox('remember', '', FALSE, 'id="remember"');?> Remember Me
 				</label>
 			</div>
-			</div>
+			</div> -->
 			<!-- /.col -->
-			<div class="col-xs-4">
+			<div class="col-xs-12">
 			<?= form_submit('submit', lang('login_submit_btn'), array('id'=>'submit','class'=>'btn btn-primary btn-block btn-flat'));?>
 			</div>
 			<!-- /.col -->
 		</div>
 		<?= form_close(); ?>
 
-		<a href="<?=base_url()?>auth/forgot_password" class="text-center"><?= lang('login_forgot_password');?></a>
+		<!-- <a href="<?=base_url()?>auth/forgot_password" class="text-center"><?= lang('login_forgot_password');?></a> -->
 
 	</div>
 </div>

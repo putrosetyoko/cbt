@@ -125,29 +125,24 @@ class Soal extends CI_Controller {
         $this->form_validation->set_rules('bobot', 'Bobot Soal', 'required|max_length[2]');
     }
 
-    public function file_config()
+    // Fungsi helper untuk mendapatkan array konfigurasi upload
+    public function file_config_array()
     {
-        $allowed_type   = [
-            "image/jpeg", "image/jpg", "image/png", "image/gif",
-            "audio/mpeg", "audio/mpg", "audio/mpeg3", "audio/mp3", "audio/x-wav", "audio/wave", "audio/wav",
-            "video/mp4", "application/octet-stream"
-        ];
         $config['upload_path']      = FCPATH.'uploads/bank_soal/';
         $config['allowed_types']    = 'jpeg|jpg|png|gif|mpeg|mpg|mpeg3|mp3|wav|wave|mp4';
         $config['encrypt_name']     = TRUE;
-        
-        return $this->load->library('upload', $config);
+        return $config;
     }
-    
+
     public function save()
     {
         $method = $this->input->post('method', true);
         $this->validasi();
-        $this->file_config();
+        // $this->file_config(); // Tidak perlu memanggil ini di sini, akan di-initialize ulang di bawah
 
         
         if($this->form_validation->run() === FALSE){
-            $method==='add'? $this->add() : $this->edit();
+            $method==='add'? $this->add() : $this->edit($this->input->post('id_soal', true));
         }else{
             $data = [
                 'soal'      => $this->input->post('soal', true),
@@ -162,47 +157,68 @@ class Soal extends CI_Controller {
                 $data['opsi_'.$abj]     = $this->input->post('jawaban_'.$abj, true);
             }
 
-            $i = 0;
-            foreach ($_FILES as $key => $val) {
-                $img_src = FCPATH.'uploads/bank_soal/';
-                $getsoal = $this->soal->getSoalById($this->input->post('id_soal', true));
-                
-                $error = '';
-                if($key === 'file_soal'){
-                    if(!empty($_FILES['file_soal']['name'])){
-                        if (!$this->upload->do_upload('file_soal')){
-                            $error = $this->upload->display_errors();
-                            show_error($error, 500, 'File Soal Error');
-                            exit();
-                        }else{
-                            if($method === 'edit'){
-                                if(!unlink($img_src.$getsoal->file)){
-                                    show_error('Error saat delete gambar <br/>'.var_dump($getsoal), 500, 'Error Edit Gambar');
-                                    exit();
-                                }
-                            }
-                            $data['file'] = $this->upload->data('file_name');
-                            $data['tipe_file'] = $this->upload->data('file_type');
-                        }
-                    }
+            $img_src = FCPATH.'uploads/bank_soal/'; // Path folder media
+            $getsoal = null; // Initialize getsoal to null
+            if ($method === 'edit') {
+                $id_soal = $this->input->post('id_soal', true);
+                $getsoal = $this->soal->getSoalById($id_soal); // Ambil data soal lama di sini hanya jika method adalah edit
+            }
+            
+            // --- Handle file_soal (main question file) ---
+            // Hanya coba upload jika ada file yang dipilih
+            if (isset($_FILES['file_soal']) && !empty($_FILES['file_soal']['name'])) {
+                $this->load->library('upload', $this->file_config_array()); // Inisialisasi library upload
+                if (!$this->upload->do_upload('file_soal')){
+                    $error = $this->upload->display_errors();
+                    show_error($error, 500, 'File Soal Error');
+                    exit();
                 }else{
-                    $file_abj = 'file_'.$abjad[$i];
-                    if(!empty($_FILES[$file_abj]['name'])){    
-                        if (!$this->upload->do_upload($key)){
-                            $error = $this->upload->display_errors();
-                            show_error($error, 500, 'File Opsi '.strtoupper($abjad[$i]).' Error');
-                            exit();
-                        }else{
-                            if($method === 'edit'){
-                                if(!unlink($img_src.$getsoal->$file_abj)){
-                                    show_error('Error saat delete gambar', 500, 'Error Edit Gambar');
-                                    exit();
-                                }
-                            }
-                            $data[$file_abj] = $this->upload->data('file_name');
-                        }
+                    // Jika mode edit dan ada file lama, hapus file lama
+                    if($method === 'edit' && $getsoal && !empty($getsoal->file) && file_exists($img_src.$getsoal->file)){
+                        unlink($img_src.$getsoal->file);
                     }
-                    $i++;
+                    $data['file'] = $this->upload->data('file_name');
+                    $data['tipe_file'] = $this->upload->data('file_type');
+                }
+            } else if ($method === 'edit' && $this->input->post('hapus_file_soal') == '1') { // Jika checkbox hapus file dicentang
+                if($getsoal && !empty($getsoal->file) && file_exists($img_src.$getsoal->file)){
+                    unlink($img_src.$getsoal->file);
+                    $data['file'] = NULL;
+                    $data['tipe_file'] = NULL;
+                }
+            } else if ($method === 'edit' && $getsoal) { // Jika edit, tidak ada upload baru, dan tidak dihapus, pertahankan file lama
+                $data['file'] = $getsoal->file;
+                $data['tipe_file'] = $getsoal->tipe_file;
+            }
+
+
+            // --- Handle option files (file_a, file_b, etc.) ---
+            foreach ($abjad as $abj) {
+                $file_field_name = 'file_'.$abj; // e.g., 'file_a', 'file_b'
+                
+                // Hanya coba upload jika ada file yang dipilih untuk opsi ini
+                if (isset($_FILES[$file_field_name]) && !empty($_FILES[$file_field_name]['name'])) {
+                    $this->load->library('upload', $this->file_config_array(), 'option_upload'); // Inisialisasi library upload dengan nama berbeda
+                    // Penting: CodeIgniter's upload library harus di-initialize ulang untuk setiap file yang berbeda,
+                    // atau gunakan nama instance berbeda (misal 'option_upload')
+                    if (!$this->option_upload->do_upload($file_field_name)){ // Gunakan instance yang berbeda
+                        $error = $this->option_upload->display_errors();
+                        show_error($error, 500, 'File Opsi '.strtoupper($abj).' Error');
+                        exit();
+                    }else{
+                        // Jika mode edit dan ada file lama, hapus file lama
+                        if($method === 'edit' && $getsoal && !empty($getsoal->$file_field_name) && file_exists($img_src.$getsoal->$file_field_name)){
+                            unlink($img_src.$getsoal->$file_field_name);
+                        }
+                        $data[$file_field_name] = $this->option_upload->data('file_name'); // Gunakan instance yang berbeda
+                    }
+                } else if ($method === 'edit' && $this->input->post('hapus_'.$file_field_name) == '1') { // Jika checkbox hapus file opsi dicentang
+                    if($getsoal && !empty($getsoal->$file_field_name) && file_exists($img_src.$getsoal->$file_field_name)){
+                        unlink($img_src.$getsoal->$file_field_name);
+                        $data[$file_field_name] = NULL;
+                    }
+                } else if ($method === 'edit' && $getsoal) { // Jika edit, tidak ada upload baru, dan tidak dihapus, pertahankan file lama
+                    $data[$file_field_name] = $getsoal->$file_field_name;
                 }
             }
                 
@@ -244,20 +260,16 @@ class Soal extends CI_Controller {
             $abjad = ['a', 'b', 'c', 'd', 'e'];
             $path = FCPATH.'uploads/bank_soal/';
             $soal = $this->soal->getSoalById($id);
+            
             // Hapus File Soal
-            if(!empty($soal->file)){
-                if(file_exists($path.$soal->file)){
-                    unlink($path.$soal->file);
-                }
+            if(!empty($soal->file) && file_exists($path.$soal->file)){
+                unlink($path.$soal->file);
             }
-            //Hapus File Opsi
-            $i = 0; //index
+            // Hapus File Opsi
             foreach ($abjad as $abj) {
                 $file_opsi = 'file_'.$abj;
-                if(!empty($soal->$file_opsi)){
-                    if(file_exists($path.$soal->$file_opsi)){
-                        unlink($path.$soal->$file_opsi);
-                    }
+                if(!empty($soal->$file_opsi) && file_exists($path.$soal->$file_opsi)){
+                    unlink($path.$soal->$file_opsi);
                 }
             }
         }

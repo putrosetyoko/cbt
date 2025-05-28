@@ -40,11 +40,9 @@ class Master_model extends CI_Model
 
     public function getDataKelas()
     {
-        // Menghapus join ke tabel jurusan karena tidak lagi relevan
         $this->datatables->select('id_kelas, nama_kelas');
         $this->datatables->from('kelas');
-        // $this->datatables->join('jurusan', 'jurusan_id=id_jurusan'); // Dihapus
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_kelas, nama_kelas'); // Menyesuaikan kolom
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_kelas, nama_kelas');
         return $this->datatables->generate();
     }
 
@@ -56,38 +54,39 @@ class Master_model extends CI_Model
         return $query;
     }
 
-    // Fungsi-fungsi terkait Jurusan dihapus karena tabel jurusan tidak ada lagi
-    // public function getDataJurusan() { ... }
-    // public function getJurusanById() { ... }
-    // public function getJurusan() { ... }
-    // public function getAllJurusan() { ... }
-    // public function getKelasByJurusan() { ... }
-
-    /**
-     * Data Siswa
-     */
-
-    public function getDataSiswa() // Mengganti getDataMahasiswa menjadi getDataSiswa
+    public function getAllKelas()
     {
-        $this->datatables->select('a.id_siswa, a.nama, a.nisn, a.jenis_kelamin, b.nama_kelas'); // Menyesuaikan kolom: id_siswa, nisn, jenis_kelamin, tanpa email dan jurusan
-        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nisn) AS ada'); // Mengubah a.nim ke a.nisn dan menghapus a.email
-        $this->datatables->from('siswa a'); // Mengganti mahasiswa a menjadi siswa a
+        $this->db->select('id_kelas, nama_kelas');
+        $this->db->from('kelas');
+        $this->db->order_by('nama_kelas');
+        return $this->db->get()->result();
+    }
+
+    public function getDataSiswa($id_kelas = null) // Tambahkan parameter $id_kelas
+    {
+        $this->datatables->select('a.id_siswa, a.nama, a.nisn, a.jenis_kelamin, b.nama_kelas, c.email AS email');
+        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nisn) AS ada');
+        $this->datatables->from('siswa a');
         $this->datatables->join('kelas b', 'a.kelas_id=b.id_kelas');
-        // $this->datatables->join('jurusan c', 'b.jurusan_id=c.id_jurusan'); // Dihapus karena siswa tidak lagi terhubung ke jurusan
+        $this->datatables->join('users c', 'a.nisn = c.username', 'left');
+
+        // Tambahkan filter kelas jika id_kelas diberikan dan bukan 'all'
+        if ($id_kelas !== null && $id_kelas !== 'all') {
+            $this->datatables->where('a.kelas_id', $id_kelas);
+        }
+
         return $this->datatables->generate();
     }
 
-    public function getSiswaById($id) // Mengganti getMahasiswaById menjadi getSiswaById
+    public function getSiswaById($id)
     {
         $this->db->select(
-            'siswa.*, ' . // Mengambil semua kolom dari tabel siswa
-            'kelas.id_kelas, kelas.nama_kelas' // Pilih kolom dari tabel kelas
-            // Kolom jurusan dihapus
+            'siswa.*, ' .
+            'kelas.id_kelas, kelas.nama_kelas'
         );
-        $this->db->from('siswa'); // Mengganti mahasiswa menjadi siswa
+        $this->db->from('siswa');
         $this->db->join('kelas', 'siswa.kelas_id = kelas.id_kelas');
-        // $this->db->join('jurusan', 'mahasiswa.jurusan_id = jurusan.id_jurusan'); // Dihapus
-        $this->db->where('siswa.id_siswa', $id); // Mengganti id_mahasiswa menjadi id_siswa
+        $this->db->where('siswa.id_siswa', $id);
         return $this->db->get()->row();
     }
 
@@ -95,18 +94,24 @@ class Master_model extends CI_Model
      * Data Guru
      */
 
-    public function getDataGuru() // Mengganti getDataDosen menjadi getDataGuru
+    public function getDataGuru($id_mapel = null) // Tambahkan parameter $id_mapel
     {
-        $this->datatables->select('a.id_guru,a.nip, a.nama_guru, a.email, a.mapel_id, b.nama_mapel, (SELECT COUNT(id) FROM users WHERE username = a.nip) AS ada'); // Menyesuaikan kolom email dan mengganti matkul/nama_matkul menjadi mapel/nama_mapel
-        $this->datatables->from('guru a'); // Mengganti dosen a menjadi guru a
-        $this->datatables->join('mapel b', 'a.mapel_id=b.id_mapel'); // Mengganti matkul b menjadi mapel b
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"></div>', 'id_guru'); // Changed id_dosen
+        $this->datatables->select('a.id_guru, a.nip, a.nama_guru, a.email, a.mapel_id, b.nama_mapel, (SELECT COUNT(id) FROM users WHERE username = a.nip) AS ada');
+        $this->datatables->from('guru a');
+        $this->datatables->join('mapel b', 'a.mapel_id=b.id_mapel');
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"></div>', 'id_guru');
+
+        // Tambahkan filter mata pelajaran jika id_mapel diberikan dan bukan 'all'
+        if ($id_mapel !== null && $id_mapel !== 'all') {
+            $this->datatables->where('a.mapel_id', $id_mapel);
+        }
+        
         return $this->datatables->generate();
     }
 
-    public function getGuruById($id) // Mengganti getDosenById menjadi getGuruById
+    public function getGuruById($id)
     {
-        $query = $this->db->get_where('guru', array('id_guru'=>$id)); // Mengganti dosen menjadi guru dan id_dosen menjadi id_guru
+        $query = $this->db->get_where('guru', array('id_guru'=>$id));
         return $query->row();
     }
 
@@ -114,26 +119,26 @@ class Master_model extends CI_Model
      * Data Mapel
      */
 
-    public function getDataMapel() // Mengganti getDataMatkul menjadi getDataMapel
+    public function getDataMapel()
     {
-        $this->datatables->select('id_mapel, nama_mapel'); // Mengganti id_matkul, menjadi id_mapel, nama_mapel
-        $this->datatables->from('mapel'); // Mengganti matkul menjadi mapel
+        $this->datatables->select('id_mapel, nama_mapel');
+        $this->datatables->from('mapel');
         return $this->datatables->generate();
     }
 
-    public function getAllMapel() // Mengganti getAllMatkul menjadi getAllMapel
+    public function getAllMapel()
     {
-        return $this->db->get('mapel')->result(); // Mengganti matkul menjadi mapel
+        return $this->db->get('mapel')->result();
     }
 
-    public function getMapelById($id, $single = false) // Mengganti getMatkulById menjadi getMapelById
+    public function getMapelById($id, $single = false)
     {
         if ($single === false) {
-            $this->db->where_in('id_mapel', $id); // Mengganti id_matkul menjadi id_mapel
-            $this->db->order_by('nama_mapel'); // Mengganti nama_matkul menjadi nama_mapel
-            $query = $this->db->get('mapel')->result(); // Mengganti matkul menjadi mapel
+            $this->db->where_in('id_mapel', $id);
+            $this->db->order_by('nama_mapel');
+            $query = $this->db->get('mapel')->result();
         } else {
-            $query = $this->db->get_where('mapel', array('id_mapel'=>$id))->row(); // Mengganti matkul menjadi mapel dan id_matkul menjadi id_mapel
+            $query = $this->db->get_where('mapel', array('id_mapel'=>$id))->row();
         }
         return $query;
     }
@@ -173,14 +178,67 @@ class Master_model extends CI_Model
         $this->db->where_not_in('id_guru', $id_guru); // Mengganti id_dosen menjadi id_guru
         return $this->db->get()->result();
     }
-    
-    public function getAllKelas()
+
+    /**
+     * Data Siswa - Modified for DataTables
+     */
+    private function _get_datatables_siswa_query($id_kelas = null) // Tambahkan parameter $id_kelas
     {
-        $this->db->select('id_kelas, nama_kelas'); // Menghapus nama_jurusan
-        $this->db->from('kelas');
-        // $this->db->join('jurusan', 'jurusan_id=id_jurusan'); // Dihapus
-        $this->db->order_by('nama_kelas');
+        $this->db->select('a.*, b.nama_kelas, c.id as id_user'); // Ambil id_user dari tabel users
+        $this->db->from($this->table_siswa . ' a'); // Gunakan properti tabel siswa
+        $this->db->join('kelas b', 'a.kelas_id = b.id_kelas', 'left'); // Menggunakan a.kelas_id sesuai struktur tabel siswa
+        $this->db->join('users c', 'a.nisn = c.username', 'left'); // JOIN dengan tabel users untuk cek apakah sudah aktif
+
+        if ($id_kelas !== null && $id_kelas !== 'all') { // Tambahkan kondisi filter kelas
+            $this->db->where('a.kelas_id', $id_kelas); // Filter berdasarkan kolom kelas_id di tabel siswa
+        }
+
+        $i = 0;
+        foreach ($this->column_search_siswa as $item) { // Gunakan properti search siswa
+            if ($_POST['search']['value']) {
+                if ($i === 0) {
+                    $this->db->group_start();
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+                if (count($this->column_search_siswa) - 1 == $i) // Gunakan properti search siswa
+                    $this->db->group_end();
+            }
+            $i++;
+        }
+
+        if (isset($_POST['order'])) {
+            $this->db->order_by($this->column_order_siswa[$_POST['order']['0']['column']], $_POST['order']['0']['dir']); // Gunakan properti order siswa
+        } else if (isset($this->order_default_siswa)) { // Gunakan properti order default siswa
+            $order = $this->order_default_siswa;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function get_datatables_siswa($id_kelas = null) // Ganti nama fungsi untuk siswa
+    {
+        $this->_get_datatables_siswa_query($id_kelas); // Kirim id_kelas ke query builder
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
         return $this->db->get()->result();
+    }
+
+    function count_filtered_siswa($id_kelas = null) // Ganti nama fungsi untuk siswa
+    {
+        $this->_get_datatables_siswa_query($id_kelas); // Kirim id_kelas ke query builder
+        return $this->db->get()->num_rows();
+    }
+
+    public function count_all_siswa($id_kelas = null) // Ganti nama fungsi untuk siswa
+    {
+        $this->db->from($this->table_siswa . ' a'); // Gunakan properti tabel siswa
+        $this->db->join('kelas b', 'a.kelas_id = b.id_kelas', 'left');
+        $this->db->join('users c', 'a.nisn = c.username', 'left');
+        if ($id_kelas !== null && $id_kelas !== 'all') {
+            $this->db->where('a.kelas_id', $id_kelas);
+        }
+        return $this->db->count_all_results();
     }
     
     public function getKelasByGuru($id) // Mengganti getKelasByDosen menjadi getKelasByGuru

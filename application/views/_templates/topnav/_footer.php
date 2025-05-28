@@ -7,9 +7,9 @@
 <footer class="main-footer">
 	<div class="container">
 		<?= strftime('%A, %d %B %Y') ?>, <span class="live-clock"><?= date('H:i:s') ?></span>
-		<div class="pull-right hidden-xs">
+		<!-- <div class="pull-right hidden-xs">
 			<b>Ujian Online</b>
-		</div>
+		</div> -->
 	</div>
 	<!-- /.container -->
 </footer>

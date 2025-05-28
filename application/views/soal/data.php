@@ -8,13 +8,13 @@
     </div>
     <div class="box-body">
 		<div class="row">
-        	<div class="col-sm-4">
+			<div class="col-sm-4">
 				<button type="button" onclick="bulk_delete()" class="btn btn-flat btn-sm bg-red"><i class="fa fa-trash"></i> Bulk Delete</button>
 			</div>
 			<div class="form-group col-sm-4 text-center">
 				<?php if ( $this->ion_auth->is_admin() ) : ?>
 					<select id="mapel_filter" class="form-control select2" style="width:100% !important">
-						<option value="all">Semua Mata Pelajatan</option>
+						<option value="all">Semua Mata Pelajaran</option>
 						<?php foreach ($mapel as $m) :?>
 							<option value="<?=$m->id_mapel?>"><?=$m->nama_mapel?></option>
 						<?php endforeach; ?>

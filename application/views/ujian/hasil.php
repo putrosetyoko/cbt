@@ -20,10 +20,11 @@
                 <th>No.</th>
                 <th>Nama Ujian</th>
                 <th>Mata Pelajaran</th>
-                <th>Dosen</th>
+                <th>Guru</th>
                 <th>Jumlah Soal</th>
                 <th>Waktu</th>
-                <th>Tanggal</th>
+                <th>Tanggal Mulai</th>
+                <th>Tanggal Selesai</th>
                 <th class="text-center">
                     <i class="fa fa-search"></i>
                 </th>

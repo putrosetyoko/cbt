@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="alert bg-purple">
-                    <h4>Mata Kuliah <i class="fa fa-book pull-right"></i></h4>
+                    <h4>Mata Pelajaran <i class="fa fa-book pull-right"></i></h4>
                     <p><?=$mapel->nama_mapel?></p>
                 </div>
                 <div class="alert bg-purple">
