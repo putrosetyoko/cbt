@@ -18,7 +18,6 @@
         <ul class="alert alert-info" style="padding-left: 40px">
             <li>Silahkan import data dari excel, menggunakan format yang sudah disediakan</li>
             <li>Data tidak boleh ada yang kosong, harus terisi semua.</li>
-            <li>Untuk data Mata Pelajaran, hanya bisa diisi menggunakan ID Mata Pelajaran. <a data-toggle="modal" href="#mapelId" style="text-decoration:none" class="btn btn-xs btn-primary">Lihat ID</a>.</li>
         </ul>
         <div class="text-center">
             <a href="<?= base_url('uploads/import/format/guru.xlsx') ?>" class="btn-default btn">Download Format</a>
@@ -46,7 +45,6 @@
                                 <td>NIP</td>
                                 <td>Nama</td>
                                 <td>Email</td>
-                                <td>Mata Pelajaran</td> </tr>
                         </thead>
                         <tbody>
                             <?php
@@ -56,9 +54,7 @@
                                 } else {
                                     $no = 1;
                                     foreach ($import as $data_row) :
-                                        // Anda bisa menggunakan $data_row['nama_mapel'] yang sudah di-pass dari controller
-                                        $display_mapel = ($data_row['mapel_id'] == null) ? 'BELUM DIISI' : (isset($data_row['nama_mapel']) ? $data_row['nama_mapel'] : 'ID tidak ditemukan');
-                                        // Tambahan pengecekan untuk memastikan $data_row['nama_mapel'] ada
+                                        
                             ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
@@ -71,11 +67,9 @@
                                             <td class="<?= $data_row['email'] == null ? 'bg-danger' : ''; ?>">
                                                 <?= $data_row['email'] == null ? 'BELUM DIISI' : $data_row['email']; ?>
                                             </td>
-                                            <td class="<?= $data_row['mapel_id'] == null ? 'bg-danger' : ''; ?>">
-                                                <?= $display_mapel; ?> </td>
                                         </tr>
                             <?php
-                                        if ($data_row['nip'] == null || $data_row['nama_guru'] == null || $data_row['email'] == null || $data_row['mapel_id'] == null) {
+                                        if ($data_row['nip'] == null || $data_row['nama_guru'] == null || $data_row['email'] == null) {
                                             $status = false;
                                         }
                                     endforeach;
@@ -97,42 +91,3 @@
     </div>
 </div>
 
-<div class="modal fade" id="mapelId">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Data Mata Pelajaran</h4>
-            </div>
-            <div class="modal-body">
-                <table id="mapel" class="table table-condensed table-striped">
-                    <thead>
-                        <th>ID</th>
-                        <th>Mata Pelajaran</th>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($mapel as $m) : ?>
-                            <tr>
-                                <td><?= $m->id_mapel; ?></td>
-                                <td><?= $m->nama_mapel; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function() {
-        let table;
-        table = $("#mapel").DataTable({
-            "lengthMenu": [
-                [5, 10, 25, 50, 100, -1],
-                [5, 10, 25, 50, 100, "All"]
-            ],
-        });
-    });
-</script>

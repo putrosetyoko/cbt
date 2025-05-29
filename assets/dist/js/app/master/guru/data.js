@@ -1,12 +1,12 @@
 var table;
 
 $(document).ready(function () {
-  ajaxcsrf(); // Pastikan fungsi ajaxcsrf() tersedia
+  ajaxcsrf();
 
   table = $('#guru').DataTable({
     initComplete: function () {
       var api = this.api();
-      $('#guru_filter input') // Sesuaikan ID filter jika ada
+      $('#guru_filter input')
         .off('.DT')
         .on('keyup.DT', function (e) {
           api.search(this.value).draw();
@@ -19,19 +19,19 @@ $(document).ready(function () {
     buttons: [
       {
         extend: 'copy',
-        exportOptions: { columns: [1, 2, 3, 4] }, // Sesuaikan kolom yang diekspor
+        exportOptions: { columns: [1, 2, 3, 4, 5] },
       },
       {
         extend: 'print',
-        exportOptions: { columns: [1, 2, 3, 4] },
+        exportOptions: { columns: [1, 2, 3, 4, 5] },
       },
       {
         extend: 'excel',
-        exportOptions: { columns: [1, 2, 3, 4] },
+        exportOptions: { columns: [1, 2, 3, 4, 5] },
       },
       {
         extend: 'pdf',
-        exportOptions: { columns: [1, 2, 3, 4] },
+        exportOptions: { columns: [1, 2, 3, 4, 5] },
       },
     ],
     oLanguage: {
@@ -40,24 +40,23 @@ $(document).ready(function () {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + 'guru/data', // Pastikan ini mengarah ke controller Guru/data
+      url: base_url + 'guru/data', // Pastikan ini mengarah ke controller guru/data
       type: 'POST',
       // data: csrf // Jika csrf diaktifkan, pastikan ini tidak dikomentari
     },
     columns: [
       {
-        data: 'id_guru', // Data yang akan di-render untuk kolom No.
+        data: 'id_guru',
         orderable: false,
         searchable: false,
       },
       { data: 'nip' },
       { data: 'nama_guru' },
       { data: 'email' },
-      { data: 'nama_mapel' },
     ],
     columnDefs: [
       {
-        targets: 5, // Index kolom Aksi (sesuaikan jika ada perubahan kolom)
+        targets: 4,
         data: {
           id_guru: 'id_guru',
           ada: 'ada',
@@ -65,27 +64,27 @@ $(document).ready(function () {
         render: function (data, type, row, meta) {
           let btn;
           if (data.ada > 0) {
-            btn = ''; // Jika sudah ada user, tidak perlu tombol aktifkan
+            btn = '';
           } else {
             btn = `<button data-id="${data.id_guru}" type="button" class="btn btn-xs btn-primary btn-aktif">
-                             <i class="fa fa-user-plus"></i> Aktif
-                         </button>`;
+                            <i class="fa fa-user-plus"></i> Aktif
+                        </button>`;
           }
           return `<div class="text-center">
-                             <a class="btn btn-xs btn-warning" href="${base_url}guru/edit/${data.id_guru}">
-                                 <i class="fa fa-pencil"></i> Edit
-                             </a>
-                             ${btn}
-                         </div>`;
+                            <a class="btn btn-xs btn-warning" href="${base_url}guru/edit/${data.id_guru}">
+                                <i class="fa fa-pencil"></i> Edit
+                            </a>
+                            ${btn}
+                        </div>`;
         },
       },
       {
-        targets: 6, // Index kolom Checkbox (sesuaikan jika ada perubahan kolom)
+        targets: 5,
         data: 'id_guru',
         render: function (data, type, row, meta) {
           return `<div class="text-center">
-                             <input name="checked[]" class="check" value="${data}" type="checkbox">
-                         </div>`;
+                            <input name="checked[]" class="check" value="${data}" type="checkbox">
+                        </div>`;
         },
       },
     ],

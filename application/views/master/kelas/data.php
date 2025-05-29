@@ -20,8 +20,8 @@
       <thead>
         <tr>
           <th>No.</th>
-          <th>Kelas</th>
-          <th class="text-center">
+          <th>Jenjang</th>
+          <th>Nama Kelas</th> <th class="text-center">
             <input type="checkbox" id="select_all">
           </th>
         </tr>
@@ -39,7 +39,7 @@
           <span aria-hidden="true">×</span></button>
         <h4 class="modal-title">Tambah Data</h4>
       </div>
-      <?= form_open('kelas/add', array('id', 'tambah')); ?>
+      <?= form_open('kelas/add', array('id' => 'tambah')); ?> 
       <div class="modal-body">
         <div class="form-group">
           <label for="banyak">Banyaknya data</label>
@@ -52,7 +52,7 @@
       </div>
       <?= form_close(); ?>
     </div>
-    </div>
   </div>
+</div>
 
 <script src="<?= base_url() ?>assets/dist/js/app/master/kelas/data.js"></script>

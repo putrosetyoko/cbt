@@ -1,8 +1,11 @@
-var save_label;
+var save_label; // Variabel ini tampaknya tidak digunakan, bisa dipertimbangkan untuk dihapus jika benar tidak dipakai.
 var table;
 
 $(document).ready(function () {
-  ajaxcsrf();
+  // Pastikan ajaxcsrf() sudah terdefinisi dan berfungsi jika Anda menggunakannya
+  if (typeof ajaxcsrf === 'function') {
+    ajaxcsrf();
+  }
 
   table = $('#kelas').DataTable({
     initComplete: function () {
@@ -20,19 +23,19 @@ $(document).ready(function () {
     buttons: [
       {
         extend: 'copy',
-        exportOptions: { columns: [1] }, // Jurusan column (index 2) removed
+        exportOptions: { columns: [1, 2] }, // Kolom: Kelas (1), Jenjang (2)
       },
       {
         extend: 'print',
-        exportOptions: { columns: [1] }, // Jurusan column (index 2) removed
+        exportOptions: { columns: [1, 2] },
       },
       {
         extend: 'excel',
-        exportOptions: { columns: [1] }, // Jurusan column (index 2) removed
+        exportOptions: { columns: [1, 2] },
       },
       {
         extend: 'pdf',
-        exportOptions: { columns: [1] }, // Jurusan column (index 2) removed
+        exportOptions: { columns: [1, 2] },
       },
     ],
     oLanguage: {
@@ -41,40 +44,45 @@ $(document).ready(function () {
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + 'kelas/data',
+      url: base_url + 'kelas/data', // Pastikan controller kelas/data mengembalikan nama_jenjang
       type: 'POST',
-      //data: csrf
+      // data: csrf // Jika Anda menggunakan variabel csrf untuk token
     },
     columns: [
       {
-        data: 'id_kelas',
+        data: 'id_kelas', // Atau null jika penomoran dari rowCallback
         orderable: false,
         searchable: false,
+        // width: '5%' // Atur lebar jika perlu
       },
+      { data: 'nama_jenjang' }, // Kolom baru untuk nama_jenjang
       { data: 'nama_kelas' },
-      // { data: "nama_jurusan" }, // Jurusan column removed
       {
-        data: 'bulk_select',
+        data: 'bulk_select', // Pastikan controller mengirimkan data untuk ini
         orderable: false,
         searchable: false,
+        className: 'text-center', // Tengahkan checkbox jika perlu
+        // width: '5%' // Atur lebar jika perlu
       },
     ],
-    order: [[1, 'asc']],
+    order: [[1, 'asc']], // Order default berdasarkan nama_kelas
     rowId: function (a) {
-      return a;
+      // Fungsi ini sepertinya salah, seharusnya mengembalikan nilai unik seperti a.id_kelas
+      // return a; // Ini akan error jika a bukan string/number. Seharusnya return a.id_kelas;
+      return a.id_kelas; // Diasumsikan id_kelas ada di data source
     },
     rowCallback: function (row, data, iDisplayIndex) {
       var info = this.fnPagingInfo();
       var page = info.iPage;
       var length = info.iLength;
       var index = page * length + (iDisplayIndex + 1);
-      $('td:eq(0)', row).html(index);
+      $('td:eq(0)', row).html(index); // Menulis nomor urut
     },
   });
 
   table.buttons().container().appendTo('#kelas_wrapper .col-md-6:eq(0)');
 
-  $('#myModal').on('shown.modal.bs', function () {
+  $('#myModal').on('shown.bs.modal', function () {
     $(':input[name="banyak"]').select();
   });
 
@@ -100,8 +108,10 @@ $(document).ready(function () {
     }
   });
 
+  // Handler untuk bulk delete (form dengan id #bulk)
   $('#bulk').on('submit', function (e) {
-    if ($(this).attr('action') == base_url + 'kelas/delete') {
+    if ($(this).attr('action').endsWith('kelas/delete')) {
+      // Hanya jika action adalah delete
       e.preventDefault();
       e.stopImmediatePropagation();
 
@@ -109,55 +119,42 @@ $(document).ready(function () {
         url: $(this).attr('action'),
         data: $(this).serialize(),
         type: 'POST',
+        dataType: 'json', // Pastikan controller mengembalikan JSON
         success: function (respon) {
           if (respon.status) {
             Swal({
+              // Atau Swal.fire untuk versi SweetAlert2 yang lebih baru
               title: 'Berhasil',
-              text: respon.total + ' data berhasil dihapus',
-              type: 'success',
+              text: respon.message || respon.total + ' data berhasil dihapus',
+              type: 'success', // 'icon: 'success'' untuk v9+
             });
           } else {
             Swal({
               title: 'Gagal',
-              text: 'Tidak ada data yang dipilih',
-              type: 'error',
+              text:
+                respon.message ||
+                'Tidak ada data yang dipilih atau gagal dihapus',
+              type: 'error', // 'icon: 'error'' untuk v9+
             });
           }
-          reload_ajax();
+          reload_ajax(); // Muat ulang tabel
+          $('#select_all').prop('checked', false); // Uncheck #select_all
+          $('.check').prop('checked', false); // Uncheck semua checkbox individual
         },
-        error: function () {
+        error: function (jqXHR, textStatus, errorThrown) {
+          // Tambahkan error handling AJAX
           Swal({
-            title: 'Gagal',
-            text: 'Ada data yang sedang digunakan',
+            title: 'Error Server',
+            text: 'Gagal menghubungi server: ' + textStatus,
             type: 'error',
           });
+          console.error('AJAX Error: ', jqXHR.responseText);
         },
       });
     }
+    // Jika action adalah edit, biarkan form submit secara normal (ke halaman edit)
   });
 });
-
-// load_jurusan function removed as Jurusan is no longer associated with Kelas directly
-// function load_jurusan() {
-//   var jurusan = $('select[name="nama_jurusan"]');
-//   jurusan.children("option:not(:first)").remove();
-
-//   ajaxcsrf(); // get csrf token
-//   $.ajax({
-//     url: base_url + "jurusan/load_jurusan",
-//     type: "GET",
-//     success: function(data) {
-//       //console.log(data);
-//       if (data.length) {
-//         var dataJurusan;
-//         $.each(data, function(key, val) {
-//           dataJurusan = `<option value="${val.id_jurusan}">${val.nama_jurusan}</option>`;
-//           jurusan.append(dataJurusan);
-//         });
-//       }
-//     }
-//   });
-// }
 
 function bulk_delete() {
   if ($('#kelas tbody tr .check:checked').length == 0) {
@@ -167,18 +164,19 @@ function bulk_delete() {
       type: 'error',
     });
   } else {
-    $('#bulk').attr('action', base_url + 'kelas/delete');
+    $('#bulk').attr('action', base_url + 'kelas/delete'); // Set action form ke delete
     Swal({
       title: 'Anda yakin?',
-      text: 'Data akan dihapus!',
+      text: 'Data yang dipilih akan dihapus!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Hapus!',
+      confirmButtonText: 'Ya, Hapus!',
     }).then((result) => {
       if (result.value) {
-        $('#bulk').submit();
+        // 'isConfirmed' untuk v9+
+        $('#bulk').submit(); // Submit form untuk delete
       }
     });
   }
@@ -192,7 +190,15 @@ function bulk_edit() {
       type: 'error',
     });
   } else {
-    $('#bulk').attr('action', base_url + 'kelas/edit');
-    $('#bulk').submit();
+    $('#bulk').attr('action', base_url + 'kelas/edit'); // Set action form ke edit
+    $('#bulk').submit(); // Submit form untuk redirect ke halaman edit
+  }
+}
+
+// Pastikan fungsi reload_ajax terdefinisi jika belum ada di scope global
+function reload_ajax() {
+  if (table) {
+    // Cek apakah variabel table sudah diinisialisasi
+    table.ajax.reload(null, false); // false agar tidak reset ke halaman pertama
   }
 }

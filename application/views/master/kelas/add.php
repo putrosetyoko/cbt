@@ -2,21 +2,17 @@
     <div class="box-header with-border">
         <h3 class="box-title">Form <?=$judul?></h3>
         <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
         </div>
     </div>
     <div class="box-body">
         <div class="row">
-            <div class="col-sm-offset-3 col-sm-6">
+            <div class="col-sm-6 col-sm-offset-3">
+                <a href="<?=base_url('kelas')?>" class="btn btn-flat btn-warning btn-sm pull-right">
+                    <i class="fa fa-arrow-left"></i> Batal
+                </a>
                 <div class="my-2">
                     <div class="form-horizontal form-inline">
-                        <a href="<?=base_url('kelas')?>" class="btn btn-default btn-xs">
-                            <i class="fa fa-arrow-left"></i> Batal
-                        </a>
-                        <div class="pull-right">
-                            <span> Jumlah : </span><label for=""><?=$banyak?></label>
-                        </div>
                     </div>
                 </div>
                 <?=form_open('kelas/save', array('id'=>'kelas'), array('mode'=>'add'))?>
@@ -24,21 +20,30 @@
                     <thead>
                         <tr>
                             <th># No</th>
-                            <th>Kelas</th>
-                            </tr>
+                            <th>Nama Kelas</th>
+                            <th>Jenjang</th> </tr>
                     </thead>
                     <tbody>
-                        <?php for ($i=1; $i <= $banyak; $i++) : ?> 
-                            <tr>
-                                <td><?=$i?></td>
-                                <td>
-                                    <div class="form-group">
-                                        <input autofocus="autofocus" onfocus="this.select()" required="required" autocomplete="off" type="text" name="nama_kelas[<?=$i?>]" class="form-control">
-                                        <span class="d-none">DON'T DELETE THIS</span>
-                                        <small class="help-block text-right"></small>
-                                    </div>
-                                </td>
-                                </tr>
+                        <?php for ($i=1; $i <= $banyak; $i++) : ?>
+                        <tr>
+                            <td><?=$i?></td>
+                            <td>
+                                <div class="form-group">
+                                    <input autofocus="autofocus" onfocus="this.select()" required="required" autocomplete="off" type="text" name="nama_kelas[<?=$i?>]" class="form-control">
+                                    <span class="d-none">DON'T DELETE THIS</span>
+                                    <small class="help-block text-right" id="error_nama_kelas[<?=$i?>]"></small> </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select name="id_jenjang[<?=$i?>]" class="form-control select2" style="width: 100%;" required>
+                                        <option value="">-- Pilih Jenjang --</option>
+                                        <?php foreach ($all_jenjang as $j) : ?>
+                                            <option value="<?=$j->id_jenjang?>"><?=$j->nama_jenjang?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <small class="help-block text-right" id="error_id_jenjang[<?=$i?>]"></small> </div>
+                            </td>
+                        </tr>
                         <?php endfor; ?>
                     </tbody>
                 </table>
@@ -52,8 +57,12 @@
 </div>
 
 <script type="text/javascript">
-    var inputs ='';
+    var inputs =''; // Variabel ini sepertinya tidak digunakan di JS Anda
     var banyak = '<?=$banyak;?>';
 </script>
-
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+});
+</script>
 <script src="<?=base_url()?>assets/dist/js/app/master/kelas/add.js"></script>

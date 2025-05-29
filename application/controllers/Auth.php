@@ -20,6 +20,55 @@ class Auth extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+	// ========================================================================
+    // FUNGSI BARU UNTUK MEMBUAT ADMIN DARURAT
+    // ========================================================================
+    // public function buat_admin_darurat($secret_key = "")
+    // {
+    //     // Ganti 'KUNCI_RAHASIA_ANDA' dengan string yang sangat sulit ditebak
+    //     // Ini untuk sedikit pengamanan agar tidak sembarang orang bisa mengakses URL ini
+    //     $expected_secret_key = "admin"; 
+
+    //     if ($secret_key !== $expected_secret_key) {
+    //         echo "Akses ditolak. Kunci rahasia tidak valid.";
+    //         return;
+    //     }
+
+    //     $username = 'admin'; // Atau username yang Anda inginkan
+    //     $password = 'admin'; // Ganti dengan password yang aman
+    //     $email    = 'admin@gmail.com'; // Ganti dengan email yang valid
+        
+    //     $additional_data = [
+    //         'first_name' => 'Super',
+    //         'last_name'  => 'Admin',
+    //     ];
+    //     $group_id = [1]; // ID grup untuk 'admin' (biasanya 1 di Ion Auth)
+
+    //     // Cek apakah username atau email sudah ada
+    //     if ($this->ion_auth->username_check($username)) {
+    //         echo "Gagal! Username '{$username}' sudah ada.";
+    //         return;
+    //     }
+    //     if ($this->ion_auth->email_check($email)) {
+    //         echo "Gagal! Email '{$email}' sudah ada.";
+    //         return;
+    //     }
+
+    //     // Buat user baru
+    //     $user_id = $this->ion_auth->register($username, $password, $email, $additional_data, $group_id);
+
+    //     if ($user_id) {
+    //         echo "Berhasil! Akun admin baru telah dibuat.<br>";
+    //         echo "Username: " . $username . "<br>";
+    //         echo "Password: " . $password . "<br>";
+    //         echo "Email: " . $email . "<br>";
+    //         echo "Silakan login dan SEGERA HAPUS atau amankan fungsi ini ('buat_admin_darurat') dari controller Auth.php!";
+    //     } else {
+    //         echo "Gagal membuat akun admin baru. Error: " . $this->ion_auth->errors();
+    //     }
+    // }
+	
+
 	public function index()
 	{
 		if ($this->ion_auth->logged_in()){

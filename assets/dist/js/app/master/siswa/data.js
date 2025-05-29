@@ -53,12 +53,11 @@ $(document).ready(function () {
       { data: 'nisn' },
       { data: 'nama' },
       { data: 'jenis_kelamin' },
-      { data: 'nama_kelas' },
       { data: 'email' },
     ],
     columnDefs: [
       {
-        targets: 6,
+        targets: 5,
         data: {
           id_siswa: 'id_siswa',
           ada: 'ada',
@@ -69,24 +68,24 @@ $(document).ready(function () {
             btn = '';
           } else {
             btn = `<button data-id="${data.id_siswa}" type="button" class="btn btn-xs btn-primary btn-aktif">
-                             <i class="fa fa-user-plus"></i> Aktif
-                         </button>`;
+                            <i class="fa fa-user-plus"></i> Aktif
+                        </button>`;
           }
           return `<div class="text-center">
-                             <a class="btn btn-xs btn-warning" href="${base_url}siswa/edit/${data.id_siswa}">
-                                 <i class="fa fa-pencil"></i> Edit
-                             </a>
-                             ${btn}
-                         </div>`;
+                            <a class="btn btn-xs btn-warning" href="${base_url}siswa/edit/${data.id_siswa}">
+                                <i class="fa fa-pencil"></i> Edit
+                            </a>
+                            ${btn}
+                        </div>`;
         },
       },
       {
-        targets: 7,
+        targets: 6,
         data: 'id_siswa',
         render: function (data, type, row, meta) {
           return `<div class="text-center">
-                             <input name="checked[]" class="check" value="${data}" type="checkbox">
-                         </div>`;
+                            <input name="checked[]" class="check" value="${data}" type="checkbox">
+                        </div>`;
         },
       },
     ],

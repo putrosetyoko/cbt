@@ -37,7 +37,6 @@ class Siswa extends CI_Controller
             'user' => $this->ion_auth->user()->row(),
             'judul' => 'Siswa',
             'subjudul' => 'Data Siswa',
-            'kelas'     => $this->master->getAllKelas()
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
         $this->load->view('master/siswa/data'); // Changed view path
@@ -56,7 +55,6 @@ class Siswa extends CI_Controller
             'user' => $this->ion_auth->user()->row(),
             'judul' => 'Siswa',
             'subjudul' => 'Tambah Data Siswa',
-            'kelas' => $this->master->getAllKelas() // Get all classes if jurusan is removed
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
         $this->load->view('master/siswa/add'); // Changed view path
@@ -70,7 +68,6 @@ class Siswa extends CI_Controller
             'user'      => $this->ion_auth->user()->row(),
             'judul'     => 'Siswa',
             'subjudul'  => 'Edit Data Siswa',
-            'kelas' => $this->master->getAllKelas(), // Get all classes if jurusan is removed
             'siswa'     => $siswa // Changed variable name
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
@@ -96,7 +93,6 @@ class Siswa extends CI_Controller
         // $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email); // Removed as 'siswa' table no longer has 'email'
         $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
         // $this->form_validation->set_rules('jurusan', 'Jurusan', 'required'); // Remove if jurusan is completely removed
-        $this->form_validation->set_rules('kelas', 'Kelas', 'required');
 
         $this->form_validation->set_message('required', 'Kolom {field} wajib diisi');
     }
@@ -113,7 +109,6 @@ class Siswa extends CI_Controller
                     'nisn' => form_error('nisn'), // Changed field name
                     'nama' => form_error('nama'),
                     'jenis_kelamin' => form_error('jenis_kelamin'),
-                    'kelas' => form_error('kelas'),
                 ]
             ];
             $this->output_json($data);
@@ -122,7 +117,6 @@ class Siswa extends CI_Controller
                 'nisn'          => $this->input->post('nisn', true), // Changed field name
                 'nama'          => $this->input->post('nama', true),
                 'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
-                'kelas_id'      => $this->input->post('kelas', true),
             ];
             if ($method === 'add') {
                 $action = $this->master->create('siswa', $input); // Changed table name
@@ -156,8 +150,15 @@ class Siswa extends CI_Controller
         // Fungsi ini akan tetap ada untuk aktivasi tunggal
         $id = $this->input->get('id', true); // Menggunakan GET untuk single activation
 
-        // Modifikasi kecil: ubah pemanggilan output_json menjadi fungsi helper jika ada
-        $this->_create_single_user($id);
+        // Panggil helper function DAN TANGKAP HASILNYA ke dalam variabel $response
+        $response = $this->_create_single_user($id);
+
+        // Tampilkan variabel $response sebagai output JSON
+        // Asumsi Anda memiliki method output_json() di controller ini atau di base controller.
+        // Jika tidak, Anda bisa menggunakan:
+        // header('Content-Type: application/json');
+        // echo json_encode($response);
+        $this->output_json($response);
     }
 
     /**
@@ -232,7 +233,7 @@ class Siswa extends CI_Controller
             }
 
             if ($total_success > 0) {
-                output_json([
+                $this->output_json([
                     'status'          => true,
                     'total_processed' => $total_processed,
                     'total_success'   => $total_success,
@@ -240,7 +241,7 @@ class Siswa extends CI_Controller
                     'msg'             => ($total_success === $total_processed) ? 'Semua akun siswa berhasil diaktifkan.' : $total_success . ' dari ' . $total_processed . ' akun siswa berhasil diaktifkan.'
                 ]);
             } else {
-                output_json([
+                $this->output_json([
                     'status'          => false,
                     'total_processed' => $total_processed,
                     'total_success'   => $total_success,
@@ -250,7 +251,7 @@ class Siswa extends CI_Controller
             }
 
         } else {
-            output_json([
+            $this->output_json([
                 'status' => false,
                 'msg'    => 'Request tidak valid atau tidak ada ID yang dikirim.'
             ]);
@@ -263,7 +264,6 @@ class Siswa extends CI_Controller
             'user' => $this->ion_auth->user()->row(),
             'judul' => 'Siswa',
             'subjudul' => 'Import Data Siswa',
-            'kelas' => $this->master->getAllKelas()
         ];
         if ($import_data != null) $data['import'] = $import_data;
 
@@ -311,7 +311,6 @@ class Siswa extends CI_Controller
                     'nisn'          => $sheetData[$i][0], // Changed to nisn
                     'nama'          => $sheetData[$i][1],
                     'jenis_kelamin' => $sheetData[$i][2], // Shifted index if email removed
-                    'kelas_id'      => $sheetData[$i][3] // Shifted index if email removed
                 ];
             }
 
@@ -330,7 +329,6 @@ class Siswa extends CI_Controller
                 'nisn'          => $d->nisn, // Changed to nisn
                 'nama'          => $d->nama,
                 'jenis_kelamin' => $d->jenis_kelamin,
-                'kelas_id'      => $d->kelas_id
             ];
         }
 

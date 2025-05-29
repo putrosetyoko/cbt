@@ -25,18 +25,8 @@
                         <label for="jenis_kelamin">Jenis Kelamin</label>
                         <select name="jenis_kelamin" class="form-control select2">
                             <option value="">-- Pilih --</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
-                        <small class="help-block"></small>
-                    </div>
-                    <div class="form-group">
-                        <label for="kelas">Kelas</label>
-                        <select id="kelas" name="kelas" class="form-control select2">
-                            <option value="">-- Pilih --</option>
-                            <?php foreach ($kelas as $k) : ?>
-                                <option value="<?= $k->id_kelas ?>"><?= $k->nama_kelas ?></option>
-                            <?php endforeach; ?>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
                         </select>
                         <small class="help-block"></small>
                     </div>

@@ -35,23 +35,90 @@ class Master_model extends CI_Model
     }
 
     /**
+     * Data Tahun Ajaran
+     */
+    public function getDataTahunAjaran()
+    {
+        $this->datatables->select('id_tahun_ajaran, nama_tahun_ajaran, semester, DATE_FORMAT(tgl_mulai, "%d-%m-%Y") as tgl_mulai, DATE_FORMAT(tgl_selesai, "%d-%m-%Y") as tgl_selesai, status');
+        $this->datatables->from('tahun_ajaran');
+        // JANGAN tambahkan kolom 'action' di sini jika akan di-render oleh JS
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_tahun_ajaran');
+        return $this->datatables->generate();
+    }
+
+    public function getTahunAjaranById($id) // Mengambil satu data berdasarkan ID
+    {
+        $this->db->where('id_tahun_ajaran', $id);
+        return $this->db->get('tahun_ajaran')->row();
+    }
+
+    public function getAllTahunAjaran() // Untuk dropdown, dll
+    {
+        $this->db->order_by('nama_tahun_ajaran', 'DESC'); // Atau ASC
+        return $this->db->get('tahun_ajaran')->result();
+    }
+
+    public function setAllTahunAjaranTidakAktif($kecuali_id = null)
+    {
+        if ($kecuali_id !== null) {
+            $this->db->where('id_tahun_ajaran !=', $kecuali_id);
+        }
+        return $this->db->update('tahun_ajaran', ['status' => 'tidak_aktif']);
+    }
+
+    /**
+     * Data Jenjang
+     */
+    public function getDataJenjang()
+    {
+        $this->datatables->select('id_jenjang, nama_jenjang, deskripsi');
+        $this->datatables->from('jenjang'); // Nama tabel jenjang
+        // Tambahkan kolom aksi untuk tombol Edit (Delete ditangani oleh bulk delete)
+        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_jenjang');
+        $this->datatables->add_column(
+            'action',
+            '<div class="text-center">
+                <a href="'.base_url('jenjang/edit/$1').'" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-pencil"></i></a>
+            </div>',
+            'id_jenjang'
+        );
+        return $this->datatables->generate();
+    }
+
+    public function getJenjangById($id)
+    {
+        $this->db->where('id_jenjang', $id);
+        return $this->db->get('jenjang')->row(); // Nama tabel jenjang
+    }
+
+    public function getAllJenjang()
+    {
+        $this->db->order_by('nama_jenjang', 'ASC');
+        return $this->db->get('jenjang')->result();
+    }
+
+    /**
      * Data Kelas
      */
 
     public function getDataKelas()
     {
-        $this->datatables->select('id_kelas, nama_kelas');
+        $this->datatables->select('kelas.id_kelas, kelas.nama_kelas, jenjang.nama_jenjang');
         $this->datatables->from('kelas');
+        $this->datatables->join('jenjang', 'jenjang.id_jenjang = kelas.id_jenjang', 'left'); // LEFT JOIN agar kelas tanpa jenjang tetap tampil
+        // Kolom aksi Anda yang sudah ada di getDataKelas sebelumnya
         $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_kelas, nama_kelas');
+        // Anda bisa menyesuaikan add_column untuk aksi jika perlu
         return $this->datatables->generate();
     }
 
     public function getKelasById($id)
     {
-        $this->db->where_in('id_kelas', $id);
-        $this->db->order_by('nama_kelas');
-        $query = $this->db->get('kelas')->result();
-        return $query;
+        $this->db->select('k.*, j.nama_jenjang');
+        $this->db->from('kelas k');
+        $this->db->join('jenjang j', 'j.id_jenjang = k.id_jenjang', 'left');
+        $this->db->where_in('k.id_kelas', $ids);
+        return $this->db->get()->result();
     }
 
     public function getAllKelas()
@@ -62,57 +129,42 @@ class Master_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    public function getDataSiswa($id_kelas = null) // Tambahkan parameter $id_kelas
+    public function getDataSiswa() // Parameter $id_kelas dihilangkan
     {
-        $this->datatables->select('a.id_siswa, a.nama, a.nisn, a.jenis_kelamin, b.nama_kelas, c.email AS email');
+        $this->datatables->select('a.id_siswa, a.nama, a.nisn, a.jenis_kelamin, c.email AS email');
         $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nisn) AS ada');
         $this->datatables->from('siswa a');
-        $this->datatables->join('kelas b', 'a.kelas_id=b.id_kelas');
         $this->datatables->join('users c', 'a.nisn = c.username', 'left');
-
-        // Tambahkan filter kelas jika id_kelas diberikan dan bukan 'all'
-        if ($id_kelas !== null && $id_kelas !== 'all') {
-            $this->datatables->where('a.kelas_id', $id_kelas);
-        }
 
         return $this->datatables->generate();
     }
 
-    public function getSiswaById($id)
+    public function getSiswaById($id_siswa)
     {
-        $this->db->select(
-            'siswa.*, ' .
-            'kelas.id_kelas, kelas.nama_kelas'
-        );
-        $this->db->from('siswa');
-        $this->db->join('kelas', 'siswa.kelas_id = kelas.id_kelas');
-        $this->db->where('siswa.id_siswa', $id);
-        return $this->db->get()->row();
+        // $this->db->from('siswa');
+        $this->db->where('id_siswa', $id_siswa);
+        return $this->db->get('siswa')->row(); // Hanya dari tabel siswa
     }
 
     /**
      * Data Guru
      */
 
-    public function getDataGuru($id_mapel = null) // Tambahkan parameter $id_mapel
+    public function getDataGuru()
     {
-        $this->datatables->select('a.id_guru, a.nip, a.nama_guru, a.email, a.mapel_id, b.nama_mapel, (SELECT COUNT(id) FROM users WHERE username = a.nip) AS ada');
+        $this->datatables->select('a.id_guru, a.nip, a.nama_guru, a.email');
+        $this->datatables->select('(SELECT COUNT(id) FROM users WHERE username = a.nip) AS ada');
         $this->datatables->from('guru a');
-        $this->datatables->join('mapel b', 'a.mapel_id=b.id_mapel');
-        $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"></div>', 'id_guru');
-
-        // Tambahkan filter mata pelajaran jika id_mapel diberikan dan bukan 'all'
-        if ($id_mapel !== null && $id_mapel !== 'all') {
-            $this->datatables->where('a.mapel_id', $id_mapel);
-        }
-        
+        $this->datatables->join('users u', 'a.nip = u.username', 'left');
+        // $this->datatables->add_column('bulk_select', '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 'id_guru');
         return $this->datatables->generate();
     }
 
-    public function getGuruById($id)
+    public function getGuruById($id_guru)
     {
-        $query = $this->db->get_where('guru', array('id_guru'=>$id));
-        return $query->row();
+        // Hanya mengambil data dari tabel guru
+        $this->db->where('id_guru', $id_guru);
+        return $this->db->get('guru')->row();
     }
 
     /**

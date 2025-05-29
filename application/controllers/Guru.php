@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Guru extends CI_Controller // Changed class name from Dosen to Guru
+class Guru extends CI_Controller
 {
 
     public function __construct()
@@ -10,11 +10,12 @@ class Guru extends CI_Controller // Changed class name from Dosen to Guru
         if (!$this->ion_auth->logged_in()) {
             redirect('auth');
         } else if (!$this->ion_auth->is_admin()) {
+            // Jika Anda ingin guru lain bisa mengakses beberapa bagian, sesuaikan di sini atau per metode
             show_error('Hanya Administrator yang diberi hak untuk mengakses halaman ini, <a href="' . base_url('dashboard') . '">Kembali ke menu awal</a>', 403, 'Akses Terlarang');
         }
-        $this->load->library(['datatables', 'ion_auth', 'form_validation']); // Load Library Ignited-Datatables
+        $this->load->library(['datatables', 'ion_auth', 'form_validation']);
         $this->load->model('Master_model', 'master');
-        $this->form_validation->set_error_delimiters('', '');
+        $this->form_validation->set_error_delimiters('', ''); // Error delimiter kosong untuk respons JSON
     }
 
     public function output_json($data, $encode = true)
@@ -27,97 +28,132 @@ class Guru extends CI_Controller // Changed class name from Dosen to Guru
     {
         $data = [
             'user' => $this->ion_auth->user()->row(),
-            'judul' => 'Guru', // Changed Dosen to Guru
-            'subjudul' => 'Data Guru', // Changed Data Dosen to Data Guru
-            'mapel'     => $this->master->getAllMapel()
+            'judul' => 'Guru',
+            'subjudul' => 'Data Guru'
+            // Tidak perlu $all_mapel karena tidak ada filter mapel di view data guru
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('master/guru/data'); // View path remains master/dosen for now
+        $this->load->view('master/guru/data', $data); // Mengirim $data agar $judul dan $subjudul bisa diakses
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
-    public function data($id_mapel = null)
+    /**
+     * Data untuk DataTables
+     */
+    public function data($id_guru = null) // Tambahkan parameter $id_guru
     {
-        echo $this->master->getDataGuru($id_mapel);
+        echo $this->master->getDataGuru($id_kelas);
     }
 
     public function add()
     {
         $data = [
             'user' => $this->ion_auth->user()->row(),
-            'judul' => 'Tambah Guru', // Changed Tambah Dosen to Tambah Guru
-            'subjudul' => 'Tambah Data Guru', // Changed Tambah Data Dosen to Tambah Data Guru
-            'mapel'  => $this->master->getAllMapel()
+            'judul' => 'Tambah Guru',
+            'subjudul' => 'Tambah Data Guru'
+            // Tidak perlu $all_mapel
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('master/guru/add'); // View path remains master/dosen for now
+        $this->load->view('master/guru/add', $data); // Mengirim $data
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
-    public function edit($id)
+    public function edit($id_guru = null)
     {
+        if (!$id_guru) {
+            show_404();
+            return;
+        }
+        $guru_data = $this->master->getGuruById($id_guru);
+        if (!$guru_data) {
+            show_error('Data guru tidak ditemukan.', 404, 'Not Found');
+            return;
+        }
         $data = [
-            'user'    => $this->ion_auth->user()->row(),
-            'judul'   => 'Edit Guru', // Changed Edit Dosen to Edit Guru
-            'subjudul'  => 'Edit Data Guru', // Changed Edit Data Dosen to Edit Data Guru
-            'mapel'  => $this->master->getAllMapel(),
-            'data'    => $this->master->getGuruById($id) // Changed getDosenById to getGuruById
+            'user'     => $this->ion_auth->user()->row(),
+            'judul'    => 'Edit Guru',
+            'subjudul' => 'Edit Data Guru',
+            'data'     => $guru_data // Data guru yang akan diedit (tanpa mapel)
+            // Tidak perlu $all_mapel
         ];
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('master/guru/edit'); // View path remains master/dosen for now
+        $this->load->view('master/guru/edit', $data); // Mengirim $data
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
     public function save()
     {
-        $method     = $this->input->post('method', true);
-        $id_guru    = $this->input->post('id_guru', true); // Changed id_dosen to id_guru
-        $nip        = $this->input->post('nip', true);
-        $nama_guru  = $this->input->post('nama_guru', true); // Changed nama_dosen to nama_guru
-        $email      = $this->input->post('email', true);
-        $mapel     = $this->input->post('mapel', true);
+        $method    = $this->input->post('method', true);
+        $id_guru   = $this->input->post('id_guru', true);
+        $nip       = $this->input->post('nip', true);
+        $nama_guru = $this->input->post('nama_guru', true);
+        $email     = $this->input->post('email', true);
 
+        // Validasi
+        $u_nip = '';
+        $u_email = '';
         if ($method == 'add') {
-            $u_nip = '|is_unique[guru.nip]'; // Changed dosen.nip to guru.nip
-            $u_email = '|is_unique[guru.email]'; // Changed dosen.email to guru.email
-        } else {
-            $dbdata    = $this->master->getGuruById($id_guru); // Changed getDosenById to getGuruById and id_dosen to id_guru
-            $u_nip     = $dbdata->nip === $nip ? "" : "|is_unique[guru.nip]"; // Changed dosen.nip to guru.nip
-            $u_email   = $dbdata->email === $email ? "" : "|is_unique[guru.email]"; // Changed dosen.email to guru.email
+            $u_nip = '|is_unique[guru.nip]';
+            if (!empty($email)) { // Hanya validasi is_unique jika email diisi
+                $u_email = '|is_unique[guru.email]';
+            }
+        } else { // Mode Edit
+            if (empty($id_guru)) {
+                $this->output_json(['status' => false, 'message' => 'ID Guru tidak valid untuk operasi edit.']);
+                return;
+            }
+            $dbdata = $this->master->getGuruById($id_guru);
+            if (!$dbdata) {
+                $this->output_json(['status' => false, 'message' => 'Data Guru asli tidak ditemukan untuk pembaruan.']);
+                return;
+            }
+            if ($dbdata->nip !== $nip) {
+                $u_nip = '|is_unique[guru.nip]';
+            }
+            if (!empty($email) && $dbdata->email !== $email) {
+                $u_email = '|is_unique[guru.email]';
+            }
         }
+
         $this->form_validation->set_rules('nip', 'NIP', 'required|numeric|trim|min_length[8]|max_length[20]' . $u_nip);
-        $this->form_validation->set_rules('nama_guru', 'Nama Guru', 'required|trim|min_length[3]|max_length[50]'); // Changed Nama Dosen to Nama Guru
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $u_email);
-        $this->form_validation->set_rules('mapel', 'Mata Pelajaran', 'required');
+        $this->form_validation->set_rules('nama_guru', 'Nama Guru', 'required|trim|min_length[3]|max_length[100]');
+        // Email bisa opsional (nullable di DB), tapi jika diisi harus valid dan unik (jika berbeda/baru)
+        if (!empty($email) || $method == 'add' && $this->input->post('email')) { // Validasi jika email diisi atau saat add diisi
+            $this->form_validation->set_rules('email', 'Email', 'trim|valid_email' . $u_email);
+        }
+
 
         if ($this->form_validation->run() == FALSE) {
-            $data = [
-                'status'  => false,
-                'errors'  => [
-                    'nip' => form_error('nip'),
-                    'nama_guru' => form_error('nama_guru'), // Changed nama_dosen to nama_guru
-                    'email' => form_error('email'),
-                    'mapel' => form_error('mapel'),
-                ]
+            $errors = [
+                'nip'       => form_error('nip'),
+                'nama_guru' => form_error('nama_guru'),
+                'email'     => form_error('email'),
             ];
-            $this->output_json($data);
+            // Hapus key error yang kosong
+            $errors = array_filter($errors, function($value) { return !empty($value); });
+            $this->output_json(['status' => false, 'errors' => $errors, 'message' => 'Periksa kembali data yang Anda input.']);
         } else {
-            $input = [
-                'nip'         => $nip,
-                'nama_guru'   => $nama_guru, // Changed nama_dosen to nama_guru
-                'email'       => $email,
-                'mapel_id'    => $mapel // 'mapel_id' is the database column name
+            $input_data = [
+                'nip'       => $nip,
+                'nama_guru' => $nama_guru,
+                'email'     => !empty($email) ? $email : NULL,
             ];
+
             if ($method === 'add') {
-                $action = $this->master->create('guru', $input); // Changed dosen to guru
+                $action = $this->master->create('guru', $input_data);
+                $message = 'Data guru berhasil ditambahkan.';
             } else if ($method === 'edit') {
-                $action = $this->master->update('guru', $input, 'id_guru', $id_guru); // Changed dosen to guru and id_dosen to id_guru
+                $action = $this->master->update('guru', $input_data, 'id_guru', $id_guru);
+                $message = 'Data guru berhasil diperbarui.';
+            } else {
+                $action = false;
+                $message = 'Metode tidak dikenali.';
             }
 
             if ($action) {
-                $this->output_json(['status' => true]);
+                $this->output_json(['status' => true, 'message' => $message]);
             } else {
-                $this->output_json(['status' => false]);
+                $this->output_json(['status' => false, 'message' => 'Gagal menyimpan data guru. '. $message]);
             }
         }
     }
@@ -125,81 +161,179 @@ class Guru extends CI_Controller // Changed class name from Dosen to Guru
     public function delete()
     {
         $chk = $this->input->post('checked', true);
-        if (!$chk) {
-            $this->output_json(['status' => false]);
-        } else {
-            if ($this->master->delete('guru', $chk, 'id_guru')) { // Changed dosen to guru and id_dosen to id_guru
-                $this->output_json(['status' => true, 'total' => count($chk)]);
+        if (empty($chk) || !is_array($chk)) {
+            $this->output_json(['status' => false, 'message' => 'Tidak ada data guru yang dipilih untuk dihapus.']);
+            return;
+        }
+
+        // Memastikan semua ID adalah skalar
+        foreach ($chk as $id_value) {
+            if (!is_scalar($id_value)) {
+                $this->output_json(['status' => false, 'message' => 'Format ID guru tidak valid.']);
+                return;
             }
+        }
+        
+        $can_delete_all = true;
+        $error_messages_on_check = [];
+        foreach ($chk as $id_guru_to_delete) {
+            $guru_data = $this->master->getGuruById((string)$id_guru_to_delete);
+            if ($guru_data) {
+                if ($this->ion_auth->username_check($guru_data->nip)) {
+                    $can_delete_all = false;
+                    $error_messages_on_check[] = "Guru \"".htmlspecialchars($guru_data->nama_guru)."\" (NIP: ".htmlspecialchars($guru_data->nip).") memiliki akun pengguna dan tidak bisa dihapus.";
+                }
+            } else {
+                $error_messages_on_check[] = "Data guru dengan ID: " . htmlspecialchars((string)$id_guru_to_delete) . " tidak ditemukan saat pengecekan.";
+                $can_delete_all = false;
+            }
+        }
+
+        if (!$can_delete_all) {
+            $this->output_json(['status' => false, 'message' => implode("\n", $error_messages_on_check)]);
+            return;
+        }
+
+        $deleted_successfully = $this->master->delete('guru', $chk, 'id_guru');
+        if ($deleted_successfully) {
+            $this->output_json(['status' => true, 'message' => count($chk) . ' data guru berhasil dihapus.', 'total' => count($chk)]);
+        } else {
+            $db_error_message = 'Gagal menghapus data guru dari database.';
+            $db_error = $this->db->error();
+            if (is_array($db_error) && !empty($db_error['message'])) {
+                $db_error_message .= ' Detail: ' . $db_error['message'];
+                log_message('error', 'Guru Delete DB Error: Code [' . $db_error['code'] . '] ' . $db_error['message']);
+            }
+            $this->output_json(['status' => false, 'message' => $db_error_message]);
         }
     }
 
     public function create_user()
     {
-        $id = $this->input->get('id', true);
-        $data = $this->master->getGuruById($id); // Changed getDosenById to getGuruById
-        $nama = explode(' ', $data->nama_guru); // Changed nama_dosen to nama_guru
+        // Fungsi ini akan tetap ada untuk aktivasi tunggal
+        $id = $this->input->get('id', true); // Menggunakan GET untuk single activation
+
+        // Panggil helper function DAN TANGKAP HASILNYA ke dalam variabel $response
+        $response = $this->_create_single_user($id);
+
+        // Tampilkan variabel $response sebagai output JSON
+        // Asumsi Anda memiliki method output_json() di controller ini atau di base controller.
+        // Jika tidak, Anda bisa menggunakan:
+        // header('Content-Type: application/json');
+        // echo json_encode($response);
+        $this->output_json($response);
+    }
+
+    /**
+     * Helper function untuk logika aktivasi user tunggal
+     * Ini dipisah agar bisa dipanggil dari create_user() atau bulk_create_user()
+     */
+    private function _create_single_user($id_guru)
+    {
+        $response = ['status' => false, 'msg' => ''];
+
+        $data = $this->master->getGuruById($id_guru);
+
+        if (empty($data)) {
+            $response['msg'] = 'Gagal Aktif! Data Guru dengan ID ' . $id_guru . ' tidak ditemukan.';
+            return $response; // Mengembalikan array respons
+        }
+
+        $nama = explode(' ', $data->nama);
         $first_name = $nama[0];
         $last_name = end($nama);
 
-        $username = $data->nip;
+        $username = $data->email;
         $password = $data->nip;
         $email = $data->email;
+
         $additional_data = [
-            'first_name'  => $first_name,
-            'last_name'   => $last_name
+            'first_name'    => $first_name,
+            'last_name'     => $last_name,
+            // Anda bisa menambahkan kolom lain yang dibutuhkan Ion Auth di sini,
+            // seperti 'phone', 'company', dll.
         ];
-        $group = array('2'); // Sets user to dosen (group 2 should be 'guru' in groups table)
+        $group = array('2'); // Asumsi '2' adalah group ID untuk Guru
 
         if ($this->ion_auth->username_check($username)) {
-            $data = [
-                'status' => false,
-                'msg'  => 'Gagal Aktif! NIP/NIK/NUPTK sudah digunakan.'
-            ];
+            $response['msg'] = 'Gagal Aktif! Akun ' . $username . ' sudah pernah diaktifkan.';
         } else if ($this->ion_auth->email_check($email)) {
-            $data = [
-                'status' => false,
-                'msg'  => 'Gagal Aktif! Email sudah digunakan.'
-            ];
+            $response['msg'] = 'Gagal Aktif! Email yang digenerate ' . $email . ' sudah pernah diaktifkan.';
         } else {
-            $this->ion_auth->register($username, $password, $email, $additional_data, $group);
-            $data = [
-                'status'  => true,
-                'msg'  => 'User berhasil diaktifkan. NIP/NIK/NUPTK digunakan sebagai password pada saat login.'
-            ];
+            // Cek apakah Ion Auth berhasil register user
+            if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
+                $response = [
+                    'status'    => true,
+                    'msg'       => 'User untuk Email ' . $email . ' berhasil diaktifkan. Gunakan NIP sebagai password.',
+                ];
+            } else {
+                $response['msg'] = 'Gagal Aktif! Error saat registrasi Ion Auth: ' . $this->ion_auth->errors();
+            }
         }
-        $this->output_json($data);
+        return $response; // Mengembalikan array respons
     }
 
+
+    public function bulk_create_user()
+    {
+        // Pastikan request adalah POST dan ada data 'ids'
+        if ($this->input->method() === 'post' && $this->input->post('ids')) {
+            $guru_ids = $this->input->post('ids', true); // Dapatkan array ID Guru
+            $total_processed = count($guru_ids);
+            $total_success = 0;
+            $failed_messages = [];
+
+            foreach ($guru_ids as $id_guru) {
+                $result = $this->_create_single_user($id_guru); // Panggil helper function
+                if ($result['status']) {
+                    $total_success++;
+                } else {
+                    $failed_messages[] = $result['msg']; // Kumpulkan pesan kegagalan
+                }
+            }
+
+            if ($total_success > 0) {
+                $this->output_json([
+                    'status'          => true,
+                    'total_processed' => $total_processed,
+                    'total_success'   => $total_success,
+                    'failed_messages' => $failed_messages, // Opsional: kirim pesan kegagalan
+                    'msg'             => ($total_success === $total_processed) ? 'Semua akun Guru berhasil diaktifkan.' : $total_success . ' dari ' . $total_processed . ' akun guru berhasil diaktifkan.'
+                ]);
+            } else {
+                $this->output_json([
+                    'status'          => false,
+                    'total_processed' => $total_processed,
+                    'total_success'   => $total_success,
+                    'failed_messages' => $failed_messages,
+                    'msg'             => 'Tidak ada akun Guru yang berhasil diaktifkan. ' . implode(', ', $failed_messages)
+                ]);
+            }
+
+        } else {
+            $this->output_json([
+                'status' => false,
+                'msg'    => 'Request tidak valid atau tidak ada ID yang dikirim.'
+            ]);
+        }
+    }
+    
+    // Metode import disederhanakan (tanpa mapel)
     public function import($import_data = null)
     {
         $data = [
             'user' => $this->ion_auth->user()->row(),
             'judul' => 'Guru',
             'subjudul' => 'Import Data Guru',
-            'mapel' => $this->master->getAllMapel()
         ];
-
-        // Buat map dari id_mapel ke nama_mapel
-        $mapel_nama_map = [];
-        foreach ($data['mapel'] as $m) {
-            $mapel_nama_map[$m->id_mapel] = $m->nama_mapel;
-        }
-        $data['mapel_nama_map'] = $mapel_nama_map; // Kirim map ini ke view
-
-        // This is where you pass the import data.
-        // If $import_data is provided (from preview() call), it will be set.
-        // Otherwise, it will be null, and the view can handle that.
-        if ($import_data !== null) { // Use strict comparison to differentiate from empty array
+        if ($import_data !== null) {
             $data['import'] = $import_data;
-            $data['show_preview'] = true; // Add a flag to indicate that preview data exists
+            $data['show_preview'] = true; 
         } else {
-            $data['show_preview'] = false; // No preview data to show initially
+            $data['show_preview'] = false; 
         }
-
-
         $this->load->view('_templates/dashboard/_header', $data);
-        $this->load->view('master/guru/import', $data); // Pass $data to the view
+        $this->load->view('master/guru/import', $data); // View import disesuaikan (NIP, Nama, Email)
         $this->load->view('_templates/dashboard/_footer');
     }
 
@@ -214,119 +348,107 @@ class Guru extends CI_Controller // Changed class name from Dosen to Guru
 
         if (!$this->upload->do_upload('upload_file')) {
             $error = $this->upload->display_errors();
-            $this->session->set_flashdata('error_message', $error);
+            $this->session->set_flashdata('error_message', strip_tags($error));
             redirect('guru/import');
-        } else {
-            $file = $this->upload->data('full_path');
-            $ext = $this->upload->data('file_ext'); // Akan menghasilkan '.xlsx', '.xls', atau '.csv'
+            return;
+        }
+        
+        $file = $this->upload->data('full_path');
+        $ext = $this->upload->data('file_ext');
 
-            try {
-                $reader = null;
-                switch ($ext) {
-                    case '.xlsx':
-                        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-                        break;
-                    case '.xls':
-                        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-                        break;
-                    case '.csv':
-                        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-                        break;
-                    default:
-                        $this->session->set_flashdata('error_message', "Ekstensi file tidak dikenal.");
-                        if (file_exists($file)) {
-                            unlink($file); // Hapus file yang diupload
-                        }
-                        redirect('guru/import');
+        try {
+            $reader = null;
+            switch ($ext) {
+                case '.xlsx': $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx(); break;
+                case '.xls':  $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();  break;
+                case '.csv':  $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();  break;
+                default:
+                    $this->session->set_flashdata('error_message', "Ekstensi file tidak dikenal.");
+                    if (file_exists($file)) unlink($file);
+                    redirect('guru/import');
+            }
+
+            $spreadsheet = $reader->load($file);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+            $data_for_preview = [];
+
+            // Asumsi kolom Excel: A=NIP, B=Nama Guru, C=Email
+            for ($i = 2; $i <= count($sheetData); $i++) {
+                if (empty(trim((string)$sheetData[$i]['A'])) && empty(trim((string)$sheetData[$i]['B']))) { // Lewati baris jika NIP dan Nama kosong
+                    continue; 
                 }
+                $data_for_preview[] = [
+                    'nip'       => isset($sheetData[$i]['A']) ? trim($sheetData[$i]['A']) : null,
+                    'nama_guru' => isset($sheetData[$i]['B']) ? trim($sheetData[$i]['B']) : null,
+                    'email'     => isset($sheetData[$i]['C']) ? trim($sheetData[$i]['C']) : null,
+                ];
+            }
+            unlink($file);
 
-                $spreadsheet = $reader->load($file);
-                // toArray(null, true, true, true) akan mengembalikan array 1-based dengan referensi sel (A, B, C...)
-                $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-
-                $data_for_preview = [];
-
-                // Ambil semua data mapel dari database untuk mapping nama
-                $all_mapel = $this->master->getAllMapel(); // Pastikan method ini ada di Master_model
-                $mapel_nama_map_preview = [];
-                foreach ($all_mapel as $m) {
-                    $mapel_nama_map_preview[$m->id_mapel] = $m->nama_mapel;
-                }
-
-                // Mulai dari baris ke-2 (mengabaikan header)
-                // Karena toArray(null, true, true, true) mengembalikan array 1-based,
-                // baris pertama adalah indeks 1, baris data pertama adalah indeks 2.
-                for ($i = 2; $i <= count($sheetData); $i++) {
-                    // Periksa apakah baris benar-benar kosong (semua sel pentingnya null/kosong)
-                    // Ini untuk mengabaikan baris "hantu" di Excel
-                    if (empty($sheetData[$i]['A']) && empty($sheetData[$i]['B']) && empty($sheetData[$i]['C']) && empty($sheetData[$i]['D'])) {
-                        continue; // Lewati baris kosong
-                    }
-
-                    // Tambahkan validasi dan trim whitespace dari nilai yang dibaca
-                    $nip = isset($sheetData[$i]['A']) ? trim($sheetData[$i]['A']) : null;
-                    $nama_guru = isset($sheetData[$i]['B']) ? trim($sheetData[$i]['B']) : null;
-                    $email = isset($sheetData[$i]['C']) ? trim($sheetData[$i]['C']) : null;
-                    $mapel_id = isset($sheetData[$i]['D']) ? trim($sheetData[$i]['D']) : null;
-
-                    // Dapatkan nama mapel berdasarkan ID
-                    // Jika mapel_id kosong dari Excel, nama_mapel juga akan dianggap null.
-                    // Jika mapel_id ada tapi tidak ditemukan di database, akan menampilkan 'ID tidak ditemukan'.
-                    $nama_mapel = null;
-                    if (!empty($mapel_id)) {
-                        $nama_mapel = isset($mapel_nama_map_preview[$mapel_id]) ? $mapel_nama_map_preview[$mapel_id] : 'ID tidak ditemukan';
-                    }
-
-                    $data_for_preview[] = [
-                        'nip'         => $nip,
-                        'nama_guru'   => $nama_guru,
-                        'email'       => $email,
-                        'mapel_id'    => $mapel_id,
-                        'nama_mapel'  => $nama_mapel // Tambahkan field nama_mapel untuk preview
-                    ];
-                }
-
-                unlink($file); // Hapus file yang diupload setelah diproses
-
-                // Panggil metode import untuk me-render view dengan data preview
-                $this->import($data_for_preview);
-
-            } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
-                // Tangani error spesifik dari PhpSpreadsheet Reader
-                $this->session->set_flashdata('error_message', "Error membaca spreadsheet: " . $e->getMessage());
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-                redirect('guru/import');
-            } catch (Exception $e) {
-                // Tangani error umum lainnya
-                $this->session->set_flashdata('error_message', "Terjadi kesalahan tak terduga: " . $e->getMessage());
-                if (file_exists($file)) {
-                    unlink($file);
-                }
+            if(empty($data_for_preview)){
+                $this->session->set_flashdata('error_message', "Tidak ada data valid untuk diimpor dari file. Pastikan kolom NIP dan Nama Guru terisi.");
                 redirect('guru/import');
             }
+            $this->import($data_for_preview);
+
+        } catch (Exception $e) {
+            $this->session->set_flashdata('error_message', "Terjadi kesalahan saat memproses file: " . $e->getMessage());
+            if (isset($file) && file_exists($file)) {
+                unlink($file);
+            }
+            redirect('guru/import');
         }
     }
 
     public function do_import()
     {
-        $input = json_decode($this->input->post('data', true));
-        $data = [];
-        foreach ($input as $d) {
-            $data[] = [
-                'nip'         => $d->nip,
-                'nama_guru'   => $d->nama_guru, // Changed nama_dosen to nama_guru
-                'email'       => $d->email,
-                'mapel_id'    => $d->mapel_id // 'mapel_id' is the database column name
+        $input_json = $this->input->post('data', true);
+        $preview_data = json_decode($input_json);
+
+        if (empty($preview_data)) {
+            $this->session->set_flashdata('error', 'Tidak ada data untuk diimpor.');
+            redirect('guru/import');
+            return;
+        }
+
+        $data_to_insert = [];
+        $skipped_rows_info = [];
+
+        foreach ($preview_data as $d) {
+            // Lakukan validasi dasar lagi sebelum insert batch
+            if (empty($d->nip) || empty($d->nama_guru)) {
+                $skipped_rows_info[] = "Baris dengan NIP '".htmlspecialchars($d->nip)."' dan Nama '".htmlspecialchars($d->nama_guru)."' dilewati karena NIP atau Nama kosong.";
+                continue;
+            }
+             // Anda mungkin ingin menambahkan validasi NIP/Email unik di sini sebelum batch insert
+             // atau mengandalkan constraint database dan menangani errornya.
+            $data_to_insert[] = [
+                'nip'       => $d->nip,
+                'nama_guru' => $d->nama_guru,
+                'email'     => !empty($d->email) ? $d->email : NULL,
             ];
         }
 
-        $save = $this->master->create('guru', $data, true); // Changed dosen to guru
-        if ($save) {
-            redirect('guru'); // Changed dosen to guru
+        if (!empty($data_to_insert)) {
+            $save = $this->master->create('guru', $data_to_insert, true);
+            if ($save) {
+                $message = count($data_to_insert) . ' data guru berhasil diimpor.';
+                if(!empty($skipped_rows_info)){
+                    $message .= "<br>Catatan: <br>- " . implode("<br>- ", $skipped_rows_info);
+                }
+                $this->session->set_flashdata('success', $message);
+                redirect('guru');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal menyimpan data impor ke database. Periksa duplikasi NIP/Email atau error database lainnya.');
+                redirect('guru/import');
+            }
         } else {
-            redirect('guru/import'); // Changed dosen/import to guru/import
+            $message = 'Tidak ada data valid untuk diimpor setelah pemrosesan.';
+            if(!empty($skipped_rows_info)){
+                $message .= "<br>Catatan: <br>- " . implode("<br>- ", $skipped_rows_info);
+            }
+            $this->session->set_flashdata('warning', $message);
+            redirect('guru/import');
         }
     }
 }

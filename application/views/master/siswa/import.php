@@ -10,7 +10,6 @@
         <ul class="alert alert-info" style="padding-left: 40px">
             <li>Silahkan import data dari excel, menggunakan format yang sudah disediakan</li>
             <li>Data tidak boleh ada yang kosong, harus terisi semua.</li>
-            <li>Untuk data Kelas, hanya bisa diisi menggunakan ID Kelas. <a data-toggle="modal" href="#kelasId" style="text-decoration:none" class="btn btn-xs btn-primary">Lihat ID</a>.</li>
         </ul>
         <div class="text-center">
             <a href="<?= base_url('uploads/import/format/siswa.xlsx') ?>" class="btn-default btn">Download Format</a>
@@ -39,7 +38,6 @@
                                 <td>NISN</td>
                                 <td>Nama</td>
                                 <td>Jenis Kelamin</td>
-                                <td>ID Kelas</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,12 +60,9 @@
                                             <td class="<?= $data['jenis_kelamin'] == null ? 'bg-danger' : ''; ?>">
                                                 <?= $data['jenis_kelamin'] == null ? 'BELUM DIISI' : $data['jenis_kelamin'];; ?>
                                             </td>
-                                            <td class="<?= $data['kelas_id'] == null ? 'bg-danger' : ''; ?>">
-                                                <?= $data['kelas_id'] == null ? 'BELUM DIISI' : $data['kelas_id'];; ?>
-                                            </td>
                                         </tr>
                                 <?php
-                                        if ($data['nisn'] == null || $data['nama'] == null || $data['jenis_kelamin'] == null || $data['kelas_id'] == null) { // email removed
+                                        if ($data['nisn'] == null || $data['nama'] == null || $data['jenis_kelamin'] == null) { // email removed
                                             $status = false;
                                         }
                                     endforeach;
@@ -88,43 +83,3 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="kelasId">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Data Kelas</h4>
-            </div>
-            <div class="modal-body">
-                <table id="kelas" class="table table-bordered table-condensed table-striped">
-                    <thead>
-                        <th>ID</th>
-                        <th>Kelas</th>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($kelas as $k) : ?>
-                            <tr>
-                                <td><?= $k->id_kelas; ?></td>
-                                <td><?= $k->nama_kelas; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function() {
-        let table;
-        table = $("#kelas").DataTable({
-            "lengthMenu": [
-                [5, 10, 25, 50, 100, -1],
-                [5, 10, 25, 50, 100, "All"]
-            ],
-        });
-    });
-</script>
