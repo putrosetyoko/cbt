@@ -11,7 +11,7 @@
             <div class="col-sm-offset-4 col-sm-4">
                 <div class="my-2">
                     <div class="form-horizontal form-inline">
-                        <a href="<?=base_url('mapel')?>" class="btn btn-default btn-xs">
+                        <a href="<?=base_url('mapel')?>" class="btn btn-flat btn-warning btn-sm">
                             <i class="fa fa-arrow-left"></i> Batal
                         </a>
                         <div class="pull-right">
@@ -23,7 +23,7 @@
                 <table id="form-table" class="table text-center table-condensed">
                     <thead>
                         <tr>
-                            <th># No</th>
+                            <th>No</th>
                             <th>Mata Pelajaran</th>
                         </tr>
                     </thead>

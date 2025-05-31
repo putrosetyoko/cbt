@@ -29,7 +29,7 @@ $(document).ready(function () {
         if (data.status) {
           Swal({
             title: 'Sukses',
-            text: 'Data Berhasil disimpan',
+            text: 'Data Siswa Berhasil ditambahkan.',
             type: 'success',
           }).then((result) => {
             if (result.value) {

@@ -32,7 +32,7 @@ $(document).ready(function () {
         if (response.status) {
           Swal(
             'Sukses',
-            response.message || 'Data siswa Berhasil diperbarui',
+            response.message || 'Data Siswa Berhasil diperbarui',
             'success'
           ).then((result) => {
             if (result.value) {

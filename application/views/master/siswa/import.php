@@ -8,7 +8,7 @@
     </div>
     <div class="box-body">
         <ul class="alert alert-info" style="padding-left: 40px">
-            <li>Silahkan import data dari excel, menggunakan format yang sudah disediakan</li>
+            <li>Silahkan import data dari excel, <b>WAJIB</> menggunakan format yang sudah disediakan</li>
             <li>Data tidak boleh ada yang kosong, harus terisi semua.</li>
         </ul>
         <div class="text-center">
@@ -34,7 +34,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <td>No</td>
+                                <td>No.</td>
                                 <td>NISN</td>
                                 <td>Nama</td>
                                 <td>Jenis Kelamin</td>

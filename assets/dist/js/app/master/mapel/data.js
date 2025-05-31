@@ -120,7 +120,7 @@ $(document).ready(function () {
           if (respon.status) {
             Swal({
               title: 'Berhasil',
-              text: respon.total + ' data berhasil dihapus',
+              text: respon.total + ' data Mata Pelajaran berhasil dihapus',
               type: 'success',
             });
           } else {
@@ -148,14 +148,14 @@ function bulk_delete() {
   if ($('#mapel tbody tr .check:checked').length == 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada data Mata Pelajaran yang dipilih',
       type: 'error',
     });
   } else {
     $('#bulk').attr('action', base_url + 'mapel/delete');
     Swal({
       title: 'Anda yakin?',
-      text: 'Data akan dihapus!',
+      text: 'Data Mata Pelajaran akan dihapus!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -173,7 +173,7 @@ function bulk_edit() {
   if ($('#mapel tbody tr .check:checked').length == 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada data Mata Pelajaran yang dipilih',
       type: 'error',
     });
   } else {

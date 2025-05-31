@@ -21,8 +21,8 @@
                     <th>No.</th>
                     <th>Nama Tahun Ajaran</th>
                     <th>Semester</th>
-                    <th>Tgl Mulai</th>
-                    <th>Tgl Selesai</th>
+                    <th>Tanggal Mulai</th>
+                    <th>Tanggal Selesai</th>
                     <th>Status</th>
                     <th class="text-center">Aksi</th>
                     <th class="text-center">

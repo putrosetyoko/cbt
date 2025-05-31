@@ -8,8 +8,8 @@
     <div class="box-body">
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-sm-6">
-                <a href="<?= base_url('guru/add') ?>" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-plus"></i> Tambah Guru</a>
-                <a href="<?= base_url('guru/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Guru</a>
+                <a href="<?= base_url('guru/add') ?>" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-plus"></i> Tambah Data</a>
+                <a href="<?= base_url('guru/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Data</a>
                 <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat btn-default"><i class="fa fa-refresh"></i> Reload</button>
             </div>
             <div class="col-sm-6">

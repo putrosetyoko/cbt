@@ -27,7 +27,7 @@ $(document).ready(function () {
         if (data.status) {
           Swal({
             title: 'Sukses',
-            text: 'Data Berhasil disimpan',
+            text: 'Data Mata Pelajaran Berhasil disimpan',
             type: 'success',
           }).then((result) => {
             if (result.value) {

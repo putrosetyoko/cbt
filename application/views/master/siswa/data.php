@@ -8,14 +8,14 @@
     <div class="box-body">
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-sm-6">
-                <a href="<?= base_url('siswa/add') ?>" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-plus"></i> Tambah Siswa</a>
-                <a href="<?= base_url('siswa/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Siswa</a>
+                <a href="<?= base_url('siswa/add') ?>" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-plus"></i> Tambah Data</a>
+                <a href="<?= base_url('siswa/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Data</a>
                 <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat btn-default"><i class="fa fa-refresh"></i> Reload</button>
             </div>
             
             <div class="col-sm-6">
                 <div class="pull-right">
-                    <button onclick="bulk_activate()" class="btn btn-sm btn-flat btn-primary" type="button"><i class="fa fa-user-plus"></i> Aktifkan User</button>
+                    <button onclick="bulk_activate()" class="btn btn-sm btn-flat btn-primary" type="button"><i class="fa fa-user-plus"></i> Aktifkan Semua</button>
                     <button onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger" type="button"><i class="fa fa-trash"></i> Delete</button>
                 </div>
             </div>

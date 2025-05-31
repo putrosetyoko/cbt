@@ -278,7 +278,11 @@ $(document).ready(function () {
           dataType: 'json',
           success: function (data) {
             if (data.status) {
-              Swal.fire('Berhasil!', data.message, 'success');
+              Swal.fire(
+                'Berhasil Aktifkan Tahun Ajaran!',
+                data.message,
+                'success'
+              );
               reload_ajax();
             } else {
               Swal.fire('Gagal!', data.message, 'error');
@@ -301,19 +305,19 @@ function bulk_delete() {
   if ($('#tahunajaran_table tbody tr .check:checked').length == 0) {
     Swal.fire({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada data Tahun Ajaran yang dipilih',
       type: 'error',
     });
   } else {
     $('#bulk').attr('action', base_url + 'tahunajaran/delete');
     Swal.fire({
       title: 'Anda yakin?',
-      text: 'Data akan dihapus!',
+      text: 'Data Tahun Ajaran akan dihapus!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Hapus!',
+      confirmButtonText: 'Ya, Hapus!',
     }).then((result) => {
       if (result.value) {
         $('#bulk').submit();

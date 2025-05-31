@@ -139,13 +139,13 @@ $(document).ready(function () {
         if (respon.status) {
           Swal({
             title: 'Berhasil',
-            text: respon.total + ' data berhasil dihapus',
+            text: respon.total + ' data Guru berhasil dihapus',
             type: 'success',
           });
         } else {
           Swal({
             title: 'Gagal',
-            text: 'Tidak ada data yang dipilih',
+            text: 'Tidak ada data Guru yang dipilih',
             type: 'error',
           });
         }
@@ -195,18 +195,18 @@ function bulk_delete() {
   if ($('#guru tbody tr .check:checked').length == 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada Guru yang dipilih',
       type: 'error',
     });
   } else {
     Swal({
       title: 'Anda yakin?',
-      text: 'Data akan dihapus!',
+      text: 'Data Guru akan dihapus!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Hapus!',
+      confirmButtonText: 'Ya, Hapus!',
     }).then((result) => {
       if (result.value) {
         $('#bulk').submit();
@@ -224,7 +224,7 @@ function bulk_activate() {
   if (checked_ids.length === 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data guru yang dipilih untuk diaktifkan!',
+      text: 'Tidak ada data Guru yang dipilih untuk diaktifkan!',
       type: 'error',
     });
     return;
@@ -232,7 +232,7 @@ function bulk_activate() {
 
   Swal({
     title: 'Anda yakin?',
-    text: 'Akun guru yang dipilih akan diaktifkan!',
+    text: 'Akun Guru yang dipilih akan diaktifkan!',
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -255,7 +255,7 @@ function bulk_activate() {
                 respon.total_success +
                 ' dari ' +
                 respon.total_processed +
-                ' akun guru berhasil diaktifkan.',
+                ' akun Guru berhasil diaktifkan.',
               type: 'success',
             });
           } else {

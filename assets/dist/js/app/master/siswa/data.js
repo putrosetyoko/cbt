@@ -140,7 +140,7 @@ $(document).ready(function () {
         if (respon.status) {
           Swal({
             title: 'Berhasil',
-            text: respon.total + ' data berhasil dihapus',
+            text: respon.total + ' data Siswa berhasil dihapus',
             type: 'success',
           });
         } else {
@@ -196,18 +196,18 @@ function bulk_delete() {
   if ($('#siswa tbody tr .check:checked').length == 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada Siswa yang dipilih',
       type: 'error',
     });
   } else {
     Swal({
       title: 'Anda yakin?',
-      text: 'Data akan dihapus!',
+      text: 'Data Siswa akan dihapus!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Hapus!',
+      confirmButtonText: 'Ya, Hapus!',
     }).then((result) => {
       if (result.value) {
         $('#bulk').submit();
@@ -225,7 +225,7 @@ function bulk_activate() {
   if (checked_ids.length === 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data siswa yang dipilih untuk diaktifkan!',
+      text: 'Tidak ada data Siswa yang dipilih untuk diaktifkan!',
       type: 'error',
     });
     return;
@@ -233,7 +233,7 @@ function bulk_activate() {
 
   Swal({
     title: 'Anda yakin?',
-    text: 'Akun siswa yang dipilih akan diaktifkan!',
+    text: 'Akun Siswa yang dipilih akan diaktifkan!',
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -256,7 +256,7 @@ function bulk_activate() {
                 respon.total_success +
                 ' dari ' +
                 respon.total_processed +
-                ' akun siswa berhasil diaktifkan.',
+                ' akun Siswa berhasil diaktifkan.',
               type: 'success',
             });
           } else {

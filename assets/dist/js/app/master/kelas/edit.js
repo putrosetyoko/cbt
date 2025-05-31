@@ -26,7 +26,7 @@ $(document).ready(function () {
         if (data.status) {
           Swal({
             title: 'Sukses',
-            text: data.message || 'Data Kelas Berhasil diperbarui',
+            text: data.message || 'Data Kelas Berhasil diperbarui.',
             type: 'success',
           }).then((result) => {
             if (result.value) {

@@ -55,26 +55,41 @@ class Kelas extends CI_Controller
         $this->load->view('_templates/dashboard/_footer.php');
     }
 
-    public function edit()
+    public function edit($id_kelas_single = null)
     {
-        $chk = $this->input->post('checked', true);
-        if (!$chk) {
-            // Sebaiknya redirect ke halaman kelas dengan pesan error, bukan admin/kelas jika controllernya Kelas
-            $this->session->set_flashdata('error', 'Tidak ada data yang dipilih untuk diedit.');
-            redirect('kelas');
+        $kelas_to_edit_array = []; // Ini akan selalu menjadi array yang dikirim ke view
+
+        if ($id_kelas_single !== null && is_numeric($id_kelas_single)) {
+            // Mode Edit Tunggal (ID dari URL)
+            $kelas_obj = $this->master->getKelasByIdSingle($id_kelas_single); // Gunakan fungsi untuk satu ID
+            if ($kelas_obj) {
+                $kelas_to_edit_array[] = $kelas_obj; // Masukkan objek tunggal ke dalam array
+            }
         } else {
-            $kelas_data = $this->master->getKelasById($chk); // getKelasById sudah dijoin dengan jenjang
-            $data = [
-                'user'      => $this->ion_auth->user()->row(),
-                'judul'     => 'Edit Kelas',
-                'subjudul'  => 'Edit Data Kelas',
-                'all_jenjang' => $this->master->getAllJenjang(), // Mengambil data semua jenjang
-                'kelas'     => $kelas_data // Mengirim data kelas yang akan diedit
-            ];
-            $this->load->view('_templates/dashboard/_header.php', $data);
-            $this->load->view('master/kelas/edit', $data);
-            $this->load->view('_templates/dashboard/_footer.php');
+            // Mode Edit Massal (ID dari POST 'checked')
+            $checked_ids = $this->input->post('checked', true);
+            if (!empty($checked_ids) && is_array($checked_ids)) {
+                $kelas_to_edit_array = $this->master->getKelasByIds($checked_ids); // Gunakan fungsi untuk array ID
+            }
         }
+
+        if (empty($kelas_to_edit_array)) {
+            $this->session->set_flashdata('error', 'Tidak ada data kelas yang dipilih atau data tidak ditemukan.');
+            redirect('kelas'); // Kembali ke halaman daftar kelas
+            return;
+        }
+
+        $data = [
+            'user'        => $this->ion_auth->user()->row(),
+            'judul'       => 'Edit Kelas',
+            'subjudul'    => 'Edit Data Kelas',
+            'all_jenjang' => $this->master->getAllJenjang(), // Untuk dropdown jenjang
+            'kelas'       => $kelas_to_edit_array // Kirim array kelas ke view
+        ];
+
+        $this->load->view('_templates/dashboard/_header.php', $data);
+        $this->load->view('master/kelas/edit', $data); // View 'edit.php' Anda tetap sama
+        $this->load->view('_templates/dashboard/_footer.php');
     }
 
     public function save()
@@ -238,7 +253,7 @@ class Kelas extends CI_Controller
     {
         $input_data = json_decode($this->input->post('data', true));
         if (empty($input_data)) {
-             $this->session->set_flashdata('error', 'Tidak ada data untuk diimpor.');
+            $this->session->set_flashdata('error', 'Tidak ada data untuk diimpor.');
             redirect('kelas/import');
         }
 

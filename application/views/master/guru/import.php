@@ -16,7 +16,7 @@
         <?php endif; ?>
 
         <ul class="alert alert-info" style="padding-left: 40px">
-            <li>Silahkan import data dari excel, menggunakan format yang sudah disediakan</li>
+            <li>Silahkan import data dari excel, <b>WAJIB</b> menggunakan format yang sudah disediakan.</li>
             <li>Data tidak boleh ada yang kosong, harus terisi semua.</li>
         </ul>
         <div class="text-center">

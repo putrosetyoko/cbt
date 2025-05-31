@@ -7,10 +7,10 @@
     </div>
     <div class="box-body">
         <div class="row">
-             <div class="col-sm-offset-2 col-sm-10 col-md-offset-2 col-md-8">
+            <div class="col-sm-offset-4 col-sm-4">
                 <div class="my-2">
                     <div class="form-horizontal form-inline">
-                        <a href="<?=base_url('kelas')?>" class="btn btn-default btn-xs">
+                        <a href="<?=base_url('kelas')?>" class="btn btn-flat btn-warning btn-sm">
                             <i class="fa fa-arrow-left"></i> Batal
                         </a>
                         <div class="pull-right">
@@ -56,7 +56,7 @@
                     </tbody>
                 </table>
                 <button id="submit" type="submit" class="mb-4 btn btn-block btn-flat bg-purple">
-                    <i class="fa fa-edit"></i> Simpan Perubahan
+                    <i class="fa fa-edit"></i> Simpan
                 </button>
                 <?=form_close()?>
             </div>

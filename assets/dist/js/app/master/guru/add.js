@@ -33,7 +33,7 @@ $(document).ready(function () {
         if (response.status) {
           Swal(
             'Sukses',
-            response.message || 'Data Guru Berhasil disimpan',
+            response.message || 'Data Guru Berhasil disimpan.',
             'success'
           ) // Gunakan response.message jika ada
             .then((result) => {

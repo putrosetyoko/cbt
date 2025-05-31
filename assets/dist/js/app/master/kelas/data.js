@@ -125,7 +125,8 @@ $(document).ready(function () {
             Swal({
               // Atau Swal.fire untuk versi SweetAlert2 yang lebih baru
               title: 'Berhasil',
-              text: respon.message || respon.total + ' data berhasil dihapus',
+              text:
+                respon.message || respon.total + ' data Kelas berhasil dihapus',
               type: 'success', // 'icon: 'success'' untuk v9+
             });
           } else {
@@ -160,14 +161,14 @@ function bulk_delete() {
   if ($('#kelas tbody tr .check:checked').length == 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada data Kelas yang dipilih',
       type: 'error',
     });
   } else {
     $('#bulk').attr('action', base_url + 'kelas/delete'); // Set action form ke delete
     Swal({
       title: 'Anda yakin?',
-      text: 'Data yang dipilih akan dihapus!',
+      text: 'Data Kelas akan dihapus!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -186,7 +187,7 @@ function bulk_edit() {
   if ($('#kelas tbody tr .check:checked').length == 0) {
     Swal({
       title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
+      text: 'Tidak ada data Kelas yang dipilih',
       type: 'error',
     });
   } else {

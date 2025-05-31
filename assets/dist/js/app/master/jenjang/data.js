@@ -227,14 +227,14 @@ function bulk_delete() {
   if ($('#jenjang_table tbody tr .check:checked').length == 0) {
     Swal.fire({
       title: 'Gagal',
-      text: 'Tidak ada data jenjang yang dipilih',
+      text: 'Tidak ada data Jenjang yang dipilih',
       type: 'error',
     }); // 'icon'
   } else {
     $('#bulk').attr('action', base_url + 'jenjang/delete'); // Target ke controller Jenjang
     Swal.fire({
       title: 'Anda yakin?',
-      text: 'Data jenjang yang dipilih akan dihapus!',
+      text: 'Data Jenjang akan dihapus!',
       type: 'warning', // 'icon'
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

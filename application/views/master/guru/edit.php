@@ -31,7 +31,7 @@
                         <i class="fa fa-rotate-left"></i> Reset
                     </button>
                     <button type="submit" id="submit" class="btn btn-flat bg-purple">
-                        <i class="fa fa-pencil"></i> Update
+                        <i class="fa fa-pencil"></i> Simpan
                     </button>
                 </div>
             </div>

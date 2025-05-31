@@ -29,15 +29,17 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="tgl_mulai">Tanggal Mulai</label>
-                            <input type="text" name="tgl_mulai" class="form-control datetimepicker" placeholder="YYYY-MM-DD" required autocomplete="off">
+                            <input type="text" name="tgl_mulai" class="form-control datetimepicker" placeholder="YYYY - MM - DD" required autocomplete="off">
                             <small class="help-block text-danger" id="error_tgl_mulai"></small>
+                            <small class="help-block"><b>Tahun - Bulan - Tanggal</b></small>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="tgl_selesai">Tanggal Selesai</label>
-                            <input type="text" name="tgl_selesai" class="form-control datetimepicker" placeholder="YYYY-MM-DD" required autocomplete="off">
+                            <input type="text" name="tgl_selesai" class="form-control datetimepicker" placeholder="YYYY - MM - DD" required autocomplete="off">
                             <small class="help-block text-danger" id="error_tgl_selesai"></small>
+                            <small class="help-block"><b>Tahun - Bulan - Tanggal</b></small>
                         </div>
                     </div>
                 </div>
