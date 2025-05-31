@@ -21,13 +21,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="kelas_id">Jenjang - Kelas <span class="text-danger">*</span></label> 
+                    <label for="kelas_id">Kelas <span class="text-danger">*</span></label> 
                     <select name="kelas_id" id="kelas_id" class="form-control select2" style="width: 100%;" required>
-                        <option value="">-- Pilih Jenjang & Kelas --</option>
+                        <option value="">-- Pilih Kelas --</option>
                         <?php if (isset($all_kelas) && !empty($all_kelas)) : ?>
                             <?php foreach ($all_kelas as $k) : ?>
                                 <option value="<?= $k->id_kelas ?>">
-                                    <?= htmlspecialchars($k->nama_jenjang . ' - ' . $k->nama_kelas) ?>
+                                    <?= htmlspecialchars($k->nama_jenjang . ' ' . $k->nama_kelas) ?>
                                 </option>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -45,7 +45,7 @@
                 
                 <div class="form-group pull-right">
                     <button type="reset" class="btn btn-flat btn-default"><i class="fa fa-rotate-left"></i> Reset</button>
-                    <button type="submit" id="submitBtn" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan Penempatan</button>
+                    <button type="submit" id="submitBtn" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </div>
         </div>

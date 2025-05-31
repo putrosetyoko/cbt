@@ -34,10 +34,10 @@ $(document).ready(function () {
       "<'row'<'col-sm-12'tr>>" +
       "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     buttons: [
-      { extend: 'copy', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
-      { extend: 'print', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
-      { extend: 'excel', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
-      { extend: 'pdf', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
+      { extend: 'copy', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+      { extend: 'print', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+      { extend: 'excel', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+      { extend: 'pdf', exportOptions: { columns: [0, 1, 2, 3, 4] } },
     ],
     oLanguage: {
       sProcessing: 'Memuat...',
@@ -71,8 +71,13 @@ $(document).ready(function () {
     columns: [
       { data: 'id_ska', orderable: false, searchable: false, width: '3%' },
       { data: 'nama_tahun_ajaran' },
-      { data: 'nama_jenjang', defaultContent: '-' },
-      { data: 'nama_kelas' },
+      {
+        // Gabungkan jenjang dan kelas
+        data: null,
+        render: function (data, type, row) {
+          return row.nama_jenjang + ' ' + row.nama_kelas;
+        },
+      },
       { data: 'nisn' },
       { data: 'nama_siswa' },
       {
@@ -96,7 +101,7 @@ $(document).ready(function () {
         },
       },
       {
-        targets: 6,
+        targets: 5,
         render: function (data, type, row) {
           return `<div class="text-center">
                   <a href="${base_url}siswakelas/edit/${data.id_ska}" class="btn btn-xs btn-warning">
@@ -106,7 +111,7 @@ $(document).ready(function () {
         },
       },
       {
-        targets: 7,
+        targets: 6,
         render: function (data, type, row) {
           return `<div class="text-center">
                   <input type="checkbox" class="check" name="checked[]" value="${data.id_ska}">

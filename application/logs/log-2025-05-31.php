@@ -54427,3 +54427,4463 @@ INFO - 2025-05-31 15:59:47 --> Form Validation Class Initialized
 INFO - 2025-05-31 15:59:47 --> Model "Master_model" initialized
 INFO - 2025-05-31 15:59:47 --> Final output sent to browser
 DEBUG - 2025-05-31 15:59:47 --> Total execution time: 0.0487
+INFO - 2025-05-31 16:00:44 --> Config Class Initialized
+INFO - 2025-05-31 16:00:44 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:00:44 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:00:44 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:00:44 --> URI Class Initialized
+INFO - 2025-05-31 16:00:44 --> Router Class Initialized
+INFO - 2025-05-31 16:00:44 --> Output Class Initialized
+INFO - 2025-05-31 16:00:44 --> Security Class Initialized
+DEBUG - 2025-05-31 16:00:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:00:44 --> CSRF cookie sent
+INFO - 2025-05-31 16:00:44 --> Input Class Initialized
+INFO - 2025-05-31 16:00:44 --> Language Class Initialized
+INFO - 2025-05-31 16:00:44 --> Loader Class Initialized
+INFO - 2025-05-31 16:00:44 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:00:44 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:00:44 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:00:45 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:00:45 --> Email Class Initialized
+INFO - 2025-05-31 16:00:45 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:00:45 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:00:45 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:00:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:00:45 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:00:45 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:00:45 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:00:45 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:00:45 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:00:45 --> Encryption Class Initialized
+INFO - 2025-05-31 16:00:45 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:00:45 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:00:45 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:00:45 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:00:45 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:00:45 --> File loaded: C:\xampp\htdocs\cbt\application\views\master/siswa/data.php
+INFO - 2025-05-31 16:00:45 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:00:45 --> Final output sent to browser
+DEBUG - 2025-05-31 16:00:45 --> Total execution time: 1.0597
+INFO - 2025-05-31 16:00:45 --> Config Class Initialized
+INFO - 2025-05-31 16:00:45 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:00:45 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:00:45 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:00:45 --> URI Class Initialized
+INFO - 2025-05-31 16:00:45 --> Router Class Initialized
+INFO - 2025-05-31 16:00:45 --> Output Class Initialized
+INFO - 2025-05-31 16:00:45 --> Security Class Initialized
+DEBUG - 2025-05-31 16:00:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:00:45 --> CSRF cookie sent
+INFO - 2025-05-31 16:00:45 --> CSRF token verified
+INFO - 2025-05-31 16:00:45 --> Input Class Initialized
+INFO - 2025-05-31 16:00:45 --> Language Class Initialized
+INFO - 2025-05-31 16:00:45 --> Loader Class Initialized
+INFO - 2025-05-31 16:00:45 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:00:45 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:00:45 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:00:45 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:00:45 --> Email Class Initialized
+INFO - 2025-05-31 16:00:45 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:00:45 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:00:45 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:00:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:00:45 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:00:45 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:00:45 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:00:45 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:00:45 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:00:45 --> Encryption Class Initialized
+INFO - 2025-05-31 16:00:45 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:00:45 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:00:45 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:00:45 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:00:45 --> Final output sent to browser
+DEBUG - 2025-05-31 16:00:45 --> Total execution time: 0.0418
+INFO - 2025-05-31 16:00:51 --> Config Class Initialized
+INFO - 2025-05-31 16:00:51 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:00:51 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:00:51 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:00:51 --> URI Class Initialized
+INFO - 2025-05-31 16:00:51 --> Router Class Initialized
+INFO - 2025-05-31 16:00:51 --> Output Class Initialized
+INFO - 2025-05-31 16:00:51 --> Security Class Initialized
+DEBUG - 2025-05-31 16:00:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:00:51 --> CSRF cookie sent
+INFO - 2025-05-31 16:00:51 --> Input Class Initialized
+INFO - 2025-05-31 16:00:51 --> Language Class Initialized
+INFO - 2025-05-31 16:00:51 --> Loader Class Initialized
+INFO - 2025-05-31 16:00:51 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:00:51 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:00:51 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:00:51 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:00:51 --> Email Class Initialized
+INFO - 2025-05-31 16:00:51 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:00:51 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:00:51 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:00:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:00:51 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:00:51 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:00:51 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:00:51 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:00:51 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:00:51 --> Encryption Class Initialized
+INFO - 2025-05-31 16:00:51 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:00:51 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:00:51 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:00:51 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:00:51 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:00:51 --> File loaded: C:\xampp\htdocs\cbt\application\views\master/siswa/data.php
+INFO - 2025-05-31 16:00:51 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:00:51 --> Final output sent to browser
+DEBUG - 2025-05-31 16:00:51 --> Total execution time: 0.0515
+INFO - 2025-05-31 16:00:52 --> Config Class Initialized
+INFO - 2025-05-31 16:00:52 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:00:52 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:00:52 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:00:52 --> URI Class Initialized
+INFO - 2025-05-31 16:00:52 --> Router Class Initialized
+INFO - 2025-05-31 16:00:52 --> Output Class Initialized
+INFO - 2025-05-31 16:00:52 --> Security Class Initialized
+DEBUG - 2025-05-31 16:00:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:00:52 --> CSRF cookie sent
+INFO - 2025-05-31 16:00:52 --> CSRF token verified
+INFO - 2025-05-31 16:00:52 --> Input Class Initialized
+INFO - 2025-05-31 16:00:52 --> Language Class Initialized
+INFO - 2025-05-31 16:00:52 --> Loader Class Initialized
+INFO - 2025-05-31 16:00:52 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:00:52 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:00:52 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:00:52 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:00:52 --> Email Class Initialized
+INFO - 2025-05-31 16:00:52 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:00:52 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:00:52 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:00:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:00:52 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:00:52 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:00:52 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:00:52 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:00:52 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:00:52 --> Encryption Class Initialized
+INFO - 2025-05-31 16:00:52 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:00:52 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:00:52 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:00:52 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:00:52 --> Final output sent to browser
+DEBUG - 2025-05-31 16:00:52 --> Total execution time: 0.0568
+INFO - 2025-05-31 16:00:56 --> Config Class Initialized
+INFO - 2025-05-31 16:00:56 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:00:56 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:00:56 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:00:56 --> URI Class Initialized
+INFO - 2025-05-31 16:00:56 --> Router Class Initialized
+INFO - 2025-05-31 16:00:56 --> Output Class Initialized
+INFO - 2025-05-31 16:00:56 --> Security Class Initialized
+DEBUG - 2025-05-31 16:00:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:00:56 --> CSRF cookie sent
+INFO - 2025-05-31 16:00:56 --> Input Class Initialized
+INFO - 2025-05-31 16:00:56 --> Language Class Initialized
+INFO - 2025-05-31 16:00:56 --> Loader Class Initialized
+INFO - 2025-05-31 16:00:56 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:00:56 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:00:56 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:00:56 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:00:56 --> Email Class Initialized
+INFO - 2025-05-31 16:00:56 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:00:56 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:00:56 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:00:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:00:56 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:00:56 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:00:56 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:00:56 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:00:56 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:00:56 --> Encryption Class Initialized
+INFO - 2025-05-31 16:00:56 --> Controller Class Initialized
+INFO - 2025-05-31 16:00:56 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:00:56 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:00:56 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:00:56 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:00:56 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:00:56 --> Final output sent to browser
+DEBUG - 2025-05-31 16:00:56 --> Total execution time: 0.0744
+INFO - 2025-05-31 16:00:56 --> Config Class Initialized
+INFO - 2025-05-31 16:00:56 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:00:56 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:00:56 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:00:56 --> URI Class Initialized
+INFO - 2025-05-31 16:00:56 --> Router Class Initialized
+INFO - 2025-05-31 16:00:56 --> Output Class Initialized
+INFO - 2025-05-31 16:00:56 --> Security Class Initialized
+DEBUG - 2025-05-31 16:00:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:00:56 --> CSRF cookie sent
+INFO - 2025-05-31 16:00:56 --> CSRF token verified
+INFO - 2025-05-31 16:00:56 --> Input Class Initialized
+INFO - 2025-05-31 16:00:56 --> Language Class Initialized
+INFO - 2025-05-31 16:00:56 --> Loader Class Initialized
+INFO - 2025-05-31 16:00:56 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:00:56 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:00:56 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:00:56 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:00:56 --> Email Class Initialized
+INFO - 2025-05-31 16:00:56 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:00:56 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:00:56 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:00:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:00:56 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:00:56 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:00:56 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:00:56 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:00:56 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:00:56 --> Encryption Class Initialized
+INFO - 2025-05-31 16:00:56 --> Controller Class Initialized
+INFO - 2025-05-31 16:00:56 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:00:56 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:00:56 --> Final output sent to browser
+DEBUG - 2025-05-31 16:00:56 --> Total execution time: 0.0543
+INFO - 2025-05-31 16:01:15 --> Config Class Initialized
+INFO - 2025-05-31 16:01:15 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:01:15 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:01:15 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:01:15 --> URI Class Initialized
+INFO - 2025-05-31 16:01:15 --> Router Class Initialized
+INFO - 2025-05-31 16:01:15 --> Output Class Initialized
+INFO - 2025-05-31 16:01:15 --> Security Class Initialized
+DEBUG - 2025-05-31 16:01:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:01:15 --> CSRF cookie sent
+INFO - 2025-05-31 16:01:15 --> Input Class Initialized
+INFO - 2025-05-31 16:01:15 --> Language Class Initialized
+INFO - 2025-05-31 16:01:15 --> Loader Class Initialized
+INFO - 2025-05-31 16:01:15 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:01:15 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:01:15 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:01:15 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:01:15 --> Email Class Initialized
+INFO - 2025-05-31 16:01:15 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:01:15 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:01:15 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:01:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:01:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:01:15 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:01:15 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:01:15 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:01:15 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:01:15 --> Encryption Class Initialized
+INFO - 2025-05-31 16:01:15 --> Controller Class Initialized
+INFO - 2025-05-31 16:01:15 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:01:15 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:01:15 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:01:15 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:01:15 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:01:15 --> Final output sent to browser
+DEBUG - 2025-05-31 16:01:15 --> Total execution time: 0.0539
+INFO - 2025-05-31 16:01:15 --> Config Class Initialized
+INFO - 2025-05-31 16:01:15 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:01:15 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:01:15 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:01:15 --> URI Class Initialized
+INFO - 2025-05-31 16:01:15 --> Router Class Initialized
+INFO - 2025-05-31 16:01:15 --> Output Class Initialized
+INFO - 2025-05-31 16:01:15 --> Security Class Initialized
+DEBUG - 2025-05-31 16:01:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:01:15 --> CSRF cookie sent
+INFO - 2025-05-31 16:01:15 --> CSRF token verified
+INFO - 2025-05-31 16:01:15 --> Input Class Initialized
+INFO - 2025-05-31 16:01:15 --> Language Class Initialized
+INFO - 2025-05-31 16:01:15 --> Loader Class Initialized
+INFO - 2025-05-31 16:01:15 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:01:15 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:01:15 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:01:15 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:01:15 --> Email Class Initialized
+INFO - 2025-05-31 16:01:15 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:01:15 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:01:15 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:01:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:01:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:01:15 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:01:15 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:01:15 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:01:15 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:01:15 --> Encryption Class Initialized
+INFO - 2025-05-31 16:01:15 --> Controller Class Initialized
+INFO - 2025-05-31 16:01:15 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:01:15 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:01:15 --> Final output sent to browser
+DEBUG - 2025-05-31 16:01:15 --> Total execution time: 0.0441
+INFO - 2025-05-31 16:02:09 --> Config Class Initialized
+INFO - 2025-05-31 16:02:09 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:09 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:09 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:09 --> URI Class Initialized
+INFO - 2025-05-31 16:02:09 --> Router Class Initialized
+INFO - 2025-05-31 16:02:09 --> Output Class Initialized
+INFO - 2025-05-31 16:02:09 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:09 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:09 --> Input Class Initialized
+INFO - 2025-05-31 16:02:09 --> Language Class Initialized
+INFO - 2025-05-31 16:02:09 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:09 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:09 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:09 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:10 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:10 --> Email Class Initialized
+INFO - 2025-05-31 16:02:10 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:10 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:10 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:10 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:10 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:10 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:10 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:10 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:10 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:10 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:10 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:10 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:10 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:10 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:02:10 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:10 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:10 --> Total execution time: 0.0617
+INFO - 2025-05-31 16:02:10 --> Config Class Initialized
+INFO - 2025-05-31 16:02:10 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:10 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:10 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:10 --> URI Class Initialized
+INFO - 2025-05-31 16:02:10 --> Router Class Initialized
+INFO - 2025-05-31 16:02:10 --> Output Class Initialized
+INFO - 2025-05-31 16:02:10 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:10 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:10 --> CSRF token verified
+INFO - 2025-05-31 16:02:10 --> Input Class Initialized
+INFO - 2025-05-31 16:02:10 --> Language Class Initialized
+INFO - 2025-05-31 16:02:10 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:10 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:10 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:10 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:10 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:10 --> Email Class Initialized
+INFO - 2025-05-31 16:02:10 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:10 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:10 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:10 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:10 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:10 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:10 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:10 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:10 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:10 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:10 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:10 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:10 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:10 --> Total execution time: 0.0415
+INFO - 2025-05-31 16:02:12 --> Config Class Initialized
+INFO - 2025-05-31 16:02:12 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:12 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:12 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:12 --> URI Class Initialized
+INFO - 2025-05-31 16:02:12 --> Router Class Initialized
+INFO - 2025-05-31 16:02:12 --> Output Class Initialized
+INFO - 2025-05-31 16:02:12 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:12 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:12 --> Input Class Initialized
+INFO - 2025-05-31 16:02:12 --> Language Class Initialized
+INFO - 2025-05-31 16:02:12 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:12 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:12 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:12 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:12 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:12 --> Email Class Initialized
+INFO - 2025-05-31 16:02:12 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:12 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:12 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:12 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:12 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:12 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:12 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:12 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:12 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:12 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:12 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:12 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:12 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:12 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:02:12 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:12 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:12 --> Total execution time: 0.0534
+INFO - 2025-05-31 16:02:13 --> Config Class Initialized
+INFO - 2025-05-31 16:02:13 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:13 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:13 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:13 --> URI Class Initialized
+INFO - 2025-05-31 16:02:13 --> Router Class Initialized
+INFO - 2025-05-31 16:02:13 --> Output Class Initialized
+INFO - 2025-05-31 16:02:13 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:13 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:13 --> CSRF token verified
+INFO - 2025-05-31 16:02:13 --> Input Class Initialized
+INFO - 2025-05-31 16:02:13 --> Language Class Initialized
+INFO - 2025-05-31 16:02:13 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:13 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:13 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:13 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:13 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:13 --> Email Class Initialized
+INFO - 2025-05-31 16:02:13 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:13 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:13 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:13 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:13 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:13 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:13 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:13 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:13 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:13 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:13 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:13 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:13 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:13 --> Total execution time: 0.0410
+INFO - 2025-05-31 16:02:28 --> Config Class Initialized
+INFO - 2025-05-31 16:02:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:28 --> URI Class Initialized
+INFO - 2025-05-31 16:02:28 --> Router Class Initialized
+INFO - 2025-05-31 16:02:28 --> Output Class Initialized
+INFO - 2025-05-31 16:02:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:28 --> Input Class Initialized
+INFO - 2025-05-31 16:02:28 --> Language Class Initialized
+INFO - 2025-05-31 16:02:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:28 --> Email Class Initialized
+INFO - 2025-05-31 16:02:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:02:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:28 --> Total execution time: 0.0401
+INFO - 2025-05-31 16:02:28 --> Config Class Initialized
+INFO - 2025-05-31 16:02:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:28 --> URI Class Initialized
+INFO - 2025-05-31 16:02:28 --> Router Class Initialized
+INFO - 2025-05-31 16:02:28 --> Output Class Initialized
+INFO - 2025-05-31 16:02:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:28 --> CSRF token verified
+INFO - 2025-05-31 16:02:28 --> Input Class Initialized
+INFO - 2025-05-31 16:02:28 --> Language Class Initialized
+INFO - 2025-05-31 16:02:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:28 --> Email Class Initialized
+INFO - 2025-05-31 16:02:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:28 --> Total execution time: 0.0455
+INFO - 2025-05-31 16:02:34 --> Config Class Initialized
+INFO - 2025-05-31 16:02:34 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:34 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:34 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:34 --> URI Class Initialized
+INFO - 2025-05-31 16:02:34 --> Router Class Initialized
+INFO - 2025-05-31 16:02:34 --> Output Class Initialized
+INFO - 2025-05-31 16:02:34 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:34 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:34 --> Input Class Initialized
+INFO - 2025-05-31 16:02:34 --> Language Class Initialized
+INFO - 2025-05-31 16:02:34 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:34 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:34 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:34 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:34 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:34 --> Email Class Initialized
+INFO - 2025-05-31 16:02:34 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:34 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:34 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:34 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:34 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:34 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:34 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:34 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:34 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:34 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:34 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:34 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:34 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:02:34 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:34 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:34 --> Total execution time: 0.0403
+INFO - 2025-05-31 16:02:34 --> Config Class Initialized
+INFO - 2025-05-31 16:02:34 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:34 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:34 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:34 --> URI Class Initialized
+INFO - 2025-05-31 16:02:34 --> Router Class Initialized
+INFO - 2025-05-31 16:02:34 --> Output Class Initialized
+INFO - 2025-05-31 16:02:34 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:34 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:34 --> CSRF token verified
+INFO - 2025-05-31 16:02:34 --> Input Class Initialized
+INFO - 2025-05-31 16:02:34 --> Language Class Initialized
+INFO - 2025-05-31 16:02:34 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:34 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:34 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:34 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:34 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:34 --> Email Class Initialized
+INFO - 2025-05-31 16:02:34 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:34 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:34 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:34 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:34 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:34 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:34 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:34 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:34 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:34 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:34 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:34 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:34 --> Total execution time: 0.0472
+INFO - 2025-05-31 16:02:38 --> Config Class Initialized
+INFO - 2025-05-31 16:02:38 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:38 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:38 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:38 --> URI Class Initialized
+INFO - 2025-05-31 16:02:38 --> Router Class Initialized
+INFO - 2025-05-31 16:02:38 --> Output Class Initialized
+INFO - 2025-05-31 16:02:38 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:38 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:38 --> Input Class Initialized
+INFO - 2025-05-31 16:02:38 --> Language Class Initialized
+INFO - 2025-05-31 16:02:38 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:38 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:38 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:38 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:38 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:38 --> Email Class Initialized
+INFO - 2025-05-31 16:02:38 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:38 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:38 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:38 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:38 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:38 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:38 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:38 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:38 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:38 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:38 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:38 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:38 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:38 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:02:38 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:38 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:38 --> Total execution time: 0.0597
+INFO - 2025-05-31 16:02:38 --> Config Class Initialized
+INFO - 2025-05-31 16:02:38 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:38 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:38 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:38 --> URI Class Initialized
+INFO - 2025-05-31 16:02:38 --> Router Class Initialized
+INFO - 2025-05-31 16:02:38 --> Output Class Initialized
+INFO - 2025-05-31 16:02:38 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:38 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:38 --> CSRF token verified
+INFO - 2025-05-31 16:02:38 --> Input Class Initialized
+INFO - 2025-05-31 16:02:38 --> Language Class Initialized
+INFO - 2025-05-31 16:02:38 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:38 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:38 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:38 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:38 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:38 --> Email Class Initialized
+INFO - 2025-05-31 16:02:38 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:38 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:38 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:38 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:38 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:38 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:38 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:38 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:38 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:38 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:38 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:38 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:38 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:38 --> Total execution time: 0.0643
+INFO - 2025-05-31 16:02:42 --> Config Class Initialized
+INFO - 2025-05-31 16:02:42 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:42 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:42 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:42 --> URI Class Initialized
+INFO - 2025-05-31 16:02:42 --> Router Class Initialized
+INFO - 2025-05-31 16:02:42 --> Output Class Initialized
+INFO - 2025-05-31 16:02:42 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:42 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:42 --> CSRF token verified
+INFO - 2025-05-31 16:02:42 --> Input Class Initialized
+INFO - 2025-05-31 16:02:42 --> Language Class Initialized
+INFO - 2025-05-31 16:02:42 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:42 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:42 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:42 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:42 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:42 --> Email Class Initialized
+INFO - 2025-05-31 16:02:42 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:42 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:42 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:42 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:42 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:42 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:42 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:42 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:42 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:42 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:42 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:42 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:42 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:42 --> Total execution time: 0.0375
+INFO - 2025-05-31 16:02:47 --> Config Class Initialized
+INFO - 2025-05-31 16:02:47 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:47 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:47 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:47 --> URI Class Initialized
+INFO - 2025-05-31 16:02:47 --> Router Class Initialized
+INFO - 2025-05-31 16:02:47 --> Output Class Initialized
+INFO - 2025-05-31 16:02:47 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:47 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:47 --> Input Class Initialized
+INFO - 2025-05-31 16:02:47 --> Language Class Initialized
+INFO - 2025-05-31 16:02:47 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:47 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:47 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:47 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:47 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:47 --> Email Class Initialized
+INFO - 2025-05-31 16:02:47 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:47 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:47 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:47 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:47 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:47 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:47 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:47 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:47 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:47 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:47 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:47 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:47 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:47 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:02:47 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:47 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:47 --> Total execution time: 0.0400
+INFO - 2025-05-31 16:02:52 --> Config Class Initialized
+INFO - 2025-05-31 16:02:52 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:02:52 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:02:52 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:02:52 --> URI Class Initialized
+INFO - 2025-05-31 16:02:52 --> Router Class Initialized
+INFO - 2025-05-31 16:02:52 --> Output Class Initialized
+INFO - 2025-05-31 16:02:52 --> Security Class Initialized
+DEBUG - 2025-05-31 16:02:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:02:52 --> CSRF cookie sent
+INFO - 2025-05-31 16:02:52 --> Input Class Initialized
+INFO - 2025-05-31 16:02:52 --> Language Class Initialized
+INFO - 2025-05-31 16:02:52 --> Loader Class Initialized
+INFO - 2025-05-31 16:02:52 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:02:52 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:02:52 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:02:52 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:02:52 --> Email Class Initialized
+INFO - 2025-05-31 16:02:52 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:02:52 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:02:52 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:02:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:02:52 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:02:52 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:02:52 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:02:52 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:02:52 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:02:52 --> Encryption Class Initialized
+INFO - 2025-05-31 16:02:52 --> Controller Class Initialized
+INFO - 2025-05-31 16:02:52 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:02:52 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:02:52 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:02:52 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:02:52 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:02:52 --> Final output sent to browser
+DEBUG - 2025-05-31 16:02:52 --> Total execution time: 0.0579
+INFO - 2025-05-31 16:03:01 --> Config Class Initialized
+INFO - 2025-05-31 16:03:01 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:01 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:01 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:01 --> URI Class Initialized
+INFO - 2025-05-31 16:03:01 --> Router Class Initialized
+INFO - 2025-05-31 16:03:01 --> Output Class Initialized
+INFO - 2025-05-31 16:03:01 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:01 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:01 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:01 --> Input Class Initialized
+INFO - 2025-05-31 16:03:01 --> Language Class Initialized
+INFO - 2025-05-31 16:03:01 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:01 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:01 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:01 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:01 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:01 --> Email Class Initialized
+INFO - 2025-05-31 16:03:01 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:01 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:01 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:01 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:01 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:01 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:01 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:01 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:01 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:01 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:01 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:01 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:01 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:01 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:01 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:03:01 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:01 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:01 --> Total execution time: 0.0396
+INFO - 2025-05-31 16:03:01 --> Config Class Initialized
+INFO - 2025-05-31 16:03:01 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:01 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:01 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:01 --> URI Class Initialized
+INFO - 2025-05-31 16:03:01 --> Router Class Initialized
+INFO - 2025-05-31 16:03:01 --> Output Class Initialized
+INFO - 2025-05-31 16:03:01 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:01 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:01 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:01 --> CSRF token verified
+INFO - 2025-05-31 16:03:01 --> Input Class Initialized
+INFO - 2025-05-31 16:03:01 --> Language Class Initialized
+INFO - 2025-05-31 16:03:01 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:01 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:01 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:01 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:01 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:01 --> Email Class Initialized
+INFO - 2025-05-31 16:03:01 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:01 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:01 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:01 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:01 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:01 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:01 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:01 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:01 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:01 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:01 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:01 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:01 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:01 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:01 --> Total execution time: 0.0598
+INFO - 2025-05-31 16:03:04 --> Config Class Initialized
+INFO - 2025-05-31 16:03:04 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:04 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:04 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:04 --> URI Class Initialized
+INFO - 2025-05-31 16:03:04 --> Router Class Initialized
+INFO - 2025-05-31 16:03:04 --> Output Class Initialized
+INFO - 2025-05-31 16:03:04 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:04 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:04 --> Input Class Initialized
+INFO - 2025-05-31 16:03:04 --> Language Class Initialized
+INFO - 2025-05-31 16:03:04 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:04 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:04 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:04 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:04 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:04 --> Email Class Initialized
+INFO - 2025-05-31 16:03:04 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:04 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:04 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:04 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:04 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:04 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:04 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:04 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:04 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:04 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:04 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:04 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:03:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:04 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:04 --> Total execution time: 0.0635
+INFO - 2025-05-31 16:03:04 --> Config Class Initialized
+INFO - 2025-05-31 16:03:04 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:04 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:04 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:04 --> URI Class Initialized
+INFO - 2025-05-31 16:03:04 --> Router Class Initialized
+INFO - 2025-05-31 16:03:04 --> Output Class Initialized
+INFO - 2025-05-31 16:03:04 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:04 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:04 --> CSRF token verified
+INFO - 2025-05-31 16:03:04 --> Input Class Initialized
+INFO - 2025-05-31 16:03:04 --> Language Class Initialized
+INFO - 2025-05-31 16:03:04 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:04 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:04 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:04 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:04 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:04 --> Email Class Initialized
+INFO - 2025-05-31 16:03:04 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:04 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:04 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:04 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:04 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:04 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:04 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:04 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:04 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:04 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:04 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:04 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:04 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:04 --> Total execution time: 0.0421
+INFO - 2025-05-31 16:03:09 --> Config Class Initialized
+INFO - 2025-05-31 16:03:09 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:09 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:09 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:09 --> URI Class Initialized
+INFO - 2025-05-31 16:03:09 --> Router Class Initialized
+INFO - 2025-05-31 16:03:09 --> Output Class Initialized
+INFO - 2025-05-31 16:03:09 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:09 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:09 --> Input Class Initialized
+INFO - 2025-05-31 16:03:09 --> Language Class Initialized
+INFO - 2025-05-31 16:03:09 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:09 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:09 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:09 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:09 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:09 --> Email Class Initialized
+INFO - 2025-05-31 16:03:09 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:09 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:09 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:09 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:09 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:09 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:09 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:09 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:09 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:09 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:09 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:09 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:09 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:09 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:09 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:03:09 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:09 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:09 --> Total execution time: 0.0503
+INFO - 2025-05-31 16:03:10 --> Config Class Initialized
+INFO - 2025-05-31 16:03:10 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:10 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:10 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:10 --> URI Class Initialized
+INFO - 2025-05-31 16:03:10 --> Router Class Initialized
+INFO - 2025-05-31 16:03:10 --> Output Class Initialized
+INFO - 2025-05-31 16:03:10 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:10 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:10 --> Input Class Initialized
+INFO - 2025-05-31 16:03:10 --> Language Class Initialized
+INFO - 2025-05-31 16:03:10 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:10 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:10 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:10 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:10 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:10 --> Email Class Initialized
+INFO - 2025-05-31 16:03:10 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:10 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:10 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:10 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:11 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:11 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:11 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:11 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:11 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:11 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:11 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:11 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:11 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:11 --> Total execution time: 0.0530
+INFO - 2025-05-31 16:03:14 --> Config Class Initialized
+INFO - 2025-05-31 16:03:14 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:14 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:14 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:14 --> URI Class Initialized
+INFO - 2025-05-31 16:03:14 --> Router Class Initialized
+INFO - 2025-05-31 16:03:14 --> Output Class Initialized
+INFO - 2025-05-31 16:03:14 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:14 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:14 --> CSRF token verified
+INFO - 2025-05-31 16:03:14 --> Input Class Initialized
+INFO - 2025-05-31 16:03:14 --> Language Class Initialized
+INFO - 2025-05-31 16:03:14 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:14 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:14 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:14 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:14 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:14 --> Email Class Initialized
+INFO - 2025-05-31 16:03:14 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:14 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:14 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:14 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:14 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:14 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:14 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:14 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:14 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:14 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:14 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:14 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:15 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2025-05-31 16:03:15 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:15 --> Total execution time: 0.0787
+INFO - 2025-05-31 16:03:16 --> Config Class Initialized
+INFO - 2025-05-31 16:03:16 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:16 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:16 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:16 --> URI Class Initialized
+INFO - 2025-05-31 16:03:16 --> Router Class Initialized
+INFO - 2025-05-31 16:03:16 --> Output Class Initialized
+INFO - 2025-05-31 16:03:16 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:16 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:16 --> Input Class Initialized
+INFO - 2025-05-31 16:03:16 --> Language Class Initialized
+INFO - 2025-05-31 16:03:16 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:16 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:16 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:16 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:16 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:16 --> Email Class Initialized
+INFO - 2025-05-31 16:03:16 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:16 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:16 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:16 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:16 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:16 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:16 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:16 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:16 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:16 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:16 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:16 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:16 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:16 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:03:16 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:16 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:16 --> Total execution time: 0.0672
+INFO - 2025-05-31 16:03:16 --> Config Class Initialized
+INFO - 2025-05-31 16:03:16 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:16 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:16 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:16 --> URI Class Initialized
+INFO - 2025-05-31 16:03:16 --> Router Class Initialized
+INFO - 2025-05-31 16:03:16 --> Output Class Initialized
+INFO - 2025-05-31 16:03:16 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:16 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:16 --> CSRF token verified
+INFO - 2025-05-31 16:03:16 --> Input Class Initialized
+INFO - 2025-05-31 16:03:16 --> Language Class Initialized
+INFO - 2025-05-31 16:03:16 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:16 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:16 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:16 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:16 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:16 --> Email Class Initialized
+INFO - 2025-05-31 16:03:16 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:16 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:16 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:16 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:16 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:16 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:16 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:16 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:16 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:16 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:16 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:16 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:16 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:16 --> Total execution time: 0.0637
+INFO - 2025-05-31 16:03:17 --> Config Class Initialized
+INFO - 2025-05-31 16:03:17 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:17 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:17 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:17 --> URI Class Initialized
+INFO - 2025-05-31 16:03:17 --> Router Class Initialized
+INFO - 2025-05-31 16:03:17 --> Output Class Initialized
+INFO - 2025-05-31 16:03:17 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:17 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:17 --> CSRF token verified
+INFO - 2025-05-31 16:03:17 --> Input Class Initialized
+INFO - 2025-05-31 16:03:17 --> Language Class Initialized
+INFO - 2025-05-31 16:03:17 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:17 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:17 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:17 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:17 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:17 --> Email Class Initialized
+INFO - 2025-05-31 16:03:17 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:17 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:17 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:17 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:17 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:17 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:17 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:17 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:17 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:17 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:17 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:17 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:17 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:17 --> Total execution time: 0.0585
+INFO - 2025-05-31 16:03:19 --> Config Class Initialized
+INFO - 2025-05-31 16:03:19 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:19 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:19 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:19 --> URI Class Initialized
+INFO - 2025-05-31 16:03:19 --> Router Class Initialized
+INFO - 2025-05-31 16:03:19 --> Output Class Initialized
+INFO - 2025-05-31 16:03:19 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:19 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:19 --> CSRF token verified
+INFO - 2025-05-31 16:03:19 --> Input Class Initialized
+INFO - 2025-05-31 16:03:19 --> Language Class Initialized
+INFO - 2025-05-31 16:03:19 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:19 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:19 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:19 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:19 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:19 --> Email Class Initialized
+INFO - 2025-05-31 16:03:19 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:19 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:19 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:19 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:19 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:19 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:19 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:19 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:19 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:19 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:19 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:19 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:19 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:19 --> Total execution time: 0.0642
+INFO - 2025-05-31 16:03:20 --> Config Class Initialized
+INFO - 2025-05-31 16:03:20 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:20 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:20 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:20 --> URI Class Initialized
+INFO - 2025-05-31 16:03:20 --> Router Class Initialized
+INFO - 2025-05-31 16:03:20 --> Output Class Initialized
+INFO - 2025-05-31 16:03:20 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:20 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:20 --> CSRF token verified
+INFO - 2025-05-31 16:03:20 --> Input Class Initialized
+INFO - 2025-05-31 16:03:20 --> Language Class Initialized
+INFO - 2025-05-31 16:03:20 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:20 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:20 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:20 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:20 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:20 --> Email Class Initialized
+INFO - 2025-05-31 16:03:20 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:20 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:20 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:20 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:20 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:20 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:20 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:20 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:20 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:20 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:20 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:20 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:20 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:20 --> Total execution time: 0.0630
+INFO - 2025-05-31 16:03:25 --> Config Class Initialized
+INFO - 2025-05-31 16:03:25 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:25 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:25 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:25 --> URI Class Initialized
+INFO - 2025-05-31 16:03:25 --> Router Class Initialized
+INFO - 2025-05-31 16:03:25 --> Output Class Initialized
+INFO - 2025-05-31 16:03:25 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:25 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:25 --> CSRF token verified
+INFO - 2025-05-31 16:03:25 --> Input Class Initialized
+INFO - 2025-05-31 16:03:25 --> Language Class Initialized
+INFO - 2025-05-31 16:03:25 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:25 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:25 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:25 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:25 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:25 --> Email Class Initialized
+INFO - 2025-05-31 16:03:25 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:25 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:25 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:25 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:25 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:25 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:25 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:25 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:25 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:25 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:25 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:25 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:25 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:25 --> Total execution time: 0.0579
+INFO - 2025-05-31 16:03:29 --> Config Class Initialized
+INFO - 2025-05-31 16:03:29 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:29 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:29 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:29 --> URI Class Initialized
+INFO - 2025-05-31 16:03:29 --> Router Class Initialized
+INFO - 2025-05-31 16:03:29 --> Output Class Initialized
+INFO - 2025-05-31 16:03:29 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:29 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:29 --> CSRF token verified
+INFO - 2025-05-31 16:03:29 --> Input Class Initialized
+INFO - 2025-05-31 16:03:29 --> Language Class Initialized
+INFO - 2025-05-31 16:03:29 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:29 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:29 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:29 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:29 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:29 --> Email Class Initialized
+INFO - 2025-05-31 16:03:29 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:29 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:29 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:29 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:29 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:29 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:29 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:29 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:29 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:29 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:29 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:29 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:29 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:29 --> Total execution time: 0.0380
+INFO - 2025-05-31 16:03:31 --> Config Class Initialized
+INFO - 2025-05-31 16:03:31 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:31 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:31 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:31 --> URI Class Initialized
+INFO - 2025-05-31 16:03:31 --> Router Class Initialized
+INFO - 2025-05-31 16:03:31 --> Output Class Initialized
+INFO - 2025-05-31 16:03:31 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:31 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:31 --> CSRF token verified
+INFO - 2025-05-31 16:03:31 --> Input Class Initialized
+INFO - 2025-05-31 16:03:31 --> Language Class Initialized
+INFO - 2025-05-31 16:03:31 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:31 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:31 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:31 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:31 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:31 --> Email Class Initialized
+INFO - 2025-05-31 16:03:31 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:31 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:31 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:31 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:31 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:31 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:31 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:31 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:31 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:31 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:31 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:31 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:31 --> Total execution time: 0.0503
+INFO - 2025-05-31 16:03:32 --> Config Class Initialized
+INFO - 2025-05-31 16:03:32 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:32 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:32 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:32 --> URI Class Initialized
+INFO - 2025-05-31 16:03:32 --> Router Class Initialized
+INFO - 2025-05-31 16:03:32 --> Output Class Initialized
+INFO - 2025-05-31 16:03:32 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:32 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:32 --> Input Class Initialized
+INFO - 2025-05-31 16:03:32 --> Language Class Initialized
+INFO - 2025-05-31 16:03:32 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:32 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:32 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:32 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:32 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:32 --> Email Class Initialized
+INFO - 2025-05-31 16:03:32 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:32 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:32 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:32 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:32 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:32 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:32 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:32 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:32 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:32 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:32 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:32 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:32 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:32 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:03:32 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:32 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:32 --> Total execution time: 0.0602
+INFO - 2025-05-31 16:03:32 --> Config Class Initialized
+INFO - 2025-05-31 16:03:32 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:32 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:32 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:32 --> URI Class Initialized
+INFO - 2025-05-31 16:03:32 --> Router Class Initialized
+INFO - 2025-05-31 16:03:32 --> Output Class Initialized
+INFO - 2025-05-31 16:03:32 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:32 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:32 --> CSRF token verified
+INFO - 2025-05-31 16:03:32 --> Input Class Initialized
+INFO - 2025-05-31 16:03:32 --> Language Class Initialized
+INFO - 2025-05-31 16:03:32 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:32 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:32 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:32 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:32 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:32 --> Email Class Initialized
+INFO - 2025-05-31 16:03:32 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:32 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:32 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:32 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:32 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:32 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:32 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:32 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:32 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:32 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:32 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:32 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:32 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:32 --> Total execution time: 0.0656
+INFO - 2025-05-31 16:03:41 --> Config Class Initialized
+INFO - 2025-05-31 16:03:41 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:41 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:41 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:41 --> URI Class Initialized
+INFO - 2025-05-31 16:03:41 --> Router Class Initialized
+INFO - 2025-05-31 16:03:41 --> Output Class Initialized
+INFO - 2025-05-31 16:03:41 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:41 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:41 --> CSRF token verified
+INFO - 2025-05-31 16:03:41 --> Input Class Initialized
+INFO - 2025-05-31 16:03:41 --> Language Class Initialized
+INFO - 2025-05-31 16:03:41 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:41 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:41 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:41 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:41 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:41 --> Email Class Initialized
+INFO - 2025-05-31 16:03:41 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:41 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:41 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:41 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:41 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:41 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:41 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:41 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:41 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:41 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:41 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:41 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:41 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:41 --> Total execution time: 0.0637
+INFO - 2025-05-31 16:03:41 --> Config Class Initialized
+INFO - 2025-05-31 16:03:41 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:41 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:41 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:41 --> URI Class Initialized
+INFO - 2025-05-31 16:03:41 --> Router Class Initialized
+INFO - 2025-05-31 16:03:41 --> Output Class Initialized
+INFO - 2025-05-31 16:03:41 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:41 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:41 --> CSRF token verified
+INFO - 2025-05-31 16:03:41 --> Input Class Initialized
+INFO - 2025-05-31 16:03:41 --> Language Class Initialized
+INFO - 2025-05-31 16:03:41 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:41 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:41 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:41 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:42 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:42 --> Email Class Initialized
+INFO - 2025-05-31 16:03:42 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:42 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:42 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:42 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:42 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:42 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:42 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:42 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:42 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:42 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:42 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:42 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:42 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:42 --> Total execution time: 0.0526
+INFO - 2025-05-31 16:03:43 --> Config Class Initialized
+INFO - 2025-05-31 16:03:43 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:43 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:43 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:43 --> URI Class Initialized
+INFO - 2025-05-31 16:03:43 --> Router Class Initialized
+INFO - 2025-05-31 16:03:43 --> Output Class Initialized
+INFO - 2025-05-31 16:03:43 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:43 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:43 --> Input Class Initialized
+INFO - 2025-05-31 16:03:43 --> Language Class Initialized
+INFO - 2025-05-31 16:03:43 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:43 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:43 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:43 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:43 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:43 --> Email Class Initialized
+INFO - 2025-05-31 16:03:43 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:43 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:43 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:43 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:43 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:43 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:43 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:43 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:43 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:43 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:43 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:43 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:43 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:43 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:03:43 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:43 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:43 --> Total execution time: 0.0564
+INFO - 2025-05-31 16:03:48 --> Config Class Initialized
+INFO - 2025-05-31 16:03:48 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:48 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:48 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:48 --> URI Class Initialized
+INFO - 2025-05-31 16:03:48 --> Router Class Initialized
+INFO - 2025-05-31 16:03:48 --> Output Class Initialized
+INFO - 2025-05-31 16:03:48 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:48 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:48 --> Input Class Initialized
+INFO - 2025-05-31 16:03:48 --> Language Class Initialized
+INFO - 2025-05-31 16:03:48 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:48 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:48 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:48 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:48 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:48 --> Email Class Initialized
+INFO - 2025-05-31 16:03:48 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:48 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:48 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:48 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:48 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:48 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:48 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:48 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:48 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:48 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:48 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:48 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:48 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:48 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:03:48 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:48 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:48 --> Total execution time: 0.0560
+INFO - 2025-05-31 16:03:48 --> Config Class Initialized
+INFO - 2025-05-31 16:03:48 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:48 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:48 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:48 --> URI Class Initialized
+INFO - 2025-05-31 16:03:48 --> Router Class Initialized
+INFO - 2025-05-31 16:03:48 --> Output Class Initialized
+INFO - 2025-05-31 16:03:48 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:48 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:48 --> CSRF token verified
+INFO - 2025-05-31 16:03:48 --> Input Class Initialized
+INFO - 2025-05-31 16:03:48 --> Language Class Initialized
+INFO - 2025-05-31 16:03:48 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:48 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:48 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:48 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:48 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:48 --> Email Class Initialized
+INFO - 2025-05-31 16:03:48 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:48 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:48 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:48 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:48 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:48 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:48 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:48 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:48 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:48 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:48 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:48 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:48 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:48 --> Total execution time: 0.0455
+INFO - 2025-05-31 16:03:50 --> Config Class Initialized
+INFO - 2025-05-31 16:03:50 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:50 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:50 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:50 --> URI Class Initialized
+INFO - 2025-05-31 16:03:50 --> Router Class Initialized
+INFO - 2025-05-31 16:03:50 --> Output Class Initialized
+INFO - 2025-05-31 16:03:50 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:50 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:50 --> Input Class Initialized
+INFO - 2025-05-31 16:03:50 --> Language Class Initialized
+INFO - 2025-05-31 16:03:50 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:50 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:50 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:50 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:50 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:50 --> Email Class Initialized
+INFO - 2025-05-31 16:03:50 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:50 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:50 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:50 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:50 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:50 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:50 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:50 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:50 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:50 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:50 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:50 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:03:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:50 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:50 --> Total execution time: 0.0563
+INFO - 2025-05-31 16:03:57 --> Config Class Initialized
+INFO - 2025-05-31 16:03:57 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:57 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:57 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:57 --> URI Class Initialized
+INFO - 2025-05-31 16:03:57 --> Router Class Initialized
+INFO - 2025-05-31 16:03:57 --> Output Class Initialized
+INFO - 2025-05-31 16:03:57 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:57 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:57 --> Input Class Initialized
+INFO - 2025-05-31 16:03:57 --> Language Class Initialized
+INFO - 2025-05-31 16:03:57 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:57 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:57 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:57 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:57 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:57 --> Email Class Initialized
+INFO - 2025-05-31 16:03:57 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:57 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:57 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:57 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:57 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:57 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:57 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:57 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:57 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:57 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:57 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:57 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:57 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:03:57 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:03:57 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:03:57 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:57 --> Total execution time: 0.0546
+INFO - 2025-05-31 16:03:57 --> Config Class Initialized
+INFO - 2025-05-31 16:03:57 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:03:57 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:03:57 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:03:57 --> URI Class Initialized
+INFO - 2025-05-31 16:03:57 --> Router Class Initialized
+INFO - 2025-05-31 16:03:57 --> Output Class Initialized
+INFO - 2025-05-31 16:03:57 --> Security Class Initialized
+DEBUG - 2025-05-31 16:03:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:03:57 --> CSRF cookie sent
+INFO - 2025-05-31 16:03:57 --> CSRF token verified
+INFO - 2025-05-31 16:03:57 --> Input Class Initialized
+INFO - 2025-05-31 16:03:57 --> Language Class Initialized
+INFO - 2025-05-31 16:03:57 --> Loader Class Initialized
+INFO - 2025-05-31 16:03:57 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:03:57 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:03:57 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:03:57 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:03:57 --> Email Class Initialized
+INFO - 2025-05-31 16:03:57 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:03:57 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:03:57 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:03:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:03:57 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:03:57 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:03:57 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:03:57 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:03:57 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:03:57 --> Encryption Class Initialized
+INFO - 2025-05-31 16:03:57 --> Controller Class Initialized
+INFO - 2025-05-31 16:03:57 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:03:57 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:03:57 --> Final output sent to browser
+DEBUG - 2025-05-31 16:03:57 --> Total execution time: 0.0582
+INFO - 2025-05-31 16:04:04 --> Config Class Initialized
+INFO - 2025-05-31 16:04:04 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:04 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:04 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:04 --> URI Class Initialized
+INFO - 2025-05-31 16:04:04 --> Router Class Initialized
+INFO - 2025-05-31 16:04:04 --> Output Class Initialized
+INFO - 2025-05-31 16:04:04 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:04 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:04 --> Input Class Initialized
+INFO - 2025-05-31 16:04:04 --> Language Class Initialized
+INFO - 2025-05-31 16:04:04 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:04 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:04 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:04 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:04 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:04 --> Email Class Initialized
+INFO - 2025-05-31 16:04:04 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:04 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:04 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:04 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:04 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:04 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:04 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:04 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:04 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:04 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:04 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:04 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/penugasanguru/data.php
+INFO - 2025-05-31 16:04:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:04 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:04 --> Total execution time: 0.0579
+INFO - 2025-05-31 16:04:04 --> Config Class Initialized
+INFO - 2025-05-31 16:04:04 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:04 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:04 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:04 --> URI Class Initialized
+INFO - 2025-05-31 16:04:04 --> Router Class Initialized
+INFO - 2025-05-31 16:04:04 --> Output Class Initialized
+INFO - 2025-05-31 16:04:04 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:04 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:04 --> CSRF token verified
+INFO - 2025-05-31 16:04:04 --> Input Class Initialized
+INFO - 2025-05-31 16:04:04 --> Language Class Initialized
+INFO - 2025-05-31 16:04:04 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:04 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:04 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:04 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:04 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:04 --> Email Class Initialized
+INFO - 2025-05-31 16:04:04 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:04 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:04 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:04 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:04 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:04 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:04 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:04 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:04 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:04 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:04 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:04 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:04 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:04 --> Total execution time: 0.0626
+INFO - 2025-05-31 16:04:06 --> Config Class Initialized
+INFO - 2025-05-31 16:04:06 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:06 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:06 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:06 --> URI Class Initialized
+INFO - 2025-05-31 16:04:06 --> Router Class Initialized
+INFO - 2025-05-31 16:04:06 --> Output Class Initialized
+INFO - 2025-05-31 16:04:06 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:06 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:06 --> Input Class Initialized
+INFO - 2025-05-31 16:04:06 --> Language Class Initialized
+INFO - 2025-05-31 16:04:06 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:06 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:06 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:06 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:06 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:06 --> Email Class Initialized
+INFO - 2025-05-31 16:04:06 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:06 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:06 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:06 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:06 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:06 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:06 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:06 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:06 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:06 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:06 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:06 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:06 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:06 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/penugasanguru/add.php
+INFO - 2025-05-31 16:04:06 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:06 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:06 --> Total execution time: 0.0613
+INFO - 2025-05-31 16:04:19 --> Config Class Initialized
+INFO - 2025-05-31 16:04:19 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:19 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:19 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:19 --> URI Class Initialized
+INFO - 2025-05-31 16:04:19 --> Router Class Initialized
+INFO - 2025-05-31 16:04:19 --> Output Class Initialized
+INFO - 2025-05-31 16:04:19 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:19 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:19 --> Input Class Initialized
+INFO - 2025-05-31 16:04:19 --> Language Class Initialized
+INFO - 2025-05-31 16:04:19 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:19 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:19 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:19 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:19 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:19 --> Email Class Initialized
+INFO - 2025-05-31 16:04:19 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:19 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:19 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:19 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:19 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:19 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:19 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:19 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:19 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:19 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:19 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:19 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:19 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:19 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/penugasanguru/data.php
+INFO - 2025-05-31 16:04:19 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:19 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:19 --> Total execution time: 0.0414
+INFO - 2025-05-31 16:04:19 --> Config Class Initialized
+INFO - 2025-05-31 16:04:19 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:19 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:19 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:19 --> URI Class Initialized
+INFO - 2025-05-31 16:04:19 --> Router Class Initialized
+INFO - 2025-05-31 16:04:19 --> Output Class Initialized
+INFO - 2025-05-31 16:04:19 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:19 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:19 --> CSRF token verified
+INFO - 2025-05-31 16:04:19 --> Input Class Initialized
+INFO - 2025-05-31 16:04:19 --> Language Class Initialized
+INFO - 2025-05-31 16:04:19 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:19 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:19 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:19 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:19 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:19 --> Email Class Initialized
+INFO - 2025-05-31 16:04:19 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:19 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:19 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:19 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:19 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:19 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:19 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:19 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:19 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:19 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:19 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:19 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:19 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:19 --> Total execution time: 0.0478
+INFO - 2025-05-31 16:04:24 --> Config Class Initialized
+INFO - 2025-05-31 16:04:24 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:24 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:24 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:24 --> URI Class Initialized
+INFO - 2025-05-31 16:04:24 --> Router Class Initialized
+INFO - 2025-05-31 16:04:24 --> Output Class Initialized
+INFO - 2025-05-31 16:04:24 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:24 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:24 --> Input Class Initialized
+INFO - 2025-05-31 16:04:24 --> Language Class Initialized
+INFO - 2025-05-31 16:04:24 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:24 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:24 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:24 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:24 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:24 --> Email Class Initialized
+INFO - 2025-05-31 16:04:24 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:24 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:24 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:24 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:24 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:24 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:24 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:24 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:24 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:24 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:24 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:24 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:24 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:24 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/penugasanguru/data.php
+INFO - 2025-05-31 16:04:24 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:24 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:24 --> Total execution time: 0.0570
+INFO - 2025-05-31 16:04:24 --> Config Class Initialized
+INFO - 2025-05-31 16:04:24 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:24 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:24 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:24 --> URI Class Initialized
+INFO - 2025-05-31 16:04:24 --> Router Class Initialized
+INFO - 2025-05-31 16:04:24 --> Output Class Initialized
+INFO - 2025-05-31 16:04:24 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:24 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:24 --> CSRF token verified
+INFO - 2025-05-31 16:04:24 --> Input Class Initialized
+INFO - 2025-05-31 16:04:24 --> Language Class Initialized
+INFO - 2025-05-31 16:04:24 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:24 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:24 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:24 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:24 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:24 --> Email Class Initialized
+INFO - 2025-05-31 16:04:24 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:24 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:24 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:24 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:24 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:24 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:24 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:24 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:24 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:24 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:24 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:24 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:24 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:24 --> Total execution time: 0.0461
+INFO - 2025-05-31 16:04:28 --> Config Class Initialized
+INFO - 2025-05-31 16:04:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:28 --> URI Class Initialized
+INFO - 2025-05-31 16:04:28 --> Router Class Initialized
+INFO - 2025-05-31 16:04:28 --> Output Class Initialized
+INFO - 2025-05-31 16:04:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:28 --> Input Class Initialized
+INFO - 2025-05-31 16:04:28 --> Language Class Initialized
+INFO - 2025-05-31 16:04:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:28 --> Email Class Initialized
+INFO - 2025-05-31 16:04:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:04:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:28 --> Total execution time: 0.0388
+INFO - 2025-05-31 16:04:28 --> Config Class Initialized
+INFO - 2025-05-31 16:04:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:28 --> URI Class Initialized
+INFO - 2025-05-31 16:04:28 --> Router Class Initialized
+INFO - 2025-05-31 16:04:28 --> Output Class Initialized
+INFO - 2025-05-31 16:04:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:28 --> CSRF token verified
+INFO - 2025-05-31 16:04:28 --> Input Class Initialized
+INFO - 2025-05-31 16:04:28 --> Language Class Initialized
+INFO - 2025-05-31 16:04:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:28 --> Email Class Initialized
+INFO - 2025-05-31 16:04:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:28 --> Total execution time: 0.0438
+INFO - 2025-05-31 16:04:30 --> Config Class Initialized
+INFO - 2025-05-31 16:04:30 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:30 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:30 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:30 --> URI Class Initialized
+INFO - 2025-05-31 16:04:30 --> Router Class Initialized
+INFO - 2025-05-31 16:04:30 --> Output Class Initialized
+INFO - 2025-05-31 16:04:30 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:30 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:30 --> Input Class Initialized
+INFO - 2025-05-31 16:04:30 --> Language Class Initialized
+INFO - 2025-05-31 16:04:30 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:30 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:30 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:30 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:30 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:30 --> Email Class Initialized
+INFO - 2025-05-31 16:04:30 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:30 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:30 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:30 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:30 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:30 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:30 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:30 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:30 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:30 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:30 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:04:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:30 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:30 --> Total execution time: 0.0594
+INFO - 2025-05-31 16:04:36 --> Config Class Initialized
+INFO - 2025-05-31 16:04:36 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:36 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:36 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:36 --> URI Class Initialized
+INFO - 2025-05-31 16:04:36 --> Router Class Initialized
+INFO - 2025-05-31 16:04:36 --> Output Class Initialized
+INFO - 2025-05-31 16:04:36 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:36 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:36 --> Input Class Initialized
+INFO - 2025-05-31 16:04:36 --> Language Class Initialized
+INFO - 2025-05-31 16:04:36 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:36 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:36 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:36 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:36 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:36 --> Email Class Initialized
+INFO - 2025-05-31 16:04:36 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:36 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:36 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:36 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:36 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:36 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:36 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:36 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:36 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:36 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:36 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:36 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:36 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:36 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:04:36 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:36 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:36 --> Total execution time: 0.0672
+INFO - 2025-05-31 16:04:36 --> Config Class Initialized
+INFO - 2025-05-31 16:04:36 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:36 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:36 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:36 --> URI Class Initialized
+INFO - 2025-05-31 16:04:36 --> Router Class Initialized
+INFO - 2025-05-31 16:04:36 --> Output Class Initialized
+INFO - 2025-05-31 16:04:36 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:36 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:36 --> CSRF token verified
+INFO - 2025-05-31 16:04:36 --> Input Class Initialized
+INFO - 2025-05-31 16:04:36 --> Language Class Initialized
+INFO - 2025-05-31 16:04:36 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:36 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:36 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:36 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:36 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:36 --> Email Class Initialized
+INFO - 2025-05-31 16:04:36 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:36 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:36 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:36 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:36 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:36 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:36 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:36 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:36 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:36 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:36 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:36 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:36 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:36 --> Total execution time: 0.0454
+INFO - 2025-05-31 16:04:55 --> Config Class Initialized
+INFO - 2025-05-31 16:04:55 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:55 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:55 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:55 --> URI Class Initialized
+INFO - 2025-05-31 16:04:55 --> Router Class Initialized
+INFO - 2025-05-31 16:04:55 --> Output Class Initialized
+INFO - 2025-05-31 16:04:55 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:55 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:55 --> Input Class Initialized
+INFO - 2025-05-31 16:04:55 --> Language Class Initialized
+INFO - 2025-05-31 16:04:55 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:55 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:55 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:55 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:55 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:55 --> Email Class Initialized
+INFO - 2025-05-31 16:04:55 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:55 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:55 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:55 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:55 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:55 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:55 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:55 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:55 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:55 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:55 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:55 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:55 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:04:55 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:04:55 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:04:55 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:55 --> Total execution time: 0.0570
+INFO - 2025-05-31 16:04:55 --> Config Class Initialized
+INFO - 2025-05-31 16:04:55 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:04:55 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:04:55 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:04:55 --> URI Class Initialized
+INFO - 2025-05-31 16:04:55 --> Router Class Initialized
+INFO - 2025-05-31 16:04:55 --> Output Class Initialized
+INFO - 2025-05-31 16:04:55 --> Security Class Initialized
+DEBUG - 2025-05-31 16:04:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:04:55 --> CSRF cookie sent
+INFO - 2025-05-31 16:04:55 --> CSRF token verified
+INFO - 2025-05-31 16:04:55 --> Input Class Initialized
+INFO - 2025-05-31 16:04:55 --> Language Class Initialized
+INFO - 2025-05-31 16:04:55 --> Loader Class Initialized
+INFO - 2025-05-31 16:04:55 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:04:55 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:04:55 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:04:55 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:04:55 --> Email Class Initialized
+INFO - 2025-05-31 16:04:55 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:04:55 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:04:55 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:04:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:04:55 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:04:55 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:04:55 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:04:55 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:04:55 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:04:55 --> Encryption Class Initialized
+INFO - 2025-05-31 16:04:55 --> Controller Class Initialized
+INFO - 2025-05-31 16:04:55 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:04:55 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:04:55 --> Final output sent to browser
+DEBUG - 2025-05-31 16:04:55 --> Total execution time: 0.0457
+INFO - 2025-05-31 16:06:45 --> Config Class Initialized
+INFO - 2025-05-31 16:06:45 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:06:45 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:06:45 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:06:45 --> URI Class Initialized
+INFO - 2025-05-31 16:06:45 --> Router Class Initialized
+INFO - 2025-05-31 16:06:45 --> Output Class Initialized
+INFO - 2025-05-31 16:06:45 --> Security Class Initialized
+DEBUG - 2025-05-31 16:06:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:06:45 --> CSRF cookie sent
+INFO - 2025-05-31 16:06:45 --> Input Class Initialized
+INFO - 2025-05-31 16:06:45 --> Language Class Initialized
+INFO - 2025-05-31 16:06:45 --> Loader Class Initialized
+INFO - 2025-05-31 16:06:45 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:06:45 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:06:45 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:06:45 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:06:45 --> Email Class Initialized
+INFO - 2025-05-31 16:06:45 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:06:45 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:06:45 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:06:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:06:45 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:06:45 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:06:45 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:06:45 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:06:45 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:06:45 --> Encryption Class Initialized
+INFO - 2025-05-31 16:06:45 --> Controller Class Initialized
+INFO - 2025-05-31 16:06:45 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:06:45 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:06:45 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:06:45 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:06:45 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:06:45 --> Final output sent to browser
+DEBUG - 2025-05-31 16:06:45 --> Total execution time: 0.0598
+INFO - 2025-05-31 16:06:47 --> Config Class Initialized
+INFO - 2025-05-31 16:06:47 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:06:47 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:06:47 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:06:47 --> URI Class Initialized
+INFO - 2025-05-31 16:06:47 --> Router Class Initialized
+INFO - 2025-05-31 16:06:47 --> Output Class Initialized
+INFO - 2025-05-31 16:06:47 --> Security Class Initialized
+DEBUG - 2025-05-31 16:06:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:06:47 --> CSRF cookie sent
+INFO - 2025-05-31 16:06:47 --> Input Class Initialized
+INFO - 2025-05-31 16:06:47 --> Language Class Initialized
+INFO - 2025-05-31 16:06:47 --> Loader Class Initialized
+INFO - 2025-05-31 16:06:47 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:06:47 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:06:47 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:06:47 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:06:47 --> Email Class Initialized
+INFO - 2025-05-31 16:06:47 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:06:47 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:06:47 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:06:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:06:47 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:06:47 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:06:47 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:06:47 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:06:47 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:06:47 --> Encryption Class Initialized
+INFO - 2025-05-31 16:06:47 --> Controller Class Initialized
+INFO - 2025-05-31 16:06:47 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:06:47 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:06:47 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:06:47 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:06:47 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:06:47 --> Final output sent to browser
+DEBUG - 2025-05-31 16:06:47 --> Total execution time: 0.0668
+INFO - 2025-05-31 16:07:11 --> Config Class Initialized
+INFO - 2025-05-31 16:07:11 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:11 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:11 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:11 --> URI Class Initialized
+INFO - 2025-05-31 16:07:11 --> Router Class Initialized
+INFO - 2025-05-31 16:07:11 --> Output Class Initialized
+INFO - 2025-05-31 16:07:11 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:11 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:11 --> Input Class Initialized
+INFO - 2025-05-31 16:07:11 --> Language Class Initialized
+INFO - 2025-05-31 16:07:11 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:11 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:11 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:11 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:11 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:11 --> Email Class Initialized
+INFO - 2025-05-31 16:07:11 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:11 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:11 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:11 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:11 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:11 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:11 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:11 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:11 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:11 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:11 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:11 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:11 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:11 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:11 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:11 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:11 --> Total execution time: 0.0702
+INFO - 2025-05-31 16:07:12 --> Config Class Initialized
+INFO - 2025-05-31 16:07:12 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:12 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:12 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:12 --> URI Class Initialized
+INFO - 2025-05-31 16:07:12 --> Router Class Initialized
+INFO - 2025-05-31 16:07:12 --> Output Class Initialized
+INFO - 2025-05-31 16:07:12 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:12 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:12 --> Input Class Initialized
+INFO - 2025-05-31 16:07:12 --> Language Class Initialized
+INFO - 2025-05-31 16:07:12 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:12 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:12 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:12 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:12 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:12 --> Email Class Initialized
+INFO - 2025-05-31 16:07:12 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:12 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:12 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:12 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:12 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:12 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:12 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:12 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:12 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:12 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:12 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:12 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:12 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:12 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:12 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:12 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:12 --> Total execution time: 0.0417
+INFO - 2025-05-31 16:07:13 --> Config Class Initialized
+INFO - 2025-05-31 16:07:13 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:13 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:13 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:13 --> URI Class Initialized
+INFO - 2025-05-31 16:07:13 --> Router Class Initialized
+INFO - 2025-05-31 16:07:13 --> Output Class Initialized
+INFO - 2025-05-31 16:07:13 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:13 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:13 --> Input Class Initialized
+INFO - 2025-05-31 16:07:13 --> Language Class Initialized
+INFO - 2025-05-31 16:07:13 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:13 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:13 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:13 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:13 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:13 --> Email Class Initialized
+INFO - 2025-05-31 16:07:13 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:13 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:13 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:13 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:13 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:13 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:13 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:13 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:13 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:13 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:13 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:13 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:13 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:13 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:13 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:13 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:13 --> Total execution time: 0.0524
+INFO - 2025-05-31 16:07:30 --> Config Class Initialized
+INFO - 2025-05-31 16:07:30 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:30 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:30 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:30 --> URI Class Initialized
+INFO - 2025-05-31 16:07:30 --> Router Class Initialized
+INFO - 2025-05-31 16:07:30 --> Output Class Initialized
+INFO - 2025-05-31 16:07:30 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:30 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:30 --> Input Class Initialized
+INFO - 2025-05-31 16:07:30 --> Language Class Initialized
+INFO - 2025-05-31 16:07:30 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:30 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:30 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:30 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:30 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:30 --> Email Class Initialized
+INFO - 2025-05-31 16:07:30 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:30 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:30 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:30 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:30 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:30 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:30 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:30 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:30 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:30 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:30 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:30 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:30 --> Total execution time: 0.0435
+INFO - 2025-05-31 16:07:30 --> Config Class Initialized
+INFO - 2025-05-31 16:07:30 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:30 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:30 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:30 --> URI Class Initialized
+INFO - 2025-05-31 16:07:30 --> Router Class Initialized
+INFO - 2025-05-31 16:07:30 --> Output Class Initialized
+INFO - 2025-05-31 16:07:30 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:30 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:30 --> CSRF token verified
+INFO - 2025-05-31 16:07:30 --> Input Class Initialized
+INFO - 2025-05-31 16:07:30 --> Language Class Initialized
+INFO - 2025-05-31 16:07:30 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:30 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:30 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:30 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:30 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:30 --> Email Class Initialized
+INFO - 2025-05-31 16:07:30 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:30 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:30 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:30 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:30 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:30 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:30 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:30 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:30 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:30 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:30 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:30 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:30 --> Total execution time: 0.0606
+INFO - 2025-05-31 16:07:31 --> Config Class Initialized
+INFO - 2025-05-31 16:07:31 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:31 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:31 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:31 --> URI Class Initialized
+INFO - 2025-05-31 16:07:31 --> Router Class Initialized
+INFO - 2025-05-31 16:07:31 --> Output Class Initialized
+INFO - 2025-05-31 16:07:31 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:31 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:31 --> Input Class Initialized
+INFO - 2025-05-31 16:07:31 --> Language Class Initialized
+INFO - 2025-05-31 16:07:31 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:31 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:31 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:31 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:31 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:31 --> Email Class Initialized
+INFO - 2025-05-31 16:07:31 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:31 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:31 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:31 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:31 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:31 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:31 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:31 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:31 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:31 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:31 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:31 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:31 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:31 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:31 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:31 --> Total execution time: 0.0593
+INFO - 2025-05-31 16:07:31 --> Config Class Initialized
+INFO - 2025-05-31 16:07:31 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:31 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:31 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:31 --> URI Class Initialized
+INFO - 2025-05-31 16:07:31 --> Router Class Initialized
+INFO - 2025-05-31 16:07:31 --> Output Class Initialized
+INFO - 2025-05-31 16:07:31 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:31 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:31 --> CSRF token verified
+INFO - 2025-05-31 16:07:31 --> Input Class Initialized
+INFO - 2025-05-31 16:07:31 --> Language Class Initialized
+INFO - 2025-05-31 16:07:31 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:31 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:31 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:31 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:31 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:31 --> Email Class Initialized
+INFO - 2025-05-31 16:07:31 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:31 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:31 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:31 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:31 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:31 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:31 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:31 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:31 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:31 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:31 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:31 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:31 --> Total execution time: 0.0625
+INFO - 2025-05-31 16:07:32 --> Config Class Initialized
+INFO - 2025-05-31 16:07:32 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:32 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:32 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:32 --> URI Class Initialized
+INFO - 2025-05-31 16:07:32 --> Router Class Initialized
+INFO - 2025-05-31 16:07:32 --> Output Class Initialized
+INFO - 2025-05-31 16:07:32 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:32 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:32 --> Input Class Initialized
+INFO - 2025-05-31 16:07:32 --> Language Class Initialized
+INFO - 2025-05-31 16:07:32 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:32 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:32 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:32 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:32 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:32 --> Email Class Initialized
+INFO - 2025-05-31 16:07:32 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:32 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:32 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:32 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:32 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:32 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:32 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:32 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:32 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:32 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:32 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:32 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:32 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:32 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:32 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:32 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:32 --> Total execution time: 0.0409
+INFO - 2025-05-31 16:07:32 --> Config Class Initialized
+INFO - 2025-05-31 16:07:32 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:32 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:32 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:32 --> URI Class Initialized
+INFO - 2025-05-31 16:07:32 --> Router Class Initialized
+INFO - 2025-05-31 16:07:32 --> Output Class Initialized
+INFO - 2025-05-31 16:07:32 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:32 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:32 --> CSRF token verified
+INFO - 2025-05-31 16:07:32 --> Input Class Initialized
+INFO - 2025-05-31 16:07:32 --> Language Class Initialized
+INFO - 2025-05-31 16:07:32 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:32 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:32 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:32 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:32 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:32 --> Email Class Initialized
+INFO - 2025-05-31 16:07:32 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:32 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:32 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:32 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:32 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:32 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:32 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:32 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:32 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:32 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:32 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:32 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:32 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:32 --> Total execution time: 0.0517
+INFO - 2025-05-31 16:07:37 --> Config Class Initialized
+INFO - 2025-05-31 16:07:37 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:37 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:37 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:37 --> URI Class Initialized
+INFO - 2025-05-31 16:07:37 --> Router Class Initialized
+INFO - 2025-05-31 16:07:37 --> Output Class Initialized
+INFO - 2025-05-31 16:07:37 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:37 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:37 --> Input Class Initialized
+INFO - 2025-05-31 16:07:37 --> Language Class Initialized
+INFO - 2025-05-31 16:07:37 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:37 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:37 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:37 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:37 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:37 --> Email Class Initialized
+INFO - 2025-05-31 16:07:37 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:37 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:37 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:37 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:37 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:37 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:37 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:37 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:37 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:37 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:37 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:07:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:37 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:37 --> Total execution time: 0.0408
+INFO - 2025-05-31 16:07:39 --> Config Class Initialized
+INFO - 2025-05-31 16:07:39 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:39 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:39 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:39 --> URI Class Initialized
+INFO - 2025-05-31 16:07:39 --> Router Class Initialized
+INFO - 2025-05-31 16:07:39 --> Output Class Initialized
+INFO - 2025-05-31 16:07:39 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:39 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:39 --> Input Class Initialized
+INFO - 2025-05-31 16:07:39 --> Language Class Initialized
+INFO - 2025-05-31 16:07:39 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:39 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:39 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:39 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:39 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:39 --> Email Class Initialized
+INFO - 2025-05-31 16:07:39 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:39 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:39 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:39 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:39 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:39 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:39 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:39 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:39 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:39 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:39 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:39 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:39 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:39 --> Total execution time: 0.0529
+INFO - 2025-05-31 16:07:43 --> Config Class Initialized
+INFO - 2025-05-31 16:07:43 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:43 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:43 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:43 --> URI Class Initialized
+INFO - 2025-05-31 16:07:43 --> Router Class Initialized
+INFO - 2025-05-31 16:07:43 --> Output Class Initialized
+INFO - 2025-05-31 16:07:43 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:43 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:43 --> CSRF token verified
+INFO - 2025-05-31 16:07:43 --> Input Class Initialized
+INFO - 2025-05-31 16:07:43 --> Language Class Initialized
+INFO - 2025-05-31 16:07:43 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:43 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:43 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:43 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:43 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:43 --> Email Class Initialized
+INFO - 2025-05-31 16:07:43 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:43 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:43 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:43 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:43 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:43 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:43 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:43 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:43 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:43 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:43 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:43 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:43 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2025-05-31 16:07:43 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:43 --> Total execution time: 0.0387
+INFO - 2025-05-31 16:07:44 --> Config Class Initialized
+INFO - 2025-05-31 16:07:44 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:44 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:44 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:44 --> URI Class Initialized
+INFO - 2025-05-31 16:07:44 --> Router Class Initialized
+INFO - 2025-05-31 16:07:44 --> Output Class Initialized
+INFO - 2025-05-31 16:07:44 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:44 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:44 --> Input Class Initialized
+INFO - 2025-05-31 16:07:44 --> Language Class Initialized
+INFO - 2025-05-31 16:07:44 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:44 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:44 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:44 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:44 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:44 --> Email Class Initialized
+INFO - 2025-05-31 16:07:44 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:44 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:44 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:44 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:44 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:44 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:44 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:44 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:44 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:44 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:44 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:44 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:44 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:44 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:44 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:44 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:44 --> Total execution time: 0.0404
+INFO - 2025-05-31 16:07:44 --> Config Class Initialized
+INFO - 2025-05-31 16:07:44 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:44 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:44 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:44 --> URI Class Initialized
+INFO - 2025-05-31 16:07:44 --> Router Class Initialized
+INFO - 2025-05-31 16:07:44 --> Output Class Initialized
+INFO - 2025-05-31 16:07:44 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:44 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:44 --> CSRF token verified
+INFO - 2025-05-31 16:07:44 --> Input Class Initialized
+INFO - 2025-05-31 16:07:44 --> Language Class Initialized
+INFO - 2025-05-31 16:07:44 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:44 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:44 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:44 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:44 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:44 --> Email Class Initialized
+INFO - 2025-05-31 16:07:44 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:44 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:44 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:44 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:44 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:44 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:44 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:44 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:44 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:44 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:44 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:44 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:44 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:44 --> Total execution time: 0.0706
+INFO - 2025-05-31 16:07:52 --> Config Class Initialized
+INFO - 2025-05-31 16:07:52 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:52 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:52 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:52 --> URI Class Initialized
+INFO - 2025-05-31 16:07:52 --> Router Class Initialized
+INFO - 2025-05-31 16:07:52 --> Output Class Initialized
+INFO - 2025-05-31 16:07:52 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:52 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:52 --> CSRF token verified
+INFO - 2025-05-31 16:07:52 --> Input Class Initialized
+INFO - 2025-05-31 16:07:52 --> Language Class Initialized
+INFO - 2025-05-31 16:07:52 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:52 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:52 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:52 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:52 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:52 --> Email Class Initialized
+INFO - 2025-05-31 16:07:52 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:52 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:52 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:52 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:52 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:52 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:52 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:52 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:52 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:52 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:52 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:52 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:52 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:52 --> Total execution time: 0.0389
+INFO - 2025-05-31 16:07:53 --> Config Class Initialized
+INFO - 2025-05-31 16:07:53 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:53 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:53 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:53 --> URI Class Initialized
+INFO - 2025-05-31 16:07:53 --> Router Class Initialized
+INFO - 2025-05-31 16:07:53 --> Output Class Initialized
+INFO - 2025-05-31 16:07:53 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:53 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:53 --> CSRF token verified
+INFO - 2025-05-31 16:07:53 --> Input Class Initialized
+INFO - 2025-05-31 16:07:53 --> Language Class Initialized
+INFO - 2025-05-31 16:07:53 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:53 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:53 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:53 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:53 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:53 --> Email Class Initialized
+INFO - 2025-05-31 16:07:53 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:53 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:53 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:53 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:53 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:53 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:53 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:53 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:53 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:53 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:53 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:53 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:53 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:53 --> Total execution time: 0.0493
+INFO - 2025-05-31 16:07:56 --> Config Class Initialized
+INFO - 2025-05-31 16:07:56 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:56 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:56 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:56 --> URI Class Initialized
+INFO - 2025-05-31 16:07:56 --> Router Class Initialized
+INFO - 2025-05-31 16:07:56 --> Output Class Initialized
+INFO - 2025-05-31 16:07:56 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:56 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:56 --> Input Class Initialized
+INFO - 2025-05-31 16:07:56 --> Language Class Initialized
+INFO - 2025-05-31 16:07:56 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:56 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:56 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:56 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:56 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:56 --> Email Class Initialized
+INFO - 2025-05-31 16:07:56 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:56 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:56 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:56 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:56 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:56 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:56 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:56 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:56 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:56 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:56 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:56 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:56 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:07:56 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:07:56 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:07:56 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:56 --> Total execution time: 0.0415
+INFO - 2025-05-31 16:07:56 --> Config Class Initialized
+INFO - 2025-05-31 16:07:56 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:07:56 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:07:56 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:07:56 --> URI Class Initialized
+INFO - 2025-05-31 16:07:56 --> Router Class Initialized
+INFO - 2025-05-31 16:07:56 --> Output Class Initialized
+INFO - 2025-05-31 16:07:56 --> Security Class Initialized
+DEBUG - 2025-05-31 16:07:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:07:56 --> CSRF cookie sent
+INFO - 2025-05-31 16:07:56 --> CSRF token verified
+INFO - 2025-05-31 16:07:56 --> Input Class Initialized
+INFO - 2025-05-31 16:07:56 --> Language Class Initialized
+INFO - 2025-05-31 16:07:56 --> Loader Class Initialized
+INFO - 2025-05-31 16:07:56 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:07:56 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:07:56 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:07:56 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:07:56 --> Email Class Initialized
+INFO - 2025-05-31 16:07:56 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:07:56 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:07:56 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:07:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:07:56 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:07:56 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:07:56 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:07:56 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:07:56 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:07:56 --> Encryption Class Initialized
+INFO - 2025-05-31 16:07:56 --> Controller Class Initialized
+INFO - 2025-05-31 16:07:56 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:07:56 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:07:56 --> Final output sent to browser
+DEBUG - 2025-05-31 16:07:56 --> Total execution time: 0.0450
+INFO - 2025-05-31 16:08:02 --> Config Class Initialized
+INFO - 2025-05-31 16:08:02 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:02 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:02 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:02 --> URI Class Initialized
+INFO - 2025-05-31 16:08:02 --> Router Class Initialized
+INFO - 2025-05-31 16:08:02 --> Output Class Initialized
+INFO - 2025-05-31 16:08:02 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:02 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:02 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:02 --> CSRF token verified
+INFO - 2025-05-31 16:08:02 --> Input Class Initialized
+INFO - 2025-05-31 16:08:02 --> Language Class Initialized
+INFO - 2025-05-31 16:08:02 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:02 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:02 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:02 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:02 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:02 --> Email Class Initialized
+INFO - 2025-05-31 16:08:02 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:02 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:02 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:02 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:02 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:02 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:02 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:02 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:02 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:02 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:02 --> Controller Class Initialized
+INFO - 2025-05-31 16:08:02 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:02 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:02 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:02 --> Total execution time: 0.0597
+INFO - 2025-05-31 16:08:04 --> Config Class Initialized
+INFO - 2025-05-31 16:08:04 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:04 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:04 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:04 --> URI Class Initialized
+INFO - 2025-05-31 16:08:04 --> Router Class Initialized
+INFO - 2025-05-31 16:08:04 --> Output Class Initialized
+INFO - 2025-05-31 16:08:04 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:04 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:04 --> Input Class Initialized
+INFO - 2025-05-31 16:08:04 --> Language Class Initialized
+INFO - 2025-05-31 16:08:04 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:04 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:04 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:04 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:04 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:04 --> Email Class Initialized
+INFO - 2025-05-31 16:08:04 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:04 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:04 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:04 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:04 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:04 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:04 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:04 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:04 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:04 --> Controller Class Initialized
+INFO - 2025-05-31 16:08:04 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:04 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:08:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:08:04 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:08:04 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:04 --> Total execution time: 0.0574
+INFO - 2025-05-31 16:08:04 --> Config Class Initialized
+INFO - 2025-05-31 16:08:04 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:04 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:04 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:04 --> URI Class Initialized
+INFO - 2025-05-31 16:08:04 --> Router Class Initialized
+INFO - 2025-05-31 16:08:04 --> Output Class Initialized
+INFO - 2025-05-31 16:08:04 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:04 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:04 --> CSRF token verified
+INFO - 2025-05-31 16:08:04 --> Input Class Initialized
+INFO - 2025-05-31 16:08:04 --> Language Class Initialized
+INFO - 2025-05-31 16:08:04 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:04 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:04 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:04 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:04 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:04 --> Email Class Initialized
+INFO - 2025-05-31 16:08:04 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:04 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:04 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:04 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:04 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:04 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:04 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:04 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:04 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:04 --> Controller Class Initialized
+INFO - 2025-05-31 16:08:04 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:04 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:04 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:04 --> Total execution time: 0.0615
+INFO - 2025-05-31 16:08:24 --> Config Class Initialized
+INFO - 2025-05-31 16:08:24 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:24 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:24 --> URI Class Initialized
+INFO - 2025-05-31 16:08:24 --> Router Class Initialized
+INFO - 2025-05-31 16:08:24 --> Output Class Initialized
+INFO - 2025-05-31 16:08:24 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:24 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:24 --> Input Class Initialized
+INFO - 2025-05-31 16:08:24 --> Language Class Initialized
+INFO - 2025-05-31 16:08:24 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:24 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:24 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:24 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:24 --> Email Class Initialized
+INFO - 2025-05-31 16:08:24 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:24 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:24 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:24 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:24 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:24 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:24 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:24 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:24 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:24 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:08:24 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:24 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:24 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:08:24 --> File loaded: C:\xampp\htdocs\cbt\application\views\master/siswa/data.php
+INFO - 2025-05-31 16:08:24 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:08:24 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:24 --> Total execution time: 0.0408
+INFO - 2025-05-31 16:08:24 --> Config Class Initialized
+INFO - 2025-05-31 16:08:24 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:24 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:24 --> URI Class Initialized
+INFO - 2025-05-31 16:08:24 --> Router Class Initialized
+INFO - 2025-05-31 16:08:24 --> Output Class Initialized
+INFO - 2025-05-31 16:08:24 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:24 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:24 --> CSRF token verified
+INFO - 2025-05-31 16:08:24 --> Input Class Initialized
+INFO - 2025-05-31 16:08:24 --> Language Class Initialized
+INFO - 2025-05-31 16:08:24 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:24 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:24 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:24 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:24 --> Email Class Initialized
+INFO - 2025-05-31 16:08:24 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:24 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:24 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:24 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:24 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:24 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:24 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:24 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:24 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:24 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:08:24 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:08:24 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:24 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:24 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:24 --> Total execution time: 0.0468
+INFO - 2025-05-31 16:08:28 --> Config Class Initialized
+INFO - 2025-05-31 16:08:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:28 --> URI Class Initialized
+INFO - 2025-05-31 16:08:28 --> Router Class Initialized
+INFO - 2025-05-31 16:08:28 --> Output Class Initialized
+INFO - 2025-05-31 16:08:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:28 --> Input Class Initialized
+INFO - 2025-05-31 16:08:28 --> Language Class Initialized
+INFO - 2025-05-31 16:08:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:28 --> Email Class Initialized
+INFO - 2025-05-31 16:08:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:08:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:08:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:08:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:08:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:28 --> Total execution time: 0.0554
+INFO - 2025-05-31 16:08:28 --> Config Class Initialized
+INFO - 2025-05-31 16:08:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:08:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:08:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:08:28 --> URI Class Initialized
+INFO - 2025-05-31 16:08:28 --> Router Class Initialized
+INFO - 2025-05-31 16:08:28 --> Output Class Initialized
+INFO - 2025-05-31 16:08:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:08:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:08:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:08:28 --> CSRF token verified
+INFO - 2025-05-31 16:08:28 --> Input Class Initialized
+INFO - 2025-05-31 16:08:28 --> Language Class Initialized
+INFO - 2025-05-31 16:08:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:08:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:08:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:08:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:08:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:08:28 --> Email Class Initialized
+INFO - 2025-05-31 16:08:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:08:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:08:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:08:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:08:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:08:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:08:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:08:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:08:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:08:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:08:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:08:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:08:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:08:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:08:28 --> Total execution time: 0.0484
+INFO - 2025-05-31 16:09:39 --> Config Class Initialized
+INFO - 2025-05-31 16:09:39 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:09:39 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:09:39 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:09:39 --> URI Class Initialized
+INFO - 2025-05-31 16:09:39 --> Router Class Initialized
+INFO - 2025-05-31 16:09:39 --> Output Class Initialized
+INFO - 2025-05-31 16:09:39 --> Security Class Initialized
+DEBUG - 2025-05-31 16:09:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:09:39 --> CSRF cookie sent
+INFO - 2025-05-31 16:09:39 --> Input Class Initialized
+INFO - 2025-05-31 16:09:39 --> Language Class Initialized
+INFO - 2025-05-31 16:09:39 --> Loader Class Initialized
+INFO - 2025-05-31 16:09:39 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:09:39 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:09:39 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:09:39 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:09:39 --> Email Class Initialized
+INFO - 2025-05-31 16:09:39 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:09:39 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:09:39 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:09:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:09:39 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:09:39 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:09:39 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:09:39 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:09:39 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:09:39 --> Encryption Class Initialized
+INFO - 2025-05-31 16:09:39 --> Controller Class Initialized
+INFO - 2025-05-31 16:09:39 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:09:39 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:09:39 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:09:39 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:09:39 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:09:39 --> Final output sent to browser
+DEBUG - 2025-05-31 16:09:39 --> Total execution time: 0.0613
+INFO - 2025-05-31 16:09:39 --> Config Class Initialized
+INFO - 2025-05-31 16:09:39 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:09:39 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:09:39 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:09:39 --> URI Class Initialized
+INFO - 2025-05-31 16:09:39 --> Router Class Initialized
+INFO - 2025-05-31 16:09:39 --> Output Class Initialized
+INFO - 2025-05-31 16:09:39 --> Security Class Initialized
+DEBUG - 2025-05-31 16:09:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:09:39 --> CSRF cookie sent
+INFO - 2025-05-31 16:09:39 --> CSRF token verified
+INFO - 2025-05-31 16:09:39 --> Input Class Initialized
+INFO - 2025-05-31 16:09:39 --> Language Class Initialized
+INFO - 2025-05-31 16:09:39 --> Loader Class Initialized
+INFO - 2025-05-31 16:09:39 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:09:39 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:09:39 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:09:39 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:09:39 --> Email Class Initialized
+INFO - 2025-05-31 16:09:39 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:09:39 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:09:39 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:09:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:09:39 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:09:39 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:09:39 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:09:39 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:09:39 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:09:39 --> Encryption Class Initialized
+INFO - 2025-05-31 16:09:39 --> Controller Class Initialized
+INFO - 2025-05-31 16:09:40 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:09:40 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:09:40 --> Final output sent to browser
+DEBUG - 2025-05-31 16:09:40 --> Total execution time: 0.0660
+INFO - 2025-05-31 16:09:49 --> Config Class Initialized
+INFO - 2025-05-31 16:09:49 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:09:49 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:09:49 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:09:49 --> URI Class Initialized
+INFO - 2025-05-31 16:09:49 --> Router Class Initialized
+INFO - 2025-05-31 16:09:49 --> Output Class Initialized
+INFO - 2025-05-31 16:09:49 --> Security Class Initialized
+DEBUG - 2025-05-31 16:09:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:09:49 --> CSRF cookie sent
+INFO - 2025-05-31 16:09:49 --> Input Class Initialized
+INFO - 2025-05-31 16:09:49 --> Language Class Initialized
+INFO - 2025-05-31 16:09:49 --> Loader Class Initialized
+INFO - 2025-05-31 16:09:49 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:09:49 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:09:49 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:09:49 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:09:49 --> Email Class Initialized
+INFO - 2025-05-31 16:09:49 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:09:49 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:09:49 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:09:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:09:49 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:09:49 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:09:49 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:09:49 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:09:49 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:09:50 --> Encryption Class Initialized
+INFO - 2025-05-31 16:09:50 --> Controller Class Initialized
+INFO - 2025-05-31 16:09:50 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:09:50 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:09:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:09:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:09:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:09:50 --> Final output sent to browser
+DEBUG - 2025-05-31 16:09:50 --> Total execution time: 0.0634
+INFO - 2025-05-31 16:09:50 --> Config Class Initialized
+INFO - 2025-05-31 16:09:50 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:09:50 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:09:50 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:09:50 --> URI Class Initialized
+INFO - 2025-05-31 16:09:50 --> Router Class Initialized
+INFO - 2025-05-31 16:09:50 --> Output Class Initialized
+INFO - 2025-05-31 16:09:50 --> Security Class Initialized
+DEBUG - 2025-05-31 16:09:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:09:50 --> CSRF cookie sent
+INFO - 2025-05-31 16:09:50 --> CSRF token verified
+INFO - 2025-05-31 16:09:50 --> Input Class Initialized
+INFO - 2025-05-31 16:09:50 --> Language Class Initialized
+INFO - 2025-05-31 16:09:50 --> Loader Class Initialized
+INFO - 2025-05-31 16:09:50 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:09:50 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:09:50 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:09:50 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:09:50 --> Email Class Initialized
+INFO - 2025-05-31 16:09:50 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:09:50 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:09:50 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:09:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:09:50 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:09:50 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:09:50 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:09:50 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:09:50 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:09:50 --> Encryption Class Initialized
+INFO - 2025-05-31 16:09:50 --> Controller Class Initialized
+INFO - 2025-05-31 16:09:50 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:09:50 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:09:50 --> Final output sent to browser
+DEBUG - 2025-05-31 16:09:50 --> Total execution time: 0.0611
+INFO - 2025-05-31 16:10:06 --> Config Class Initialized
+INFO - 2025-05-31 16:10:06 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:06 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:06 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:06 --> URI Class Initialized
+INFO - 2025-05-31 16:10:06 --> Router Class Initialized
+INFO - 2025-05-31 16:10:06 --> Output Class Initialized
+INFO - 2025-05-31 16:10:06 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:06 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:06 --> Input Class Initialized
+INFO - 2025-05-31 16:10:06 --> Language Class Initialized
+INFO - 2025-05-31 16:10:06 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:06 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:06 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:06 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:06 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:06 --> Email Class Initialized
+INFO - 2025-05-31 16:10:06 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:06 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:06 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:06 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:06 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:06 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:06 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:06 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:06 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:06 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:06 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:06 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:06 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:06 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:10:06 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:06 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:06 --> Total execution time: 0.0598
+INFO - 2025-05-31 16:10:12 --> Config Class Initialized
+INFO - 2025-05-31 16:10:12 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:12 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:12 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:12 --> URI Class Initialized
+INFO - 2025-05-31 16:10:12 --> Router Class Initialized
+INFO - 2025-05-31 16:10:12 --> Output Class Initialized
+INFO - 2025-05-31 16:10:12 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:12 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:12 --> Input Class Initialized
+INFO - 2025-05-31 16:10:12 --> Language Class Initialized
+INFO - 2025-05-31 16:10:12 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:12 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:12 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:12 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:12 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:12 --> Email Class Initialized
+INFO - 2025-05-31 16:10:12 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:12 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:12 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:12 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:12 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:12 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:12 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:12 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:12 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:12 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:12 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:12 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:12 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:12 --> Total execution time: 0.0577
+INFO - 2025-05-31 16:10:30 --> Config Class Initialized
+INFO - 2025-05-31 16:10:30 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:30 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:30 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:30 --> URI Class Initialized
+INFO - 2025-05-31 16:10:30 --> Router Class Initialized
+INFO - 2025-05-31 16:10:30 --> Output Class Initialized
+INFO - 2025-05-31 16:10:30 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:30 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:30 --> CSRF token verified
+INFO - 2025-05-31 16:10:30 --> Input Class Initialized
+INFO - 2025-05-31 16:10:30 --> Language Class Initialized
+INFO - 2025-05-31 16:10:30 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:30 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:30 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:30 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:30 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:30 --> Email Class Initialized
+INFO - 2025-05-31 16:10:30 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:30 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:30 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:30 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:30 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:30 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:30 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:30 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:30 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:30 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:30 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:30 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2025-05-31 16:10:30 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:30 --> Total execution time: 0.0613
+INFO - 2025-05-31 16:10:34 --> Config Class Initialized
+INFO - 2025-05-31 16:10:34 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:34 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:34 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:34 --> URI Class Initialized
+INFO - 2025-05-31 16:10:34 --> Router Class Initialized
+INFO - 2025-05-31 16:10:34 --> Output Class Initialized
+INFO - 2025-05-31 16:10:34 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:34 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:34 --> Input Class Initialized
+INFO - 2025-05-31 16:10:34 --> Language Class Initialized
+INFO - 2025-05-31 16:10:34 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:34 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:34 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:34 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:34 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:34 --> Email Class Initialized
+INFO - 2025-05-31 16:10:34 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:34 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:34 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:34 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:34 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:34 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:34 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:34 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:34 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:34 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:34 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:34 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:34 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:10:34 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:34 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:34 --> Total execution time: 0.0596
+INFO - 2025-05-31 16:10:34 --> Config Class Initialized
+INFO - 2025-05-31 16:10:34 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:34 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:34 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:34 --> URI Class Initialized
+INFO - 2025-05-31 16:10:34 --> Router Class Initialized
+INFO - 2025-05-31 16:10:34 --> Output Class Initialized
+INFO - 2025-05-31 16:10:34 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:34 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:34 --> CSRF token verified
+INFO - 2025-05-31 16:10:34 --> Input Class Initialized
+INFO - 2025-05-31 16:10:34 --> Language Class Initialized
+INFO - 2025-05-31 16:10:34 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:34 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:34 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:34 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:34 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:34 --> Email Class Initialized
+INFO - 2025-05-31 16:10:34 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:34 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:34 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:34 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:34 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:34 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:34 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:34 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:34 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:34 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:34 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:34 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:34 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:34 --> Total execution time: 0.0426
+INFO - 2025-05-31 16:10:36 --> Config Class Initialized
+INFO - 2025-05-31 16:10:36 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:36 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:36 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:36 --> URI Class Initialized
+INFO - 2025-05-31 16:10:36 --> Router Class Initialized
+INFO - 2025-05-31 16:10:36 --> Output Class Initialized
+INFO - 2025-05-31 16:10:36 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:36 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:36 --> Input Class Initialized
+INFO - 2025-05-31 16:10:36 --> Language Class Initialized
+INFO - 2025-05-31 16:10:36 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:36 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:36 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:36 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:36 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:36 --> Email Class Initialized
+INFO - 2025-05-31 16:10:36 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:36 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:36 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:36 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:36 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:36 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:36 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:36 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:36 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:36 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:36 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:36 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:36 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:36 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/edit.php
+INFO - 2025-05-31 16:10:36 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:36 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:36 --> Total execution time: 0.0626
+INFO - 2025-05-31 16:10:37 --> Config Class Initialized
+INFO - 2025-05-31 16:10:37 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:37 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:37 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:37 --> URI Class Initialized
+INFO - 2025-05-31 16:10:37 --> Router Class Initialized
+INFO - 2025-05-31 16:10:37 --> Output Class Initialized
+INFO - 2025-05-31 16:10:37 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:37 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:37 --> Input Class Initialized
+INFO - 2025-05-31 16:10:37 --> Language Class Initialized
+INFO - 2025-05-31 16:10:37 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:37 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:37 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:37 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:37 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:37 --> Email Class Initialized
+INFO - 2025-05-31 16:10:37 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:37 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:37 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:37 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:37 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:37 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:37 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:37 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:37 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:37 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:37 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:10:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:37 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:37 --> Total execution time: 0.0569
+INFO - 2025-05-31 16:10:37 --> Config Class Initialized
+INFO - 2025-05-31 16:10:37 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:37 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:37 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:37 --> URI Class Initialized
+INFO - 2025-05-31 16:10:37 --> Router Class Initialized
+INFO - 2025-05-31 16:10:37 --> Output Class Initialized
+INFO - 2025-05-31 16:10:37 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:37 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:37 --> CSRF token verified
+INFO - 2025-05-31 16:10:37 --> Input Class Initialized
+INFO - 2025-05-31 16:10:37 --> Language Class Initialized
+INFO - 2025-05-31 16:10:37 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:37 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:37 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:37 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:37 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:37 --> Email Class Initialized
+INFO - 2025-05-31 16:10:37 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:37 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:37 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:37 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:37 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:37 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:37 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:37 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:37 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:37 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:37 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:37 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:37 --> Total execution time: 0.0491
+INFO - 2025-05-31 16:10:43 --> Config Class Initialized
+INFO - 2025-05-31 16:10:43 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:43 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:43 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:43 --> URI Class Initialized
+INFO - 2025-05-31 16:10:43 --> Router Class Initialized
+INFO - 2025-05-31 16:10:43 --> Output Class Initialized
+INFO - 2025-05-31 16:10:43 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:43 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:43 --> Input Class Initialized
+INFO - 2025-05-31 16:10:43 --> Language Class Initialized
+INFO - 2025-05-31 16:10:43 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:43 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:43 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:43 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:43 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:43 --> Email Class Initialized
+INFO - 2025-05-31 16:10:43 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:43 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:43 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:43 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:43 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:43 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:43 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:43 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:43 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:43 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:43 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:43 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:43 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:43 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:10:43 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:43 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:43 --> Total execution time: 0.0410
+INFO - 2025-05-31 16:10:54 --> Config Class Initialized
+INFO - 2025-05-31 16:10:54 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:54 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:54 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:54 --> URI Class Initialized
+INFO - 2025-05-31 16:10:54 --> Router Class Initialized
+INFO - 2025-05-31 16:10:54 --> Output Class Initialized
+INFO - 2025-05-31 16:10:54 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:54 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:54 --> Input Class Initialized
+INFO - 2025-05-31 16:10:54 --> Language Class Initialized
+INFO - 2025-05-31 16:10:54 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:54 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:54 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:54 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:54 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:54 --> Email Class Initialized
+INFO - 2025-05-31 16:10:54 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:54 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:54 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:54 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:54 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:54 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:54 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:54 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:54 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:54 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:54 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:54 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:54 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:54 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:10:54 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:54 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:54 --> Total execution time: 0.0433
+INFO - 2025-05-31 16:10:55 --> Config Class Initialized
+INFO - 2025-05-31 16:10:55 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:55 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:55 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:55 --> URI Class Initialized
+INFO - 2025-05-31 16:10:55 --> Router Class Initialized
+INFO - 2025-05-31 16:10:55 --> Output Class Initialized
+INFO - 2025-05-31 16:10:55 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:55 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:55 --> Input Class Initialized
+INFO - 2025-05-31 16:10:55 --> Language Class Initialized
+INFO - 2025-05-31 16:10:55 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:55 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:55 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:55 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:55 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:55 --> Email Class Initialized
+INFO - 2025-05-31 16:10:55 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:55 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:55 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:55 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:55 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:55 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:55 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:55 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:55 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:55 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:55 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:55 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:55 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:55 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:10:55 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:55 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:55 --> Total execution time: 0.0399
+INFO - 2025-05-31 16:10:56 --> Config Class Initialized
+INFO - 2025-05-31 16:10:56 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:56 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:56 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:56 --> URI Class Initialized
+INFO - 2025-05-31 16:10:56 --> Router Class Initialized
+INFO - 2025-05-31 16:10:56 --> Output Class Initialized
+INFO - 2025-05-31 16:10:56 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:56 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:56 --> CSRF token verified
+INFO - 2025-05-31 16:10:56 --> Input Class Initialized
+INFO - 2025-05-31 16:10:56 --> Language Class Initialized
+INFO - 2025-05-31 16:10:56 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:56 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:56 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:56 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:56 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:56 --> Email Class Initialized
+INFO - 2025-05-31 16:10:56 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:56 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:56 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:56 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:56 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:56 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:56 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:56 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:56 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:56 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:56 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:56 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:56 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:56 --> Total execution time: 0.0412
+INFO - 2025-05-31 16:10:56 --> Config Class Initialized
+INFO - 2025-05-31 16:10:56 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:56 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:56 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:56 --> URI Class Initialized
+INFO - 2025-05-31 16:10:56 --> Router Class Initialized
+INFO - 2025-05-31 16:10:56 --> Output Class Initialized
+INFO - 2025-05-31 16:10:56 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:56 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:56 --> Input Class Initialized
+INFO - 2025-05-31 16:10:56 --> Language Class Initialized
+INFO - 2025-05-31 16:10:56 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:56 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:56 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:56 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:56 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:56 --> Email Class Initialized
+INFO - 2025-05-31 16:10:56 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:56 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:56 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:56 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:56 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:56 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:57 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:57 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:57 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:57 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:57 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:57 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:57 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:57 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/edit.php
+INFO - 2025-05-31 16:10:57 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:57 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:57 --> Total execution time: 0.0408
+INFO - 2025-05-31 16:10:58 --> Config Class Initialized
+INFO - 2025-05-31 16:10:58 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:58 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:58 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:58 --> URI Class Initialized
+INFO - 2025-05-31 16:10:58 --> Router Class Initialized
+INFO - 2025-05-31 16:10:58 --> Output Class Initialized
+INFO - 2025-05-31 16:10:58 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:58 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:58 --> Input Class Initialized
+INFO - 2025-05-31 16:10:58 --> Language Class Initialized
+INFO - 2025-05-31 16:10:58 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:58 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:58 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:58 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:58 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:58 --> Email Class Initialized
+INFO - 2025-05-31 16:10:58 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:58 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:58 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:58 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:58 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:58 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:58 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:58 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:58 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:58 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:58 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:58 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:58 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:10:58 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:10:58 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:10:58 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:58 --> Total execution time: 0.0546
+INFO - 2025-05-31 16:10:58 --> Config Class Initialized
+INFO - 2025-05-31 16:10:58 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:10:58 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:10:58 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:10:58 --> URI Class Initialized
+INFO - 2025-05-31 16:10:58 --> Router Class Initialized
+INFO - 2025-05-31 16:10:58 --> Output Class Initialized
+INFO - 2025-05-31 16:10:58 --> Security Class Initialized
+DEBUG - 2025-05-31 16:10:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:10:58 --> CSRF cookie sent
+INFO - 2025-05-31 16:10:58 --> CSRF token verified
+INFO - 2025-05-31 16:10:58 --> Input Class Initialized
+INFO - 2025-05-31 16:10:58 --> Language Class Initialized
+INFO - 2025-05-31 16:10:58 --> Loader Class Initialized
+INFO - 2025-05-31 16:10:58 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:10:58 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:10:58 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:10:58 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:10:58 --> Email Class Initialized
+INFO - 2025-05-31 16:10:58 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:10:58 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:10:58 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:10:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:10:58 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:10:58 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:10:58 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:10:58 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:10:58 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:10:58 --> Encryption Class Initialized
+INFO - 2025-05-31 16:10:58 --> Controller Class Initialized
+INFO - 2025-05-31 16:10:58 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:10:58 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:10:58 --> Final output sent to browser
+DEBUG - 2025-05-31 16:10:58 --> Total execution time: 0.0682
+INFO - 2025-05-31 16:11:02 --> Config Class Initialized
+INFO - 2025-05-31 16:11:02 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:02 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:02 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:02 --> URI Class Initialized
+INFO - 2025-05-31 16:11:02 --> Router Class Initialized
+INFO - 2025-05-31 16:11:02 --> Output Class Initialized
+INFO - 2025-05-31 16:11:02 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:02 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:02 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:02 --> CSRF token verified
+INFO - 2025-05-31 16:11:02 --> Input Class Initialized
+INFO - 2025-05-31 16:11:02 --> Language Class Initialized
+INFO - 2025-05-31 16:11:02 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:02 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:02 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:02 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:02 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:02 --> Email Class Initialized
+INFO - 2025-05-31 16:11:02 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:02 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:02 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:02 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:02 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:02 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:02 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:02 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:02 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:02 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:02 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:02 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:02 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:02 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:02 --> Total execution time: 0.0620
+INFO - 2025-05-31 16:11:03 --> Config Class Initialized
+INFO - 2025-05-31 16:11:03 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:03 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:03 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:03 --> URI Class Initialized
+INFO - 2025-05-31 16:11:03 --> Router Class Initialized
+INFO - 2025-05-31 16:11:03 --> Output Class Initialized
+INFO - 2025-05-31 16:11:03 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:03 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:03 --> CSRF token verified
+INFO - 2025-05-31 16:11:03 --> Input Class Initialized
+INFO - 2025-05-31 16:11:03 --> Language Class Initialized
+INFO - 2025-05-31 16:11:03 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:03 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:03 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:03 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:03 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:03 --> Email Class Initialized
+INFO - 2025-05-31 16:11:03 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:03 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:03 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:03 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:03 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:03 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:03 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:03 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:03 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:03 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:03 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:03 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:03 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:03 --> Total execution time: 0.0390
+INFO - 2025-05-31 16:11:27 --> Config Class Initialized
+INFO - 2025-05-31 16:11:27 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:27 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:27 --> URI Class Initialized
+INFO - 2025-05-31 16:11:27 --> Router Class Initialized
+INFO - 2025-05-31 16:11:27 --> Output Class Initialized
+INFO - 2025-05-31 16:11:27 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:27 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:27 --> Input Class Initialized
+INFO - 2025-05-31 16:11:27 --> Language Class Initialized
+INFO - 2025-05-31 16:11:27 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:27 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:27 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:27 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:27 --> Email Class Initialized
+INFO - 2025-05-31 16:11:27 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:27 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:27 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:27 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:27 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:27 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:27 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:27 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:27 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:27 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:11:27 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:27 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:27 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:11:27 --> File loaded: C:\xampp\htdocs\cbt\application\views\master/guru/data.php
+INFO - 2025-05-31 16:11:27 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:11:27 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:27 --> Total execution time: 0.0800
+INFO - 2025-05-31 16:11:27 --> Config Class Initialized
+INFO - 2025-05-31 16:11:27 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:27 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:27 --> URI Class Initialized
+INFO - 2025-05-31 16:11:27 --> Router Class Initialized
+INFO - 2025-05-31 16:11:27 --> Output Class Initialized
+INFO - 2025-05-31 16:11:27 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:27 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:27 --> CSRF token verified
+INFO - 2025-05-31 16:11:27 --> Input Class Initialized
+INFO - 2025-05-31 16:11:27 --> Language Class Initialized
+INFO - 2025-05-31 16:11:27 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:27 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:27 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:27 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:27 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:27 --> Email Class Initialized
+INFO - 2025-05-31 16:11:27 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:27 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:27 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:27 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:27 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:27 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:28 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:11:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:28 --> Total execution time: 0.0459
+INFO - 2025-05-31 16:11:28 --> Config Class Initialized
+INFO - 2025-05-31 16:11:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:28 --> URI Class Initialized
+INFO - 2025-05-31 16:11:28 --> Router Class Initialized
+INFO - 2025-05-31 16:11:28 --> Output Class Initialized
+INFO - 2025-05-31 16:11:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:28 --> Input Class Initialized
+INFO - 2025-05-31 16:11:28 --> Language Class Initialized
+INFO - 2025-05-31 16:11:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:28 --> Email Class Initialized
+INFO - 2025-05-31 16:11:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:28 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:11:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:11:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\master/siswa/data.php
+INFO - 2025-05-31 16:11:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:11:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:28 --> Total execution time: 0.0395
+INFO - 2025-05-31 16:11:28 --> Config Class Initialized
+INFO - 2025-05-31 16:11:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:28 --> URI Class Initialized
+INFO - 2025-05-31 16:11:28 --> Router Class Initialized
+INFO - 2025-05-31 16:11:28 --> Output Class Initialized
+INFO - 2025-05-31 16:11:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:28 --> CSRF token verified
+INFO - 2025-05-31 16:11:28 --> Input Class Initialized
+INFO - 2025-05-31 16:11:28 --> Language Class Initialized
+INFO - 2025-05-31 16:11:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:28 --> Email Class Initialized
+INFO - 2025-05-31 16:11:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:28 --> Controller Class Initialized
+DEBUG - 2025-05-31 16:11:28 --> Ion_auth class already loaded. Second attempt ignored.
+INFO - 2025-05-31 16:11:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:28 --> Total execution time: 0.0512
+INFO - 2025-05-31 16:11:31 --> Config Class Initialized
+INFO - 2025-05-31 16:11:31 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:31 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:31 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:31 --> URI Class Initialized
+INFO - 2025-05-31 16:11:31 --> Router Class Initialized
+INFO - 2025-05-31 16:11:31 --> Output Class Initialized
+INFO - 2025-05-31 16:11:31 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:31 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:31 --> Input Class Initialized
+INFO - 2025-05-31 16:11:31 --> Language Class Initialized
+INFO - 2025-05-31 16:11:31 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:31 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:31 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:31 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:31 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:31 --> Email Class Initialized
+INFO - 2025-05-31 16:11:31 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:31 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:31 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:31 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:31 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:31 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:31 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:31 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:31 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:31 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:31 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:31 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:31 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:11:31 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:11:31 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:11:31 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:31 --> Total execution time: 0.0400
+INFO - 2025-05-31 16:11:31 --> Config Class Initialized
+INFO - 2025-05-31 16:11:31 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:31 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:31 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:31 --> URI Class Initialized
+INFO - 2025-05-31 16:11:31 --> Router Class Initialized
+INFO - 2025-05-31 16:11:31 --> Output Class Initialized
+INFO - 2025-05-31 16:11:31 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:31 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:31 --> CSRF token verified
+INFO - 2025-05-31 16:11:31 --> Input Class Initialized
+INFO - 2025-05-31 16:11:31 --> Language Class Initialized
+INFO - 2025-05-31 16:11:31 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:31 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:31 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:31 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:31 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:32 --> Email Class Initialized
+INFO - 2025-05-31 16:11:32 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:32 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:32 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:32 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:32 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:32 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:32 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:32 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:32 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:32 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:32 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:32 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:32 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:32 --> Total execution time: 0.0440
+INFO - 2025-05-31 16:11:37 --> Config Class Initialized
+INFO - 2025-05-31 16:11:37 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:37 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:37 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:37 --> URI Class Initialized
+INFO - 2025-05-31 16:11:37 --> Router Class Initialized
+INFO - 2025-05-31 16:11:37 --> Output Class Initialized
+INFO - 2025-05-31 16:11:37 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:37 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:37 --> Input Class Initialized
+INFO - 2025-05-31 16:11:37 --> Language Class Initialized
+INFO - 2025-05-31 16:11:37 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:37 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:37 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:37 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:37 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:37 --> Email Class Initialized
+INFO - 2025-05-31 16:11:37 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:37 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:37 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:37 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:37 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:37 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:37 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:37 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:37 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:37 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:37 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:37 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:11:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:11:37 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:11:37 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:37 --> Total execution time: 0.0592
+INFO - 2025-05-31 16:11:48 --> Config Class Initialized
+INFO - 2025-05-31 16:11:48 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:48 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:48 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:48 --> URI Class Initialized
+INFO - 2025-05-31 16:11:48 --> Router Class Initialized
+INFO - 2025-05-31 16:11:48 --> Output Class Initialized
+INFO - 2025-05-31 16:11:48 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:48 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:48 --> Input Class Initialized
+INFO - 2025-05-31 16:11:48 --> Language Class Initialized
+INFO - 2025-05-31 16:11:48 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:48 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:48 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:48 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:48 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:48 --> Email Class Initialized
+INFO - 2025-05-31 16:11:48 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:48 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:48 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:48 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:48 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:48 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:48 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:48 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:48 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:48 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:48 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:48 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:48 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:11:48 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:11:48 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:11:48 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:48 --> Total execution time: 0.0613
+INFO - 2025-05-31 16:11:48 --> Config Class Initialized
+INFO - 2025-05-31 16:11:48 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:48 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:48 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:48 --> URI Class Initialized
+INFO - 2025-05-31 16:11:48 --> Router Class Initialized
+INFO - 2025-05-31 16:11:48 --> Output Class Initialized
+INFO - 2025-05-31 16:11:48 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:48 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:48 --> CSRF token verified
+INFO - 2025-05-31 16:11:48 --> Input Class Initialized
+INFO - 2025-05-31 16:11:48 --> Language Class Initialized
+INFO - 2025-05-31 16:11:48 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:48 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:48 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:48 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:48 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:48 --> Email Class Initialized
+INFO - 2025-05-31 16:11:48 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:48 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:48 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:48 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:48 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:48 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:48 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:48 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:48 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:48 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:48 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:48 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:48 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:48 --> Total execution time: 0.0464
+INFO - 2025-05-31 16:11:50 --> Config Class Initialized
+INFO - 2025-05-31 16:11:50 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:11:50 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:11:50 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:11:50 --> URI Class Initialized
+INFO - 2025-05-31 16:11:50 --> Router Class Initialized
+INFO - 2025-05-31 16:11:50 --> Output Class Initialized
+INFO - 2025-05-31 16:11:50 --> Security Class Initialized
+DEBUG - 2025-05-31 16:11:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:11:50 --> CSRF cookie sent
+INFO - 2025-05-31 16:11:50 --> Input Class Initialized
+INFO - 2025-05-31 16:11:50 --> Language Class Initialized
+INFO - 2025-05-31 16:11:50 --> Loader Class Initialized
+INFO - 2025-05-31 16:11:50 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:11:50 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:11:50 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:11:50 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:11:50 --> Email Class Initialized
+INFO - 2025-05-31 16:11:50 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:11:50 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:11:50 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:11:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:11:50 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:11:50 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:11:50 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:11:50 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:11:50 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:11:50 --> Encryption Class Initialized
+INFO - 2025-05-31 16:11:50 --> Controller Class Initialized
+INFO - 2025-05-31 16:11:50 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:11:50 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:11:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:11:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:11:50 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:11:50 --> Final output sent to browser
+DEBUG - 2025-05-31 16:11:50 --> Total execution time: 0.0650
+INFO - 2025-05-31 16:12:01 --> Config Class Initialized
+INFO - 2025-05-31 16:12:01 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:01 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:01 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:01 --> URI Class Initialized
+INFO - 2025-05-31 16:12:01 --> Router Class Initialized
+INFO - 2025-05-31 16:12:01 --> Output Class Initialized
+INFO - 2025-05-31 16:12:01 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:01 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:01 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:01 --> Input Class Initialized
+INFO - 2025-05-31 16:12:01 --> Language Class Initialized
+INFO - 2025-05-31 16:12:01 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:01 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:01 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:01 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:01 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:01 --> Email Class Initialized
+INFO - 2025-05-31 16:12:01 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:01 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:01 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:01 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:01 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:01 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:01 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:01 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:01 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:01 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:01 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:01 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:01 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:01 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:01 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:12:01 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:01 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:01 --> Total execution time: 0.0410
+INFO - 2025-05-31 16:12:09 --> Config Class Initialized
+INFO - 2025-05-31 16:12:09 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:09 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:09 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:09 --> URI Class Initialized
+INFO - 2025-05-31 16:12:09 --> Router Class Initialized
+INFO - 2025-05-31 16:12:09 --> Output Class Initialized
+INFO - 2025-05-31 16:12:09 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:09 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:09 --> Input Class Initialized
+INFO - 2025-05-31 16:12:09 --> Language Class Initialized
+INFO - 2025-05-31 16:12:09 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:09 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:09 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:09 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:09 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:09 --> Email Class Initialized
+INFO - 2025-05-31 16:12:09 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:09 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:09 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:09 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:09 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:09 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:09 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:09 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:09 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:09 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:09 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:09 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:09 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:09 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:09 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:12:09 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:09 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:09 --> Total execution time: 0.0426
+INFO - 2025-05-31 16:12:14 --> Config Class Initialized
+INFO - 2025-05-31 16:12:14 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:14 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:14 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:15 --> URI Class Initialized
+INFO - 2025-05-31 16:12:15 --> Router Class Initialized
+INFO - 2025-05-31 16:12:15 --> Output Class Initialized
+INFO - 2025-05-31 16:12:15 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:15 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:15 --> Input Class Initialized
+INFO - 2025-05-31 16:12:15 --> Language Class Initialized
+INFO - 2025-05-31 16:12:15 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:15 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:15 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:15 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:15 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:15 --> Email Class Initialized
+INFO - 2025-05-31 16:12:15 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:15 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:15 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:15 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:15 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:15 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:15 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:15 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:15 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:15 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:15 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:15 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:15 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:15 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:12:15 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:15 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:15 --> Total execution time: 0.0673
+INFO - 2025-05-31 16:12:18 --> Config Class Initialized
+INFO - 2025-05-31 16:12:18 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:18 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:18 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:18 --> URI Class Initialized
+INFO - 2025-05-31 16:12:18 --> Router Class Initialized
+INFO - 2025-05-31 16:12:18 --> Output Class Initialized
+INFO - 2025-05-31 16:12:18 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:18 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:18 --> Input Class Initialized
+INFO - 2025-05-31 16:12:18 --> Language Class Initialized
+INFO - 2025-05-31 16:12:18 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:18 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:18 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:18 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:18 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:18 --> Email Class Initialized
+INFO - 2025-05-31 16:12:18 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:18 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:18 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:18 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:18 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:18 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:18 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:18 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:18 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:18 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:18 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:18 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:18 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:18 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:12:18 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:18 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:18 --> Total execution time: 0.0567
+INFO - 2025-05-31 16:12:21 --> Config Class Initialized
+INFO - 2025-05-31 16:12:21 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:21 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:21 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:21 --> URI Class Initialized
+INFO - 2025-05-31 16:12:21 --> Router Class Initialized
+INFO - 2025-05-31 16:12:21 --> Output Class Initialized
+INFO - 2025-05-31 16:12:21 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:21 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:21 --> Input Class Initialized
+INFO - 2025-05-31 16:12:21 --> Language Class Initialized
+INFO - 2025-05-31 16:12:21 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:21 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:21 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:21 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:21 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:21 --> Email Class Initialized
+INFO - 2025-05-31 16:12:21 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:21 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:21 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:21 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:21 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:21 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:21 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:21 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:21 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:21 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:21 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:21 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:21 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:21 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:12:21 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:21 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:21 --> Total execution time: 0.0405
+INFO - 2025-05-31 16:12:21 --> Config Class Initialized
+INFO - 2025-05-31 16:12:21 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:21 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:21 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:21 --> URI Class Initialized
+INFO - 2025-05-31 16:12:21 --> Router Class Initialized
+INFO - 2025-05-31 16:12:21 --> Output Class Initialized
+INFO - 2025-05-31 16:12:21 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:21 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:21 --> CSRF token verified
+INFO - 2025-05-31 16:12:21 --> Input Class Initialized
+INFO - 2025-05-31 16:12:21 --> Language Class Initialized
+INFO - 2025-05-31 16:12:21 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:21 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:21 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:21 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:21 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:21 --> Email Class Initialized
+INFO - 2025-05-31 16:12:21 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:21 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:21 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:21 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:21 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:21 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:21 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:21 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:21 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:21 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:21 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:21 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:21 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:21 --> Total execution time: 0.0689
+INFO - 2025-05-31 16:12:28 --> Config Class Initialized
+INFO - 2025-05-31 16:12:28 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:28 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:28 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:28 --> URI Class Initialized
+INFO - 2025-05-31 16:12:28 --> Router Class Initialized
+INFO - 2025-05-31 16:12:28 --> Output Class Initialized
+INFO - 2025-05-31 16:12:28 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:28 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:28 --> Input Class Initialized
+INFO - 2025-05-31 16:12:28 --> Language Class Initialized
+INFO - 2025-05-31 16:12:28 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:28 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:28 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:28 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:28 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:28 --> Email Class Initialized
+INFO - 2025-05-31 16:12:28 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:28 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:28 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:28 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:28 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:28 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:28 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:28 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:28 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:28 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:28 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:28 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/add.php
+INFO - 2025-05-31 16:12:28 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:28 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:28 --> Total execution time: 0.0404
+INFO - 2025-05-31 16:12:30 --> Config Class Initialized
+INFO - 2025-05-31 16:12:30 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:30 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:30 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:30 --> URI Class Initialized
+INFO - 2025-05-31 16:12:30 --> Router Class Initialized
+INFO - 2025-05-31 16:12:30 --> Output Class Initialized
+INFO - 2025-05-31 16:12:30 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:30 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:30 --> Input Class Initialized
+INFO - 2025-05-31 16:12:30 --> Language Class Initialized
+INFO - 2025-05-31 16:12:30 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:30 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:30 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:30 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:30 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:30 --> Email Class Initialized
+INFO - 2025-05-31 16:12:30 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:30 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:30 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:30 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:30 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:30 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:30 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:30 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:30 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:30 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:30 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_header.php
+INFO - 2025-05-31 16:12:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\relasi/siswakelas/data.php
+INFO - 2025-05-31 16:12:30 --> File loaded: C:\xampp\htdocs\cbt\application\views\_templates/dashboard/_footer.php
+INFO - 2025-05-31 16:12:30 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:30 --> Total execution time: 0.0552
+INFO - 2025-05-31 16:12:30 --> Config Class Initialized
+INFO - 2025-05-31 16:12:30 --> Hooks Class Initialized
+DEBUG - 2025-05-31 16:12:30 --> UTF-8 Support Enabled
+INFO - 2025-05-31 16:12:30 --> Utf8 Class Initialized
+INFO - 2025-05-31 16:12:30 --> URI Class Initialized
+INFO - 2025-05-31 16:12:30 --> Router Class Initialized
+INFO - 2025-05-31 16:12:30 --> Output Class Initialized
+INFO - 2025-05-31 16:12:30 --> Security Class Initialized
+DEBUG - 2025-05-31 16:12:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2025-05-31 16:12:30 --> CSRF cookie sent
+INFO - 2025-05-31 16:12:30 --> CSRF token verified
+INFO - 2025-05-31 16:12:30 --> Input Class Initialized
+INFO - 2025-05-31 16:12:30 --> Language Class Initialized
+INFO - 2025-05-31 16:12:30 --> Loader Class Initialized
+INFO - 2025-05-31 16:12:30 --> Helper loaded: url_helper
+INFO - 2025-05-31 16:12:30 --> Helper loaded: form_helper
+INFO - 2025-05-31 16:12:30 --> Database Driver Class Initialized
+DEBUG - 2025-05-31 16:12:30 --> Config file loaded: C:\xampp\htdocs\cbt\application\config/ion_auth.php
+INFO - 2025-05-31 16:12:30 --> Email Class Initialized
+INFO - 2025-05-31 16:12:30 --> Language file loaded: language/english/ion_auth_lang.php
+INFO - 2025-05-31 16:12:30 --> Helper loaded: cookie_helper
+INFO - 2025-05-31 16:12:30 --> Helper loaded: language_helper
+DEBUG - 2025-05-31 16:12:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2025-05-31 16:12:30 --> Session: Class initialized using 'files' driver.
+INFO - 2025-05-31 16:12:30 --> Helper loaded: date_helper
+INFO - 2025-05-31 16:12:30 --> Model "Ion_auth_model" initialized
+DEBUG - 2025-05-31 16:12:30 --> Encryption: Auto-configured driver 'openssl'.
+INFO - 2025-05-31 16:12:30 --> Encryption: OpenSSL initialized with method AES-128-CBC.
+INFO - 2025-05-31 16:12:30 --> Encryption Class Initialized
+INFO - 2025-05-31 16:12:30 --> Controller Class Initialized
+INFO - 2025-05-31 16:12:30 --> Form Validation Class Initialized
+INFO - 2025-05-31 16:12:30 --> Model "Master_model" initialized
+INFO - 2025-05-31 16:12:30 --> Final output sent to browser
+DEBUG - 2025-05-31 16:12:30 --> Total execution time: 0.0625

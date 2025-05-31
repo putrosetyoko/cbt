@@ -23,9 +23,13 @@
                 <label>Filter Kelas:</label>
                 <select id="filter_kelas" class="form-control select2" style="width: 100%;">
                     <option value="all">Semua Kelas</option>
-                    <?php foreach ($all_kelas as $k) : ?>
-                        <option value="<?= $k->id_kelas ?>"><?= htmlspecialchars($k->nama_kelas) ?></option>
-                    <?php endforeach; ?>
+                    <?php if (isset($all_kelas) && !empty($all_kelas)) : ?>
+                            <?php foreach ($all_kelas as $k) : ?>
+                                <option value="<?= $k->id_kelas ?>">
+                                    <?= htmlspecialchars($k->nama_jenjang . ' ' . $k->nama_kelas) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                 </select>
             </div>
             <div class="col-sm-4 text-right" style="padding-top: 25px;">
@@ -42,7 +46,6 @@
                     <tr>
                         <th width="3%" class="text-center">No.</th>
                         <th>Tahun Ajaran</th>
-                        <th>Jenjang</th>
                         <th>Kelas</th>
                         <th>NISN Siswa</th>
                         <th>Nama Siswa</th>
