@@ -23,19 +23,19 @@ $(document).ready(function () {
     buttons: [
       {
         extend: 'copy',
-        exportOptions: { columns: [1, 2] }, // Kolom: Kelas (1), Jenjang (2)
+        exportOptions: { columns: [1] }, // Kolom: Kelas (1), Jenjang (2)
       },
       {
         extend: 'print',
-        exportOptions: { columns: [1, 2] },
+        exportOptions: { columns: [1] },
       },
       {
         extend: 'excel',
-        exportOptions: { columns: [1, 2] },
+        exportOptions: { columns: [1] },
       },
       {
         extend: 'pdf',
-        exportOptions: { columns: [1, 2] },
+        exportOptions: { columns: [1] },
       },
     ],
     oLanguage: {
@@ -55,8 +55,13 @@ $(document).ready(function () {
         searchable: false,
         // width: '5%' // Atur lebar jika perlu
       },
-      { data: 'nama_jenjang' }, // Kolom baru untuk nama_jenjang
-      { data: 'nama_kelas' },
+      {
+        data: null,
+        render: function (data, type, row) {
+          return row.nama_jenjang + ' ' + row.nama_kelas;
+        },
+        searchable: true,
+      },
       {
         data: 'bulk_select', // Pastikan controller mengirimkan data untuk ini
         orderable: false,

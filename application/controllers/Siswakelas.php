@@ -29,7 +29,7 @@ class Siswakelas extends CI_Controller
             'nama_tahun_ajaran' => $row->nama_tahun_ajaran,
             'user'          => $this->ion_auth->user()->row(),
             'judul'         => 'Distribusi Kelas Siswa',
-            'subjudul'      => 'Penempatan Siswa per Kelas & Tahun Ajaran',
+            'subjudul'      => 'Tahun Ajaran - Kelas - Siswa',
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(), // Untuk filter
             'all_kelas'     => $this->master->getAllKelas()       // Untuk filter
         ];

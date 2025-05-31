@@ -20,7 +20,6 @@
       <thead>
         <tr>
           <th>No.</th>
-          <th>Jenjang</th>
           <th>Nama Kelas</th> <th class="text-center">
             <input type="checkbox" id="select_all">
           </th>
