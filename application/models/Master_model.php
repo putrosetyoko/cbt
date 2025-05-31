@@ -195,6 +195,7 @@ class Master_model extends CI_Model
         $this->db->where('id_guru', $id_guru);
         return $this->db->get('guru')->row();
     }
+    
 
     /**
      * Data Mapel
@@ -310,40 +311,48 @@ class Master_model extends CI_Model
     /**
      * Data Penugasan Guru untuk DataTables
      */
-    public function getDataPenugasanGuru($filters = [])
+    public function getDataPenugasanGuru($filter_tahun_ajaran = null, $filter_guru = null, $filter_mapel = null, $filter_kelas = null) 
     {
-        $this->datatables->select(
-            'gmka.id_gmka, ta.nama_tahun_ajaran, g.nama_guru, m.nama_mapel, k.nama_kelas, j.nama_jenjang',
-            FALSE
-        );
+        // Tambahkan kolom untuk bulk_select
+        $this->datatables->select('
+            gmka.id_gmka,
+            ta.nama_tahun_ajaran,
+            g.nama_guru,
+            m.nama_mapel,
+            CONCAT(j.nama_jenjang, " ", k.nama_kelas) as kelas_info
+        ', FALSE);
+        
         $this->datatables->from('guru_mapel_kelas_ajaran gmka');
-        $this->datatables->join('guru g', 'gmka.guru_id = g.id_guru');
-        $this->datatables->join('mapel m', 'gmka.mapel_id = m.id_mapel');
-        $this->datatables->join('kelas k', 'gmka.kelas_id = k.id_kelas');
-        $this->datatables->join('tahun_ajaran ta', 'gmka.id_tahun_ajaran = ta.id_tahun_ajaran');
-        $this->datatables->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left'); // Untuk menampilkan jenjang kelas
+        $this->datatables->join('tahun_ajaran ta', 'ta.id_tahun_ajaran = gmka.id_tahun_ajaran');
+        $this->datatables->join('guru g', 'g.id_guru = gmka.guru_id');
+        $this->datatables->join('mapel m', 'm.id_mapel = gmka.mapel_id');
+        $this->datatables->join('kelas k', 'k.id_kelas = gmka.kelas_id');
+        $this->datatables->join('jenjang j', 'j.id_jenjang = k.id_jenjang');
 
-        if (!empty($filters['id_tahun_ajaran']) && $filters['id_tahun_ajaran'] !== 'all') {
-            $this->datatables->where('gmka.id_tahun_ajaran', $filters['id_tahun_ajaran']);
-        }
-        if (!empty($filters['guru_id']) && $filters['guru_id'] !== 'all') {
-            $this->datatables->where('gmka.guru_id', $filters['guru_id']);
-        }
-        if (!empty($filters['mapel_id']) && $filters['mapel_id'] !== 'all') {
-            $this->datatables->where('gmka.mapel_id', $filters['mapel_id']);
-        }
-        if (!empty($filters['kelas_id']) && $filters['kelas_id'] !== 'all') {
-            $this->datatables->where('gmka.kelas_id', $filters['kelas_id']);
+        // Perbaikan filter
+        if ($filter_tahun_ajaran !== null && $filter_tahun_ajaran !== 'all') {
+            $this->datatables->where('gmka.id_tahun_ajaran', $filter_tahun_ajaran);
         }
         
-        // Kolom bulk_select untuk checkbox
-        $this->datatables->add_column(
-            'bulk_select', 
+        if ($filter_guru !== null && $filter_guru !== 'all') {
+            $this->datatables->where('gmka.guru_id', $filter_guru);
+        }
+        
+        if ($filter_mapel !== null && $filter_mapel !== 'all') {
+            $this->datatables->where('gmka.mapel_id', $filter_mapel);
+        }
+        
+        if ($filter_kelas !== null && $filter_kelas !== 'all') {
+            $this->datatables->where('gmka.kelas_id', $filter_kelas);
+        }
+
+        // Tambahkan kolom bulk_select
+        $this->datatables->add_column('bulk_select', 
             '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 
-            'gmka.id_gmka'
+            'id_gmka'
         );
-        // Kolom aksi akan dirender oleh JavaScript
-        
+
+        // Ganti order_by dengan pengaturan di DataTables JS
         return $this->datatables->generate();
     }
 

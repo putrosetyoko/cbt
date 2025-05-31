@@ -53,7 +53,7 @@
                 
                 <div class="form-group pull-right">
                     <button type="reset" class="btn btn-flat btn-default"><i class="fa fa-rotate-left"></i> Reset</button>
-                    <button type="submit" id="submitBtn" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan Penugasan</button>
+                    <button type="submit" id="submitBtn" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </div>
         </div>

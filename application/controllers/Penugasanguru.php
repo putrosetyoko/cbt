@@ -40,13 +40,17 @@ class Penugasanguru extends CI_Controller
 
     public function data()
     {
-        $filters = [
-            'id_tahun_ajaran' => $this->input->post('filter_tahun_ajaran', true),
-            'guru_id'         => $this->input->post('filter_guru', true),
-            'mapel_id'        => $this->input->post('filter_mapel', true),
-            'kelas_id'        => $this->input->post('filter_kelas', true),
-        ];
-        $this->output_json($this->master->getDataPenugasanGuru($filters), false);
+        $filter_tahun_ajaran = $this->input->post('filter_tahun_ajaran');
+        $filter_guru = $this->input->post('filter_guru');
+        $filter_mapel = $this->input->post('filter_mapel');
+        $filter_kelas = $this->input->post('filter_kelas');
+
+        $this->output_json($this->master->getDataPenugasanGuru(
+            $filter_tahun_ajaran === 'all' ? null : $filter_tahun_ajaran,
+            $filter_guru === 'all' ? null : $filter_guru,
+            $filter_mapel === 'all' ? null : $filter_mapel,
+            $filter_kelas === 'all' ? null : $filter_kelas
+        ), false);
     }
 
     public function add()
@@ -212,21 +216,31 @@ class Penugasanguru extends CI_Controller
     }
 
 
-    public function delete()
+    public function delete($id = null)
     {
-        $chk = $this->input->post('checked', true); // Array of id_gmka
-        if (empty($chk) || !is_array($chk)) {
-            $this->output_json(['status' => false, 'message' => 'Tidak ada data yang dipilih.']);
+        $checked = $id ? [$id] : $this->input->post('checked', true);
+        
+        if (!$checked) {
+            $this->output_json([
+                'status' => false,
+                'message' => 'Tidak ada data yang dipilih'
+            ]);
             return;
         }
-        foreach ($chk as $id_value) {
-            if (!is_scalar($id_value)) { /* ... handle error ID tidak valid ... */ }
+
+        if (!is_array($checked)) {
+            $checked = [$checked];
         }
 
-        if ($this->master->delete('guru_mapel_kelas_ajaran', $chk, 'id_gmka')) {
-            $this->output_json(['status' => true, 'message' => count($chk) . ' data penugasan berhasil dihapus.', 'total' => count($chk)]);
-        } else {
-            $this->output_json(['status' => false, 'message' => 'Gagal menghapus data penugasan.']);
-        }
+        $this->db->trans_start();
+        $this->db->where_in('id_gmka', $checked);
+        $delete = $this->db->delete('guru_mapel_kelas_ajaran');
+        $this->db->trans_complete();
+
+        $this->output_json([
+            'status' => $delete,
+            'total' => count($checked),
+            'message' => $delete ? 'Data berhasil dihapus' : 'Gagal menghapus data'
+        ]);
     }
 }

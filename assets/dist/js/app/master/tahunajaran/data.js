@@ -52,9 +52,9 @@ $(document).ready(function () {
         className: 'text-center',
         render: function (data, type, row) {
           if (data === 'aktif') {
-            return '<span class="label label-success">Aktif</span>';
+            return '<span class="badge bg-green">Aktif</span>';
           } else {
-            return '<span class="label label-danger">Tidak Aktif</span>';
+            return '<span class="badge bg-red">Tidak Aktif</span>';
           }
         },
       },

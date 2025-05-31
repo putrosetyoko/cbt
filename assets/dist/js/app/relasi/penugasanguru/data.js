@@ -19,20 +19,11 @@ $(document).ready(function () {
       "<'row'<'col-sm-12'tr>>" +
       "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     buttons: [
-      { extend: 'copy', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } }, // No, TA, Guru, Mapel, Jenjang, Kelas
-      { extend: 'print', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
-      { extend: 'excel', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
-      { extend: 'pdf', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
+      { extend: 'copy', exportOptions: { columns: [0, 1, 2, 3, 4] } }, // No, TA, Guru, Mapel, Jenjang, Kelas
+      { extend: 'print', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+      { extend: 'excel', exportOptions: { columns: [0, 1, 2, 3, 4] } },
+      { extend: 'pdf', exportOptions: { columns: [0, 1, 2, 3, 4] } },
     ],
-    oLanguage: {
-      sProcessing: 'Memuat...',
-      sSearch: 'Cari:',
-      sLengthMenu: 'Tampilkan _MENU_ entri',
-      sInfo: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ entri',
-      sInfoEmpty: 'Menampilkan 0 dari 0 entri',
-      sInfoFiltered: '(disaring dari _MAX_ total entri)',
-      oPaginate: { sFirst: 'Awal', sLast: 'Akhir', sNext: '>', sPrevious: '<' },
-    },
     processing: true,
     serverSide: true,
     ajax: {
@@ -43,7 +34,6 @@ $(document).ready(function () {
         d.filter_guru = $('#filter_guru').val();
         d.filter_mapel = $('#filter_mapel').val();
         d.filter_kelas = $('#filter_kelas').val();
-        d.t = new Date().getTime();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.error(
@@ -64,8 +54,36 @@ $(document).ready(function () {
       { data: 'nama_tahun_ajaran' },
       { data: 'nama_guru' },
       { data: 'nama_mapel' },
-      { data: 'nama_jenjang', defaultContent: '-' },
-      { data: 'nama_kelas' },
+      {
+        data: 'kelas_info',
+        render: function (data, type, row) {
+          if (type === 'display') {
+            // Extract jenjang from kelas_info (format: "JENJANG KELAS")
+            const jenjang = data.split(' ')[0];
+
+            // Set badge color based on jenjang
+            let badgeClass = '';
+            switch (jenjang) {
+              case 'VII':
+                badgeClass = 'bg-green';
+                break;
+              case 'VIII':
+                badgeClass = 'bg-blue';
+                break;
+              case 'IX':
+                badgeClass = 'bg-maroon';
+                break;
+              default:
+                badgeClass = 'bg-default';
+            }
+
+            return `<span class="badge ${badgeClass}" style="padding: 4px 8px;">
+                    ${data}
+                </span>`;
+          }
+          return data;
+        },
+      },
       {
         data: null,
         orderable: false,
@@ -89,17 +107,15 @@ $(document).ready(function () {
         },
       },
       {
-        targets: 6, // Kolom Aksi
-        data: 'id_gmka',
+        targets: 5, // Kolom Aksi
         render: function (data, type, row, meta) {
-          return `<a href="${base_url}penugasanguru/edit/${data}" class="btn btn-xs btn-warning" title="Edit Penugasan"><i class="fa fa-pencil"></i> Edit</a>`;
+          return `<a href="${base_url}penugasanguru/edit/${data.id_gmka}" class="btn btn-xs btn-warning""><i class="fa fa-pencil"></i> Edit</a>`;
         },
       },
       {
-        targets: 7, // Kolom Checkbox
-        data: 'id_gmka',
+        targets: 6, // Kolom Checkbox
         render: function (data, type, row, meta) {
-          return `<input name="checked[]" class="check" value="${data}" type="checkbox">`;
+          return `<input name="checked[]" class="check" value="${data.id_gmka}" type="checkbox">`;
         },
       },
     ],
@@ -107,12 +123,25 @@ $(document).ready(function () {
       [1, 'desc'],
       [2, 'asc'],
       [3, 'asc'],
-      [5, 'asc'],
+      [4, 'asc'],
     ],
     rowId: function (a) {
       return 'row_gmka_' + a.id_gmka;
     },
   });
+
+  $('#filter_tahun_ajaran, #filter_guru, #filter_mapel, #filter_kelas').on(
+    'change',
+    function () {
+      console.log('Filter changed:', {
+        tahun_ajaran: $('#filter_tahun_ajaran').val(),
+        guru: $('#filter_guru').val(),
+        mapel: $('#filter_mapel').val(),
+        kelas: $('#filter_kelas').val(),
+      });
+      tablePenugasanGuru.ajax.reload();
+    }
+  );
 
   if (tablePenugasanGuru && typeof tablePenugasanGuru.buttons === 'function') {
     tablePenugasanGuru
@@ -121,18 +150,14 @@ $(document).ready(function () {
       .appendTo('#table_penugasan_guru_wrapper .col-md-6:eq(0)');
   }
 
-  $('#filter_tahun_ajaran, #filter_guru, #filter_mapel, #filter_kelas').on(
-    'change',
-    function () {
-      reload_ajax();
-    }
-  );
-
-  $(document).on('click', '.select_all', function () {
-    /* ... logika select all ... */
+  $('.select_all').on('click', function () {
+    $('.check').prop('checked', this.checked);
   });
+
   $('#table_penugasan_guru tbody').on('click', 'tr .check', function () {
-    /* ... logika individual check ... */
+    if (!this.checked) {
+      $('.select_all').prop('checked', false);
+    }
   });
 
   // Handler untuk form bulk delete (ID Form: #bulkDeleteFormPenugasanGuru)
@@ -150,36 +175,74 @@ function reload_ajax() {
 }
 
 function bulk_delete() {
-  var $form = $('#bulkDeleteFormPenugasanGuru');
   var $checkedBoxes = $('#table_penugasan_guru .check:checked');
+  console.log('Jumlah checkbox terpilih:', $checkedBoxes.length);
+
   if ($checkedBoxes.length === 0) {
-    /* ... Swal error ... */ return;
+    Swal.fire('Gagal', 'Tidak ada data yang dipilih untuk dihapus.', 'error');
+    return;
   }
 
-  $form.attr('action', base_url + 'penugasanguru/delete'); // Pastikan action benar
+  var ids = [];
+  $checkedBoxes.each(function () {
+    ids.push($(this).val());
+  });
+  console.log('ID yang akan dihapus:', ids);
+
   Swal.fire({
-    /* ... konfirmasi ... */
+    title: 'Anda yakin?',
+    text:
+      'Data penugasan guru yang dipilih (' +
+      $checkedBoxes.length +
+      ' data) akan dihapus.',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, Hapus!',
+    cancelButtonText: 'Batal',
   }).then((result) => {
-    if (result.isConfirmed) {
-      // Langsung AJAX, bukan $form.submit() jika handler di atas sudah ada
-      var ids_to_delete = $checkedBoxes
-        .map(function () {
-          return $(this).val();
-        })
-        .get();
-      var postData = { checked: ids_to_delete };
+    if (result.value) {
+      console.log('User mengkonfirmasi penghapusan');
       $.ajax({
-        url: $form.attr('action'),
+        url: base_url + 'penugasanguru/delete',
         type: 'POST',
-        data: postData,
+        data: { checked: ids },
         dataType: 'json',
         success: function (response) {
-          /* ... Swal notifikasi & reload ... */
+          console.log('Response server:', response);
+          if (response.status) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: response.message,
+              type: 'success',
+            }).then(() => {
+              tablePenugasanGuru.ajax.reload(null, false);
+              $('.select_all').prop('checked', false);
+            });
+          } else {
+            Swal.fire(
+              'Gagal!',
+              response.message || 'Terjadi kesalahan',
+              'error'
+            );
+          }
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-          /* ... Swal error ... */
+        error: function (xhr, status, error) {
+          console.error('AJAX Error:', {
+            xhr: xhr.responseText,
+            status: status,
+            error: error,
+          });
+          Swal.fire('Error!', 'Gagal menghapus data: ' + error, 'error');
         },
       });
     }
   });
+}
+
+function reload_ajax() {
+  if (tablePenugasanGuru) {
+    tablePenugasanGuru.ajax.reload(null, false);
+  }
 }

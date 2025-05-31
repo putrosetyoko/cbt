@@ -21,7 +21,7 @@
                         <?php endforeach; endif; ?>
                     </select>
                     <small class="help-block text-danger" id="error_id_tahun_ajaran"></small>
-                </div>
+                </div> 
 
                 <div class="form-group">
                     <label for="guru_id">Guru <span class="text-danger">*</span></label>
@@ -63,7 +63,7 @@
                 </div>
                 
                 <div class="form-group pull-right">
-                    <button type="submit" id="submitBtn" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan Perubahan</button>
+                    <button type="submit" id="submitBtn" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </div>
         </div>

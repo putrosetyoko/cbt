@@ -3,7 +3,7 @@
         <h3 class="box-title"><?= htmlspecialchars($subjudul ?? 'Data Penugasan Guru'); ?></h3>
         <div class="box-tools pull-right">
             <a href="<?= base_url('penugasanguru/add') ?>" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-plus"></i> Tambah Penugasan</a>
-            <a href="<?= base_url('penugasanguru/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Data</a>
+            <!-- <a href="<?= base_url('penugasanguru/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Data</a> -->
             <!-- <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat btn-default"><i class="fa fa-refresh"></i> Reload</button> -->
         </div>
     </div>
@@ -48,15 +48,25 @@
                     <option value="all">Semua Kelas</option>
                     <?php if(isset($all_kelas) && !empty($all_kelas)): ?>
                         <?php foreach ($all_kelas as $k) : ?>
-                            <option value="<?= $k->id_kelas ?>"><?= htmlspecialchars( (isset($k->nama_jenjang) ? $k->nama_jenjang . ' - ' : '') . $k->nama_kelas) ?></option>
+                            <option value="<?= $k->id_kelas ?>"><?= htmlspecialchars( (isset($k->nama_jenjang) ? $k->nama_jenjang . ' ' : '') . $k->nama_kelas) ?></option>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </select>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px;">
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-sm-12 text-left">
+            <div class="callout callout-info">
+                    <p><strong>Keterangan Warna Kelas:</strong></p>
+                    <div>
+                        <span class="badge bg-green" style="font-size: 12px; padding: 4px 8px; margin-right: 4px;">Kelas VII</span>
+                        <span class="badge bg-blue" style="font-size: 12px; padding: 4px 8px; margin-right: 4px;">Kelas VIII</span>
+                        <span class="badge bg-maroon" style="font-size: 12px; padding: 4px 8px;">Kelas IX</span>
+                    </div>
+                </div>
+            </div>
             <div class="col-sm-12 text-right">
-                <button onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger" type="button"><i class="fa fa-trash"></i> Delete Terpilih</button>
+                <button onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger" type="button"><i class="fa fa-trash"></i> Delete</button>
             </div>
         </div>
 
@@ -69,8 +79,7 @@
                         <th>Tahun Ajaran</th>
                         <th>Nama Guru</th>
                         <th>Mata Pelajaran</th>
-                        <th>Jenjang</th>
-                        <th>Kelas</th>
+                        <th>Kelas Ajar</th>
                         <th width="80" class="text-center">Aksi</th>
                         <th width="30" class="text-center">
                             <input class="select_all" type="checkbox">
