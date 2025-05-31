@@ -25,6 +25,8 @@ class Siswakelas extends CI_Controller
     public function index()
     {
         $data = [
+            'id_ska' => $row->id_ska,  // pastikan ini adalah ID numerik
+            'nama_tahun_ajaran' => $row->nama_tahun_ajaran,
             'user'          => $this->ion_auth->user()->row(),
             'judul'         => 'Distribusi Kelas Siswa',
             'subjudul'      => 'Penempatan Siswa per Kelas & Tahun Ajaran',
@@ -182,19 +184,74 @@ class Siswakelas extends CI_Controller
         }
     }
 
-    public function delete()
+    public function delete($id = null)
     {
-        $chk = $this->input->post('checked', true);
-        if (!$chk) {
-            $this->output_json(['status' => false, 'message' => 'Tidak ada data yang dipilih']);
+        // Handle URL parameter delete
+        if ($id !== null) {
+            $chk = [$id];
         } else {
-            // Anda bisa menambahkan pengecekan di sini apakah kelas masih digunakan (misal di tabel siswa)
-            // sebelum melakukan penghapusan.
-            if ($this->master->delete('siswa_kelas_ajaran', $chk, 'id_ska')) {
-                $this->output_json(['status' => true, 'message' => count($chk) . ' data Distribusi berhasil dihapus.']);
-            } else {
-                $this->output_json(['status' => false, 'message' => 'Gagal menghapus data.']);
+            // Handle POST data delete
+            $chk = $this->input->post('checked', true);
+            
+            // Handle JSON POST data
+            if (empty($chk)) {
+                $json_data = json_decode(file_get_contents('php://input'), true);
+                $chk = isset($json_data['checked']) ? $json_data['checked'] : null;
             }
+        }
+        
+        // Validasi input
+        if (!$chk) {
+            $this->output_json([
+                'status' => false, 
+                'message' => 'Tidak ada data yang dipilih'
+            ]);
+            return;
+        }
+
+        // Pastikan $chk selalu dalam bentuk array
+        if (!is_array($chk)) {
+            $chk = [$chk];
+        }
+
+        // Filter array dari nilai kosong atau tidak valid
+        $chk = array_filter($chk, function($value) {
+            return !empty($value) && is_numeric($value);
+        });
+
+        // Cek ulang setelah filtering
+        if (empty($chk)) {
+            $this->output_json([
+                'status' => false, 
+                'message' => 'Data yang dipilih tidak valid'
+            ]);
+            return;
+        }
+
+        try {
+            $this->db->trans_start();
+            
+            if ($this->master->delete('siswa_kelas_ajaran', $chk, 'id_ska')) {
+                $this->db->trans_commit();
+                $this->output_json([
+                    'status' => true, 
+                    'message' => count($chk) . ' data penempatan Siswa berhasil dihapus.',
+                    'total' => count($chk)
+                ]);
+            } else {
+                $this->db->trans_rollback();
+                $this->output_json([
+                    'status' => false, 
+                    'message' => 'Gagal menghapus data. Silakan coba lagi.'
+                ]);
+            }
+
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            $this->output_json([
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ]);
         }
     }
 
@@ -235,7 +292,7 @@ class Siswakelas extends CI_Controller
 
     public function preview()
     {
-        $config['upload_path']      = './uploads/import/format'; // Pastikan folder ini ada dan writable
+        $config['upload_path']      = './uploads/import/'; // Pastikan folder ini ada dan writeable
         $config['allowed_types']    = 'xls|xlsx|csv';
         $config['max_size']         = 2048; // 2MB
         $config['encrypt_name']     = true;

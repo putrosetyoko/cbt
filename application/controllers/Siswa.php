@@ -336,7 +336,7 @@ class Siswa extends CI_Controller
         if ($save) {
             redirect('siswa'); // Changed redirect path
         } else {
-            redirect('siswa/import'); // Changed redirect path
+            redirect('siswa/import'); // Changed redirect pathf
         }
     }
 }

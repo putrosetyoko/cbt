@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <button name="preview" type="submit" class="btn btn-sm btn-success">Preview</button>
+                <button name="preview" type="submit" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Preview</button>
             </div>
             <?= form_close(); ?>
             <div class="col-sm-6 col-sm-offset-3">

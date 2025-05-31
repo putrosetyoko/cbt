@@ -4,10 +4,11 @@
         <div class="box-tools pull-right">
             <a href="<?= base_url('siswakelas/add') ?>" class="btn btn-sm btn-flat bg-purple"><i class="fa fa-plus"></i> Tambah Penempatan</a>
             <a href="<?= base_url('siswakelas/import') ?>" class="btn btn-sm btn-flat btn-success"><i class="fa fa-upload"></i> Import Data</a> 
-            <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat btn-default"><i class="fa fa-refresh"></i> Reload</button>
+            <!-- <button type="button" onclick="reload_ajax()" class="btn btn-sm btn-flat btn-default"><i class="fa fa-refresh"></i> Reload</button> -->
         </div>
     </div>
     <div class="box-body">
+        
         <div class="row" style="margin-bottom: 10px;">
             <div class="col-sm-4">
                 <label>Filter Tahun Ajaran:</label>
@@ -32,7 +33,9 @@
             </div>
         </div>
 
-        <?= form_open('siswakelas/delete', array('id' => 'bulkDeleteForm')); ?>
+        <?= form_open('siswakelas/delete', array(
+                'id' => 'bulkDeleteForm'
+            )); ?>
         <div class="table-responsive">
             <table id="table_siswa_kelas_ajaran" class="table table-striped table-bordered table-hover" style="width:100%">
                 <thead>

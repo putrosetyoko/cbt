@@ -35,14 +35,14 @@
             <li>Data tidak boleh ada yang kosong, harus terisi semua.</li>
             <li>Pastikan semua ID Kelas dan ID Tahun Ajaran berisi angka valid dan terdaftar di sistem.</li>
             <li>Klik untuk melihat daftar ID Kelas dan ID Tahun Ajaran yang valid:
-                <a data-toggle="modal" href="#tahunAjaranIdModal" class="btn btn-xs btn-primary">Lihat ID Tahun Ajaran</a>
-                <a data-toggle="modal" href="#kelasIdModal" class="btn btn-xs btn-primary">Lihat ID Kelas</a>
+                <button data-toggle="modal" href="#tahunAjaranIdModal" class="btn btn-xs btn-primary">Lihat ID Tahun Ajaran</button>
+                <button data-toggle="modal" href="#kelasIdModal" class="btn btn-xs btn-primary">Lihat ID Kelas</button>
                 <!-- <a data-toggle="modal" href="#siswaIdModal" class="btn btn-xs btn-primary">Lihat Data Siswa (NISN)</a> -->
             </li>
         </ul>
 
         <div class="text-center">
-            <a href="<?= base_url('uploads/import/format/siswakelas.xlsx') // GANTI DENGAN PATH TEMPLATE ANDA ?>" class="btn-default btn"><i class="fa fa-download"></i> Download Format</a>
+            <a href="<?= base_url('uploads/import/format/penempatan_siswa.xlsx') // GANTI DENGAN PATH TEMPLATE ANDA ?>" class="btn-default btn"><i class="fa fa-download"></i> Download Format</a>
         </div>
         <br>
 
@@ -54,7 +54,7 @@
                     <input type="file" name="upload_file" id="upload_file" class="form-control" required>
                 </div>
                 <div class="col-sm-2">
-                    <button name="preview" type="submit" class="btn btn-sm btn-success btn-flat"><i class="fa fa-eye"></i> Preview Data</button>
+                    <button name="preview" type="submit" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Preview</button>
                 </div>
             </div>
             <?= form_close(); ?>

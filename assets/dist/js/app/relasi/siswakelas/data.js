@@ -1,17 +1,29 @@
-var tableSiswaKelasAjaran; // Ganti nama variabel tabel
+var tableSiswaKelasAjaran;
+
+console.log('base_url:', base_url);
+
+// Pastikan base_url diakhiri dengan slash
+if (!base_url.endsWith('/')) {
+  base_url += '/';
+  console.log('base_url updated:', base_url);
+}
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+  },
+}); // Deklarasi di scope global sudah benar
 
 $(document).ready(function () {
   if (typeof ajaxcsrf === 'function') {
-    // Pastikan fungsi ini ada
     ajaxcsrf();
   }
 
   tableSiswaKelasAjaran = $('#table_siswa_kelas_ajaran').DataTable({
-    // ID Tabel diubah
+    // Inisialisasi menggunakan tableSiswaKelasAjaran
     initComplete: function () {
       var api = this.api();
-      // Sesuaikan jika ada input filter global untuk tabel ini
-      $('#table_siswa_kelas_ajaran_filter input')
+      $('#table_siswa_kelas_ajaran_filter input') // Pastikan ID filter ini benar
         .off('.DT')
         .on('keyup.DT', function (e) {
           api.search(this.value).draw();
@@ -22,85 +34,83 @@ $(document).ready(function () {
       "<'row'<'col-sm-12'tr>>" +
       "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     buttons: [
-      // Sesuaikan kolom untuk export
-      { extend: 'copy', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } }, // No, TA, Kelas, NISN, Nama
+      { extend: 'copy', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
       { extend: 'print', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
       { extend: 'excel', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
       { extend: 'pdf', exportOptions: { columns: [0, 1, 2, 3, 4, 5] } },
     ],
     oLanguage: {
-      /* ... Teks bahasa Indonesia Anda ... */ sProcessing: 'Memuat...',
+      sProcessing: 'Memuat...',
       sSearch: 'Cari:',
-      sLengthMenu: 'Tampilkan _MENU_ entri',
-      sInfo: 'Menampilkan _START_ sampai _END_ dari _TOTAL_ entri',
-      sInfoEmpty: 'Menampilkan 0 sampai 0 dari 0 entri',
       sInfoFiltered: '(disaring dari _MAX_ total entri)',
     },
     processing: true,
     serverSide: true,
     ajax: {
-      url: base_url + 'siswakelas/data', // URL untuk data Distribusi Kelas Siswa
+      url: base_url + 'siswakelas/data',
       type: 'POST',
       data: function (d) {
-        d.filter_tahun_ajaran = $('#filter_tahun_ajaran').val(); // Ambil filter
-        d.filter_kelas = $('#filter_kelas').val(); // Ambil filter
-        d.t = new Date().getTime(); // Cache busting
-        // Tambahkan CSRF jika perlu
-        // if(typeof csrf_name !== 'undefined' && typeof csrf_hash !== 'undefined'){
-        //    d[csrf_name] = csrf_hash;
-        // }
+        d.filter_tahun_ajaran = $('#filter_tahun_ajaran').val();
+        d.filter_kelas = $('#filter_kelas').val();
+        d.t = new Date().getTime();
       },
       error: function (jqXHR, textStatus, errorThrown) {
-        /* ... error handling ... */
+        console.error(
+          'DataTables AJAX error on load:',
+          textStatus,
+          errorThrown,
+          jqXHR.responseText
+        );
+        Swal.fire(
+          'Error DataTables',
+          'Gagal memuat data: ' + textStatus,
+          'error'
+        );
       },
     },
     columns: [
-      { data: 'id_ska', orderable: false, searchable: false, width: '3%' }, // Untuk No.
+      { data: 'id_ska', orderable: false, searchable: false, width: '3%' },
       { data: 'nama_tahun_ajaran' },
       { data: 'nama_jenjang', defaultContent: '-' },
       { data: 'nama_kelas' },
       { data: 'nisn' },
       { data: 'nama_siswa' },
-      // Kolom Aksi dan Checkbox akan dirender melalui columnDefs
       {
         data: null,
         className: 'text-center',
         orderable: false,
         searchable: false,
-      }, // Aksi
+      },
       {
         data: null,
         className: 'text-center',
         orderable: false,
         searchable: false,
-      }, // Checkbox
+      },
     ],
     columnDefs: [
       {
-        targets: 0, // Kolom No.
+        targets: 0,
         render: function (data, type, row, meta) {
           return meta.row + meta.settings._iDisplayStart + 1;
         },
       },
       {
-        targets: 6, // Kolom Aksi (setelah Nama Siswa)
-        data: 'id_ska', // Data yang dibutuhkan adalah id_ska untuk link edit
-        render: function (data, type, row, meta) {
-          // Tidak ada tombol "Aktifkan User" di sini, hanya Edit
+        targets: 6,
+        render: function (data, type, row) {
           return `<div class="text-center">
-                    <a class="btn btn-xs btn-warning" href="${base_url}siswakelas/edit/${data.id_ska}">
-                        <i class="fa fa-pencil"></i> Edit
-                    </a>
-                  </div>`;
+                  <a href="${base_url}siswakelas/edit/${data.id_ska}" class="btn btn-xs btn-warning">
+                      <i class="fa fa-pencil"></i> Edit
+                  </a>
+              </div>`;
         },
       },
       {
-        targets: 7, // Kolom Checkbox
-        data: 'id_ska', // Value checkbox adalah id_ska
-        render: function (data, type, row, meta) {
+        targets: 7,
+        render: function (data, type, row) {
           return `<div class="text-center">
-                    <input name="checked[]" class="check" value="${data}" type="checkbox">
-                  </div>`;
+                  <input type="checkbox" class="check" name="checked[]" value="${data.id_ska}">
+              </div>`;
         },
       },
     ],
@@ -111,33 +121,81 @@ $(document).ready(function () {
       [5, 'asc'],
     ],
     rowId: function (a) {
-      return 'row_ska_' + a.id_ska; // **PENTING**: Gunakan id_ska yang unik
+      return 'row_ska_' + a.id_ska;
     },
-    // rowCallback untuk penomoran sudah dihandle columnDefs[0].render
   });
 
-  tableSiswaKelasAjaran
-    .buttons()
-    .container()
-    .appendTo('#table_siswa_kelas_ajaran_wrapper .col-md-6:eq(0)'); // Sesuaikan ID wrapper
+  // Perbaikan fungsi reload_ajax
+  window.reload_ajax = function () {
+    console.log('Reloading table data...');
 
-  // Event listener untuk filter
+    // Reset filter ke default
+    $('#filter_tahun_ajaran').val('all').trigger('change');
+    $('#filter_kelas').val('all').trigger('change');
+
+    // Reload table dengan animasi loading
+    Swal.fire({
+      title: 'Memuat Ulang Data',
+      text: 'Mohon tunggu sebentar...',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        tableSiswaKelasAjaran.ajax.reload(function () {
+          Swal.close();
+        });
+      },
+    });
+
+    // Uncheck semua checkbox
+    $('.select_all').prop('checked', false);
+    $('.check').prop('checked', false);
+  };
+
+  // Perbaikan pada baris di bawah ini: gunakan variabel yang benar
+  if (
+    tableSiswaKelasAjaran &&
+    typeof tableSiswaKelasAjaran.buttons === 'function'
+  ) {
+    tableSiswaKelasAjaran
+      .buttons()
+      .container()
+      .appendTo('#table_siswa_kelas_ajaran_wrapper .col-md-6:eq(0)');
+  } else {
+    console.error(
+      "DataTables instance 'tableSiswaKelasAjaran' or its 'buttons' method is not available."
+    );
+  }
+
   $('#filter_tahun_ajaran, #filter_kelas').on('change', function () {
-    if (tableSiswaKelasAjaran) {
-      tableSiswaKelasAjaran.ajax.reload();
-    }
+    console.log('Filter changed:', {
+      tahun_ajaran: $('#filter_tahun_ajaran').val(),
+      kelas: $('#filter_kelas').val(),
+    });
+    tableSiswaKelasAjaran.ajax.reload();
   });
 
-  // Handler untuk checkbox "select_all" (gunakan class .select_all)
+  // Inisialisasi Select2
+  if ($.fn.select2) {
+    $('.select2').select2({
+      width: '100%',
+      placeholder: function () {
+        return $(this).data('placeholder') || 'Pilih opsi';
+      },
+      allowClear: true,
+    });
+  }
+
   $(document).on('click', '.select_all', function () {
     let isChecked = this.checked;
+    // Targetkan checkbox di dalam tabel DataTables yang aktif
     $('.check', tableSiswaKelasAjaran.rows({ search: 'applied' }).nodes()).prop(
       'checked',
       isChecked
     );
   });
 
-  // Handler untuk checkbox individual
   $('#table_siswa_kelas_ajaran tbody').on('click', 'tr .check', function () {
     var totalChecks = $(
       '.check',
@@ -159,40 +217,33 @@ $(document).ready(function () {
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    console.log(
-      'Form #bulkDeleteForm submitted. Action:',
-      $(this).attr('action')
-    ); // Debug
+    // Ambil semua checkbox yang diceklis
+    var checkedVals = [];
+    $('#table_siswa_kelas_ajaran .check:checked').each(function () {
+      checkedVals.push($(this).val());
+    });
 
-    // Pastikan action adalah untuk delete (ini seharusnya sudah di-set oleh fungsi bulk_delete())
-    if (
-      !$(this).attr('action') ||
-      !$(this).attr('action').endsWith('siswakelas/delete')
-    ) {
-      console.warn(
-        'Form action not set correctly for delete or not a delete action.'
-      );
-      Swal.fire('Perhatian', 'Aksi form tidak diset untuk delete.', 'warning');
-      return;
-    }
-
-    var serializedData = $(this).serialize(); // Mengambil semua data form, termasuk checkbox 'checked[]'
-    console.log('Data yang diserialisasi:', serializedData); // Debug
-
-    // Cek apakah ada checkbox yang tercentang melalui data serialisasi atau hitung manual
-    if (serializedData.indexOf('checked%5B%5D=') === -1) {
-      // '%5B%5D' adalah '[]' yang di-URL encode
+    if (checkedVals.length === 0) {
       Swal.fire('Gagal', 'Tidak ada data yang dipilih untuk dihapus.', 'error');
       return;
     }
 
+    // Pastikan action sudah benar
+    if (
+      !$(this).attr('action') ||
+      !$(this).attr('action').endsWith('siswakelas/delete')
+    ) {
+      Swal.fire('Perhatian', 'Aksi form tidak diset untuk delete.', 'warning');
+      return;
+    }
+
+    // Kirim data via AJAX
     $.ajax({
       url: $(this).attr('action'),
-      data: serializedData, // Kirim data yang sudah diserialisasi
       type: 'POST',
-      dataType: 'json', // PENTING: harapkan JSON dari server
+      data: { checked: checkedVals },
+      dataType: 'json',
       success: function (respon) {
-        console.log('Respon dari server (delete siswakelas):', respon); // Debug
         if (respon && typeof respon.status !== 'undefined') {
           Swal.fire({
             title: respon.status ? 'Berhasil' : 'Gagal',
@@ -201,7 +252,7 @@ $(document).ready(function () {
               (respon.status
                 ? (respon.total || '') + ' data berhasil dihapus.'
                 : 'Operasi gagal.'),
-            icon: respon.status ? 'success' : 'error',
+            type: respon.status ? 'success' : 'error',
           });
           if (respon.status) {
             reload_ajax();
@@ -230,45 +281,160 @@ $(document).ready(function () {
       },
     });
   });
-
-  // Tidak ada tombol .btn-aktif untuk Distribusi Kelas Siswa, jadi handler itu dihilangkan
 }); // End $(document).ready
 
-// Fungsi global untuk bulk delete (dipanggil dari tombol onclick)
-function bulk_delete() {
-  // Untuk Distribusi Kelas Siswa
-  // Pastikan ada checkbox yang tercentang
-  if ($('#table_siswa_kelas_ajaran tbody tr .check:checked').length == 0) {
-    Swal.fire('Gagal', 'Tidak ada data penempatan yang dipilih.', 'error');
+function reload_ajax() {
+  console.log('reload_ajax() function called');
+
+  // Validasi DataTable instance
+  if (
+    !tableSiswaKelasAjaran ||
+    typeof tableSiswaKelasAjaran.ajax === 'undefined'
+  ) {
+    console.error('DataTables instance not initialized');
+    Swal.fire('Error', 'Tabel tidak dapat dimuat ulang', 'error');
     return;
   }
-  // Set action form ke URL delete yang benar
-  $('#bulkDeleteForm').attr('action', base_url + 'siswakelas/delete');
+
+  // Reset filter tanpa trigger reload
+  $('#filter_tahun_ajaran, #filter_kelas').each(function () {
+    $(this).val('all').trigger('change.select2', true);
+  });
+
+  // Tampilkan loading
+  const loadingDialog = Swal.fire({
+    title: 'Memuat Ulang Data',
+    text: 'Mohon tunggu sebentar...',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: false,
+    willOpen: () => {
+      Swal.showLoading();
+    },
+  });
+
+  // Set timeout untuk force close
+  const timeoutId = setTimeout(() => {
+    if (Swal.isVisible()) {
+      Swal.close();
+      console.log('Force close loading dialog after timeout');
+    }
+  }, 1000); // 5 detik timeout
+
+  // Reload DataTable
+  try {
+    tableSiswaKelasAjaran.ajax.reload(
+      function (json) {
+        // Clear timeout karena data sudah selesai dimuat
+        clearTimeout(timeoutId);
+
+        // Tutup dialog loading
+        if (Swal.isVisible()) {
+          Swal.close();
+        }
+
+        // Reset checkbox
+        $('.select_all, .check').prop('checked', false);
+
+        console.log('Data reload completed successfully');
+      },
+      false // Don't reset page
+    );
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.error('Error in reload_ajax:', error);
+    Swal.close();
+    Swal.fire('Error', 'Gagal memuat ulang data', 'error');
+  }
+}
+
+function bulk_delete() {
+  var $checkedBoxes = $('#table_siswa_kelas_ajaran .check:checked');
+  console.log('Jumlah checkbox terpilih:', $checkedBoxes.length);
+
+  if ($checkedBoxes.length === 0) {
+    Swal.fire('Gagal', 'Tidak ada data yang dipilih untuk dihapus.', 'error');
+    return;
+  }
+
+  var ids = [];
+  $checkedBoxes.each(function () {
+    ids.push($(this).val());
+  });
+  console.log('ID yang akan dihapus:', ids);
 
   Swal.fire({
     title: 'Anda yakin?',
-    text: 'Data penempatan siswa yang dipilih akan dihapus!',
-    type: 'warning',
+    text:
+      'Data penempatan Siswa yang dipilih (' +
+      $checkedBoxes.length +
+      ' data) akan dihapus.',
+    type: 'warning', // Ganti 'type' menjadi 'icon'
     showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
     confirmButtonText: 'Ya, Hapus!',
     cancelButtonText: 'Batal',
   }).then((result) => {
-    if (result.isConfirmed) {
-      $('#bulkDeleteForm').submit(); // Submit form yang akan ditangani oleh event handler di atas
+    if (result.value) {
+      // Ganti result.isConfirmed menjadi result.value
+      console.log('User mengkonfirmasi penghapusan');
+      console.log('Mengirim request ke:', base_url + 'siswakelas/delete');
+      console.log('Data yang dikirim:', { checked: ids });
+
+      $.ajax({
+        url: base_url + 'siswakelas/delete',
+        type: 'POST',
+        data: { checked: ids },
+        dataType: 'json',
+        beforeSend: function () {
+          console.log('Memulai request AJAX');
+          Swal.fire({
+            // title: 'Memproses...',
+            // text: 'Mohon tunggu sebentar',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+        },
+        success: function (response) {
+          console.log('Response server:', response);
+          if (response.status) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Berhasil',
+              type: 'success',
+              text: response.message,
+              showConfirmButton: true,
+            }).then(() => {
+              tableSiswaKelasAjaran.ajax.reload(null, false);
+              $('.select_all').prop('checked', false);
+            });
+          } else {
+            Swal.fire(
+              'Gagal!',
+              response.message || 'Terjadi kesalahan',
+              'error'
+            );
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('AJAX Error:', {
+            xhr: xhr.responseText,
+            status: status,
+            error: error,
+          });
+          Swal.fire('Error!', 'Gagal menghapus data: ' + error, 'error');
+        },
+      });
     }
   });
 }
 
-// Tidak ada fungsi bulk_activate untuk Distribusi Kelas Siswa
-// function bulk_activate() { /* ... */ }
-
-function reload_ajax() {
-  if (
-    tableSiswaKelasAjaran &&
-    typeof tableSiswaKelasAjaran.ajax !== 'undefined'
-  ) {
-    tableSiswaKelasAjaran.ajax.reload(null, false);
-  }
-}
+// Tambahkan event handler untuk select all checkbox
+$('.select_all').on('click', function () {
+  $('.check').prop('checked', this.checked);
+});
