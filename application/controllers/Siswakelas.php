@@ -28,8 +28,8 @@ class Siswakelas extends CI_Controller
             'id_ska' => $row->id_ska,  // pastikan ini adalah ID numerik
             'nama_tahun_ajaran' => $row->nama_tahun_ajaran,
             'user'          => $this->ion_auth->user()->row(),
-            'judul'         => 'Distribusi Kelas Siswa',
-            'subjudul'      => 'Tahun Ajaran - Kelas - Siswa',
+            'judul'         => 'Penempatan Kelas Siswa',
+            'subjudul'      => 'Data Penempatan Kelas Siswa',
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(), // Untuk filter
             'all_kelas'     => $this->master->getAllKelas()       // Untuk filter
         ];
@@ -51,7 +51,7 @@ class Siswakelas extends CI_Controller
         $data = [
             'user'             => $this->ion_auth->user()->row(),
             'judul'            => 'Tambah Penempatan Siswa',
-            'subjudul'         => 'Pilih Tahun Ajaran, Kelas, dan Siswa',
+            'subjudul'         => 'Tambah Data Penempatan Siswa ke Kelas',
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(),
             'all_kelas'        => $this->master->getAllKelas(),
             // Siswa akan di-load via AJAX berdasarkan tahun ajaran yang dipilih
@@ -142,7 +142,7 @@ class Siswakelas extends CI_Controller
         $data = [
             'user'              => $this->ion_auth->user()->row(),
             'judul'             => 'Edit Penempatan Siswa',
-            'subjudul'          => 'Ubah Kelas Siswa untuk Tahun Ajaran Tertentu',
+            'subjudul'          => 'Edit Data Penempatan Siswa ke Kelas',
             'penempatan'        => $penempatan,
             'all_kelas'         => $this->master->getAllKelas(),
             // Tahun Ajaran dan Siswa tidak diubah di sini, hanya kelasnya

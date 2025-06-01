@@ -39,7 +39,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="<?=$page==='siswakelas'?"active":""?>"> 
-                        <a href="<?=base_url('siswakelas')?>"><i class="fa fa-exchange"></i> Distribusi Kelas Siswa</a>
+                        <a href="<?=base_url('siswakelas')?>"><i class="fa fa-exchange"></i> Penempatan Kelas Siswa</a>
                     </li>
                     <li class="<?=$page==='penugasanguru'?"active":""?>"> 
                         <a href="<?=base_url('penugasanguru')?>"><i class="fa fa-briefcase"></i> Penugasan Guru</a>

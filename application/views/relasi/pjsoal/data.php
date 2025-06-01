@@ -52,7 +52,8 @@
     </div>
 </div>
 
-<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+<input type="hidden" name="csrf_name" value="<?= $this->security->get_csrf_token_name() ?>">
+<input type="hidden" name="csrf_hash" value="<?= $this->security->get_csrf_hash() ?>">
 
 <script src="<?= base_url() ?>assets/dist/js/app/relasi/pjsoal/data.js"></script>
 <script>

@@ -28,9 +28,13 @@ class Master_model extends CI_Model
         return $insert;
     }
 
-    public function delete($table, $data, $pk)
+    public function delete($table, $data, $pk = null)
     {
-        $this->db->where_in($pk, $data);
+        if (is_array($data)) {
+            $this->db->where($data);
+        } else {
+            $this->db->where($pk, $data);
+        }
         return $this->db->delete($table);
     }
 

@@ -35,7 +35,7 @@ class Pjsoal extends CI_Controller
         $data = [
             'user'             => $this->ion_auth->user()->row(),
             'judul'            => 'PJ Soal per Mapel',
-            'subjudul'         => 'Pengaturan Penanggung Jawab Soal',
+            'subjudul'         => 'Data Penugasan PJ Soal per Mapel',
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(), // Untuk filter
             'all_mapel'        => $this->master->getAllMapel(),       // Untuk filter
         ];
@@ -62,8 +62,8 @@ class Pjsoal extends CI_Controller
     {
         $data = [
             'user'             => $this->ion_auth->user()->row(),
-            'judul'            => 'Atur PJ Soal Baru',
-            'subjudul'         => 'Atur Penanggung Jawab Soal',
+            'judul'            => 'Tambah PJ Soal',
+            'subjudul'         => 'Tambah Data PJ Soal per Mapel',
             // Ambil semua tahun ajaran, bisa difilter hanya yang aktif jika perlu
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(true), 
             // Mapel dan Guru akan di-load via AJAX berdasarkan Tahun Ajaran yang dipilih di view
@@ -206,7 +206,7 @@ class Pjsoal extends CI_Controller
         $data = [
             'user'             => $this->ion_auth->user()->row(),
             'judul'            => 'Edit PJ Soal',
-            'subjudul'         => 'Edit Guru Penanggung Jawab Soal',
+            'subjudul'         => 'Edit PJ Soal per Mapel',
             'pjsa'             => $pjsa_data,
             // Guru yang available untuk tahun ajaran ini, KECUALI yang sudah jadi PJ mapel LAIN.
             // Dan sertakan guru PJ saat ini agar tetap bisa dipilih.
@@ -279,27 +279,19 @@ class Pjsoal extends CI_Controller
     /**
      * Menghapus satu entri PJ Soal.
      */
-    public function delete($id = null)
+    public function delete()
     {
-        // Handle both POST and GET (URL) requests
-        $id_pjsa = $id ?? $this->input->post('id_pjsa', true);
-
+        $id_pjsa = $this->input->post('id_pjsa', true);
+        
         if (empty($id_pjsa) || !is_numeric($id_pjsa)) {
             $this->output_json(['status' => false, 'message' => 'ID Penugasan PJ Soal tidak valid.']);
             return;
         }
 
-        // Check if record exists before deleting
-        $pjsoal = $this->master->getPJSoalById($id_pjsa);
-        if (!$pjsoal) {
-            $this->output_json(['status' => false, 'message' => 'Data Penanggung Jawab Soal tidak ditemukan.']);
-            return;
-        }
-
-        if ($this->master->delete('penanggung_jawab_soal_ajaran', [$id_pjsa], 'id_pjsa')) {
+        if ($this->master->delete('penanggung_jawab_soal_ajaran', ['id_pjsa' => $id_pjsa])) {
             $this->output_json(['status' => true, 'message' => 'Data Penanggung Jawab Soal berhasil dihapus.']);
         } else {
-            $this->output_json(['status' => false, 'message' => 'Gagal menghapus data Penanggung Jawab Soal.']);
+            $this->output_json(['status' => false, 'message' => 'Gagal menghapus data.']);
         }
     }
 }

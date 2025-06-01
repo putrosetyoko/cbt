@@ -1,4 +1,6 @@
 var tablePJSoal;
+var csrf_name = $('input[name="csrf_name"]').val() || 'csrf_test_name';
+var csrf_hash = $('input[name="csrf_hash"]').val();
 
 $(document).ready(function () {
   if (typeof ajaxcsrf === 'function') {
@@ -118,35 +120,51 @@ $(document).ready(function () {
     Swal.fire({
       title: 'Anda yakin?',
       html: `Akan menghapus penugasan PJ Soal untuk mapel <strong>${mapel}</strong> oleh guru <strong>${guru}</strong>?`,
-      type: 'warning', // Perbaikan: ganti 'type' menjadi 'type'
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
       confirmButtonText: 'Ya, Hapus!',
       cancelButtonText: 'Batal',
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.value) {
+        // Ambil ulang CSRF token untuk memastikan masih valid
+        const currentCsrfHash = $('input[name="csrf_hash"]').val();
+
         $.ajax({
-          url: base_url + 'pjsoal/delete', // Perbaikan: hapus parameter dari URL
+          url: base_url + 'pjsoal/delete',
           type: 'POST',
           data: {
-            id_pjsa: id, // Perbaikan: kirim id sebagai id_pjsa
-            [csrf_name]: csrf_hash, // Perbaikan: gunakan csrf_hash langsung
+            id_pjsa: id,
+            csrf_test_name: currentCsrfHash, // Gunakan nama default CI CSRF
           },
           dataType: 'json',
           success: function (response) {
-            console.log('Server response:', response);
             if (response.status) {
-              Swal.fire('Berhasil!', response.message, 'success').then(() => {
+              Swal.fire({
+                type: 'success',
+                title: 'Berhasil!',
+                text: response.message,
+                showConfirmButton: true,
+                // timer: 1500,
+              }).then(() => {
                 tablePJSoal.ajax.reload(null, false);
               });
             } else {
-              Swal.fire('Gagal!', response.message, 'error');
+              Swal.fire({
+                type: 'error',
+                title: 'Gagal!',
+                text: response.message || 'Terjadi kesalahan',
+              });
             }
           },
           error: function (xhr, status, error) {
             console.error('AJAX Error:', xhr.responseText);
-            Swal.fire('Error!', 'Terjadi kesalahan pada server', 'error');
+            Swal.fire({
+              type: 'error',
+              title: 'Error!',
+              text: 'Terjadi kesalahan pada server',
+            });
           },
         });
       }

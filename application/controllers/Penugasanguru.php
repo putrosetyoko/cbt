@@ -27,7 +27,7 @@ class Penugasanguru extends CI_Controller
         $data = [
             'user'             => $this->ion_auth->user()->row(),
             'judul'            => 'Penugasan Guru',
-            'subjudul'         => 'Tahun Ajaran - Guru - Mapel - Kelas',
+            'subjudul'         => 'Data Penugasan Guru',
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(),
             'all_guru'         => $this->master->getAllGuru(), // Asumsi nama fungsi ini benar
             'all_mapel'        => $this->master->getAllMapel(),
@@ -58,7 +58,7 @@ class Penugasanguru extends CI_Controller
         $data = [
             'user'             => $this->ion_auth->user()->row(),
             'judul'            => 'Tambah Penugasan Guru',
-            'subjudul'         => 'Assign Guru ke Mapel, Kelas, dan Tahun Ajaran',
+            'subjudul'         => 'Tambah Data Penugasan Guru ',
             'all_tahun_ajaran' => $this->master->getAllTahunAjaran(),
             'all_guru'         => $this->master->getAllGuru(),
             'all_mapel'        => $this->master->getAllMapel(),
@@ -107,7 +107,7 @@ class Penugasanguru extends CI_Controller
                 $ta = $this->master->getTahunAjaranById($id_tahun_ajaran);
 
                 $error_messages[] = "Guru " . ($guru->nama_guru ?? '') . " sudah ditugaskan mapel " . ($mapel->nama_mapel ?? '') . 
-                                  " di kelas " . ($kelas->nama_kelas ?? '') . " pada TA " . ($ta->nama_tahun_ajaran ?? '');
+                                " di kelas " . ($kelas->nama_kelas ?? '') . " pada TA " . ($ta->nama_tahun_ajaran ?? '');
                 $skipped_count++;
             } else {
                 $batch_data[] = [
