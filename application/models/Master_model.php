@@ -421,4 +421,141 @@ class Master_model extends CI_Model
         return $query->num_rows() > 0;
     }
 
+    /**
+     * Data PJ Soal
+     */
+    public function getDataPJSoal($filter_tahun_ajaran = null, $filter_mapel = null)
+    {
+        $this->datatables->select(
+            'pjsa.id_pjsa, ta.nama_tahun_ajaran, m.nama_mapel, g.nip AS nip_guru, g.nama_guru, pjsa.keterangan, DATE_FORMAT(pjsa.ditetapkan_pada, "%d-%m-%Y %H:%i") as ditetapkan_pada, '.
+            'pjsa.mapel_id, pjsa.guru_id, pjsa.id_tahun_ajaran', 
+            FALSE
+        );
+        $this->datatables->from('penanggung_jawab_soal_ajaran pjsa');
+        $this->datatables->join('tahun_ajaran ta', 'pjsa.id_tahun_ajaran = ta.id_tahun_ajaran');
+        $this->datatables->join('mapel m', 'pjsa.mapel_id = m.id_mapel');
+        $this->datatables->join('guru g', 'pjsa.guru_id = g.id_guru');
+
+        if ($filter_tahun_ajaran && $filter_tahun_ajaran !== 'all' && !empty($filter_tahun_ajaran)) {
+            $this->datatables->where('pjsa.id_tahun_ajaran', $filter_tahun_ajaran);
+        }
+        if ($filter_mapel && $filter_mapel !== 'all' && !empty($filter_mapel)) {
+            $this->datatables->where('pjsa.mapel_id', $filter_mapel);
+        }
+        
+        // Kolom aksi akan dirender oleh JavaScript
+        return $this->datatables->generate();
+    }
+
+    /**
+     * Mendapatkan satu data PJ Soal berdasarkan id_pjsa
+     * @param int $id_pjsa
+     * @return object|null
+     */
+    public function getPJSoalById($id_pjsa)
+    {
+        $this->db->select('pjsa.*, ta.nama_tahun_ajaran, m.nama_mapel, g.nama_guru, g.nip');
+        $this->db->from('penanggung_jawab_soal_ajaran pjsa');
+        $this->db->join('tahun_ajaran ta', 'pjsa.id_tahun_ajaran = ta.id_tahun_ajaran', 'left');
+        $this->db->join('mapel m', 'pjsa.mapel_id = m.id_mapel', 'left');
+        $this->db->join('guru g', 'pjsa.guru_id = g.id_guru', 'left');
+        $this->db->where('pjsa.id_pjsa', $id_pjsa);
+        return $this->db->get()->row();
+    }
+    
+    /**
+     * Mendapatkan data PJ Soal berdasarkan mapel_id dan id_tahun_ajaran
+     * @param int $mapel_id
+     * @param int $id_tahun_ajaran
+     * @return object|null
+     */
+    public function getPJSoalByMapelTahun($mapel_id, $id_tahun_ajaran)
+    {
+        $this->db->select('pjsa.*, g.nama_guru, g.nip'); // Ambil juga info guru PJ
+        $this->db->from('penanggung_jawab_soal_ajaran pjsa');
+        $this->db->join('guru g', 'pjsa.guru_id = g.id_guru', 'left');
+        $this->db->where('pjsa.mapel_id', $mapel_id);
+        $this->db->where('pjsa.id_tahun_ajaran', $id_tahun_ajaran);
+        return $this->db->get()->row();
+    }
+
+    /**
+     * Mendapatkan data PJ Soal berdasarkan guru_id dan id_tahun_ajaran
+     * @param int $guru_id
+     * @param int $id_tahun_ajaran
+     * @return object|null
+     */
+    public function getPJSoalByGuruTahun($guru_id, $id_tahun_ajaran)
+    {
+        $this->db->select('pjsa.*, m.nama_mapel'); // Ambil juga info mapel
+        $this->db->from('penanggung_jawab_soal_ajaran pjsa');
+        $this->db->join('mapel m', 'pjsa.mapel_id = m.id_mapel', 'left');
+        $this->db->where('pjsa.guru_id', $guru_id);
+        $this->db->where('pjsa.id_tahun_ajaran', $id_tahun_ajaran);
+        return $this->db->get()->row();
+    }
+
+    /**
+     * Mendapatkan guru yang BELUM menjadi PJ Soal di tahun ajaran tertentu,
+     * atau adalah guru PJ saat ini (untuk edit).
+     * @param int $id_tahun_ajaran
+     * @param int|null $current_editing_guru_id (Guru ID yang sedang diedit, agar tetap muncul di list)
+     * @return array
+     */
+    public function getGuruAvailableForPJ($id_tahun_ajaran, $current_editing_guru_id = null)
+    {
+        // Ambil semua guru dulu
+        $all_guru_query = $this->db->select('id_guru, nip, nama_guru')->order_by('nama_guru', 'ASC')->get('guru');
+        $all_guru = $all_guru_query->result();
+
+        // Ambil guru yang sudah jadi PJ di tahun ajaran ini
+        $this->db->select('guru_id');
+        $this->db->from('penanggung_jawab_soal_ajaran');
+        $this->db->where('id_tahun_ajaran', $id_tahun_ajaran);
+        if ($current_editing_guru_id !== null) {
+            $this->db->where('guru_id !=', $current_editing_guru_id); // Kecualikan guru yang sedang diedit dari daftar "sudah jadi PJ"
+        }
+        $assigned_gurus_query = $this->db->get();
+        $assigned_guru_ids = array_column($assigned_gurus_query->result_array(), 'guru_id');
+
+        $available_gurus = [];
+        foreach ($all_guru as $guru) {
+            if (!in_array($guru->id_guru, $assigned_guru_ids) || $guru->id_guru == $current_editing_guru_id) {
+                $available_gurus[] = $guru;
+            }
+        }
+        return $available_gurus;
+    }
+    
+    /**
+     * Mendapatkan mapel yang BELUM memiliki PJ Soal di tahun ajaran tertentu,
+     * atau adalah mapel yang sedang diedit PJ-nya.
+     * @param int $id_tahun_ajaran
+     * @param int|null $current_editing_mapel_id (Mapel ID yang sedang diedit, agar tetap muncul di list)
+     * @return array
+     */
+    public function getMapelAvailableForPJ($id_tahun_ajaran, $current_editing_mapel_id = null)
+    {
+        // Ambil semua mapel dulu
+        $all_mapel_query = $this->db->select('id_mapel, nama_mapel')->order_by('nama_mapel', 'ASC')->get('mapel');
+        $all_mapel = $all_mapel_query->result();
+
+        // Ambil mapel yang sudah punya PJ di tahun ajaran ini
+        $this->db->select('mapel_id');
+        $this->db->from('penanggung_jawab_soal_ajaran');
+        $this->db->where('id_tahun_ajaran', $id_tahun_ajaran);
+        if ($current_editing_mapel_id !== null) {
+            $this->db->where('mapel_id !=', $current_editing_mapel_id); // Kecualikan mapel yang sedang diedit
+        }
+        $assigned_mapels_query = $this->db->get();
+        $assigned_mapel_ids = array_column($assigned_mapels_query->result_array(), 'mapel_id');
+
+        $available_mapels = [];
+        foreach ($all_mapel as $mapel) {
+            if (!in_array($mapel->id_mapel, $assigned_mapel_ids) || $mapel->id_mapel == $current_editing_mapel_id) {
+                $available_mapels[] = $mapel;
+            }
+        }
+        return $available_mapels;
+    }
 }
