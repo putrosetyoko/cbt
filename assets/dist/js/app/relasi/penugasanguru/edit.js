@@ -1,68 +1,59 @@
 $(document).ready(function () {
-  if ($.fn.select2) {
-    $('#id_tahun_ajaran, #guru_id, #mapel_id, #kelas_id').select2({
-      placeholder: '-- Pilih --',
-      allowClear: true,
-    });
-  }
-  $('#id_tahun_ajaran').focus();
+  // Inisialisasi Select2
+  $('.select2').select2({
+    width: '100%',
+    theme: 'bootstrap',
+  });
 
   $('#formPenugasanGuru').on('submit', function (e) {
-    // Asumsi ID form sama
     e.preventDefault();
-    e.stopImmediatePropagation();
 
-    var $form = $(this);
-    var $submitBtn = $form.find('button[type="submit"]');
-    var btnText = $submitBtn.html();
-    $submitBtn
-      .attr('disabled', 'disabled')
-      .html('<i class="fa fa-spinner fa-spin"></i> Processing...');
-    $('.help-block.text-danger').text('');
-    $('.form-group').removeClass('has-error');
+    // Debug form data
+    const formEl = $(this)[0];
+    const formData = new FormData(formEl);
+    console.log('Form elements:', formEl.elements);
+    console.log('id_gmka value:', formData.get('id_gmka'));
 
     $.ajax({
-      url: $form.attr('action'), // Ke penugasanguru/update
+      url: $(this).attr('action'),
       type: 'POST',
-      data: $form.serialize(),
+      data: $(this).serialize(),
       dataType: 'json',
+      beforeSend: function () {
+        $('#submitBtn')
+          .attr('disabled', true)
+          .html('<i class="fa fa-spin fa-spinner"></i> Processing...');
+      },
       success: function (response) {
-        $submitBtn.removeAttr('disabled').html(btnText);
         if (response.status) {
-          Swal.fire(
-            'Sukses!',
-            response.message || 'Penugasan guru berhasil diperbarui.',
-            'success'
-          ).then(() => {
-            window.location.href = base_url + 'penugasanguru';
+          Swal.fire({
+            title: 'Berhasil',
+            text: response.message,
+            type: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.value) {
+              window.location.href = base_url + 'penugasanguru';
+            }
           });
         } else {
-          if (response.errors) {
-            $.each(response.errors, function (key, value) {
-              if (value) {
-                $('#error_' + key)
-                  .text(value)
-                  .addClass('text-danger');
-                $('[name="' + key + '"]')
-                  .closest('.form-group')
-                  .addClass('has-error');
-              }
-            });
-          }
-          Swal.fire(
-            'Gagal!',
-            response.message || 'Terjadi kesalahan validasi.',
-            'error'
-          );
+          Swal.fire({
+            title: 'Gagal',
+            text: response.message || 'Terjadi kesalahan',
+            icon: 'error',
+          });
         }
       },
-      error: function (jqXHR, textStatus, errorThrown) {
-        $submitBtn.removeAttr('disabled').html(btnText);
-        Swal.fire(
-          'Error Server!',
-          'Tidak dapat terhubung ke server: ' + textStatus,
-          'error'
-        );
+      error: function (xhr, status, error) {
+        console.error('AJAX Error:', xhr.responseText);
+        Swal.fire('Error', 'Terjadi kesalahan pada server', 'error');
+      },
+      complete: function () {
+        $('#submitBtn')
+          .attr('disabled', false)
+          .html('<i class="fa fa-save"></i> Simpan');
       },
     });
   });

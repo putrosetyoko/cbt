@@ -70,3 +70,24 @@ $(document).ready(function () {
     });
   });
 });
+
+$(document).ready(function () {
+  if ($.fn.select2) {
+    $('.select2').select2({
+      allowClear: true,
+    });
+
+    // Konfigurasi untuk single select mapel
+    $('#mapel_id').select2({
+      placeholder: '-- Pilih Mata Pelajaran --',
+      allowClear: true,
+    });
+
+    // Konfigurasi untuk multiple select kelas
+    $('#kelas_ids').select2({
+      placeholder: 'Pilih kelas...',
+      allowClear: true,
+    });
+  }
+  $('#id_tahun_ajaran').focus();
+});

@@ -56,33 +56,6 @@ $(document).ready(function () {
       { data: 'nama_mapel' },
       {
         data: 'kelas_info',
-        render: function (data, type, row) {
-          if (type === 'display') {
-            // Extract jenjang from kelas_info (format: "JENJANG KELAS")
-            const jenjang = data.split(' ')[0];
-
-            // Set badge color based on jenjang
-            let badgeClass = '';
-            switch (jenjang) {
-              case 'VII':
-                badgeClass = 'bg-green';
-                break;
-              case 'VIII':
-                badgeClass = 'bg-blue';
-                break;
-              case 'IX':
-                badgeClass = 'bg-maroon';
-                break;
-              default:
-                badgeClass = 'bg-default';
-            }
-
-            return `<span class="badge ${badgeClass}" style="padding: 4px 8px;">
-                    ${data}
-                </span>`;
-          }
-          return data;
-        },
       },
       {
         data: null,
@@ -107,6 +80,47 @@ $(document).ready(function () {
         },
       },
       {
+        targets: 4,
+        searchable: false,
+        orderable: false,
+        data: 'kelas_info',
+        render: function (data, type, row, meta) {
+          if (type === 'display' && data) {
+            // Pisahkan string kelas menjadi array dan bersihkan spasi
+            const kelasArray = data.split(',').map((k) => k.trim());
+            let badges = '';
+
+            // Buat badge untuk setiap kelas
+            kelasArray.forEach((kelas) => {
+              // Ambil jenjang dari kelas (VII, VIII, atau IX)
+              const jenjang = kelas.split(' ')[0];
+              let badgeClass = '';
+
+              // Tentukan warna badge berdasarkan jenjang
+              switch (jenjang) {
+                case 'VII':
+                  badgeClass = 'bg-green';
+                  break;
+                case 'VIII':
+                  badgeClass = 'bg-blue';
+                  break;
+                case 'IX':
+                  badgeClass = 'bg-maroon';
+                  break;
+                default:
+                  badgeClass = 'bg-gray';
+              }
+
+              // Tambahkan badge dengan margin
+              badges += `<span class="badge ${badgeClass}" style="margin: 2px 4px; display: inline-block;">${kelas}</span>`;
+            });
+
+            return badges;
+          }
+          return data;
+        },
+      },
+      {
         targets: 5, // Kolom Aksi
         render: function (data, type, row, meta) {
           return `<a href="${base_url}penugasanguru/edit/${data.id_gmka}" class="btn btn-xs btn-warning""><i class="fa fa-pencil"></i> Edit</a>`;
@@ -115,7 +129,9 @@ $(document).ready(function () {
       {
         targets: 6, // Kolom Checkbox
         render: function (data, type, row, meta) {
-          return `<input name="checked[]" class="check" value="${data.id_gmka}" type="checkbox">`;
+          // Debug: log row data
+          console.log('Row data for checkbox:', row);
+          return `<input name="checked[]" class="check" value="${row.id_gmka}" type="checkbox">`;
         },
       },
     ],
@@ -176,25 +192,34 @@ function reload_ajax() {
 
 function bulk_delete() {
   var $checkedBoxes = $('#table_penugasan_guru .check:checked');
-  console.log('Jumlah checkbox terpilih:', $checkedBoxes.length);
 
   if ($checkedBoxes.length === 0) {
     Swal.fire('Gagal', 'Tidak ada data yang dipilih untuk dihapus.', 'error');
     return;
   }
 
-  var ids = [];
+  // Kumpulkan data yang akan dihapus
+  let uniqueData = new Set();
+  let dataToDelete = [];
+
   $checkedBoxes.each(function () {
-    ids.push($(this).val());
+    const row = tablePenugasanGuru.row($(this).closest('tr')).data();
+    // Buat key unik untuk kombinasi guru, mapel, dan tahun ajaran
+    const key = `${row.guru_id}_${row.mapel_id}_${row.id_tahun_ajaran}`;
+
+    if (!uniqueData.has(key)) {
+      uniqueData.add(key);
+      dataToDelete.push({
+        guru_id: row.guru_id,
+        mapel_id: row.mapel_id,
+        tahun_ajaran_id: row.id_tahun_ajaran,
+      });
+    }
   });
-  console.log('ID yang akan dihapus:', ids);
 
   Swal.fire({
     title: 'Anda yakin?',
-    text:
-      'Data penugasan guru yang dipilih (' +
-      $checkedBoxes.length +
-      ' data) akan dihapus.',
+    text: `Data yang dipilih akan dihapus beserta seluruh kelasnya!`,
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -203,38 +228,37 @@ function bulk_delete() {
     cancelButtonText: 'Batal',
   }).then((result) => {
     if (result.value) {
-      console.log('User mengkonfirmasi penghapusan');
       $.ajax({
         url: base_url + 'penugasanguru/delete',
         type: 'POST',
-        data: { checked: ids },
-        dataType: 'json',
+        data: {
+          data_delete: JSON.stringify(dataToDelete),
+        },
         success: function (response) {
-          console.log('Response server:', response);
           if (response.status) {
             Swal.fire({
               title: 'Berhasil',
               text: response.message,
               type: 'success',
             }).then(() => {
-              tablePenugasanGuru.ajax.reload(null, false);
+              tablePenugasanGuru.ajax.reload();
               $('.select_all').prop('checked', false);
             });
           } else {
-            Swal.fire(
-              'Gagal!',
-              response.message || 'Terjadi kesalahan',
-              'error'
-            );
+            Swal.fire({
+              title: 'Gagal',
+              text: response.message,
+              type: 'error',
+            });
           }
         },
         error: function (xhr, status, error) {
-          console.error('AJAX Error:', {
-            xhr: xhr.responseText,
-            status: status,
-            error: error,
+          console.error('AJAX Error:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Terjadi kesalahan saat menghapus data',
+            type: 'error',
           });
-          Swal.fire('Error!', 'Gagal menghapus data: ' + error, 'error');
         },
       });
     }

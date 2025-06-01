@@ -32,13 +32,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="mapel_ids">Mata Pelajaran yang Diajar <span class="text-danger">*</span></label>
-                    <select name="mapel_ids[]" id="mapel_ids" class="form-control select2" multiple="multiple" data-placeholder="Pilih satu atau beberapa mapel" style="width: 100%;" required>
+                    <label for="mapel_id">Mata Pelajaran yang Diajar <span class="text-danger">*</span></label>
+                    <select name="mapel_id" id="mapel_id" class="form-control select2" style="width: 100%;" required>
+                        <option value="">-- Pilih Mata Pelajaran --</option>
                         <?php if(isset($all_mapel)): foreach ($all_mapel as $m) : ?>
                             <option value="<?= $m->id_mapel ?>"><?= htmlspecialchars($m->nama_mapel) ?></option>
                         <?php endforeach; endif; ?>
                     </select>
-                    <small class="help-block text-danger" id="error_mapel_ids"></small>
+                    <small class="help-block text-danger" id="error_mapel_id"></small>
                 </div>
 
                 <div class="form-group">
@@ -61,17 +62,6 @@
     <?= form_close(); ?>
 </div>
 
+
 <script src="<?= base_url() ?>assets/dist/js/app/relasi/penugasanguru/add.js"></script>
-<script>
-$(document).ready(function() {
-    if($.fn.select2){ 
-        $('.select2').select2({
-            allowClear: true // Opsional
-        }); 
-        // Untuk placeholder yang berbeda pada multiple select
-        $('#mapel_ids').select2({ placeholder: "Pilih mapel...", allowClear: true });
-        $('#kelas_ids').select2({ placeholder: "Pilih kelas...", allowClear: true });
-    }
-    $('#id_tahun_ajaran').focus();
-});
-</script>
+

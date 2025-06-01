@@ -313,13 +313,20 @@ class Master_model extends CI_Model
      */
     public function getDataPenugasanGuru($filter_tahun_ajaran = null, $filter_guru = null, $filter_mapel = null, $filter_kelas = null) 
     {
-        // Tambahkan kolom untuk bulk_select
+        // Modifikasi SELECT untuk menggabungkan kelas dalam satu baris
         $this->datatables->select('
             gmka.id_gmka,
             ta.nama_tahun_ajaran,
             g.nama_guru,
             m.nama_mapel,
-            CONCAT(j.nama_jenjang, " ", k.nama_kelas) as kelas_info
+            g.id_guru as guru_id,
+            m.id_mapel as mapel_id,
+            ta.id_tahun_ajaran,
+            GROUP_CONCAT(CONCAT(j.nama_jenjang, " ", k.nama_kelas)) as kelas_info,
+            GROUP_CONCAT(JSON_OBJECT(
+                "id_kelas", k.id_kelas,
+                "nama_kelas", CONCAT(j.nama_jenjang, " ", k.nama_kelas)
+            )) as kelas_data
         ', FALSE);
         
         $this->datatables->from('guru_mapel_kelas_ajaran gmka');
@@ -329,7 +336,10 @@ class Master_model extends CI_Model
         $this->datatables->join('kelas k', 'k.id_kelas = gmka.kelas_id');
         $this->datatables->join('jenjang j', 'j.id_jenjang = k.id_jenjang');
 
-        // Perbaikan filter
+        // Tambahkan GROUP BY untuk mengelompokkan berdasarkan guru, mapel, dan tahun ajaran
+        $this->datatables->group_by('gmka.guru_id, gmka.mapel_id, gmka.id_tahun_ajaran');
+
+        // Filter tetap sama
         if ($filter_tahun_ajaran !== null && $filter_tahun_ajaran !== 'all') {
             $this->datatables->where('gmka.id_tahun_ajaran', $filter_tahun_ajaran);
         }
@@ -346,13 +356,6 @@ class Master_model extends CI_Model
             $this->datatables->where('gmka.kelas_id', $filter_kelas);
         }
 
-        // Tambahkan kolom bulk_select
-        $this->datatables->add_column('bulk_select', 
-            '<div class="text-center"><input type="checkbox" class="check" name="checked[]" value="$1"/></div>', 
-            'id_gmka'
-        );
-
-        // Ganti order_by dengan pengaturan di DataTables JS
         return $this->datatables->generate();
     }
 
@@ -361,14 +364,38 @@ class Master_model extends CI_Model
      */
     public function getPenugasanGuruById($id_gmka)
     {
-        $this->db->select('gmka.*, g.nama_guru, m.nama_mapel, k.nama_kelas, ta.nama_tahun_ajaran, j.nama_jenjang');
+        // Ambil referensi data dari id_gmka yang dipilih
+        $ref = $this->db->get_where('guru_mapel_kelas_ajaran', ['id_gmka' => $id_gmka])->row();
+        
+        if (!$ref) return null;
+
+        $this->db->select('
+            gmka.id_gmka,
+            gmka.guru_id,
+            gmka.mapel_id,
+            gmka.id_tahun_ajaran,
+            g.nama_guru,
+            m.nama_mapel,
+            ta.nama_tahun_ajaran,
+            GROUP_CONCAT(k.id_kelas) as kelas_id,
+            GROUP_CONCAT(CONCAT(j.nama_jenjang, " ", k.nama_kelas)) as kelas_info
+        ');
         $this->db->from('guru_mapel_kelas_ajaran gmka');
         $this->db->join('guru g', 'gmka.guru_id = g.id_guru');
         $this->db->join('mapel m', 'gmka.mapel_id = m.id_mapel');
         $this->db->join('kelas k', 'gmka.kelas_id = k.id_kelas');
         $this->db->join('tahun_ajaran ta', 'gmka.id_tahun_ajaran = ta.id_tahun_ajaran');
         $this->db->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left');
-        $this->db->where('gmka.id_gmka', $id_gmka);
+        
+        // Gunakan data referensi untuk filter
+        $this->db->where([
+            'gmka.guru_id' => $ref->guru_id,
+            'gmka.mapel_id' => $ref->mapel_id,
+            'gmka.id_tahun_ajaran' => $ref->id_tahun_ajaran
+        ]);
+        
+        $this->db->group_by('gmka.guru_id, gmka.mapel_id, gmka.id_tahun_ajaran');
+        
         return $this->db->get()->row();
     }
 
