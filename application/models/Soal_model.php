@@ -99,4 +99,34 @@ class Soal_model extends CI_Model {
         return $this->db->trans_status();
     }
 
+    public function get_soal_by_mapel_jenjang($mapel_id, $jenjang_id, $limit = null)
+    {
+        $this->db->select('id_soal, soal, bobot');
+        $this->db->from('tb_soal');
+        $this->db->where([
+            'mapel_id' => $mapel_id,
+            'id_jenjang' => $jenjang_id
+            // Remove status_soal check since column doesn't exist
+        ]);
+        $this->db->order_by('RAND()');
+        
+        if ($limit !== null) {
+            $this->db->limit($limit);
+        }
+        
+        $result = $this->db->get();
+        log_message('debug', 'Query get_soal_by_mapel_jenjang: ' . $this->db->last_query());
+        log_message('debug', 'Result count: ' . $result->num_rows());
+        
+        return $result->result();
+    }
+
+    public function count_available_soal($mapel_id, $jenjang_id)
+    {
+        return $this->db->where([
+            'mapel_id' => $mapel_id,
+            'id_jenjang' => $jenjang_id
+            // Remove status_soal check since column doesn't exist
+        ])->from('tb_soal')->count_all_results();
+    }
 }

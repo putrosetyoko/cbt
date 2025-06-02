@@ -74,6 +74,7 @@ $(document).ready(function () {
         data: 'cuplikan_soal',
         orderable: false,
         searchable: true,
+        width: '40%',
         render: function (data) {
           return data ? data + '...' : '';
         },
@@ -107,34 +108,34 @@ $(document).ready(function () {
       },
     ],
     columnDefs: [
-      {
-        targets: 4, // Index kolom created_on_formatted
-        render: function (data, type, row) {
-          if (type === 'display') {
-            // Split tanggal dan waktu
-            const [datePart] = row.created_on_formatted.split(' ');
-            // Split tanggal
-            const [day, month, year] = datePart.split('-');
+      // {
+      //   targets: 4, // Index kolom created_on_formatted
+      //   render: function (data, type, row) {
+      //     if (type === 'display') {
+      //       // Split tanggal dan waktu
+      //       const [datePart] = row.created_on_formatted.split(' ');
+      //       // Split tanggal
+      //       const [day, month, year] = datePart.split('-');
 
-            // Buat objek Date dengan format yang benar (YYYY-MM-DD)
-            const date = new Date(`${year}-${month}-${day}`);
+      //       // Buat objek Date dengan format yang benar (YYYY-MM-DD)
+      //       const date = new Date(`${year}-${month}-${day}`);
 
-            const options = {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-              timeZone: 'Asia/Jakarta',
-            };
-            return date.toLocaleDateString('id-ID', options);
-          }
-          return data;
-        },
-      },
+      //       const options = {
+      //         day: 'numeric',
+      //         month: 'long',
+      //         year: 'numeric',
+      //         timeZone: 'Asia/Jakarta',
+      //       };
+      //       return date.toLocaleDateString('id-ID', options);
+      //     }
+      //     return data;
+      //   },
+      // },
       {
         targets: 5, // Kolom aksi
         data: 'id_soal',
         render: function (data, type, row, meta) {
-          let detailBtn = `<a href="${base_url}soal/detail/${row.id_soal}" class="btn btn-xs btn-info" title="Lihat Detail"><i class="fa fa-eye"></i> Detail</a>`;
+          let detailBtn = `<a href="${base_url}soal/detail/${row.id_soal}" class="btn btn-xs bg-blue" title="Lihat Detail"><i class="fa fa-eye"></i> Detail</a>`;
           let editBtn = '';
 
           if (

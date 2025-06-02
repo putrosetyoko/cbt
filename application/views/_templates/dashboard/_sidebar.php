@@ -66,9 +66,9 @@
                         <a href="<?=base_url('soal')?>"><i class="fa fa-file-text-o"></i> Bank Soal</a>
                     </li>
 
-                    <?php if( $this->ion_auth->in_group('guru') ) : ?> 
+                    <?php if( $this->ion_auth->is_admin() || $this->ion_auth->in_group('guru') ) : ?> 
                     <li class="<?=$page==='ujian' && $page2 ==='master'?"active":""?>"> 
-                        <a href="<?=base_url('ujian/master')?>"><i class="fa fa-pencil-square-o"></i> Kelola Ujian</a>
+                        <a href="<?=base_url('ujian')?>"><i class="fa fa-pencil-square-o"></i> Kelola Ujian</a>
                     </li>
                     <?php endif; ?>
                 </ul>

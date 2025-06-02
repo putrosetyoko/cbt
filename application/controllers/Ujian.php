@@ -3,535 +3,716 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ujian extends CI_Controller {
 
-    public $siswa, $user, $guru;
+    private $user_id_ion_auth; // ID dari tabel users ion_auth
+    private $is_admin;
+    private $is_guru;
+    private $guru_data;     // Objek data dari tabel 'guru' (termasuk id_guru PK-nya)
+    private $pj_mapel_data; // Objek data mapel jika guru login adalah PJ Soal untuk TA aktif
 
     public function __construct(){
         parent::__construct();
         if (!$this->ion_auth->logged_in()){
             redirect('auth');
         }
-        $this->load->library(['datatables', 'form_validation', 'encryption']);
-        $this->load->helper('my');
+        
+        $this->load->library(['datatables', 'form_validation', 'session', 'encryption']); // Tambahkan encryption
+        $this->load->helper(['my', 'form', 'url', 'string']); // Tambahkan string helper
+
         $this->load->model('Master_model', 'master');
-        $this->load->model('Soal_model', 'soal');
-        $this->load->model('Ujian_model', 'ujian');
-        $this->form_validation->set_error_delimiters('','');
+        $this->load->model('Ujian_model', 'ujian_m'); 
+        $this->load->model('Soal_model', 'soal_m'); // Ganti alias agar tidak konflik dengan variabel $soal
 
-        $this->user = $this->ion_auth->user()->row();
+        $user_ion_auth = $this->ion_auth->user()->row();
+        $this->user_id_ion_auth = $user_ion_auth->id;
+        $this->is_admin = $this->ion_auth->is_admin();
+        $this->is_guru = $this->ion_auth->in_group('guru');
 
-        if ($this->ion_auth->in_group('siswa')) {
-            $this->siswa = $this->ujian->getIdSiswa($this->user->username);
-        } elseif ($this->ion_auth->in_group('guru')) {
-            $this->guru = $this->ujian->getIdGuru($this->user->username);
+        if ($this->is_guru) {
+            if (!empty($user_ion_auth->username)) {
+                $this->guru_data = $this->db->get_where('guru', ['nip' => $user_ion_auth->username])->row();
+            }
+            if (!$this->guru_data && !empty($user_ion_auth->email)) {
+                $this->guru_data = $this->db->get_where('guru', ['email' => $user_ion_auth->email])->row();
+            }
+
+            if ($this->guru_data && isset($this->guru_data->id_guru)) {
+                $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif();
+                if ($tahun_ajaran_aktif) {
+                    $this->pj_mapel_data = $this->master->getMapelPJByGuruTahun($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
+                } else {
+                    $this->pj_mapel_data = null; // Pastikan null jika TA tidak aktif
+                }
+            } else {
+                 $this->pj_mapel_data = null; // Pastikan null jika guru_data tidak ada
+            }
         }
+        $this->form_validation->set_error_delimiters('<span class="help-block text-danger">', '</span>');
     }
 
-    public function akses_guru()
-    {
-        if ( !$this->ion_auth->in_group('guru') ){
-            $this->session->set_flashdata('message', 'Akses tidak diizinkan. Halaman ini khusus untuk guru.');
-            redirect('dashboard');
+    private function _can_manage_ujian($id_ujian = null) {
+        if ($this->is_admin) {
+            return true;
         }
+        if ($this->is_guru && $this->pj_mapel_data) {
+            if ($id_ujian === null) { // Untuk akses umum membuat ujian
+                return true;
+            }
+            // Untuk edit/delete, cek kepemilikan atau mapel PJ
+            $ujian = $this->ujian_m->get_ujian_by_id($id_ujian);
+            if ($ujian && $ujian->mapel_id == $this->pj_mapel_data->id_mapel) {
+                // PJ Soal bisa edit/delete semua ujian di mapel PJ-nya,
+                // atau hanya yang dia buat (ujian->guru_id == $this->guru_data->id_guru) - sesuaikan aturan
+                return true; 
+            }
+        }
+        return false;
     }
 
-    public function akses_siswa()
-    {
-        if ( !$this->ion_auth->in_group('siswa') ){
-            $this->session->set_flashdata('message', 'Akses tidak diizinkan. Halaman ini khusus untuk siswa.');
-            redirect('dashboard');
-        }
-        if (empty($this->siswa)) {
-            $this->session->set_flashdata('message', 'Data siswa tidak ditemukan.');
-            redirect('dashboard');
-        }
-    }
 
     public function output_json($data, $encode = true)
     {
-        if($encode) $data = json_encode($data);
+        if($encode && (is_array($data) || is_object($data))) {
+            $data = json_encode($data);
+        }
         $this->output->set_content_type('application/json')->set_output($data);
     }
 
-    public function json($id=null)
+    /**
+     * Halaman utama Kelola Ujian, menampilkan daftar ujian.
+     * URL: /ujian atau /ujian/index
+     */
+    public function index()
     {
-        $this->akses_guru();
-        $this->output_json($this->ujian->getDataUjian($id), false);
-    }
-
-    public function master()
-    {
-        $this->akses_guru();
-        $user = $this->ion_auth->user()->row();
-        $data = [
-            'user' => $user,
-            'judul' => 'Ujian',
-            'subjudul'=> 'Data Ujian',
-            'guru' => $this->ujian->getIdGuru($user->username),
-        ];
-        $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('ujian/data');
-        $this->load->view('_templates/dashboard/_footer.php');
-    }
-
-    public function add()
-    {
-        $this->akses_guru();
+        // Semua guru (PJ & Non-PJ) dan Admin bisa melihat daftar ini,
+        // tapi data yang tampil akan difilter di method data() & model.
         
-        $user = $this->ion_auth->user()->row();
-
         $data = [
-            'user'      => $user,
-            'judul'     => 'Ujian',
-            'subjudul'      => 'Tambah Ujian',
-            'mapel'     => $this->soal->getMapelGuru($user->username),
-            'guru'      => $this->ujian->getIdGuru($user->username),
+            'user'          => $this->ion_auth->user()->row(),
+            'judul'         => 'Kelola Ujian',
+            'subjudul'      => 'Daftar Ujian',
+            'is_admin'      => $this->is_admin,
+            'is_guru'       => $this->is_guru,
+            'guru_data'     => $this->guru_data,
+            'pj_mapel_data' => $this->pj_mapel_data,
+            'can_add_ujian' => $this->_can_manage_ujian() // Cek apakah bisa menambah ujian baru
         ];
 
-        $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('ujian/add');
-        $this->load->view('_templates/dashboard/_footer.php');
-    }
-    
-    public function edit($id)
-    {
-        $this->akses_guru();
-        
-        $user = $this->ion_auth->user()->row();
+        // Opsi filter untuk dropdown di view
+        $data['filter_tahun_ajaran_options'] = $this->master->getAllTahunAjaran(); // Ambil semua TA untuk filter
+        $data['filter_jenjang_options'] = $this->master->getAllJenjang();
 
-        $data = [
-            'user'      => $user,
-            'judul'     => 'Ujian',
-            'subjudul'      => 'Edit Ujian',
-            'mapel'     => $this->soal->getMapelGuru($user->username),
-            'guru'      => $this->ujian->getIdGuru($user->username),
-            'ujian'     => $this->ujian->getUjianById($id),
-        ];
-
-        $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('ujian/edit');
-        $this->load->view('_templates/dashboard/_footer.php');
-    }
-
-    public function convert_tgl($tgl)
-    {
-        return date('Y-m-d H:i:s', strtotime($tgl));
-    }
-
-    public function validasi()
-    {
-        $this->akses_guru();
-        
-        $user   = $this->ion_auth->user()->row();
-        $guru   = $this->ujian->getIdGuru($user->username);
-        $jml    = $this->ujian->getJumlahSoal($guru->id_guru)->jml_soal;
-        $jml_a    = $jml + 1;
-
-        $this->form_validation->set_rules('nama_ujian', 'Nama Ujian', 'required|alpha_numeric_spaces|max_length[50]');
-        $this->form_validation->set_rules('jumlah_soal', 'Jumlah Soal', "required|integer|less_than[{$jml_a}]|greater_than[0]", ['less_than' => "Soal tidak cukup, anda hanya punya {$jml} soal"]);
-        $this->form_validation->set_rules('tgl_mulai', 'Tanggal Mulai', 'required');
-        $this->form_validation->set_rules('tgl_selesai', 'Tanggal Selesai', 'required');
-        $this->form_validation->set_rules('waktu', 'Waktu', 'required|integer|max_length[4]|greater_than[0]');
-        $this->form_validation->set_rules('jenis', 'Acak Soal', 'required|in_list[acak,urut]');
-    }
-
-    public function save()
-    {
-        $this->validasi();
-        $this->load->helper('string');
-
-        $method      = $this->input->post('method', true);
-        $guru_id       = $this->input->post('guru_id', true);
-        $mapel_id      = $this->input->post('mapel_id', true);
-        $nama_ujian   = $this->input->post('nama_ujian', true);
-        $jumlah_soal  = $this->input->post('jumlah_soal', true);
-        $tgl_mulai    = $this->convert_tgl($this->input->post('tgl_mulai',   true));
-        $tgl_selesai  = $this->convert_tgl($this->input->post('tgl_selesai', true));
-        $waktu         = $this->input->post('waktu', true);
-        $jenis         = $this->input->post('jenis', true);
-        $token         = strtoupper(random_string('alpha', 5));
-
-        if( $this->form_validation->run() === FALSE ){
-            $data['status'] = false;
-            $data['errors'] = [
-                'nama_ujian'    => form_error('nama_ujian'),
-                'jumlah_soal'   => form_error('jumlah_soal'),
-                'tgl_mulai'     => form_error('tgl_mulai'),
-                'tgl_selesai'   => form_error('tgl_selesai'),
-                'waktu'         => form_error('waktu'),
-                'jenis'         => form_error('jenis'),
-            ];
-        }else{
-            $input = [
-                'nama_ujian'    => $nama_ujian,
-                'jumlah_soal'   => $jumlah_soal,
-                'tgl_mulai'     => $tgl_mulai,
-                'terlambat'     => $tgl_selesai,
-                'waktu'         => $waktu,
-                'jenis'         => $jenis,
-                'aktif'         => 'Y'
-            ];
-            if($method === 'add'){
-                $input['guru_id']   = $guru_id;
-                $input['mapel_id'] = $mapel_id;
-                $input['token']   = $token;
-                $action = $this->master->create('m_ujian', $input);
-            }else if($method === 'edit'){
-                $id_ujian = $this->input->post('id_ujian', true);
-                $action = $this->master->update('m_ujian', $input, 'id_ujian', $id_ujian);
+        if ($this->is_admin) {
+            $data['filter_mapel_options'] = $this->master->getAllMapel();
+        } elseif ($this->is_guru && $this->pj_mapel_data) {
+            $data['filter_mapel_options'] = [$this->pj_mapel_data]; 
+        } elseif ($this->is_guru && !$this->pj_mapel_data && $this->guru_data) { // Guru Non-PJ
+            $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif();
+            if($tahun_ajaran_aktif && isset($this->guru_data->id_guru)){
+                $mapel_ids_diajar = $this->master->getMapelDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
+                if(!empty($mapel_ids_diajar)){
+                    $data['filter_mapel_options'] = $this->db->where_in('id_mapel', $mapel_ids_diajar)->order_by('nama_mapel', 'ASC')->get('mapel')->result();
+                } else {
+                    $data['filter_mapel_options'] = [];
+                }
+            } else {
+                $data['filter_mapel_options'] = [];
             }
-            $data['status'] = $action ? TRUE : FALSE;
+        } else {
+            $data['filter_mapel_options'] = []; // Default kosong jika tidak ada kondisi cocok
         }
-        $this->output_json($data);
-    }
 
-    public function delete()
-    {
-        $this->akses_guru();
-        $chk = $this->input->post('checked', true);
-        if(!$chk){
-            $this->output_json(['status'=>false]);
-        }else{
-            if($this->master->delete('m_ujian', $chk, 'id_ujian')){
-                $this->output_json(['status'=>true, 'total'=>count($chk)]);
-            }
-        }
-    }
 
-    public function refresh_token($id)
-    {
-        $this->load->helper('string');
-        $data['token'] = strtoupper(random_string('alpha', 5));
-        $refresh = $this->master->update('m_ujian', $data, 'id_ujian', $id);
-        $data['status'] = $refresh ? TRUE : FALSE;
-        $this->output_json($data);
+        $this->load->view('_templates/dashboard/_header.php', $data);
+        $this->load->view('ujian/data', $data);
+        $this->load->view('_templates/dashboard/_footer.php');
     }
 
     /**
-     * BAGIAN SISWA
+     * Endpoint AJAX untuk DataTables.
      */
-
-    public function list_json()
+    public function data()
     {
-        $this->akses_siswa();
-        if (empty($this->siswa) || empty($this->siswa->id_siswa) || empty($this->siswa->kelas_id)) {
-            $this->output_json(['data' => []], false);
-            return;
+        $filters = [
+            'id_tahun_ajaran'   => $this->input->post('filter_tahun_ajaran_ujian', true),
+            'mapel_id'          => $this->input->post('filter_mapel_ujian', true),
+            'id_jenjang_target' => $this->input->post('filter_jenjang_ujian', true),
+        ];
+
+        $guru_context = [
+            'is_admin'      => $this->is_admin,
+            'is_guru'       => $this->is_guru,
+            'id_guru'       => ($this->is_guru && $this->guru_data) ? $this->guru_data->id_guru : null,
+            'id_mapel_pj'   => ($this->is_guru && $this->pj_mapel_data) ? $this->pj_mapel_data->id_mapel : null,
+            'mapel_ids_diajar' => []
+        ];
+
+        if ($this->is_guru && !$this->pj_mapel_data && $this->guru_data) { // Guru Non-PJ
+            // Ambil TA dari filter jika ada, jika tidak, pakai TA aktif
+            $id_ta_filter = ($filters['id_tahun_ajaran'] && $filters['id_tahun_ajaran'] !== 'all') 
+                            ? $filters['id_tahun_ajaran'] 
+                            : ($this->master->getTahunAjaranAktif()->id_tahun_ajaran ?? null);
+            
+            if ($id_ta_filter && isset($this->guru_data->id_guru)) {
+                $guru_context['mapel_ids_diajar'] = $this->master->getMapelDiajarGuru($this->guru_data->id_guru, $id_ta_filter);
+            }
         }
-        $list = $this->ujian->getListUjian($this->siswa->id_siswa, $this->siswa->kelas_id);
-        $this->output_json($list, false);
-    }
-    
-    public function list()
-    {
-        $this->akses_siswa();
-
-        $user = $this->ion_auth->user()->row();
         
-        if (empty($this->siswa)) {
-            $this->session->set_flashdata('message', 'Data siswa tidak ditemukan untuk menampilkan daftar ujian.');
-            redirect('dashboard');
+        $this->output_json($this->ujian_m->getUjianDatatables($filters, $guru_context));
+    }
+
+    /**
+     * Menampilkan form tambah ujian baru.
+     * URL: /ujian/add
+     */
+    public function add()
+    {
+        if (!$this->_can_manage_ujian()) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki hak untuk menambah ujian.');
+            redirect('ujian');
         }
 
         $data = [
-            'user'      => $user,
-            'judul'     => 'Ujian',
-            'subjudul'      => 'List Ujian',
-            'siswa'     => $this->siswa,
+            'user'          => $this->ion_auth->user()->row(),
+            'judul'         => 'Kelola Ujian',
+            'subjudul'      => 'Buat Ujian Baru',
+            'is_admin'      => $this->is_admin,
+            'guru_data'     => $this->guru_data,
+            'pj_mapel_data' => $this->pj_mapel_data,
+            
+            // SESUAIKAN NAMA KEY DI SINI:
+            'all_jenjang'           => $this->master->getAllJenjang(),
+            'all_tahun_ajaran'      => $this->master->getAllTahunAjaran(), 
+            // Anda mungkin punya parameter di getAllTahunAjaran() untuk mengambil yg aktif saja,
+            // contoh dari controller Anda sebelumnya: $this->master->getAllTahunAjaran(true)
+            // Jika tidak, logika selected di view sudah cukup.
         ];
+        
+        if ($this->is_admin) {
+            $data['all_mapel_options_for_admin'] = $this->master->getAllMapel();
+        }
+
         $this->load->view('_templates/dashboard/_header.php', $data);
-        $this->load->view('ujian/list');
+        $this->load->view('ujian/add', $data);
         $this->load->view('_templates/dashboard/_footer.php');
     }
-    
-    public function token($id)
+
+    /**
+     * Menyimpan data ujian baru.
+     * URL: /ujian/save (Method POST)
+     */
+    public function save()
     {
-        $this->akses_siswa();
-        $user = $this->ion_auth->user()->row();
-
-        if (empty($this->siswa)) {
-            $this->session->set_flashdata('message', 'Data siswa tidak ditemukan.');
-            redirect('dashboard');
+        if (!$this->_can_manage_ujian()) {
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.']);
+            return;
         }
 
-        $ujian = $this->ujian->getUjianById($id); // Ambil objek ujian
-        if (!$ujian) {
-            // Handle jika ujian tidak ditemukan (opsional, tapi disarankan)
-            $this->session->set_flashdata('message', 'Ujian tidak ditemukan.');
-            redirect('ujian/list');
+        $this->form_validation->set_rules('nama_ujian', 'Nama Ujian', 'required|trim|min_length[3]|max_length[100]');
+        $this->form_validation->set_rules('id_jenjang_target', 'Jenjang Target', 'required|integer');
+        $this->form_validation->set_rules('id_tahun_ajaran', 'Tahun Ajaran', 'required|integer');
+        $this->form_validation->set_rules('jumlah_soal', 'Jumlah Soal Ditampilkan', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('waktu', 'Waktu Ujian (menit)', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('tgl_mulai', 'Tanggal Mulai', 'required');
+        $this->form_validation->set_rules('terlambat', 'Batas Akhir Masuk', 'required');
+        // Tidak perlu validasi 'jenis' jika sudah dihapus, gunakan 'acak_soal'
+        $this->form_validation->set_rules('acak_soal', 'Acak Soal', 'required|in_list[Y,N]');
+        $this->form_validation->set_rules('acak_opsi', 'Acak Opsi', 'required|in_list[Y,N]');
+        $this->form_validation->set_rules('aktif', 'Status Aktif', 'required|in_list[Y,N]');
+
+        $mapel_id_input = $this->input->post('mapel_id', true);
+
+        if ($this->is_admin) {
+            $this->form_validation->set_rules('mapel_id', 'Mata Pelajaran', 'required|integer');
+            // Jika admin menentukan guru_id (PJ) untuk ujian ini:
+            // $this->form_validation->set_rules('guru_id_assign', 'Guru PJ', 'required|integer');
+        } elseif ($this->is_guru && $this->pj_mapel_data) {
+            // Untuk PJ Soal, mapel_id sudah ditentukan, tidak perlu validasi dari input
+        } else { // Seharusnya tidak sampai sini karena _can_manage_ujian()
+            $this->output_json(['status' => false, 'message' => 'Konfigurasi pengguna tidak valid.']);
+            return;
         }
 
-        // DEFINE VARIABEL WAKTU DI SINI SEBELUM DILEWATKAN KE VIEW
-        $mulai = strtotime($ujian->tgl_mulai);
-        $selesai = strtotime($ujian->terlambat);
-        $now = time();
-        $terlambat_mulai = strtotime($ujian->terlambat); // Ambil dari objek ujian, jika ada kolom 'terlambat' di DB
 
-        $data = [
-            'user'          => $user,
-            'judul'         => 'Ujian',
-            'subjudul'      => '',
-            'siswa'         => $this->siswa,
-            'ujian'         => $ujian, // Objek ujian sudah ada
-            'encrypted_id'  => urlencode($this->encryption->encrypt($id)),
-            // Tambahkan variabel waktu ke $data
-            'mulai'         => $mulai,
-            'selesai'       => $selesai,
-            'now'           => $now,
-            'terlambat_mulai' => $terlambat_mulai // Masukkan ke data
+        if ($this->form_validation->run() === FALSE) {
+            $errors = array();
+            // Ambil semua error
+            foreach ($this->form_validation->get_error_array() as $key => $value) {
+                if (!empty($value)) $errors[$key] = $value;
+            }
+            $this->output_json(['status' => false, 'errors' => $errors, 'message' => 'Form tidak valid. Periksa kembali isian Anda.']);
+            return;
+        }
+
+        // Siapkan data untuk disimpan
+        $data_ujian = [
+            'nama_ujian'        => $this->input->post('nama_ujian', true),
+            'id_jenjang_target' => $this->input->post('id_jenjang_target', true),
+            'id_tahun_ajaran'   => $this->input->post('id_tahun_ajaran', true),
+            'jumlah_soal'       => $this->input->post('jumlah_soal', true),
+            'waktu'             => $this->input->post('waktu', true),
+            'tgl_mulai'         => $this->convert_datetime_to_db($this->input->post('tgl_mulai', true)),
+            'terlambat'         => $this->convert_datetime_to_db($this->input->post('terlambat', true)),
+            'acak_soal'         => $this->input->post('acak_soal', true),
+            'acak_opsi'         => $this->input->post('acak_opsi', true),
+            'aktif'             => $this->input->post('aktif', true),
+            'token'             => strtoupper(random_string('alnum', 6))
         ];
-        $this->load->view('_templates/topnav/_header.php', $data);
-        $this->load->view('ujian/token', $data); // Pastikan $data dilewatkan
-        $this->load->view('_templates/topnav/_footer.php');
-    }
 
-    public function cektoken()
-    {
-        $id = $this->input->post('id_ujian', true);
-        $token = $this->input->post('token', true);
-        $cek = $this->ujian->getUjianById($id);
-        
-        $data['status'] = $token === $cek->token ? TRUE : FALSE;
-        $this->output_json($data);
-    }
-
-    public function encrypt()
-    {
-        $id = $this->input->post('id', true);
-        $key = urlencode($this->encryption->encrypt($id));
-        $this->output_json(['key'=>$key]);
-    }
-
-    public function index()
-    {
-        $this->akses_siswa();
-        $key = $this->input->get('key', true);
-        $id  = $this->encryption->decrypt(rawurldecode($key));
-        
-        $ujian    = $this->ujian->getUjianById($id);
-        $soal     = $this->ujian->getSoal($id);
-        
-        $siswa    = $this->siswa;
-        $h_ujian  = $this->ujian->HslUjian($id, $siswa->id_siswa);
-    
-        $cek_sudah_ikut = $h_ujian->num_rows();
-
-        if ($cek_sudah_ikut < 1) {
-            $soal_urut_ok   = array();
-            $i = 0;
-            foreach ($soal as $s) {
-                $soal_per = new stdClass();
-                $soal_per->id_soal     = $s->id_soal;
-                $soal_per->soal      = $s->soal;
-                $soal_per->file      = $s->file;
-                $soal_per->tipe_file   = $s->tipe_file;
-                $soal_per->opsi_a      = $s->opsi_a;
-                $soal_per->opsi_b      = $s->opsi_b;
-                $soal_per->opsi_c      = $s->opsi_c;
-                $soal_per->opsi_d      = $s->opsi_d;
-                $soal_per->opsi_e      = $s->opsi_e;
-                $soal_per->jawaban     = $s->jawaban;
-                $soal_urut_ok[$i]      = $soal_per;
-                $i++;
-            }
-            $soal_urut_ok   = $soal_urut_ok;
-            $list_id_soal = "";
-            $list_jw_soal   = "";
-            if (!empty($soal)) {
-                foreach ($soal as $d) {
-                    $list_id_soal .= $d->id_soal.",";
-                    $list_jw_soal .= $d->id_soal."::N::N,"; // Inisialisasi dengan jawaban kosong dan tidak ragu
-                }
-            }
-            $list_id_soal   = substr($list_id_soal, 0, -1);
-            $list_jw_soal   = substr($list_jw_soal, 0, -1);
-            $waktu_selesai  = date('Y-m-d H:i:s', strtotime("+{$ujian->waktu} minute"));
-            $time_mulai   = date('Y-m-d H:i:s');
-
-            $input = [
-                'ujian_id'      => $id,
-                'siswa_id'      => $siswa->id_siswa,
-                'list_soal'     => $list_id_soal,
-                'list_jawaban'  => $list_jw_soal,
-                'jml_benar'     => 0,
-                'nilai'         => 0,
-                'nilai_bobot'   => 0,
-                'tgl_mulai'     => $time_mulai,
-                'tgl_selesai'   => $waktu_selesai,
-                'status'        => 'unfinished'
-            ];
-            $this->master->create('h_ujian', $input);
-
-            redirect('ujian/?key='.urlencode($key), 'location', 301);
+        if ($this->is_admin) {
+            $data_ujian['mapel_id'] = $mapel_id_input;
+            // Jika admin bisa menunjuk Guru PJ lain untuk ujian ini
+            // $data_ujian['guru_id'] = $this->input->post('guru_id_assign', true); 
+            // Jika tidak, guru_id bisa ID admin sendiri (jika admin juga terdaftar sbg guru) atau ID PJ default.
+            // Untuk sekarang, asumsikan Admin menunjuk dirinya jika perlu (perlu entri guru untuk admin).
+            $admin_guru_data = $this->db->get_where('guru', ['nip' => $this->ion_auth->user()->row()->username])->row();
+             $data_ujian['guru_id'] = $admin_guru_data ? $admin_guru_data->id_guru : $this->guru_data->id_guru; // Fallback ke $this->guru_data jika admin adalah guru aktif juga
+        } else { // PJ Soal
+            $data_ujian['mapel_id'] = $this->pj_mapel_data->id_mapel;
+            $data_ujian['guru_id']  = $this->guru_data->id_guru;
         }
-        
-        $q_soal = $h_ujian->row();
-        
-        $urut_soal      = explode(",", $q_soal->list_jawaban);
-        $soal_urut_ok = array();
-        for ($i = 0; $i < sizeof($urut_soal); $i++) {
-            $pc_urut_soal = explode(":",$urut_soal[$i]);
+
+        try {
+            $this->db->trans_start();
             
-            // Perbaikan utama di sini: Pastikan index 0 ada (id_soal)
-            if (isset($pc_urut_soal[0]) && !empty($pc_urut_soal[0])) {
-                $jawaban_from_db = isset($pc_urut_soal[1]) ? $pc_urut_soal[1] : '';
-                $pc_urut_soal1  = empty($jawaban_from_db) ? "''" : "'{$jawaban_from_db}'";
-
-                $ambil_soal   = $this->ujian->ambilSoal($pc_urut_soal1, $pc_urut_soal[0]);
-                
-                if ($ambil_soal) { // Hanya tambahkan jika ambilSoal mengembalikan objek
-                    $soal_urut_ok[] = $ambil_soal;
-                } else {
-                    // Opsional: Log error jika soal tidak ditemukan di tb_soal
-                    log_message('error', 'Soal dengan ID ' . $pc_urut_soal[0] . ' tidak ditemukan di tb_soal untuk ujian ID: ' . $id);
-                }
-            } else {
-                // Opsional: Log error jika format list_jawaban tidak valid (id_soal hilang)
-                log_message('error', 'Format list_jawaban tidak valid: ' . $urut_soal[$i] . ' untuk ujian ID: ' . $id);
+            // Insert ujian
+            $id_ujian = $this->ujian_m->create_ujian($data_ujian);
+            
+            if (!$id_ujian) {
+                throw new Exception('Gagal menyimpan data ujian.');
             }
-        }
 
-        $detail_tes = $q_soal;
-        // $soal_urut_ok = $soal_urut_ok; // Baris ini redundan, bisa dihapus
+            // Assign soal ke ujian
+            $this->_assign_soal_to_ujian($id_ujian);
 
-        $pc_list_jawaban = explode(",", $detail_tes->list_jawaban);
-        $arr_jawab = array();
-        foreach ($pc_list_jawaban as $v) {
-            $pc_v   = explode(":", $v);
-            $idx    = $pc_v[0];
-            $val    = isset($pc_v[1]) ? $pc_v[1] : '';
-            $rg     = isset($pc_v[2]) ? $pc_v[2] : 'N';
+            $this->db->trans_complete();
 
-            $arr_jawab[$idx] = array("j"=>$val,"r"=>$rg);
-        }
-
-        $arr_opsi = array("a","b","c","d","e");
-        $html = '';
-        $no = 1;
-        if (!empty($soal_urut_ok)) {
-            foreach ($soal_urut_ok as $s) {
-                $path = 'uploads/bank_soal/';
-                // Pastikan $s adalah objek dan memiliki id_soal
-                $vrg = (is_object($s) && isset($s->id_soal) && isset($arr_jawab[$s->id_soal]["r"])) ? $arr_jawab[$s->id_soal]["r"] : "N";
-                $html .= '<input type="hidden" name="id_soal_'.$no.'" value="'.(is_object($s) && isset($s->id_soal) ? $s->id_soal : '').'">'; // Tambahkan pengecekan
-                $html .= '<input type="hidden" name="rg_'.$no.'" id="rg_'.$no.'" value="'.$vrg.'">';
-                $html .= '<div class="step" id="widget_'.$no.'">';
-
-                $html .= '<div class="text-center"><div class="w-25">'.(is_object($s) && isset($s->file) ? tampil_media($path.$s->file) : '').'</div></div>'.(is_object($s) && isset($s->soal) ? $s->soal : '').'<div class="funkyradio">';
-                for ($j = 0; $j < $this->config->item('jml_opsi'); $j++) {
-                    $opsi     = "opsi_".$arr_opsi[$j];
-                    $file     = "file_".$arr_opsi[$j];
-                    
-                    $checked    = (is_object($s) && isset($s->id_soal) && isset($arr_jawab[$s->id_soal]["j"]) && $arr_jawab[$s->id_soal]["j"] == strtoupper($arr_opsi[$j])) ? "checked" : "";
-                    
-                    $pilihan_opsi   = (is_object($s) && isset($s->$opsi) && !empty($s->$opsi)) ? $s->$opsi : "";
-                    $tampil_media_opsi = (is_object($s) && isset($s->$file) && !empty($s->$file) && file_exists(FCPATH.$path.$s->$file)) ? tampil_media($path.$s->$file) : "";
-                    
-                    $html .= '<div class="funkyradio-success" onclick="return simpan_sementara();">
-                        <input type="radio" id="opsi_'.strtolower($arr_opsi[$j]).'_'.(is_object($s) && isset($s->id_soal) ? $s->id_soal : '').'" name="opsi_'.$no.'" value="'.strtoupper($arr_opsi[$j]).'" '.$checked.'> <label for="opsi_'.strtolower($arr_opsi[$j]).'_'.(is_object($s) && isset($s->id_soal) ? $s->id_soal : '').'"><div class="huruf_opsi">'.$arr_opsi[$j].'</div> <p>'.$pilihan_opsi.'</p><div class="w-25">'.$tampil_media_opsi.'</div></label></div>';
-                }
-                $html .= '</div></div>';
-                $no++;
+            if ($this->db->trans_status() === FALSE) {
+                throw new Exception('Gagal menyimpan data ujian dan soal.');
             }
+
+            $this->output_json([
+                'status' => true,
+                'message' => 'Data ujian berhasil disimpan.'
+            ]);
+            return;
+
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            $this->output_json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    
+    /**
+     * Menampilkan form edit ujian.
+     * URL: /ujian/edit/{id_ujian}
+     */
+    public function edit($id_ujian = null)
+    {
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki hak untuk mengedit ujian ini.');
+            redirect('ujian');
         }
 
-        $id_tes = $this->encryption->encrypt($detail_tes->id);
+        $ujian = $this->ujian_m->get_ujian_by_id($id_ujian);
+        if (!$ujian) {
+            show_404(); return;
+        }
 
         $data = [
-            'user'    => $this->user,
-            'siswa'   => $this->siswa,
-            'judul'   => 'Ujian',
-            'subjudul'      => 'Lembar Ujian',
-            'soal'    => $detail_tes,
-            'no'    => $no,
-            'html'    => $html,
-            'id_tes'  => $id_tes
+            'user'          => $this->ion_auth->user()->row(),
+            'judul'         => 'Kelola Ujian',
+            'subjudul'      => 'Edit Ujian & Kelola Soal',
+            'ujian'         => $ujian, // Data ujian yang akan diedit
+            'is_admin'      => $this->is_admin,
+            'guru_data'     => $this->guru_data,
+            'pj_mapel_data' => $this->pj_mapel_data, 
+            'all_jenjang_options'   => $this->master->getAllJenjang(),
+            'all_tahun_ajaran_options' => $this->master->getAllTahunAjaran(),
         ];
-        $this->load->view('_templates/topnav/_header.php', $data);
-        $this->load->view('ujian/sheet');
-        $this->load->view('_templates/topnav/_footer.php');
-    }
-
-    public function simpan_satu()
-    {
-        $id_tes = $this->input->post('id', true);
-        $id_tes = $this->encryption->decrypt($id_tes);
         
-        $input  = $this->input->post(null, true);
-        $list_jawaban   = "";
-        for ($i = 1; $i <= $input['jml_soal']; $i++) {
-            $_tjawab   = "opsi_".$i;
-            $_tidsoal    = "id_soal_".$i;
-            $_ragu     = "rg_".$i;
-
-            $jawaban_    = empty($input[$_tjawab]) ? "" : $input[$_tjawab];
-            $ragu_ragu_ = empty($input[$_ragu]) ? "N" : $input[$_ragu];
-
-            $list_jawaban .= $input[$_tidsoal].":".$jawaban_.":".$ragu_ragu_.",";
+        if ($this->is_admin) {
+            $data['all_mapel_options'] = $this->master->getAllMapel();
         }
-        $list_jawaban = substr($list_jawaban, 0, -1);
-        $d_simpan = [
-            'list_jawaban' => $list_jawaban
-        ];
-        
-        $this->master->update('h_ujian', $d_simpan, 'id', $id_tes);
-        $this->output_json(['status'=>true]);
+
+        $this->load->view('_templates/dashboard/_header.php', $data);
+        $this->load->view('ujian/edit', $data); // View untuk edit ujian
+        $this->load->view('_templates/dashboard/_footer.php');
     }
 
-    public function simpan_akhir()
+    /**
+     * Memproses update data ujian.
+     * URL: /ujian/update/{id_ujian} (Method POST)
+     */
+    public function update($id_ujian = null)
     {
-        $id_tes = $this->input->post('id', true);
-        $id_tes = $this->encryption->decrypt($id_tes);
+        if (!$id_ujian) redirect('ujian');
+        
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->session->set_flashdata('error', 'Akses ditolak.');
+            redirect('ujian');
+        }
 
-        $list_jawaban = $this->ujian->getJawaban($id_tes);
+        $ujian = $this->ujian_m->get_ujian_by_id($id_ujian);
+        if (!$ujian) {
+            $this->session->set_flashdata('error', 'Data ujian tidak ditemukan.');
+            redirect('ujian');
+        }
 
-        $pc_jawaban = explode(",", $list_jawaban);
+        $data = $this->input->post(null, true);
+        
+        // Validasi form
+        $this->form_validation->set_rules('nama_ujian', 'Nama Ujian', 'required');
+        $this->form_validation->set_rules('id_jenjang_target', 'Jenjang Target', 'required|integer');
+        $this->form_validation->set_rules('id_tahun_ajaran', 'Tahun Ajaran', 'required|integer');
+        $this->form_validation->set_rules('jumlah_soal', 'Jumlah Soal Ditampilkan', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('waktu', 'Waktu Ujian (menit)', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('tgl_mulai', 'Tanggal Mulai', 'required');
+        $this->form_validation->set_rules('terlambat', 'Batas Akhir Masuk', 'required');
+        $this->form_validation->set_rules('acak_soal', 'Acak Soal', 'required|in_list[Y,N]');
+        $this->form_validation->set_rules('acak_opsi', 'Acak Opsi', 'required|in_list[Y,N]');
+        $this->form_validation->set_rules('aktif', 'Status Aktif', 'required|in_list[Y,N]');
 
-        $jumlah_benar   = 0;
-        $jumlah_salah   = 0;
-        $total_bobot_yang_diperoleh = 0; // Akumulasi bobot dari soal yang dijawab BENAR
-        $total_bobot_maksimal_ujian = 0; // Akumulasi bobot dari SEMUA soal dalam ujian
-        $jumlah_soal_dalam_ujian = sizeof($pc_jawaban); // Ini adalah jumlah soal yang terdaftar dalam list_jawaban
+        if ($this->form_validation->run() === FALSE) {
+            $this->output_json(['status' => false, 'errors' => $this->form_validation->error_array()]);
+            return;
+        }
 
-        foreach ($pc_jawaban as $jwb) {
-            $pc_dt    = explode(":", $jwb);
-            $id_soal  = $pc_dt[0];
-            $jawaban  = isset($pc_dt[1]) ? $pc_dt[1] : '';
-            $ragu     = isset($pc_dt[2]) ? $pc_dt[2] : 'N';
+        // Start transaction
+        $this->db->trans_start();
 
-            $cek_jwb  = $this->soal->getSoalById($id_soal);
-            if ($cek_jwb) {
-                // Akumulasi total bobot maksimal dari semua soal
-                $total_bobot_maksimal_ujian += $cek_jwb->bobot;
+        try {
+            // Update data ujian
+            $update_data = [
+                'nama_ujian' => $data['nama_ujian'],
+                'id_jenjang_target' => $data['id_jenjang_target'],
+                'id_tahun_ajaran' => $data['id_tahun_ajaran'],
+                'jumlah_soal' => $data['jumlah_soal'],
+                'waktu' => $data['waktu'],
+                'tgl_mulai' => $data['tgl_mulai'],
+                'terlambat' => $data['terlambat'],
+                'acak_soal' => $data['acak_soal'],
+                'acak_opsi' => $data['acak_opsi'],
+                'aktif' => $data['aktif']
+            ];
 
-                if (!empty($jawaban) && $jawaban == $cek_jwb->jawaban) {
-                    $jumlah_benar++;
-                    // Akumulasi total bobot yang diperoleh dari jawaban benar
-                    $total_bobot_yang_diperoleh += $cek_jwb->bobot;
-                } else {
-                    $jumlah_salah++;
-                }
-            } else {
-                log_message('error', 'Soal dengan ID ' . $id_soal . ' tidak ditemukan di tb_soal saat menghitung nilai ujian ID: ' . $id_tes);
+            // Update ujian
+            $this->ujian_m->update_ujian($id_ujian, $update_data);
+
+            // Reset dan tambahkan soal baru secara otomatis
+            $this->_assign_soal_to_ujian($id_ujian);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === FALSE) {
+                throw new Exception('Gagal memperbarui data ujian.');
+            }
+
+            $this->output_json([
+                'status' => true,
+                'message' => 'Data ujian berhasil diperbarui.'
+            ]);
+
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            $this->output_json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    private function _assign_soal_to_ujian($id_ujian)
+    {
+        $ujian = $this->ujian_m->get_ujian_by_id($id_ujian);
+        if (!$ujian) {
+            throw new Exception('Data ujian tidak ditemukan.');
+        }
+
+        // Debug log
+        log_message('debug', 'Assigning soal to ujian ID: ' . $id_ujian);
+        log_message('debug', 'Mapel ID: ' . $ujian->mapel_id . ', Jenjang ID: ' . $ujian->id_jenjang_target);
+
+        // Cek jumlah soal tersedia
+        $total_available = $this->soal_m->count_available_soal(
+            $ujian->mapel_id,
+            $ujian->id_jenjang_target
+        );
+
+        if ($total_available < $ujian->jumlah_soal) {
+            throw new Exception(
+                'Jumlah soal yang tersedia (' . $total_available . ') ' .
+                'kurang dari jumlah soal yang dibutuhkan (' . $ujian->jumlah_soal . ').'
+            );
+        }
+
+        // Hapus soal yang sudah ada
+        $this->db->delete('d_ujian_soal', ['id_ujian' => $id_ujian]);
+
+        // Ambil soal dari bank soal
+        $available_soal = $this->soal_m->get_soal_by_mapel_jenjang(
+            $ujian->mapel_id,
+            $ujian->id_jenjang_target,
+            $ujian->jumlah_soal
+        );
+
+        // Debug log
+        log_message('debug', 'Soal retrieved: ' . count($available_soal));
+
+        if (empty($available_soal)) {
+            throw new Exception('Tidak ada soal yang tersedia untuk kriteria yang dipilih.');
+        }
+
+        // Insert soal ke d_ujian_soal
+        $batch_data = [];
+        foreach ($available_soal as $index => $soal) {
+            $batch_data[] = [
+                'id_ujian' => $id_ujian,
+                'id_soal' => $soal->id_soal,
+                'nomor_urut' => $index + 1
+            ];
+        }
+
+        if (!empty($batch_data)) {
+            $insert_result = $this->db->insert_batch('d_ujian_soal', $batch_data);
+            
+            // Debug log
+            log_message('debug', 'Insert batch result: ' . ($insert_result ? 'success' : 'failed'));
+            log_message('debug', 'Last query: ' . $this->db->last_query());
+            
+            if (!$insert_result) {
+                throw new Exception('Gagal menyimpan soal ke ujian.');
             }
         }
 
-        // Perhitungan nilai berdasarkan jumlah soal benar (jika ingin ditampilkan)
-        $nilai_berdasarkan_jumlah = ($jumlah_soal_dalam_ujian > 0) ? ($jumlah_benar / $jumlah_soal_dalam_ujian) * 100 : 0;
+        return true;
+    }
 
-        // Perhitungan nilai berdasarkan bobot soal
-        $nilai_berdasarkan_bobot = 0;
-        if ($total_bobot_maksimal_ujian > 0) {
-            $nilai_berdasarkan_bobot = ($total_bobot_yang_diperoleh / $total_bobot_maksimal_ujian) * 100;
+    /**
+     * Menghapus data ujian (bisa bulk).
+     * URL: /ujian/delete (Method POST)
+     */
+    public function delete()
+    {
+        $response = ['status' => false, 'message' => ''];
+        
+        if (!$this->input->is_ajax_request()) {
+            $response['message'] = 'Invalid request!';
+            exit(json_encode($response));
         }
 
-        $d_update = [
-            'jml_benar'   => $jumlah_benar, // Ini akan menyimpan jumlah_benar yang terhitung
-            'nilai'       => number_format(floor($nilai_berdasarkan_bobot), 0),
-            'nilai_bobot' => number_format(floor($nilai_berdasarkan_bobot), 0),
-            'status'      => 'completed'
-        ];
+        // Ambil data ID yang akan dihapus dari POST
+        $checked = $this->input->post('checked', true);
+        
+        if (empty($checked)) {
+            $response['message'] = 'Tidak ada data yang dipilih untuk dihapus!';
+            exit(json_encode($response));
+        }
 
-        $this->master->update('h_ujian', $d_update, 'id', $id_tes);
-        $this->output_json(['status'=>TRUE, 'data'=>$d_update, 'id'=>$id_tes]);
+        try {
+            // Mulai transaksi
+            $this->db->trans_start();
+            
+            // Hapus dari tabel terkait terlebih dahulu
+            $this->db->where_in('id_ujian', $checked);
+            $this->db->delete('d_ujian_soal');
+            
+            // Kemudian hapus dari tabel utama
+            $this->db->where_in('id_ujian', $checked);
+            $delete = $this->db->delete('m_ujian');
+            
+            // Selesaikan transaksi
+            $this->db->trans_complete();
+            
+            if ($this->db->trans_status() === FALSE) {
+                throw new Exception('Gagal menghapus data ujian!');
+            }
+            
+            $response['status'] = true;
+            $response['message'] = 'Data berhasil dihapus!';
+            
+        } catch (Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+        
+        exit(json_encode($response));
     }
+
+    /**
+     * Refresh token ujian.
+     * URL: /ujian/refresh_token/{id_ujian}
+     */
+    public function refresh_token($id_ujian)
+    {
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.', 'new_token' => '']);
+            return;
+        }
+        $new_token = strtoupper(random_string('alnum', 5));
+        if ($this->ujian_m->update_ujian($id_ujian, ['token' => $new_token])) {
+            $this->output_json(['status' => true, 'message' => 'Token berhasil diperbarui.', 'new_token' => $new_token]);
+        } else {
+            $this->output_json(['status' => false, 'message' => 'Gagal memperbarui token.', 'new_token' => '']);
+        }
+    }
+
+    /**
+     * Helper function untuk konversi datetime dari input form ke format DB.
+     */
+    private function convert_datetime_to_db($datetime_str) {
+        if (empty($datetime_str)) return null;
+        try {
+            // Input format dari <input type="datetime-local"> adalah YYYY-MM-DDTHH:MM
+            $dt = new DateTime($datetime_str);
+            return $dt->format('Y-m-d H:i:s');
+        } catch (Exception $e) {
+            return null; // Atau handle error jika format tidak valid
+        }
+    }
+
+    // --- Method untuk Manajemen Soal dalam Ujian (via AJAX, akan dikembangkan) ---
+    
+    /**
+     * AJAX: Mengambil daftar soal dari bank soal yang relevan untuk ditambahkan ke ujian.
+     * Filter berdasarkan mapel_id dan id_jenjang_target dari ujian.
+     * Juga mengecualikan soal yang sudah ada di ujian ini.
+     */
+    public function get_soal_bank_for_ujian($id_ujian) {
+        // Validasi hak akses dan $id_ujian
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.', 'data' => []]);
+            return;
+        }
+        $ujian = $this->ujian_m->get_ujian_by_id($id_ujian);
+        if (!$ujian) {
+            $this->output_json(['status' => false, 'message' => 'Ujian tidak ditemukan.', 'data' => []]);
+            return;
+        }
+
+        $soal_sudah_ada_ids = $this->ujian_m->get_assigned_soal_ids($id_ujian); // Perlu method ini di model
+        $soal_bank = $this->ujian_m->get_soal_bank_for_ujian($ujian->mapel_id, $ujian->id_jenjang_target, $soal_sudah_ada_ids);
+        
+        $this->output_json(['status' => true, 'data' => $soal_bank]);
+    }
+
+    /**
+     * AJAX: Menyimpan soal-soal yang dipilih dari bank soal ke dalam ujian (d_ujian_soal).
+     */
+    public function assign_soal_to_ujian() {
+        $id_ujian = $this->input->post('id_ujian', true);
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.']);
+            return;
+        }
+
+        $soal_ids = $this->input->post('soal_ids', true); // Array ID soal dari bank
+        if (empty($id_ujian) || empty($soal_ids) || !is_array($soal_ids)) {
+            $this->output_json(['status' => false, 'message' => 'Data tidak lengkap.']);
+            return;
+        }
+
+        $ujian = $this->ujian_m->get_ujian_by_id($id_ujian);
+        if (!$ujian) {
+            $this->output_json(['status' => false, 'message' => 'Ujian tidak ditemukan.']);
+            return;
+        }
+
+        // Cek apakah jumlah soal yang ditambahkan + yang sudah ada tidak melebihi $ujian->jumlah_soal
+        // (Ini opsional, validasi jumlah soal bisa saat ujian akan diaktifkan)
+
+        $data_to_insert = [];
+        $nomor_urut_terakhir = $this->ujian_m->get_last_nomor_urut($id_ujian); // Perlu method ini di model
+
+        foreach ($soal_ids as $id_soal) {
+            // Cek apakah soal ini valid (mapel & jenjang sesuai) - sebaiknya sudah difilter di get_soal_bank_for_ujian
+            // Cek apakah soal belum ada di ujian ini
+            if (!$this->ujian_m->is_soal_in_ujian($id_ujian, $id_soal)) { // Perlu method ini
+                $nomor_urut_terakhir++;
+                $data_to_insert[] = [
+                    'id_ujian' => $id_ujian,
+                    'id_soal'  => $id_soal,
+                    'nomor_urut' => $nomor_urut_terakhir
+                ];
+            }
+        }
+
+        if (!empty($data_to_insert)) {
+            if ($this->ujian_m->assign_batch_soal_to_ujian($data_to_insert)) { // Model insert_batch
+                $current_total_soal = $this->ujian_m->count_soal_in_ujian($id_ujian);
+                $this->output_json(['status' => true, 'message' => count($data_to_insert) . ' soal berhasil ditambahkan.', 'total_soal_di_ujian' => $current_total_soal]);
+            } else {
+                $this->output_json(['status' => false, 'message' => 'Gagal menambahkan soal ke ujian.']);
+            }
+        } else {
+            $this->output_json(['status' => false, 'message' => 'Tidak ada soal baru untuk ditambahkan atau soal sudah ada.']);
+        }
+    }
+
+    /**
+     * AJAX: Mengambil daftar soal yang sudah ada di ujian.
+     */
+    public function get_assigned_soal($id_ujian){
+        // Tidak perlu cek _can_manage_ujian jika guru non-PJ juga boleh lihat ini di halaman detail ujian
+        // Namun, jika ini khusus untuk halaman edit, maka perlu.
+        // Untuk sekarang asumsikan ini untuk halaman edit.
+         if (!$this->_can_manage_ujian($id_ujian) && !$this->is_admin) { // Admin selalu bisa lihat
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.', 'data' => []]);
+            return;
+        }
+
+        $assigned_soal = $this->ujian_m->get_assigned_soal_for_ujian($id_ujian);
+        $this->output_json(['status' => true, 'data' => $assigned_soal]);
+    }
+
+    /**
+     * AJAX: Menghapus soal dari ujian (dari tabel d_ujian_soal).
+     */
+    public function remove_soal_from_ujian() {
+        $id_ujian = $this->input->post('id_ujian', true);
+        $id_d_ujian_soal = $this->input->post('id_d_ujian_soal', true); // PK dari d_ujian_soal
+
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.']);
+            return;
+        }
+        if (empty($id_d_ujian_soal)) {
+            $this->output_json(['status' => false, 'message' => 'ID soal ujian tidak valid.']);
+            return;
+        }
+
+        if ($this->ujian_m->remove_soal_from_ujian($id_ujian, $id_d_ujian_soal)) {
+            // Setelah menghapus, mungkin perlu re-number nomor_urut jika tidak ingin ada gap.
+            // $this->ujian_m->renumber_soal_in_ujian($id_ujian); // Fungsi opsional
+            $current_total_soal = $this->ujian_m->count_soal_in_ujian($id_ujian);
+            $this->output_json(['status' => true, 'message' => 'Soal berhasil dihapus dari ujian.', 'total_soal_di_ujian' => $current_total_soal]);
+        } else {
+            $this->output_json(['status' => false, 'message' => 'Gagal menghapus soal dari ujian.']);
+        }
+    }
+
+    /**
+     * AJAX: Mengupdate urutan soal dalam ujian.
+     */
+    public function update_soal_order() {
+        $id_ujian = $this->input->post('id_ujian', true);
+        if (!$this->_can_manage_ujian($id_ujian)) {
+            $this->output_json(['status' => false, 'message' => 'Akses ditolak.']);
+            return;
+        }
+        // Data urutan soal, misal: [{id_d_ujian_soal: 1, nomor_urut: 1}, {id_d_ujian_soal: 5, nomor_urut: 2}, ...]
+        $soal_orders = $this->input->post('soal_orders', true); 
+        if (empty($id_ujian) || empty($soal_orders) || !is_array($soal_orders)) {
+            $this->output_json(['status' => false, 'message' => 'Data urutan tidak valid.']);
+            return;
+        }
+
+        if ($this->ujian_m->update_soal_order_in_ujian($soal_orders)) { // Model pakai update_batch
+            $this->output_json(['status' => true, 'message' => 'Urutan soal berhasil diperbarui.']);
+        } else {
+            $this->output_json(['status' => false, 'message' => 'Gagal memperbarui urutan soal.']);
+        }
+    }
+
 }

@@ -233,7 +233,7 @@ $ta_aktif = $tahun_ajaran_aktif_info ?? null;
     <div class="row">
         <div class="col-lg-12" style="margin-bottom:15px;">
             <div class="callout callout-info">
-                <h3>Selamat Datang, <?= htmlspecialchars($user->first_name ?? $user->username); ?>!</h3>
+                <h4>Selamat Datang, <?= htmlspecialchars($user->first_name ?? $user->username); ?>👋</h4>
                 <p>Tahun Ajaran Aktif Saat Ini: 
                     <strong>
                     <?php 
@@ -256,9 +256,9 @@ $ta_aktif = $tahun_ajaran_aktif_info ?? null;
                 <table class="table table-hover">
                     <tr><th width="40%">NISN</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nisn ?? '-'); ?></td></tr>
                     <tr><th>Nama</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nama_siswa ?? '-'); ?></td></tr>
-                    <tr><th>Jenis Kelamin</th><td>: <?= ($siswa_dashboard_info->jenis_kelamin ?? '') === 'L' ? "Laki-laki" : (($siswa_dashboard_info->jenis_kelamin ?? '') === 'P' ? "Perempuan" : "-") ;?></td></tr>
+                    <tr><th>Jenis Kelamin</th><td>: <?= ($siswa_dashboard_info->jenis_kelamin ?? '') === 'Laki-laki' ? "Laki-laki" : (($siswa_dashboard_info->jenis_kelamin ?? '') === 'Perempuan' ? "Perempuan" : "-") ;?></td></tr>
                     <tr><th>Tahun Ajaran Saat Ini</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nama_tahun_ajaran ?? '-'); ?></td></tr>
-                    <tr><th>Kelas Saat Ini</th><td>: <?= htmlspecialchars( (isset($siswa_dashboard_info->nama_jenjang) ? $siswa_dashboard_info->nama_jenjang . ' - ' : '') . ($siswa_dashboard_info->nama_kelas ?? '-')) ?></td></tr>
+                    <tr><th>Kelas Saat Ini</th><td>: <?= htmlspecialchars( (isset($siswa_dashboard_info->nama_jenjang) ? $siswa_dashboard_info->nama_jenjang . ' ' : '') . ($siswa_dashboard_info->nama_kelas ?? '-')) ?></td></tr>
                 </table>
             </div>
         </div>

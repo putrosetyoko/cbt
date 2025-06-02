@@ -64,6 +64,22 @@
     .list-group-item:last-child {
         border-bottom: none;
     }
+
+    #sortable-soal tr {
+    cursor: move;
+}
+
+.table-responsive {
+    margin-bottom: 15px;
+}
+
+#bank-soal-tersedia-container,
+#soal-di-ujian-container {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
 </style>
 </head>
 
