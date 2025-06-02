@@ -70,6 +70,12 @@ class Master_model extends CI_Model
         return $this->db->update('tahun_ajaran', ['status' => 'tidak_aktif']);
     }
 
+    public function getTahunAjaranAktif()
+    {
+        $this->db->where('status', 'aktif');
+        return $this->db->get('tahun_ajaran')->row();
+    }
+
     /**
      * Data Jenjang
      */
@@ -227,6 +233,45 @@ class Master_model extends CI_Model
             $query = $this->db->get_where('mapel', array('id_mapel'=>$id))->row();
         }
         return $query;
+    }
+
+    public function getMapelPJByGuruTahun($guru_id, $id_tahun_ajaran)
+    {
+        if (empty($guru_id) || empty($id_tahun_ajaran)) {
+            return null;
+        }
+
+        $this->db->select('m.id_mapel, m.nama_mapel, pjsa.keterangan AS keterangan_pj');
+        $this->db->from('penanggung_jawab_soal_ajaran pjsa');
+        $this->db->join('mapel m', 'pjsa.mapel_id = m.id_mapel');
+        $this->db->where('pjsa.guru_id', $guru_id);
+        $this->db->where('pjsa.id_tahun_ajaran', $id_tahun_ajaran);
+        return $this->db->get()->row(); // Mengembalikan satu baris data mapel PJ
+    }
+
+    public function getMapelDiajarGuru($guru_id, $id_tahun_ajaran)
+    {
+        if (empty($guru_id) || empty($id_tahun_ajaran)) {
+            log_message('debug', 'Master_model (getMapelDiajarGuru) - Guru ID ('.$guru_id.') atau TA ID ('.$id_tahun_ajaran.') kosong.');
+            return []; // Kembalikan array kosong jika parameter tidak lengkap
+        }
+
+        $this->db->select('DISTINCT(gmka.mapel_id)'); // Hanya pilih kolom mapel_id dari tabel gmka
+        $this->db->from('guru_mapel_kelas_ajaran gmka');
+        // Tidak perlu join ke tabel mapel jika hanya butuh ID-nya untuk perbandingan
+        $this->db->where('gmka.guru_id', $guru_id);
+        $this->db->where('gmka.id_tahun_ajaran', $id_tahun_ajaran);
+        $query = $this->db->get();
+
+        log_message('debug', 'Master_model (getMapelDiajarGuru) - Last Query: ' . $this->db->last_query());
+
+        $result_objects = $query->result(); // Ini menghasilkan array objek: [{mapel_id:val1}, {mapel_id:val2}]
+        
+        // Ubah menjadi array ID sederhana (flat array): [val1, val2]
+        $flat_mapel_ids = array_column($result_objects, 'mapel_id');
+        
+        log_message('debug', 'Master_model (getMapelDiajarGuru) - GuruID: '.$guru_id.', TA_ID: '.$id_tahun_ajaran.', Returned flat_mapel_ids: '.print_r($flat_mapel_ids, true));
+        return $flat_mapel_ids;
     }
 
     /**
@@ -562,4 +607,6 @@ class Master_model extends CI_Model
         }
         return $available_mapels;
     }
+
+    
 }

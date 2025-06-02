@@ -236,41 +236,42 @@ class Guru extends CI_Controller
 
         if (empty($data)) {
             $response['msg'] = 'Gagal Aktif! Data Guru dengan ID ' . $id_guru . ' tidak ditemukan.';
-            return $response; // Mengembalikan array respons
+            return $response;
         }
 
-        $nama = explode(' ', $data->nama);
+        $nama = explode(' ', trim($data->nama_guru)); // Trim untuk menghilangkan whitespace di awal dan akhir
         $first_name = $nama[0];
-        $last_name = end($nama);
+        
+        if (count($nama) > 1) {
+            // Gabungkan sisa nama menjadi last_name
+            $last_name = implode(' ', array_slice($nama, 1));
+        } else {
+            $last_name = ''; // Jika hanya satu kata, last_name kosong
+        }
 
         $username = $data->email;
         $password = $data->nip;
         $email = $data->email;
 
+        // Tambahkan data untuk proses aktivasi user
         $additional_data = [
-            'first_name'    => $first_name,
-            'last_name'     => $last_name,
-            // Anda bisa menambahkan kolom lain yang dibutuhkan Ion Auth di sini,
-            // seperti 'phone', 'company', dll.
+            'first_name' => $first_name,
+            'last_name'  => $last_name,
         ];
-        $group = array('2'); // Asumsi '2' adalah group ID untuk Guru
 
-        if ($this->ion_auth->username_check($username)) {
-            $response['msg'] = 'Gagal Aktif! Akun ' . $username . ' sudah pernah diaktifkan.';
-        } else if ($this->ion_auth->email_check($email)) {
-            $response['msg'] = 'Gagal Aktif! Email yang digenerate ' . $email . ' sudah pernah diaktifkan.';
+        $group = array('2'); // Sets user to guru.
+
+        // Daftarkan user
+        $register = $this->ion_auth->register($username, $password, $email, $additional_data, $group);
+
+        if ($register) {
+            $response['status'] = true;
+            $response['msg'] = 'Berhasil diaktifkan!';
         } else {
-            // Cek apakah Ion Auth berhasil register user
-            if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
-                $response = [
-                    'status'    => true,
-                    'msg'       => 'User untuk Email ' . $email . ' berhasil diaktifkan. Gunakan NIP sebagai password.',
-                ];
-            } else {
-                $response['msg'] = 'Gagal Aktif! Error saat registrasi Ion Auth: ' . $this->ion_auth->errors();
-            }
+            $response['msg'] = 'Gagal mengaktifkan user: ' . strip_tags($this->ion_auth->errors());
         }
-        return $response; // Mengembalikan array respons
+
+        return $response;
     }
 
 

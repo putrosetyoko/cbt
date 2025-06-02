@@ -1,94 +1,153 @@
+<?php
+$id_mapel_pj = '';
+$nama_mapel_pj = '';
+if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
+    $id_mapel_pj = $mapel_pj->id_mapel;
+    $nama_mapel_pj = $mapel_pj->nama_mapel;
+}
+?>
 <div class="row">
-    <div class="col-sm-12">    
-        <?=form_open_multipart('soal/save', array('id'=>'formsoal'), array('method'=>'add'));?>
+    <div class="col-sm-12">
+        <?=form_open_multipart('soal/save', array('id'=>'formSoal'), array('method'=>'add'));?>
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title"><?=$subjudul?></h3>
+                <h3 class="box-title"><?= htmlspecialchars($subjudul ?? 'Buat Soal Baru'); ?></h3>
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
+                    <a href="<?=base_url('soal')?>" class="btn btn-sm btn-warning btn-flat"><i class="fa fa-arrow-left"></i> Batal</a>
                 </div>
             </div>
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2">
-                        <div class="form-group col-sm-12">
-                            <label>Guru (Mata Pelajaran)</label>
-                            <?php if ($this->ion_auth->is_admin()) : ?>
-                            <select name="guru_id" required="required" id="guru_id" class="select2 form-group" style="width:100% !important">
-                                <option value="" disabled selected>Pilih Guru</option>
-                                <?php foreach ($guru as $d) : ?>
-                                    <option value="<?=$d->id_guru?>:<?=$d->mapel_id?>"><?=$d->nama_guru?> (<?=$d->nama_mapel?>)</option>
-                                <?php endforeach; ?>
-                            </select>
-                            <small class="help-block" style="color: #dc3545"><?=form_error('guru_id')?></small>
-                            <?php else : ?>
-                            <input type="hidden" name="guru_id" value="<?=$guru->id_guru;?>">
-                            <input type="hidden" name="mapel_id" value="<?=$guru->mapel_id;?>">
-                            <input type="text" readonly="readonly" class="form-control" value="<?=$guru->nama_guru; ?> (<?=$guru->nama_mapel; ?>)">
+                        <div class="form-group">
+                            <label for="mapel_id_form">Mata Pelajaran <span class="text-danger">*</span></label>
+                            <?php if ($is_admin) : ?>
+                                <select name="mapel_id" id="mapel_id_form" class="form-control select2" style="width:100% !important" required>
+                                    <option value="">-- Pilih Mata Pelajaran --</option>
+                                    <?php if(isset($all_mapel)): foreach ($all_mapel as $m) : ?>
+                                        <option value="<?=$m->id_mapel?>"><?=htmlspecialchars($m->nama_mapel)?></option>
+                                    <?php endforeach; endif; ?>
+                                </select>
+                            <?php else : // Guru PJ Soal ?>
+                                <input type="hidden" name="mapel_id" value="<?= $id_mapel_pj; ?>">
+                                <input type="text" readonly class="form-control" value="<?= htmlspecialchars($nama_mapel_pj); ?>">
                             <?php endif; ?>
-                        </div>
-                        
-                        <div class="col-sm-12">
-                            <label for="soal" class="control-label">Soal</label>
-                            <div class="form-group">
-                                <input type="file" name="file_soal" class="form-control">
-                                <small class="help-block" style="color: #dc3545"><?=form_error('file_soal')?></small>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="soal" id="soal" class="form-control summernote"><?=set_value('soal')?></textarea>
-                                <small class="help-block" style="color: #dc3545"><?=form_error('soal')?></small>
-                            </div>
-                        </div>
-                        
-                        <!-- 
-                            Membuat perulangan A-E 
-                        -->
-                        <?php
-                        $abjad = ['a', 'b', 'c', 'd', 'e'];
-                        foreach ($abjad as $abj) :
-                            $ABJ = strtoupper($abj); // Abjad Kapital
-                        ?>
-
-                        <div class="col-sm-12">
-                            <label for="file">Jawaban <?= $ABJ; ?></label>
-                            <div class="form-group">
-                                <input type="file" name="file_<?= $abj; ?>" class="form-control">
-                                <small class="help-block" style="color: #dc3545"><?=form_error('file_'.$abj)?></small>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="jawaban_<?= $abj; ?>" id="jawaban_<?= $abj; ?>" class="form-control summernote"><?=set_value('jawaban_a')?></textarea>
-                                <small class="help-block" style="color: #dc3545"><?=form_error('jawaban_'.$abj)?></small>
-                            </div>
+                            <small class="help-block text-danger" id="error_mapel_id"></small>
                         </div>
 
+                        <div class="form-group">
+                            <label for="id_jenjang_form">Jenjang <span class="text-danger">*</span></label>
+                            <select name="id_jenjang" id="id_jenjang_form" class="form-control select2" style="width:100% !important" required>
+                                <option value="">-- Pilih Jenjang --</option>
+                                <?php if(isset($all_jenjang)): foreach ($all_jenjang as $j) : ?>
+                                    <option value="<?=$j->id_jenjang?>"><?=htmlspecialchars($j->nama_jenjang)?></option>
+                                <?php endforeach; endif; ?>
+                            </select>
+                            <small class="help-block text-danger" id="error_id_jenjang"></small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="soal_text_form">Isi Soal <span class="text-danger">*</span></label>
+                            <textarea name="soal" id="soal_text_form" class="form-control summernote" placeholder="Ketik isi soal di sini..."></textarea>
+                            <small class="help-block text-danger" id="error_soal"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file_soal_form">File Pendukung Soal (Gambar/Audio)</label>
+                            <input type="file" name="file_soal" id="file_soal_form" class="form-control">
+                            <small class="help-block">Kosongkan jika tidak ada. Tipe: jpg, png, mp3, mp4. Max: 2MB.</small>
+                            <small class="help-block text-danger" id="error_file_soal"></small>
+                        </div>
+                        <hr>
+
+                        <?php $abjad = ['a', 'b', 'c', 'd', 'e']; foreach ($abjad as $abj) : $ABJ = strtoupper($abj); ?>
+                        <div class="form-group">
+                            <label for="jawaban_<?= $abj; ?>_form">Opsi Jawaban <?= $ABJ; ?> <span class="text-danger">*</span></label>
+                            <textarea name="jawaban_<?= $abj; ?>" id="jawaban_<?= $abj; ?>_form" class="form-control summernote_opsi" placeholder="Isi opsi <?= $ABJ; ?>..."></textarea>
+                            <small class="help-block text-danger" id="error_jawaban_<?= $abj; ?>"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="file_<?= $abj; ?>_form">File Pendukung Opsi <?= $ABJ; ?> (Gambar/Audio)</label>
+                            <input type="file" name="file_<?= $abj; ?>" id="file_<?= $abj; ?>_form" class="form-control">
+                            <small class="help-block">Kosongkan jika tidak ada.</small>
+                            <small class="help-block text-danger" id="error_file_<?= $abj; ?>"></small>
+                        </div>
+                        <hr>
                         <?php endforeach; ?>
 
-                        <div class="form-group col-sm-12">
-                            <label for="jawaban" class="control-label">Kunci Jawaban</label>
-                            <select required="required" name="jawaban" id="jawaban" class="form-control select2" style="width:100%!important">
-                                <option value="" disabled selected>Pilih Kunci Jawaban</option>
+                        <div class="form-group">
+                            <label for="jawaban_kunci_form">Kunci Jawaban <span class="text-danger">*</span></label>
+                            <select required="required" name="jawaban" id="jawaban_kunci_form" class="form-control select2" style="width:100%!important">
+                                <option value="" disabled selected>-- Pilih Kunci Jawaban --</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
                                 <option value="D">D</option>
                                 <option value="E">E</option>
-                            </select>                
-                            <small class="help-block" style="color: #dc3545"><?=form_error('jawaban')?></small>
+                            </select>
+                            <small class="help-block text-danger" id="error_jawaban"></small>
                         </div>
-                        <div class="form-group col-sm-12">
-                            <label for="bobot" class="control-label">Bobot Soal</label>
-                            <input required="required" value="1" type="number" name="bobot" placeholder="Bobot Soal" id="bobot" class="form-control">
-                            <small class="help-block" style="color: #dc3545"><?=form_error('bobot')?></small>
-                        </div>
-                        <div class="form-group pull-right">
-                            <a href="<?=base_url('soal')?>" class="btn btn-flat btn-default"><i class="fa fa-arrow-left"></i> Batal</a>
-                            <button type="submit" id="submit" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan</button>
+
+                        <div class="form-group">
+                            <label for="bobot_form">Bobot Soal <span class="text-danger">*</span></label>
+                            <input required="required" value="1" type="number" name="bobot" placeholder="Bobot Soal" id="bobot_form" class="form-control" min="1">
+                            <small class="help-block text-danger" id="error_bobot"></small>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="col-sm-8 col-sm-offset-2 text-right">
+                    <a href="<?=base_url('soal')?>" class="btn btn-flat btn-warning"><i class="fa fa-arrow-left"></i> Batal</a>
+                    <button type="submit" id="submitBtnSoal" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan Soal</button>
                 </div>
             </div>
         </div>
         <?=form_close();?>
     </div>
 </div>
+
+<script src="<?=base_url()?>assets/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="<?=base_url()?>assets/dist/js/app/soal/add.js"></script>
+<script>
+$(document).ready(function() {
+    if($.fn.select2){ $('.select2').select2({ placeholder: "-- Pilih --", allowClear: true }); }
+    if($.fn.summernote) { 
+        $('.summernote').summernote({
+            height: 150,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']], // Hapus 'picture' jika upload file terpisah
+                ['view', ['fullscreen', 'codeview', 'help']],
+            ],
+            callbacks: {
+                // Jika ingin menangani paste sebagai plain text
+                onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    document.execCommand('insertText', false, bufferText);
+                }
+            }
+        });
+        $('.summernote_opsi').summernote({
+            height: 75,
+            toolbar: [
+                ['font', ['bold', 'underline']],
+                ['insert', ['link']],
+            ],
+            callbacks: {
+                onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    document.execCommand('insertText', false, bufferText);
+                }
+            }
+        });
+    }
+});
+</script>

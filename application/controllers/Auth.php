@@ -9,9 +9,12 @@ class Auth extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->database();
-		$this->load->library('form_validation');
+		$this->load->library(['ion_auth', 'form_validation', 'session']);
 		$this->load->helper(['url', 'language']);
-		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
+		// Baris ini sekarang seharusnya bekerja dengan benar
+		if (isset($this->form_validation)) { // Tambahkan pengecekan untuk lebih aman (opsional)
+			$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
+	}
 		$this->lang->load('auth');
 	}
 
@@ -62,42 +65,76 @@ class Auth extends CI_Controller
     //         echo "Username: " . $username . "<br>";
     //         echo "Password: " . $password . "<br>";
     //         echo "Email: " . $email . "<br>";
-    //         echo "Silakan login dan SEGERA HAPUS atau amankan fungsi ini ('buat_admin_darurat') dari controller Auth.php!";
+    //         echo "Silakan login dan SEGERA HAPUS atau amankan fusngsi ini ('buat_admin_darurat') dari controller Auth.php!";
     //     } else {
     //         echo "Gagal membuat akun admin baru. Error: " . $this->ion_auth->errors();
     //     }
     // }
 	
 
-	public function index()
-	{
-		if ($this->ion_auth->logged_in()){
-			$user_id = $this->ion_auth->user()->row()->id; // Get User ID
-			$group = $this->ion_auth->get_users_groups($user_id)->row()->name; // Get user group
-			redirect('dashboard');
-		}
-		$this->data['identity'] = [
-			'name' => 'identity',
-			'id' => 'identity',
-			'type' => 'text',
-			'placeholder' => 'Email',
-			'autofocus'	=> 'autofocus',
-			'class' => 'form-control',
-			'autocomplete'=>'off'
-		];
-		$this->data['password'] = [
-			'name' => 'password',
-			'id' => 'password',
-			'type' => 'password',
-			'placeholder' => 'Password',
-			'class' => 'form-control',
-		];
-		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+		public function index()
+    {
+        if ($this->ion_auth->logged_in()) { 
+            $current_ion_user = $this->ion_auth->user()->row(); // Objek user dari Ion Auth
+            $user_id_ion_auth = $current_ion_user->id; // ID dari tabel 'users' Ion Auth
 
-		$this->load->view('_templates/auth/_header.php');
-		$this->load->view('auth/login', $this->data);
-		$this->load->view('_templates/auth/_footer.php');
-	}
+            $guru_data_from_db = null;
+
+            // Coba dapatkan data guru berdasarkan NIP (jika username adalah NIP)
+            if (!empty($current_ion_user->username)) {
+                $guru_data_from_db = $this->db->get_where('guru', ['nip' => $current_ion_user->username])->row();
+            }
+
+            // Jika tidak ketemu, coba berdasarkan email (pastikan email unik di tabel guru jika metode ini dipakai)
+            if (!$guru_data_from_db && !empty($current_ion_user->email)) {
+                $guru_data_from_db = $this->db->get_where('guru', ['email' => $current_ion_user->email])->row();
+            }
+
+            // Alternatif lain: jika tabel 'guru' memiliki kolom 'user_id' yang merujuk ke 'users.id' Ion Auth
+            // if (!$guru_data_from_db) {
+            //     $guru_data_from_db = $this->db->get_where('guru', ['user_id' => $user_id_ion_auth])->row();
+            // }
+
+
+            if ($guru_data_from_db && isset($guru_data_from_db->id_guru)) { // Pastikan id_guru ada
+                $session_data_for_guru = [
+                    // 'guru_id' ini haruslah ID yang sama dengan yang tersimpan di tb_soal.guru_id
+                    'guru_id'   => $guru_data_from_db->id_guru, // Pastikan 'id_guru' adalah nama kolom Primary Key di tabel 'guru' Anda
+                    'nama_guru' => $guru_data_from_db->nama_guru,
+                    // Anda bisa menambahkan data lain seperti NIP, email guru jika perlu
+                ];
+                $this->session->set_userdata($session_data_for_guru);
+                log_message('debug', 'Auth: Guru session data set for guru_id: ' . $guru_data_from_db->id_guru);
+            } else {
+                log_message('debug', 'Auth: Guru data not found in guru table for user: ' . $current_ion_user->username . ' or email: ' . $current_ion_user->email);
+            }
+            redirect('dashboard'); // Redirect setelah semua proses selesai
+        }
+
+        // Kode untuk menampilkan form login jika belum login
+        $this->data['identity'] = [
+            'name' => 'identity',
+            'id' => 'identity',
+            'type' => 'text',
+            'placeholder' => 'Email', // Sesuaikan placeholder
+            'autofocus' => 'autofocus',
+            'class' => 'form-control',
+            'autocomplete' => 'off',
+            'value' => $this->form_validation->set_value('identity'), // Untuk re-populate jika validasi gagal
+        ];
+        $this->data['password'] = [
+            'name' => 'password',
+            'id' => 'password',
+            'type' => 'password',
+            'placeholder' => 'Password',
+            'class' => 'form-control',
+        ];
+        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+        $this->load->view('_templates/auth/_header.php'); // Asumsi path template header
+        $this->load->view('auth/login', $this->data);    // Asumsi path view login
+        $this->load->view('_templates/auth/_footer.php'); // Asumsi path template footer
+    }
 
 	public function cek_login()
 	{

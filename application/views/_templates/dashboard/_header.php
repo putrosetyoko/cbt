@@ -41,6 +41,30 @@
 
 	<!-- include summernote css/js -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<style>
+    .small-box {
+        transition: all 0.3s ease;
+    }
+    .small-box:hover {
+        transform: translateY(-2px);
+    }
+    .btn-flat {
+        transition: all 0.2s;
+    }
+    .btn-flat:hover {
+        transform: scale(1.02);
+    }
+    .list-group-item {
+        border-left: none;
+        border-right: none;
+    }
+    .list-group-item:first-child {
+        border-top: none;
+    }
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+</style>
 </head>
 
 <!-- Must Load First -->

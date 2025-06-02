@@ -1,183 +1,315 @@
-var table;
+var tableSoal;
+
+// Tambahkan variable global untuk CSRF
+var csrf_token = $('input[name="csrf_test_name"]').val();
 
 $(document).ready(function () {
-  ajaxcsrf();
+  if (typeof ajaxcsrf === 'function') {
+    ajaxcsrf();
+  }
 
-  table = $('#soal').DataTable({
+  tableSoal = $('#table_soal').DataTable({
     initComplete: function () {
       var api = this.api();
-      $('#soal_filter input')
+      $('#table_soal_filter input') // Ganti jika ID filter global Anda berbeda
         .off('.DT')
         .on('keyup.DT', function (e) {
           api.search(this.value).draw();
         });
     },
-    dom:
-      "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
-      "<'row'<'col-sm-12'tr>>" +
-      "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-    buttons: [
-      {
-        extend: 'copy',
-        exportOptions: { columns: [2, 3, 4, 5] },
-      },
-      {
-        extend: 'print',
-        exportOptions: { columns: [2, 3, 4, 5] },
-      },
-      {
-        extend: 'excel',
-        exportOptions: { columns: [2, 3, 4, 5] },
-      },
-      {
-        extend: 'pdf',
-        exportOptions: { columns: [2, 3, 4, 5] },
-      },
-    ],
-    oLanguage: {
-      sProcessing: 'loading...',
-    },
+    // dom:
+    //   "<'row'<'col-sm-12 col-md-3'l><'col-sm-12 col-md-6 text-center'B><'col-sm-12 col-md-3'f>>" +
+    //   "<'row'<'col-sm-12'tr>>" +
+    //   "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+    // buttons: [
+    //   // No, Mapel, Jenjang, Cuplikan, Pembuat, Bobot, Kunci, Tgl Dibuat
+    //   { extend: 'copy', exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7, 8] } },
+    //   { extend: 'print', exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7, 8] } },
+    //   { extend: 'excel', exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7, 8] } },
+    //   { extend: 'pdf', exportOptions: { columns: [1, 2, 3, 4, 5, 6, 7, 8] } },
+    // ],
+    // oLanguage: {
+    //   /* ... bahasa Indonesia ... */
+    // },
     processing: true,
     serverSide: true,
     ajax: {
       url: base_url + 'soal/data',
       type: 'POST',
+      data: function (d) {
+        d.filter_mapel = $('#filter_mapel_soal').val();
+        d.filter_jenjang = $('#filter_jenjang_soal').val();
+        d.filter_guru_pembuat = $('#filter_guru_pembuat_soal').val(); // Untuk Admin
+        d.t = new Date().getTime(); // Cache busting
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(
+          'DataTables AJAX error (soal/data):',
+          textStatus,
+          errorThrown,
+          jqXHR.responseText
+        );
+        Swal.fire(
+          'Error DataTables',
+          'Gagal memuat data soal: ' + textStatus,
+          'error'
+        );
+      },
     },
     columns: [
       {
-        data: 'id_soal',
+        // Kolom nomor urut
+        data: null,
         orderable: false,
         searchable: false,
+        width: '3%',
+        className: 'text-center',
+        render: function (data, type, row, meta) {
+          return meta.row + meta.settings._iDisplayStart + 1;
+        },
+      },
+      { data: 'nama_mapel', defaultContent: '-' },
+      { data: 'nama_jenjang', defaultContent: '-' },
+      {
+        data: 'cuplikan_soal',
+        orderable: false,
+        searchable: true,
+        render: function (data) {
+          return data ? data + '...' : '';
+        },
+      },
+      { data: 'pembuat_soal' },
+      // { data: 'bobot', className: 'text-center' },
+      // { data: 'jawaban', className: 'text-center' },
+      // { data: 'created_on_formatted', className: 'text-center' },
+      {
+        data: null,
+        orderable: false,
+        searchable: false,
+        className: 'text-center',
       },
       {
+        // Checkbox di kolom terakhir
         data: 'id_soal',
         orderable: false,
         searchable: false,
+        width: '3%',
+        className: 'text-center',
+        render: function (data, type, row) {
+          if (
+            typeof canDeleteSoal !== 'undefined' &&
+            canDeleteSoal(row.guru_id, row.mapel_id)
+          ) {
+            return `<input type="checkbox" class="check" value="${data}" />`;
+          }
+          return '';
+        },
       },
-      { data: 'nama_guru' },
-      { data: 'nama_mapel' },
-      { data: 'soal' },
-      { data: 'created_on' },
     ],
     columnDefs: [
       {
-        targets: 0,
-        data: 'id_soal',
-        render: function (data, type, row, meta) {
-          return `<div class="text-center">
-									<input name="checked[]" class="check" value="${data}" type="checkbox">
-								</div>`;
+        targets: 4, // Index kolom created_on_formatted
+        render: function (data, type, row) {
+          if (type === 'display') {
+            // Split tanggal dan waktu
+            const [datePart] = row.created_on_formatted.split(' ');
+            // Split tanggal
+            const [day, month, year] = datePart.split('-');
+
+            // Buat objek Date dengan format yang benar (YYYY-MM-DD)
+            const date = new Date(`${year}-${month}-${day}`);
+
+            const options = {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+              timeZone: 'Asia/Jakarta',
+            };
+            return date.toLocaleDateString('id-ID', options);
+          }
+          return data;
         },
       },
       {
-        targets: 6,
+        targets: 5, // Kolom aksi
         data: 'id_soal',
         render: function (data, type, row, meta) {
-          return `<div class="text-center">
-                                <a href="${base_url}soal/detail/${data}" class="btn btn-xs btn-default">
-                                    <i class="fa fa-eye"></i> Detail
-                                </a>
-                                <a href="${base_url}soal/edit/${data}" class="btn btn-xs btn-warning">
-                                    <i class="fa fa-edit"></i> Edit
-                                </a>
-                            </div>`;
+          let detailBtn = `<a href="${base_url}soal/detail/${row.id_soal}" class="btn btn-xs btn-info" title="Lihat Detail"><i class="fa fa-eye"></i> Detail</a>`;
+          let editBtn = '';
+
+          if (
+            typeof canEditSoal !== 'undefined' &&
+            canEditSoal(row.guru_id, row.mapel_id)
+          ) {
+            editBtn = ` <a href="${base_url}soal/edit/${row.id_soal}" class="btn btn-xs btn-warning" title="Edit Soal"><i class="fa fa-pencil"></i> Edit</a>`;
+          }
+
+          return `<div class="text-center">${detailBtn}${editBtn}</div>`;
         },
       },
     ],
-    order: [[5, 'desc']],
+    order: [[4, 'desc']], // Adjust order column index since we moved columns
     rowId: function (a) {
-      return a;
-    },
-    rowCallback: function (row, data, iDisplayIndex) {
-      var info = this.fnPagingInfo();
-      var page = info.iPage;
-      var length = info.iLength;
-      var index = page * length + (iDisplayIndex + 1);
-      $('td:eq(1)', row).html(index);
+      return 'soal_' + a.id_soal;
     },
   });
 
-  table.buttons().container().appendTo('#soal_wrapper .col-md-6:eq(0)');
+  if (tableSoal && typeof tableSoal.buttons === 'function') {
+    tableSoal
+      .buttons()
+      .container()
+      .appendTo('#table_soal_wrapper .col-md-6:eq(0)');
+  }
 
-  $('.select_all').on('click', function () {
-    if (this.checked) {
-      $('.check').each(function () {
-        this.checked = true;
-        $('.select_all').prop('checked', true);
-      });
-    } else {
-      $('.check').each(function () {
-        this.checked = false;
-        $('.select_all').prop('checked', false);
-      });
-    }
+  // Event listener untuk filter
+  $(
+    'select#filter_mapel_soal, select#filter_jenjang_soal, select#filter_guru_pembuat_soal'
+  ).on('change', function () {
+    reload_ajax_soal();
   });
 
-  $('#soal tbody').on('click', 'tr .check', function () {
-    var check = $('#soal tbody tr .check').length;
-    var checked = $('#soal tbody tr .check:checked').length;
-    if (check === checked) {
-      $('.select_all').prop('checked', true);
-    } else {
-      $('.select_all').prop('checked', false);
-    }
+  // Handler untuk checkbox "select_all_soal"
+  $(document).on('click', '.select_all_soal', function () {
+    let isChecked = this.checked;
+    $('#table_soal .check').prop('checked', isChecked);
+    $(this).prop('checked', isChecked);
   });
 
-  $('#bulk').on('submit', function (e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
+  $('#table_soal tbody').on('click', 'tr .check', function () {
+    var totalChecks = $('#table_soal .check').length;
+    var checkedChecks = $('#table_soal .check:checked').length;
+    $('.select_all_soal').prop(
+      'checked',
+      totalChecks === checkedChecks && totalChecks > 0
+    );
+  });
 
-    $.ajax({
-      url: $(this).attr('action'),
-      data: $(this).serialize(),
-      type: 'POST',
-      success: function (respon) {
-        if (respon.status) {
-          Swal({
-            title: 'Berhasil',
-            text: respon.total + ' data berhasil dihapus',
-            type: 'success',
-          });
-        } else {
-          Swal({
-            title: 'Gagal',
-            text: 'Tidak ada data yang dipilih',
-            type: 'error',
-          });
+  // Handler untuk form bulk delete (ID Form: #bulkDeleteFormSoal)
+  $('#bulkDeleteFormSoal').on('submit', function (e) {
+    /* ... (Adaptasi dari bulk delete sebelumnya, target soal/delete) ... */
+  });
+
+  // Handler untuk select all checkbox
+  $('#select_all_soal').on('click', function () {
+    $('.check').prop('checked', this.checked);
+  });
+
+  // Handler untuk checkbox individual
+  $('#table_soal tbody').on('click', '.check', function () {
+    if (!this.checked) {
+      $('#select_all_soal').prop('checked', false);
+    } else {
+      let allChecked = true;
+      $('.check').each(function () {
+        if (!this.checked) {
+          allChecked = false;
+          return false;
         }
-        reload_ajax();
-      },
-      error: function () {
-        Swal({
-          title: 'Gagal',
-          text: 'Ada data yang sedang digunakan',
-          type: 'error',
-        });
-      },
-    });
+      });
+      $('#select_all_soal').prop('checked', allChecked);
+    }
+  });
+
+  // Handler untuk bulk delete
+  $('#bulk_delete').on('click', function () {
+    bulk_delete();
   });
 });
 
+function reload_ajax_soal() {
+  if (tableSoal) tableSoal.ajax.reload(null, false);
+}
+
 function bulk_delete() {
-  if ($('#soal tbody tr .check:checked').length == 0) {
-    Swal({
-      title: 'Gagal',
-      text: 'Tidak ada data yang dipilih',
-      type: 'error',
-    });
-  } else {
-    Swal({
-      title: 'Anda yakin?',
-      text: 'Data akan dihapus!',
+  const $checkedBoxes = $('#table_soal .check:checked');
+
+  if ($checkedBoxes.length === 0) {
+    Swal.fire({
+      title: 'Perhatian',
+      text: 'Tidak ada soal yang dipilih untuk dihapus',
       type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Hapus!',
-    }).then((result) => {
-      if (result.value) {
-        $('#bulk').submit();
-      }
     });
+    return;
   }
+
+  Swal.fire({
+    title: 'Konfirmasi',
+    text: `Akan menghapus ${$checkedBoxes.length} soal yang dipilih. Yakin?`,
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Ya, Hapus!',
+    cancelButtonText: 'Batal',
+  }).then((result) => {
+    if (result.value) {
+      // Kumpulkan ID soal yang akan dihapus
+      let selected = [];
+      $checkedBoxes.each(function () {
+        selected.push($(this).val());
+      });
+
+      // Kirim request AJAX untuk delete
+      $.ajax({
+        url: base_url + 'soal/delete',
+        type: 'POST',
+        data: {
+          checked: selected,
+          csrf_test_name: csrf_token,
+        },
+        dataType: 'json',
+        success: function (response) {
+          if (response.status) {
+            Swal.fire({
+              title: 'Berhasil!',
+              text: response.message,
+              type: 'success',
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              // Reload table dan reset checkbox
+              tableSoal.ajax.reload(null, false);
+              $('#select_all_soal').prop('checked', false);
+            });
+          } else {
+            Swal.fire({
+              title: 'Gagal!',
+              text: response.message,
+              type: 'error',
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('AJAX Error:', xhr.responseText);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Terjadi kesalahan pada server',
+            type: 'error',
+          });
+        },
+      });
+    }
+  });
+}
+
+// Anda perlu mendefinisikan fungsi JS global ini, dan mengisinya dengan data dari PHP
+// var USER_ID_LOGIN = <?= $this->session->userdata('user_id') ?>;
+// var IS_ADMIN_JS = <?= $this->ion_auth->is_admin() ? 'true' : 'false' ?>;
+// var PJ_MAPEL_ID_JS = <?= isset($pj_mapel_data->id_mapel) ? $pj_mapel_data->id_mapel : 'null' ?>;
+// var GURU_ID_LOGIN_JS = <?= isset($guru_data->id_guru) ? $guru_data->id_guru : 'null' ?>;
+
+function canEditSoal(id_guru_soal, mapel_id_soal) {
+  if (IS_ADMIN_JS) return true;
+  if (GURU_ID_LOGIN_JS && PJ_MAPEL_ID_JS) {
+    return id_guru_soal == GURU_ID_LOGIN_JS && mapel_id_soal == PJ_MAPEL_ID_JS;
+  }
+  return false;
+}
+function canDeleteSoal(id_guru_soal, mapel_id_soal) {
+  // Sama dengan canEditSoal untuk saat ini
+  if (IS_ADMIN_JS) return true;
+  if (GURU_ID_LOGIN_JS && PJ_MAPEL_ID_JS) {
+    return id_guru_soal == GURU_ID_LOGIN_JS && mapel_id_soal == PJ_MAPEL_ID_JS;
+  }
+  return false;
 }
