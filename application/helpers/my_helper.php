@@ -71,3 +71,26 @@ function tampil_media($file, $width="", $height="") {
     
     return $ret;
 }
+
+if (!function_exists('encrypt_url')) {
+    function encrypt_url($str) {
+        $CI =& get_instance();
+        return rawurlencode($CI->encryption->encrypt($str));
+    }
+}
+
+if (!function_exists('decrypt_url')) {
+    function decrypt_url($str) {
+        $CI =& get_instance();
+        return $CI->encryption->decrypt(rawurldecode($str));
+    }
+}
+
+if (!function_exists('get_csrf')) {
+    function get_csrf()
+    {
+        $ci =& get_instance();
+        return '<input type="hidden" name="'.$ci->security->get_csrf_token_name().'" value="'.$ci->security->get_csrf_hash().'" />';
+    }
+}
+

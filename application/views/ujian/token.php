@@ -1,123 +1,70 @@
+<?php
+// File: application/views/ujian/konfirmasi_siswa.php
+// Menggunakan template _templates/topnav/
+// Variabel yang diharapkan dari controller:
+// $user (objek user Ion Auth)
+// $siswa (objek detail siswa)
+// $ujian (objek detail ujian dari m_ujian)
+// $judul
+// $subjudul
+// $id_ujian_enc (ID ujian yang dienkripsi)
+
+// Atur locale untuk format tanggal Indonesia
+// Sebaiknya dilakukan di config atau helper global
+if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
+    setlocale(LC_TIME, 'id_ID.utf8', 'id_ID', 'id', 'Indonesian_Indonesia.1252');
+}
+?>
+
 <div class="callout callout-info">
-    <h4>INFORMASI UJIAN</h4>
+    <h4><i class="fa fa-info-circle"></i> INFORMASI PENTING UJIAN</h4>
+    <p>Harap baca semua instruksi dengan seksama sebelum memulai ujian.</p>
     <ul>
-        <li>Peserta ujian diwajibkan mengerjakan soal secara jujur dan mandiri. Segala bentuk kecurangan akan dikenakan <b>SANKSI TEGAS</b>.</li>
-        <li>Waktu pengerjaan ujian terbatas sesuai dengan durasi yang telah ditentukan. Pastikan Anda menyelesaikan ujian sebelum waktu berakhir.</li>
-        <li>Peserta ujian disarankan menggunakan device/perangkat Laptop.</li>
-        <li>Tombol <b>"MULAI"</b> akan muncul jika ujian sudah dapat dimulai.</li>
-        <li>Pastikan koneksi internet Anda stabil selama ujian berlangsung untuk menghindari gangguan teknis.</li>
-        <li>Selama ujian berlangsung, peserta dilarang untuk keluar dari halaman ujian atau beralih ke aplikasi/browser lain. Pelanggaran dapat menyebabkan ujian otomatis berakhir atau dianggap <b>TIDAK LULUS</b>.</li>
-        <li>Sebelum menyelesaikan ujian, pastikan Anda telah memeriksa kembali semua jawaban Anda.</li>
-        <li>Setelah selesai mengerjakan, pastikan Anda menekan tombol <b>"Selesai"</b>.</li>
-        <li>Jika terjadi kendala teknis atau hal lain yang tidak terduga, segera hubungi pengawas.</li>
+        <li>Peserta ujian diwajibkan mengerjakan soal secara jujur dan mandiri.</li>
+        <li>Waktu pengerjaan ujian terbatas sesuai dengan durasi yang telah ditentukan.</li>
+        <li>Tombol <strong>"MULAI UJIAN"</strong> akan aktif jika token benar dan waktu ujian telah tiba.</li>
+        <li>Pastikan koneksi internet Anda stabil selama ujian berlangsung.</li>
+        <li>Dilarang keluar dari halaman ujian atau beralih ke aplikasi/browser lain selama ujian.</li>
+        <li>Periksa kembali semua jawaban Anda sebelum menekan tombol "Selesai".</li>
+        <li>Jika terjadi kendala teknis, segera hubungi pengawas ujian.</li>
     </ul>
 </div>
-<div class="box box-primary">
+
+<div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Konfirmasi Data</h3>
+        <h3 class="box-title"><?=$subjudul?></h3>
+        <div class="box-tools pull-right">
+            <a href="<?=base_url()?>ujian/list_ujian_siswa" class="btn btn-sm btn-flat btn-warning">
+                <i class="fa fa-arrow-left"></i> Kembali
+            </a>
+        </div>
     </div>
     <div class="box-body">
-        <span id="id_ujian" data-key="<?=$encrypted_id?>"></span>
         <div class="row">
-            <div class="col-sm-6">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Nama Siswa / NISN</th>
-                        <td><?=$siswa->nama?> / <?=$siswa->nisn?></td>
-                    </tr>
-                    <tr>
-                        <th>Nama Guru</th>
-                        <td><?=$ujian->nama_guru?></td>
-                    </tr>
-                    <tr>
-                        <th>Kelas</th>
-                        <td><?=$siswa->nama_kelas?></td>
-                    </tr>
-                    <tr>
-                        <th>Nama Ujian</th>
-                        <td><?=$ujian->nama_ujian?></td>
-                    </tr>
-                    <tr>
-                        <th>Jumlah Soal</th>
-                        <td><?=$ujian->jumlah_soal?></td>
-                    </tr>
-                    <tr>
-                        <th>Mulai</th>
-                        <td>
-                            <?php
-                                // Atur locale jika belum diatur secara global (bisa di awal script atau di config)
-                                // setlocale(LC_TIME, 'id_ID.utf8', 'id_ID', 'id'); 
-                                $timestamp_mulai = strtotime($ujian->tgl_mulai);
-                                echo strftime('%d %B %Y', $timestamp_mulai) . date(' H:i', $timestamp_mulai) . ' WITA';
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Batas Akhir</th>
-                        <td>
-                            <?php
-                                // Mengubah format tanggal dari YYYY-MM-DD HH:MM:SS menjadi DD Month YYYY HH:MM
-                                $timestamp_terlambat = strtotime($ujian->terlambat); // Menggunakan kolom 'terlambat' sebagai 'tgl_selesai'
-                                echo strftime('%d %B %Y', $timestamp_terlambat) . date(' H:i', $timestamp_terlambat) . ' WITA'; // Tambahkan WITA secara manual
-                                ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Durasi</th>
-                        <td><?=$ujian->waktu?> Menit</td>
-                    </tr>
-                    <tr>
-                        <th style="vertical-align:middle">Token</th>
-                        <td>
-                            <input autocomplete="off" id="token" placeholder="Token" type="text" class="input-sm form-control">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-sm-6">
-                <div class="box box-solid">
-                    <div class="box-body pb-0">
-                        <div class="callout callout-info">
-                            <p>
-                                <b>Token</b> ujian diberikan oleh Guru.
-                            </p>
-                        </div>
-                        <div class="callout callout-warning">
-                            <p>
-                                Waktu boleh mengerjakan ujian adalah saat tombol <b>"MULAI"</b> muncul.
-                            </p>
-                        </div>
-                        <?php
-                        $mulai = strtotime($ujian->tgl_mulai);
-                        $terlambat = strtotime($ujian->terlambat);
-                        $now = time();
-                        if($mulai > $now) : 
-                        ?>
-                        <div class="callout callout-success">
-                            <strong><i class="fa fa-clock-o"></i> Ujian akan dimulai pada</strong>
-                            <br>
-                            <span class="countdown" data-time="<?=date('Y-m-d H:i:s', strtotime($ujian->tgl_mulai))?>">00 Hari, 00 Jam, 00 Menit, 00 Detik</strong><br/>
-                        </div>
-                        <?php elseif( $terlambat > $now ) : ?>
-                        <div class="callout callout-danger">
-                            Batas waktu klik tombol mulai.<br/>
-                            <i class="fa fa-clock-o"></i> <strong class="countdown" data-time="<?=date('Y-m-d H:i:s', strtotime($ujian->terlambat))?>">00 Hari, 00 Jam, 00 Menit, 00 Detik</strong>
-                        </div>
-                        <button id="btncek" data-id="<?=$ujian->id_ujian?>" class="btn btn-success btn-lg mb-4 ml-auto d-block">
-                            <i class="fa fa-pencil"></i> Mulai
-                        </button>
-                        <?php else : ?>
-                        <div class="callout callout-danger">
-                            Waktu ujian sudah habis.<br/>
-                            Silakan hubungi guru anda untuk bisa mengikuti ujian pengganti.
-                        </div>
-                        
-                        <?php endif;?>
+            <div class="col-sm-12">
+                <form id="formtoken" method="POST">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>">
+                    <input type="hidden" name="id_ujian_enc" id="id_ujian_enc" value="<?=$encrypted_id_ujian?>">
+                    
+                    <div class="form-group">
+                        <label for="token">Token Ujian</label>
+                        <input type="text" id="token" name="token" class="form-control" required>
+                        <small class="help-block text-muted">Tanyakan token kepada pengawas</small>
                     </div>
-                </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" id="btncek" class="btn btn-primary btn-flat btn-block">MULAI UJIAN</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var csrf_name = '<?=$this->security->get_csrf_token_name()?>';
+    var csrf_hash = '<?=$this->security->get_csrf_hash()?>';
+    var base_url = '<?=base_url()?>';
+</script>
 
-<script src="<?=base_url()?>assets/dist/js/app/ujian/token.js"></script>
+<script src="<?= base_url('assets/dist/js/app/ujian/token.js') ?>"></script>
+

@@ -54,7 +54,7 @@
             <?php 
             // Variabel untuk menentukan apakah grup menu "Manajemen Ujian" aktif
             // Grup ini aktif jika halaman saat ini adalah 'soal' ATAU ('ujian' dan sub-halamannya 'master')
-            $is_manajemen_ujian_parent_active = ($page === 'soal' || ($page === 'ujian' && $page2 === 'master'));
+            $is_manajemen_ujian_parent_active = ($page === 'soal' || ($page === 'ujian'));
             ?>
             <?php if( $this->ion_auth->is_admin() || $this->ion_auth->in_group('guru') ) : ?>
             <li class="treeview <?= $is_manajemen_ujian_parent_active ? "active menu-open" : "" ?>">
@@ -67,7 +67,7 @@
                     </li>
 
                     <?php if( $this->ion_auth->is_admin() || $this->ion_auth->in_group('guru') ) : ?> 
-                    <li class="<?=$page==='ujian' && $page2 ==='master'?"active":""?>"> 
+                    <li class="<?=$page==='ujian'?"active":""?>"> 
                         <a href="<?=base_url('ujian')?>"><i class="fa fa-pencil-square-o"></i> Kelola Ujian</a>
                     </li>
                     <?php endif; ?>
@@ -76,8 +76,8 @@
             <?php endif; ?>
 
             <?php if( $this->ion_auth->in_group('siswa') ) : ?> 
-            <li class="<?=$page==='ujian' && ($page2 ==='list' || empty($page2)) ?"active":""?>"> 
-                <a href="<?=base_url('ujian/list')?>"><i class="fa fa-edit"></i> <span>Ujian Saya</span></a> 
+            <li class="<?=$page==='ujian' && ($page2 ==='list_ujian_siswa' || empty($page2)) ?"active":""?>"> 
+                <a href="<?=base_url('ujian/list_ujian_siswa')?>"><i class="fa fa-edit"></i> <span>Ujian Saya</span></a> 
             </li>
             <?php endif; ?>
 
