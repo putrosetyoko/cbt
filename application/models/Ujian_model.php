@@ -259,7 +259,7 @@ class Ujian_model extends CI_Model {
     }
 
     public function get_hasil_ujian_by_id_and_siswa($id_h_ujian, $id_siswa) {
-        $this->db->select('h.*, UNIX_TIMESTAMP(h.tgl_selesai) as waktu_habis_timestamp');
+        $this->db->select('h.*, UNIX_TIMESTAMP(h.tgl_selesai) as waktu_habis_timestamp'); // Ini sudah benar
         $this->db->from('h_ujian h');
         $this->db->where('h.id', $id_h_ujian);
         $this->db->where('h.siswa_id', $id_siswa);
@@ -314,8 +314,19 @@ class Ujian_model extends CI_Model {
     }
 
     public function update_jawaban_siswa($id_h_ujian, $list_jawaban_json) {
+        if(empty($id_h_ujian) || $list_jawaban_json === null) { // Periksa juga jika $list_jawaban_json null
+            log_message('error', 'UjianModel (update_jawaban_siswa): id_h_ujian atau list_jawaban_json kosong.');
+            return false;
+        }
         $this->db->where('id', $id_h_ujian);
-        return $this->db->update('h_ujian', ['list_jawaban' => $list_jawaban_json]);
+        $update_status = $this->db->update('h_ujian', ['list_jawaban' => $list_jawaban_json]);
+        
+        if(!$update_status){
+            log_message('error', 'UjianModel (update_jawaban_siswa): Gagal update DB. Error: ' . $this->db->error()['message'] . ' Query: ' . $this->db->last_query());
+        } else {
+            log_message('debug', 'UjianModel (update_jawaban_siswa): Berhasil update list_jawaban untuk id_h_ujian: ' . $id_h_ujian);
+        }
+        return $update_status;
     }
 
     public function calculate_and_finalize_score($id_h_ujian) {
@@ -521,8 +532,8 @@ class Ujian_model extends CI_Model {
     public function get_lembar_ujian_siswa($id_h_ujian, $id_siswa)
     {
         try {
-            // 1. Ambil data h_ujian dan validasi
-            $h_ujian = $this->db->select('h.*, h.tgl_selesai as waktu_habis_timestamp, u.nama_ujian, u.waktu, u.mapel_id, m.nama_mapel')
+            // Get exam data
+            $h_ujian = $this->db->select('h.*, h.tgl_selesai as waktu_habis_timestamp, u.nama_ujian, u.waktu, u.mapel_id, m.nama_mapel, u.acak_opsi')
                 ->from('h_ujian h')
                 ->join('m_ujian u', 'h.ujian_id = u.id_ujian')
                 ->join('mapel m', 'u.mapel_id = m.id_mapel')
@@ -532,48 +543,84 @@ class Ujian_model extends CI_Model {
                 ])
                 ->get()
                 ->row();
-
+    
             if (!$h_ujian) {
                 throw new Exception('Data ujian tidak ditemukan.');
             }
-
-            // 2. Decode list soal dan jawaban
-            $list_soal = json_decode($h_ujian->list_soal);
-            $list_jawaban = json_decode($h_ujian->list_jawaban, true);
-
-            if (!$list_soal || !$list_jawaban) {
-                throw new Exception('Format data soal/jawaban tidak valid.');
-            }
-
-            // 3. Ambil detail soal-soal
-            $soal_collection = $this->db
-                ->select('s.*, s.id_soal')
-                ->from('tb_soal s')
-                ->where_in('s.id_soal', $list_soal)
-                ->get()
-                ->result();
-
-            // 4. Susun data untuk view
+    
+            // Calculate timestamps
+            $waktu_selesai = strtotime($h_ujian->tgl_selesai);
+            $sisa_waktu = max(0, $waktu_selesai - time());
+    
+            // Get list soal from JSON
+            $list_soal = json_decode($h_ujian->list_soal, true);
+            
+            // Get soal details using existing function
+            $soal_collection = $this->get_soal_details_for_lembar_ujian(
+                $list_soal, 
+                $h_ujian->acak_opsi === 'Y'
+            );
+    
+            // Prepare data for view
             $data = [
                 'user' => $this->ion_auth->user()->row(),
                 'judul' => 'Lembar Ujian',
                 'subjudul' => $h_ujian->nama_ujian,
-                'total_soal' => count($list_soal),
                 'h_ujian' => $h_ujian,
                 'hasil_ujian' => $h_ujian,
                 'soal_collection' => $soal_collection,
-                'jawaban_tersimpan' => $list_jawaban,
-                'id_h_ujian_enc' => $this->encryption->encrypt($id_h_ujian),
-                'waktu_selesai' => strtotime($h_ujian->tgl_selesai),
-                'sisa_waktu' => max(0, strtotime($h_ujian->tgl_selesai) - time())
+                'jawaban_tersimpan' => json_decode($h_ujian->list_jawaban, true),
+                'id_h_ujian_enc' => $this->encrypt_exam_id($id_h_ujian),
+                'waktu_selesai' => $waktu_selesai,
+                'sisa_waktu' => $sisa_waktu,
+                'jumlah_soal_total_php' => count($list_soal)
             ];
-
+    
             return $data;
-
+    
         } catch (Exception $e) {
             log_message('error', 'Error in get_lembar_ujian_siswa: ' . $e->getMessage());
             return false;
         }
     }
+
+    public function encrypt_exam_id($id)
+{
+    $CI =& get_instance();
+    try {
+        // Always use the same encryption method
+        $encrypted = $CI->encryption->encrypt($id);
+        return strtr(base64_encode($encrypted), '+/=', '-_,');
+    } catch (Exception $e) {
+        log_message('error', 'Error encrypting exam ID: ' . $e->getMessage());
+        return false;
+    }
+}
+
+public function decrypt_exam_id($encrypted_id)
+{
+    $CI =& get_instance();
+    try {
+        // Reverse the process
+        $encrypted_id = urldecode($encrypted_id);
+        $encrypted = strtr($encrypted_id, '-_,', '+/=');
+        $binary = base64_decode($encrypted);
+        
+        if ($binary === false) {
+            throw new Exception('Invalid encrypted ID format');
+        }
+
+        $id = $CI->encryption->decrypt($binary);
+        
+        if (!$id || !is_numeric($id)) {
+            throw new Exception('Failed to decrypt ID');
+        }
+
+        return (int)$id;
+    } catch (Exception $e) {
+        log_message('error', 'Error decrypting exam ID: ' . $e->getMessage());
+        return false;
+    }
+}
 
 }

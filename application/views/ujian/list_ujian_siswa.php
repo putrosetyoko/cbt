@@ -6,6 +6,9 @@
 // $siswa (objek detail siswa dari model, termasuk nama_kelas, nama_jenjang)
 // $judul
 // $subjudul
+// When generating the "Ikut Ujian" button URL:
+$encrypted_id = $this->ujian_m->encrypt_exam_id($ujian->id_h_ujian);
+$url = base_url('ujian/lembar_ujian/' . urlencode($encrypted_id));
 ?>
 <div class="row">
     <div class="col-sm-4">

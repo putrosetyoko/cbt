@@ -66,5 +66,48 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
     var base_url = '<?=base_url()?>';
 </script>
 
-<script src="<?= base_url('assets/dist/js/app/ujian/token.js') ?>"></script>
+<script>
+$(document).ready(function() {
+    $('#formToken').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: '<?=base_url()?>ujian/proses_token',
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if(response.status) {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: response.message,
+                        icon: 'success',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function() {
+                        // Force redirect to lembar_ujian
+                        window.location.href = response.redirect_url;
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: response.message,
+                        icon: 'error'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Terjadi kesalahan saat memproses token',
+                    icon: 'error'
+                });
+            }
+        });
+    });
+});
+</script>
+
+<script src="<?= base_url('assets/dist/js/app/ujian/token.js') ?>"></sc>
 

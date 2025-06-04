@@ -51,7 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['default_controller'] = 'Auth';
-$route['404_override'] = '';
+$route['404_override'] = ''; // Make sure this is set
 $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'Auth/index';
 $route['logout'] = 'Auth/logout';
+$route['ujian/lembar_ujian/(:any)'] = 'ujian/lembar_ujian/$1';
