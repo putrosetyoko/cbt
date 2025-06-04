@@ -902,6 +902,8 @@ class Ujian extends MY_Controller {
                 return;
             }
 
+            $ujian = $this->ujian_m->get_ujian_by_id_with_guru($id_ujian);
+            
             $data = [
                 'user'      => $this->ion_auth->user()->row(),
                 'siswa'     => $this->siswa_data,
@@ -1085,7 +1087,8 @@ class Ujian extends MY_Controller {
             $h_ujian = $this->db->get_where('h_ujian', [
                 'id' => $id_h_ujian,
                 'siswa_id' => $this->siswa_data->id_siswa
-            ])->row();
+            ])
+            ->row();
 
             if (!$h_ujian) {
                 throw new Exception('Data ujian tidak ditemukan');
@@ -1095,11 +1098,52 @@ class Ujian extends MY_Controller {
             $now = time();
             $waktu_selesai = strtotime($h_ujian->tgl_selesai);
 
+            // Ambil data ujian dan master ujian
+            $h_ujian = $this->db->query("
+                SELECT h.*, u.terlambat as batas_masuk 
+                FROM h_ujian h 
+                JOIN m_ujian u ON h.ujian_id = u.id_ujian 
+                WHERE h.id = ? AND h.siswa_id = ?
+            ", [$id_h_ujian, $this->siswa_data->id_siswa])->row();
+
+            if (!$h_ujian) {
+                throw new Exception('Data ujian tidak ditemukan');
+            }
+
+            log_message('debug', 'Query result h_ujian: ' . print_r($h_ujian, true));
+
+            // Hitung sisa waktu berdasarkan batas terlambat
+            $waktu_sekarang = time();
+            $waktu_terlambat = strtotime($h_ujian->batas_masuk);
+            $sisa_waktu = max(0, $waktu_terlambat - $waktu_sekarang);
+
+            if ($waktu_terlambat === false) {
+                // Fallback ke waktu dari m_ujian jika parsing gagal
+                $waktu_terlambat = strtotime($ujian->terlambat);
+            }
+            
+            if ($waktu_terlambat === false) {
+                throw new Exception('Format waktu tidak valid');
+            }
+
+            // Set waktu selesai untuk ditampilkan di view
+            $data = $this->ujian_m->get_lembar_ujian_siswa($id_h_ujian, $this->siswa_data->id_siswa);
+            $data['waktu_selesai'] = date('Y-m-d H:i:s', $waktu_terlambat);
+            $data['sisa_waktu'] = $sisa_waktu;
+
             if ($h_ujian->status == 'completed') {
                 redirect('ujian/list_ujian_siswa');
                 return;
             }
 
+            // Update waktu mulai saat pertama kali masuk ke lembar ujian
+            if ($h_ujian && $h_ujian->tgl_mulai === null) {
+                $this->db->where('id', $id_h_ujian)
+                        ->update('h_ujian', [
+                            'tgl_mulai' => date('Y-m-d H:i:s')
+                        ]);
+            }
+            
             // Set session with the encrypted ID
             $this->session->set_userdata([
                 'active_exam_id' => $id_h_ujian,
@@ -1117,6 +1161,26 @@ class Ujian extends MY_Controller {
             // Use the same encrypted ID
             $data['id_h_ujian_enc'] = $this->session->userdata('active_exam_enc');
 
+            $data = [
+                'user' => $this->ion_auth->user()->row(),
+                'siswa' => $this->siswa_data,
+                'judul' => 'Lembar Ujian',
+                'subjudul' => $h_ujian->nama_ujian,
+                'ujian' => $ujian,
+                'h_ujian' => $h_ujian,
+                'soal_collection' => $this->ujian_m->get_soal_by_id_ujian($id_h_ujian),
+                'jawaban_tersimpan' => json_decode($h_ujian->list_jawaban, true) ?: [],
+                'id_h_ujian_enc' => $id_h_ujian_enc,
+                'waktu_selesai' => date('Y-m-d H:i:s', $waktu_terlambat),
+                'sisa_waktu' => $sisa_waktu,
+                // Tambahan untuk debugging
+                'debug_info' => [
+                    'waktu_sekarang' => date('Y-m-d H:i:s', $waktu_sekarang),
+                    'waktu_terlambat' => date('Y-m-d H:i:s', $waktu_terlambat),
+                    'sisa_waktu' => $sisa_waktu
+                ]
+            ];
+
             $this->load->view('_templates/topnav/_header.php', $data);
             $this->load->view('ujian/lembar_ujian', $data);
             $this->load->view('_templates/topnav/_footer.php');
@@ -1128,7 +1192,7 @@ class Ujian extends MY_Controller {
         }
     }
     
-    public function simpan_jawaban_ajax()
+    public function simpan_jawaban_ajax() 
     {
         if (!$this->input->is_ajax_request()) {
             show_404();
@@ -1136,10 +1200,8 @@ class Ujian extends MY_Controller {
         }
 
         try {
-            // Get encrypted ID
+            // Get and decode exam ID
             $id_h_ujian_enc = $this->input->post('id_h_ujian_enc');
-            
-            // Decode URL-safe base64
             $encrypted = strtr($id_h_ujian_enc, '-_,', '+/=');
             $binary = base64_decode($encrypted);
             
@@ -1147,19 +1209,13 @@ class Ujian extends MY_Controller {
                 throw new Exception('Format ID tidak valid');
             }
 
-            // Decrypt
             $id_h_ujian = $this->encryption->decrypt($binary);
             
             if (!$id_h_ujian) {
                 throw new Exception('ID hasil ujian tidak valid');
             }
 
-            // Get other post data
-            $id_soal = $this->input->post('id_soal');
-            $jawaban = $this->input->post('jawaban');
-            $ragu = $this->input->post('ragu_ragu');
-
-            // Validate exam session
+            // Validasi data ujian
             $h_ujian = $this->db->get_where('h_ujian', [
                 'id' => $id_h_ujian,
                 'siswa_id' => $this->siswa_data->id_siswa,
@@ -1167,23 +1223,35 @@ class Ujian extends MY_Controller {
             ])->row();
 
             if (!$h_ujian) {
-                throw new Exception('Sesi ujian tidak ditemukan atau sudah selesai');
+                throw new Exception('Data ujian tidak ditemukan atau sudah selesai');
             }
 
-            // Update jawaban
-            $jawaban_siswa = json_decode($h_ujian->list_jawaban, true) ?: [];
-            $jawaban_siswa[$id_soal] = [
+            // Get answer data
+            $id_soal = $this->input->post('id_soal');
+            $jawaban = $this->input->post('jawaban');
+            $ragu_ragu = $this->input->post('ragu_ragu');
+
+            // Validate required fields
+            if (!$id_soal) {
+                throw new Exception('ID soal tidak valid');
+            }
+
+            // Get existing answers
+            $list_jawaban = json_decode($h_ujian->list_jawaban, true) ?: [];
+            
+            // Update answer
+            $list_jawaban[$id_soal] = [
                 'j' => $jawaban,
-                'r' => $ragu
+                'r' => $ragu_ragu
             ];
 
+            // Save to database
             $this->db->where('id', $id_h_ujian)
-                    ->update('h_ujian', [
-                        'list_jawaban' => json_encode($jawaban_siswa),
-                        // 'updated_at' => date('Y-m-d H:i:s')
-                    ]);
+                ->update('h_ujian', [
+                    'list_jawaban' => json_encode($list_jawaban),
+                    // 'updated_at' => date('Y-m-d H:i:s')
+                ]);
 
-            // Return success response
             $this->output_json([
                 'status' => true,
                 'message' => 'Jawaban berhasil disimpan',
@@ -1191,7 +1259,6 @@ class Ujian extends MY_Controller {
             ]);
 
         } catch (Exception $e) {
-            log_message('error', 'Error in simpan_jawaban_ajax: ' . $e->getMessage());
             $this->output_json([
                 'status' => false,
                 'message' => $e->getMessage(),

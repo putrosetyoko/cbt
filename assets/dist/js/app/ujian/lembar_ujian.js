@@ -18,16 +18,25 @@ var csrfTokenName; // Untuk menyimpan nama token CSRF
 var csrfHash; // Untuk menyimpan hash CSRF
 
 $(document).ready(function () {
-  // Inisialisasi variabel global dari PHP
-  let initSuccess = true;
-  let missingVarsLog = [];
-
-  // Check if exam config exists
+  // Validasi konfigurasi
   if (typeof window.examConfig === 'undefined') {
     console.error('Exam configuration not found!');
     Swal.fire('Error', 'Konfigurasi ujian tidak ditemukan', 'error');
     return;
   }
+
+  // Debug log
+  console.log('Initializing exam with config:', window.examConfig);
+
+  // Inisialisasi timer dan komponen lain
+  startTimer();
+  initializeNavigation();
+}); // End $(document).ready
+
+function initializeNavigation() {
+  // Inisialisasi variabel global dari PHP
+  let initSuccess = true;
+  let missingVarsLog = [];
 
   // Extract variables from config
   const {
@@ -197,7 +206,7 @@ $(document).ready(function () {
   $('#btn-selesai-ujian').on('click', function () {
     konfirmasiDanSelesaikanUjian();
   });
-}); // End $(document).ready
+} // End $(document).ready
 
 function showSoalPanel(nomorSoal) {
   // ... (fungsi sama seperti sebelumnya)
@@ -315,35 +324,22 @@ function simpanJawabanAjax(idSoal, jawaban, raguStatus) {
     CSRF_HASH_GLOBAL,
   } = window.examConfig;
 
-  // Validate required variables
-  if (!base_url || !ID_H_UJIAN_ENC_GLOBAL) {
-    console.error('Missing required variables for simpanJawabanAjax:', {
-      base_url,
-      ID_H_UJIAN_ENC_GLOBAL,
-    });
-    return;
-  }
-
-  // Log for debugging
-  console.log('Sending answer data:', {
+  // Debug log
+  console.log('Debug simpanJawabanAjax:', {
     id_h_ujian_enc: ID_H_UJIAN_ENC_GLOBAL,
     id_soal: idSoal,
     jawaban: jawaban,
     ragu_ragu: raguStatus,
   });
 
-  // Prepare data with proper CSRF token
-  const ajaxData = {
+  // Prepare data
+  const formData = {
     id_h_ujian_enc: ID_H_UJIAN_ENC_GLOBAL,
     id_soal: idSoal,
     jawaban: jawaban,
     ragu_ragu: raguStatus,
+    [CSRF_TOKEN_NAME_GLOBAL]: CSRF_HASH_GLOBAL,
   };
-
-  // Add CSRF token if available
-  if (CSRF_TOKEN_NAME_GLOBAL && CSRF_HASH_GLOBAL) {
-    ajaxData[CSRF_TOKEN_NAME_GLOBAL] = CSRF_HASH_GLOBAL;
-  }
 
   // Show loading indicator
   const btnRagu = $('#btn-ragu-ragu');
@@ -351,44 +347,44 @@ function simpanJawabanAjax(idSoal, jawaban, raguStatus) {
   btnRagu.prop('disabled', true);
 
   $.ajax({
-    url: base_url + 'ujian/simpan_jawaban_ajax',
+    url: `${base_url}ujian/simpan_jawaban_ajax`,
     type: 'POST',
-    data: ajaxData,
+    data: formData,
     dataType: 'json',
     success: function (response) {
       if (response.status) {
         console.log('Jawaban berhasil disimpan');
-        // Update CSRF hash if provided
+        // Update CSRF hash
         if (response.csrf_hash_new) {
           window.examConfig.CSRF_HASH_GLOBAL = response.csrf_hash_new;
         }
       } else {
-        console.error('Gagal simpan jawaban:', response.message);
-        Swal.fire({
-          title: 'Gagal Simpan',
-          text: response.message || 'Gagal menyimpan jawaban',
-          type: 'error',
-          timer: 2000,
-          showConfirmButton: false,
-        });
+        console.error('Gagal simpan jawaban:', response);
+        // Tampilkan pesan error jika perlu
+        if (response.message === 'ID hasil ujian tidak valid') {
+          Swal.fire({
+            title: 'Error',
+            text: 'Sesi ujian tidak valid. Halaman akan dimuat ulang.',
+            icon: 'error',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: true,
+          }).then(() => {
+            window.location.reload();
+          });
+        }
       }
     },
     error: function (xhr, status, error) {
-      console.error('AJAX Error:', {
-        status: status,
-        error: error,
-        response: xhr.responseText,
-      });
+      console.error('AJAX Error:', { xhr, status, error });
       Swal.fire({
         title: 'Error',
-        text: 'Gagal menghubungi server. Silakan coba lagi.',
-        type: 'error',
+        text: 'Gagal menyimpan jawaban. Silakan coba lagi.',
+        icon: 'error',
         timer: 2000,
-        showConfirmButton: false,
       });
     },
     complete: function () {
-      // Re-enable button
       btnRagu.prop('disabled', false).html(originalBtnText);
     },
   });
@@ -558,36 +554,30 @@ function startTimer() {
     return;
   }
 
+  // Gunakan waktu terlambat dari m_ujian
   const waktuSelesai = new Date(window.examConfig.WAKTU_SELESAI).getTime();
 
-  console.log('Starting timer with end time:', window.examConfig.WAKTU_SELESAI);
-
-  if (isNaN(waktuSelesai)) {
-    console.error(
-      'Invalid WAKTU_SELESAI format:',
-      window.examConfig.WAKTU_SELESAI
-    );
-    timerElement.text('Error: Format waktu tidak valid');
-    return;
-  }
+  console.log('Timer started with end time:', window.examConfig.WAKTU_SELESAI);
 
   const timer = setInterval(function () {
     const now = new Date().getTime();
     const distance = waktuSelesai - now;
 
-    if (distance < 0) {
+    if (distance <= 0) {
       clearInterval(timer);
       timerElement.text('00:00:00');
       waktuHabis();
       return;
     }
 
+    // Hitung jam, menit, detik
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+    // Update tampilan timer
     timerElement.text(
       String(hours).padStart(2, '0') +
         ':' +

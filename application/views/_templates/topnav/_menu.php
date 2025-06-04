@@ -1,6 +1,6 @@
-<nav class="navbar navbar-static-top">
-	<div class="container">
-		<div class="navbar-header">
+<nav class="navbar navbar-static-top bg-purple">
+	<div class="container bg-purple">
+		<div class="navbar-header ">
 			<a href="#" class="navbar-brand"><i class="fa fa-laptop"></i> <b>CBT Online</b></a>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 				<i class="fa fa-bars"></i>
@@ -14,18 +14,18 @@
 			</ul>
 		</div>
 		<div class="navbar-custom-menu">
-			<ul class="nav navbar-nav">
-				<!-- <li><a href="#" onclick="simpan_akhir()">Selesai Ujian</a></li> -->
+			<!-- <ul class="nav navbar-nav">
+				<li><a href="#" onclick="simpan_akhir()">Selesai Ujian</a></li>
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-						<?=$siswa->nama?><span class="caret"></span>
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+						<?=$siswa->nama_siswa?><span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?=base_url('logout')?>">Logout</a></li>
 					</ul>
 				</li>
-			</ul>
-        </div>
+			</ul> -->
+    </div>
 		<!-- /.navbar-collapse -->
 	</div>
 	<!-- /.container-fluid -->

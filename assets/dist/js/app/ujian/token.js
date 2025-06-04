@@ -35,7 +35,7 @@ $(document).ready(function () {
           Swal.fire({
             title: 'Berhasil',
             text: response.message,
-            icon: 'success',
+            type: 'success',
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'OK',
@@ -48,7 +48,7 @@ $(document).ready(function () {
           Swal.fire({
             title: 'Gagal',
             text: response.message || 'Token tidak valid',
-            icon: 'error',
+            type: 'error',
             showCancelButton: false,
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'OK',
@@ -61,7 +61,7 @@ $(document).ready(function () {
         Swal.fire({
           title: 'Error',
           text: 'Terjadi kesalahan saat memproses token',
-          icon: 'error',
+          type: 'error',
           showCancelButton: false,
           confirmButtonColor: '#3085d6',
           confirmButtonText: 'OK',

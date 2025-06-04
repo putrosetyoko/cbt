@@ -13,8 +13,7 @@ $waktu_selesai = strtotime($hasil_ujian->tgl_selesai);
 $waktu_selesai_format = date('Y-m-d H:i:s', $waktu_selesai);
 
 // Ensure proper encryption
-$encrypted_id = $this->encryption->encrypt($hasil_ujian->id);
-$id_h_ujian_enc = strtr(base64_encode($encrypted_id), '+/=', '-_,'); ?>
+$id_h_ujian_enc = strtr(base64_encode($this->encryption->encrypt($h_ujian->id)), '+/=', '-_,'); ?>
 
 <?php if ($waktu_habis_ujian_timestamp_php > 0 && $waktu_habis_ujian_timestamp_php < time() && isset($hasil_ujian) && $hasil_ujian->status !== 'completed'): ?>
     <div class="alert alert-danger text-center">
@@ -25,39 +24,49 @@ $id_h_ujian_enc = strtr(base64_encode($encrypted_id), '+/=', '-_,'); ?>
     </div>
 <?php endif; ?>
 
-<!-- Variabel JavaScript Global -->
+<?php
+// Di bagian atas file, setelah komentar variabel
+$waktu_sekarang = time();
+$waktu_terlambat = strtotime($h_ujian->batas_masuk);
+
+// Pastikan waktu valid
+if ($waktu_terlambat === false) {
+    // Jika parsing gagal, gunakan waktu dari tabel m_ujian
+    $waktu_terlambat = strtotime($ujian->terlambat);
+}
+
+// Hitung sisa waktu
+$sisa_waktu = max(0, $waktu_terlambat - $waktu_sekarang);
+
+// Debug waktu
+log_message('debug', 'Debug waktu: ' . print_r([
+    'waktu_sekarang' => date('Y-m-d H:i:s', $waktu_sekarang),
+    'waktu_terlambat' => date('Y-m-d H:i:s', $waktu_terlambat),
+    'sisa_waktu' => $sisa_waktu
+], true));
+?>
+
+<!-- Tambahkan ini di bagian head atau sebelum closing </head> -->
 <script type="text/javascript">
-// Initialize exam config with properly encoded ID
+// Inisialisasi konfigurasi ujian
 window.examConfig = {
     base_url: '<?= base_url() ?>',
     ID_H_UJIAN_ENC_GLOBAL: '<?= $id_h_ujian_enc ?>',
-    JUMLAH_SOAL_TOTAL_GLOBAL: <?= $jumlah_soal_total_php ?>,
+    JUMLAH_SOAL_TOTAL_GLOBAL: <?= count($soal_collection) ?>,
     JAWABAN_TERSIMPAN_GLOBAL: <?= json_encode($jawaban_tersimpan) ?>,
-    WAKTU_HABIS_TIMESTAMP_GLOBAL: <?= $waktu_selesai ?>,
-    WAKTU_SELESAI: '<?= $waktu_selesai_format ?>',
+    WAKTU_SELESAI: '<?= date('Y-m-d H:i:s', $waktu_terlambat) ?>',
+    WAKTU_HABIS_TIMESTAMP_GLOBAL: <?= intval($waktu_terlambat) ?>, // Pastikan integer valid
     CSRF_TOKEN_NAME_GLOBAL: '<?= $this->security->get_csrf_token_name() ?>',
     CSRF_HASH_GLOBAL: '<?= $this->security->get_csrf_hash() ?>'
 };
 
 // Debug log
-console.log('Exam config initialized:', {
-    ...window.examConfig,
-    ID_H_UJIAN_ENC_GLOBAL_LENGTH: window.examConfig.ID_H_UJIAN_ENC_GLOBAL.length
+console.log('Debug waktu:', {
+    waktuSekarang: new Date().toISOString(),
+    waktuTerlambat: new Date(<?= $waktu_terlambat * 1000 ?>).toISOString(),
+    sisaWaktuDetik: <?= $sisa_waktu ?>,
+    waktuTerlambatTimestamp: <?= intval($waktu_terlambat) ?>
 });
-
-// Tambahkan variabel waktu
-const WAKTU_SELESAI = "<?= date('Y-m-d H:i:s', strtotime($hasil_ujian->tgl_selesai)) ?>";
-const SISA_WAKTU = <?= max(0, strtotime($hasil_ujian->tgl_selesai) - time()) ?>;
-const WAKTU_SELESAI_TIMESTAMP = <?= $waktu_selesai ?>;
-    
-console.log("Waktu Selesai:", WAKTU_SELESAI);
-console.log("Sisa Waktu (detik):", SISA_WAKTU);
-console.log("Debug waktu:", {
-    WAKTU_SELESAI: WAKTU_SELESAI,
-    WAKTU_SELESAI_TIMESTAMP: WAKTU_SELESAI_TIMESTAMP,
-    now: new Date().toISOString()
-});
-
 </script>
 
 <div class="row">

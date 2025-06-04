@@ -8,6 +8,30 @@ class Ujian_model extends CI_Model {
         // $this->load->database(); // Biasanya sudah autoload
     }
 
+    public function get_ujian_by_id_with_guru($id_ujian)
+    {
+        $this->db->select('m_ujian.*, mapel.nama_mapel, 
+                    g1.nama_guru as pembuat_soal,
+                    g2.nama_guru as guru_pengajar,
+                    jenjang.nama_jenjang')
+            ->from('m_ujian')
+            ->join('mapel', 'mapel.id_mapel = m_ujian.mapel_id')
+            ->join('guru g1', 'g1.id_guru = m_ujian.guru_id')
+            ->join('jenjang', 'jenjang.id_jenjang = m_ujian.id_jenjang_target', 'left')
+            // Join with guru_mapel_kelas_ajaran to get the teaching teacher
+            ->join('guru_mapel_kelas_ajaran gmka', 
+                'gmka.mapel_id = m_ujian.mapel_id AND 
+                gmka.id_tahun_ajaran = m_ujian.id_tahun_ajaran', 'left')
+            ->join('guru g2', 'g2.id_guru = gmka.guru_id', 'left')
+            ->where('m_ujian.id_ujian', $id_ujian);
+
+        // For debugging
+        $result = $this->db->get()->row();
+        log_message('debug', 'SQL Query: ' . $this->db->last_query());
+        
+        return $result;
+    }
+
     public function getUjianDatatables($filters = [], $guru_context = []) {
         $this->datatables->select(
             'u.id_ujian, u.nama_ujian, m.nama_mapel, j.nama_jenjang AS nama_jenjang_target, '.
@@ -528,6 +552,77 @@ class Ujian_model extends CI_Model {
             return false;
         }
     }
+
+    /**
+     * Mengambil soal-soal untuk ujian berdasarkan ID h_ujian
+     * 
+     * @param int $id_h_ujian ID dari h_ujian
+     * @return array Array berisi data soal-soal untuk ujian
+     */
+    public function get_soal_by_id_ujian($id_h_ujian) 
+    {
+        // Ambil data h_ujian untuk mendapatkan list_soal
+        $h_ujian = $this->db->get_where('h_ujian', ['id' => $id_h_ujian])->row();
+        if (!$h_ujian) {
+            return [];
+        }
+
+        // Decode list_soal JSON menjadi array
+        $list_soal = json_decode($h_ujian->list_soal);
+        if (empty($list_soal)) {
+            return [];
+        }
+
+        // Ambil master ujian untuk cek pengacakan opsi
+        $m_ujian = $this->db->get_where('m_ujian', ['id_ujian' => $h_ujian->ujian_id])->row();
+        $acak_opsi = ($m_ujian && $m_ujian->acak_opsi === 'Y');
+
+        // Ambil detail soal dari bank soal
+        $soal_collection = $this->db
+            ->select('id_soal, soal, file, tipe_file, opsi_a, opsi_b, opsi_c, opsi_d, opsi_e')
+            ->from('tb_soal')
+            ->where_in('id_soal', $list_soal)
+            ->get()
+            ->result();
+
+        // Jika perlu acak opsi
+        if ($acak_opsi) {
+            foreach ($soal_collection as &$soal) {
+                $opsi = [
+                    'A' => $soal->opsi_a,
+                    'B' => $soal->opsi_b,
+                    'C' => $soal->opsi_c,
+                    'D' => $soal->opsi_d,
+                    'E' => $soal->opsi_e
+                ];
+                
+                // Acak opsi
+                uksort($opsi, function($a, $b) {
+                    return rand(-1, 1);
+                });
+
+                // Assign kembali opsi yang sudah diacak
+                $i = 0;
+                foreach ($opsi as $key => $value) {
+                    $prop = 'opsi_' . strtolower($key);
+                    $soal->$prop = $value;
+                }
+            }
+        }
+
+        // Urutkan soal sesuai urutan di list_soal
+        $sorted_soal = [];
+        foreach ($list_soal as $id_soal) {
+            foreach ($soal_collection as $soal) {
+                if ($soal->id_soal == $id_soal) {
+                    $sorted_soal[] = $soal;
+                    break;
+                }
+            }
+        }
+
+        return $sorted_soal;
+    }
     
     public function get_lembar_ujian_siswa($id_h_ujian, $id_siswa)
     {
@@ -585,42 +680,42 @@ class Ujian_model extends CI_Model {
     }
 
     public function encrypt_exam_id($id)
-{
-    $CI =& get_instance();
-    try {
-        // Always use the same encryption method
-        $encrypted = $CI->encryption->encrypt($id);
-        return strtr(base64_encode($encrypted), '+/=', '-_,');
-    } catch (Exception $e) {
-        log_message('error', 'Error encrypting exam ID: ' . $e->getMessage());
-        return false;
-    }
-}
-
-public function decrypt_exam_id($encrypted_id)
-{
-    $CI =& get_instance();
-    try {
-        // Reverse the process
-        $encrypted_id = urldecode($encrypted_id);
-        $encrypted = strtr($encrypted_id, '-_,', '+/=');
-        $binary = base64_decode($encrypted);
-        
-        if ($binary === false) {
-            throw new Exception('Invalid encrypted ID format');
+    {
+        $CI =& get_instance();
+        try {
+            // Always use the same encryption method
+            $encrypted = $CI->encryption->encrypt($id);
+            return strtr(base64_encode($encrypted), '+/=', '-_,');
+        } catch (Exception $e) {
+            log_message('error', 'Error encrypting exam ID: ' . $e->getMessage());
+            return false;
         }
-
-        $id = $CI->encryption->decrypt($binary);
-        
-        if (!$id || !is_numeric($id)) {
-            throw new Exception('Failed to decrypt ID');
-        }
-
-        return (int)$id;
-    } catch (Exception $e) {
-        log_message('error', 'Error decrypting exam ID: ' . $e->getMessage());
-        return false;
     }
-}
+
+    public function decrypt_exam_id($encrypted_id)
+    {
+        $CI =& get_instance();
+        try {
+            // Reverse the process
+            $encrypted_id = urldecode($encrypted_id);
+            $encrypted = strtr($encrypted_id, '-_,', '+/=');
+            $binary = base64_decode($encrypted);
+            
+            if ($binary === false) {
+                throw new Exception('Invalid encrypted ID format');
+            }
+
+            $id = $CI->encryption->decrypt($binary);
+            
+            if (!$id || !is_numeric($id)) {
+                throw new Exception('Failed to decrypt ID');
+            }
+
+            return (int)$id;
+        } catch (Exception $e) {
+            log_message('error', 'Error decrypting exam ID: ' . $e->getMessage());
+            return false;
+        }
+    }
 
 }

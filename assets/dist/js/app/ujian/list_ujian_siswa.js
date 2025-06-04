@@ -49,7 +49,7 @@ $(document).ready(function () {
         });
 
         Swal.fire({
-          icon: 'error',
+          type: 'error',
           title: 'Error',
           text: 'Gagal memuat daftar ujian. Silakan refresh halaman.',
         });
@@ -100,17 +100,32 @@ $(document).ready(function () {
           // Get time parts from both timestamps
           const [, mulaiTime] = row.tgl_mulai_formatted.split(' ');
           const [, terlambatTime] = row.terlambat_formatted.split(' ');
-          return `${mulaiTime}-${terlambatTime} WITA`;
+          return `${mulaiTime}-${terlambatTime} WIB`;
         },
       },
       {
         data: 'status_pengerjaan_siswa',
         className: 'text-center',
         render: function (data, type, row) {
-          if (data === 'completed') {
-            return '<span class="label label-success">Selesai</span>';
+          switch (data) {
+            case 'completed':
+              return '<span class="label label-success">Selesai</span>';
+            case 'sedang_dikerjakan':
+              return '<span class="label label-warning">Sedang Dikerjakan</span>';
+            default:
+              let now = new Date().getTime();
+              let tglMulai = new Date(row.tgl_mulai_server_format).getTime();
+              let tglTerlambat = new Date(
+                row.terlambat_server_format
+              ).getTime();
+
+              if (now < tglMulai) {
+                return '<span class="label label-default">Belum Mulai</span>';
+              } else if (now > tglTerlambat) {
+                return '<span class="label label-danger">Terlewat</span>';
+              }
+              return '<span class="label label-warning">Belum Dikerjakan</span>';
           }
-          return '<span class="label label-warning">Belum Dikerjakan</span>';
         },
       },
       {
@@ -123,33 +138,49 @@ $(document).ready(function () {
           let tglMulai = new Date(row.tgl_mulai_server_format).getTime();
           let tglTerlambat = new Date(row.terlambat_server_format).getTime();
 
-          if (row.status_pengerjaan_siswa === 'completed') {
-            return `<a class="btn btn-xs btn-info" href="${BASE_URL}ujian/hasil/${encodeURIComponent(
-              row.id_hasil_ujian_encrypted
-            )}" title="Lihat Hasil">
-                            <i class="fa fa-file-text-o"></i> Lihat Hasil
-                        </a>`;
+          // Handle different status conditions
+          switch (row.status_pengerjaan_siswa) {
+            case 'completed':
+              // Tidak menampilkan tombol lihat hasil
+              return '';
+
+            case 'sedang_dikerjakan':
+              const safeUrlContinue = encodeURIComponent(row.id_ujian_encrypted)
+                .replace(/\(/g, '%28')
+                .replace(/\)/g, '%29')
+                .replace(/!/g, '%21')
+                .replace(/'/g, '%27')
+                .replace(/\*/g, '%2A');
+
+              return `<a class="btn btn-xs bg-blue" href="${BASE_URL}ujian/token/${safeUrlContinue}" title="Lanjutkan Ujian">
+          <i class="fa fa-pencil"></i> Lanjutkan
+        </a>`;
           }
 
-          // Jika belum dikerjakan
-          if (now >= tglMulai && now <= tglTerlambat) {
-            // Use encodeURIComponent for the encrypted ID
-            const safeUrl = encodeURIComponent(row.id_ujian_encrypted)
-              .replace(/\(/g, '%28')
-              .replace(/\)/g, '%29')
-              .replace(/!/g, '%21')
-              .replace(/'/g, '%27')
-              .replace(/\*/g, '%2A');
-
-            return `<a class="btn btn-xs btn-primary" href="${BASE_URL}ujian/token/${safeUrl}" title="Ikuti Ujian">
-                            <i class="fa fa-pencil"></i> Ikut Ujian
-                        </a>`;
-          } else if (now < tglMulai) {
-            return `<button type="button" class="btn btn-xs btn-primary disabled" title="Ujian Belum Dimulai"><i class="fa fa-pencil"></i> Ikut Ujian</button>`;
-          } else {
-            // now > tglTerlambat
-            return `<button type="button" class="btn btn-xs btn-primary disabled" title="Waktu Sudah Habis"><i class="fa fa-pencil"></i> Ikut Ujian</button>`;
+          // Handle timing conditions for non-started exams
+          if (now < tglMulai) {
+            return `<button type="button" class="btn btn-xs bg-blue disabled" title="Ujian Belum Dimulai">
+        <i class="fa fa-pencil"></i> Ikut Ujian
+      </button>`;
           }
+
+          if (now > tglTerlambat) {
+            return `<button type="button" class="btn btn-xs bg-blue disabled" title="Waktu Sudah Habis">
+        <i class="fa fa-pencil"></i> Ikuti Ujian
+      </button>`;
+          }
+
+          // Exam is available to take
+          const safeUrl = encodeURIComponent(row.id_ujian_encrypted)
+            .replace(/\(/g, '%28')
+            .replace(/\)/g, '%29')
+            .replace(/!/g, '%21')
+            .replace(/'/g, '%27')
+            .replace(/\*/g, '%2A');
+
+          return `<a class="btn btn-xs btn-primary" href="${BASE_URL}ujian/token/${safeUrl}" title="Ikuti Ujian">
+      <i class="fa fa-pencil"></i> Ikut Ujian
+    </a>`;
         },
       },
     ],
@@ -170,7 +201,7 @@ $(document).ready(function () {
   tableListUjianSiswa.on('error.dt', function (e, settings, techNote, message) {
     console.error('DataTables error:', message);
     Swal.fire({
-      icon: 'error',
+      type: 'error',
       title: 'Error',
       text: 'Terjadi kesalahan saat memuat data. Silakan refresh halaman.',
     });

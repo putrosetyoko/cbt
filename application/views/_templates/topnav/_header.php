@@ -41,11 +41,11 @@
 						<?=$judul?>
 						<small><?=$subjudul?></small>
 					</h1>
-					<ol class="breadcrumb">
+					<!-- <ol class="breadcrumb">
 						<li><a href="<?=base_url()?>"><i class="fa fa-dashboard"></i> Home</a></li>
-						<li><a href="<?=base_url()?>ujian/list"><?=$judul?></a></li>
+						<li><a href="#"><?=$judul?></a></li>
 						<li class="active"><?=$subjudul?></li>
-					</ol>
+					</ol> -->
 				</section>
 
 				<!-- Main content -->
