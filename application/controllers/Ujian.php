@@ -1169,17 +1169,32 @@ class Ujian extends MY_Controller {
                 'ujian' => $ujian,
                 'h_ujian' => $h_ujian,
                 'soal_collection' => $this->ujian_m->get_soal_by_id_ujian($id_h_ujian),
+                'jawaban_tersimpan_php' => json_decode($h_ujian->list_jawaban, true) ?: [],
                 'jawaban_tersimpan' => json_decode($h_ujian->list_jawaban, true) ?: [],
                 'id_h_ujian_enc' => $id_h_ujian_enc,
                 'waktu_selesai' => date('Y-m-d H:i:s', $waktu_terlambat),
                 'sisa_waktu' => $sisa_waktu,
+                // Tambahkan debug
+                'debug_jawaban' => [
+                    'raw' => $h_ujian->list_jawaban,
+                    'decoded' => json_decode($h_ujian->list_jawaban, true)
+                ],
                 // Tambahan untuk debugging
                 'debug_info' => [
                     'waktu_sekarang' => date('Y-m-d H:i:s', $waktu_sekarang),
                     'waktu_terlambat' => date('Y-m-d H:i:s', $waktu_terlambat),
                     'sisa_waktu' => $sisa_waktu
-                ]
+                ],
             ];
+            $data['debug_soal'] = array_map(function($soal) {
+                return [
+                    'id_soal' => $soal->id_soal,
+                    'soal_text' => substr($soal->soal, 0, 100) . '...', // First 100 chars
+                    'has_file' => !empty($soal->file),
+                    'file_path' => !empty($soal->file) ? FCPATH . 'uploads/bank_soal/' . $soal->file : null,
+                    'file_exists' => !empty($soal->file) ? file_exists(FCPATH . 'uploads/bank_soal/' . $soal->file) : false
+                ];
+            }, $data['soal_collection']);
 
             $this->load->view('_templates/topnav/_header.php', $data);
             $this->load->view('ujian/lembar_ujian', $data);
@@ -1342,7 +1357,7 @@ class Ujian extends MY_Controller {
                     'list_jawaban' => json_encode($jawaban_akhir),
                     'jml_benar' => $jml_benar,
                     'nilai_bobot' => $total_bobot,
-                    'nilai' => round($nilai, 2),
+                    'nilai' => number_format($nilai, 2, '.', ''),
                     'status' => 'completed',
                     'tgl_selesai' => date('Y-m-d H:i:s')
                 ]);

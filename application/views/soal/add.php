@@ -60,17 +60,31 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
                         </div>
                         <hr>
 
-                        <?php $abjad = ['a', 'b', 'c', 'd', 'e']; foreach ($abjad as $abj) : $ABJ = strtoupper($abj); ?>
+                        <!-- Untuk setiap opsi jawaban -->
+                        <?php 
+                        $abjad = isset($abjad) ? $abjad : ['a', 'b', 'c', 'd', 'e'];
+                        foreach ($abjad as $abj): 
+                            $ABJ = strtoupper($abj); 
+                        ?>
                         <div class="form-group">
-                            <label for="jawaban_<?= $abj; ?>_form">Opsi Jawaban <?= $ABJ; ?> <span class="text-danger">*</span></label>
-                            <textarea name="jawaban_<?= $abj; ?>" id="jawaban_<?= $abj; ?>_form" class="form-control summernote_opsi" placeholder="Isi opsi <?= $ABJ; ?>..."></textarea>
+                            <label for="jawaban_<?= $abj; ?>_form">
+                                Opsi Jawaban <?= $ABJ; ?>
+                                <small class="text-muted">(Teks atau File)</small>
+                            </label>
+                            <textarea name="jawaban_<?= $abj; ?>" 
+                                    id="jawaban_<?= $abj; ?>_form" 
+                                    class="form-control summernote_opsi" 
+                                    placeholder="Isi opsi <?= $ABJ; ?>... (Opsional jika menggunakan gambar/audio)"></textarea>
                             <small class="help-block text-danger" id="error_jawaban_<?= $abj; ?>"></small>
                         </div>
+
                         <div class="form-group">
-                            <label for="file_<?= $abj; ?>_form">File Pendukung Opsi <?= $ABJ; ?> (Gambar/Audio)</label>
-                            <input type="file" name="file_<?= $abj; ?>" id="file_<?= $abj; ?>_form" class="form-control">
-                            <small class="help-block">Kosongkan jika tidak ada.</small>
-                            <small class="help-block text-danger" id="error_file_<?= $abj; ?>"></small>
+                            <label for="file_<?= $abj; ?>_form">File Pendukung Opsi <?= $ABJ; ?></label>
+                            <input type="file" 
+                                   name="file_<?= $abj; ?>" 
+                                   id="file_<?= $abj; ?>_form" 
+                                   class="form-control">
+                            <small class="help-block">Upload file jika ingin menggunakan gambar/audio sebagai jawaban</small>
                         </div>
                         <hr>
                         <?php endforeach; ?>

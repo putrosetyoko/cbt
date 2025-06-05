@@ -192,15 +192,13 @@ class Soal extends CI_Controller {
             'subjudul' => 'Buat Soal Baru',
             'is_admin' => $this->is_admin,
             'all_jenjang' => $this->master->getAllJenjang(),
+            'abjad'    => ['a', 'b', 'c', 'd', 'e'], // Add this line
         ];
 
         if ($this->is_admin) {
             $data['all_mapel'] = $this->master->getAllMapel();
-            // Admin bisa memilih guru pembuat (opsional, default ke diri sendiri)
-            // $data['all_guru_for_admin'] = $this->master->getAllGuru(); 
         } else if ($this->is_guru && $this->pj_mapel_data) {
-            // Jika Guru adalah PJ Soal, mapel sudah ditentukan
-            $data['mapel_pj'] = $this->pj_mapel_data; // Kirim objek mapel PJ
+            $data['mapel_pj'] = $this->pj_mapel_data;
         }
 
         $this->load->view('_templates/dashboard/_header.php', $data);
@@ -368,15 +366,26 @@ class Soal extends CI_Controller {
         $this->form_validation->set_rules('jawaban', 'Kunci Jawaban', 'required|in_list[A,B,C,D,E]');
         $this->form_validation->set_rules('bobot', 'Bobot Soal', 'required|integer|greater_than[0]');
         
+        // Remove the previous validation rules for answer options
         $abjad = ['a', 'b', 'c', 'd', 'e'];
         foreach ($abjad as $abj) {
-            $this->form_validation->set_rules('jawaban_'.$abj, 'Opsi '.strtoupper($abj), 'required');
+            // Remove this line
+            // $this->form_validation->set_rules('jawaban_'.$abj, 'Opsi '.strtoupper($abj), 'required');
         }
 
-        if ($this->is_admin) {
-            $this->form_validation->set_rules('mapel_id', 'Mata Pelajaran', 'required|numeric');
-            // Jika admin bisa assign ke guru lain, tambahkan validasi guru_id dari form
-            // $this->form_validation->set_rules('guru_id_assign', 'Guru Pembuat', 'required|numeric');
+        // New validation rules that check either text OR file exists
+        foreach ($abjad as $option) {
+            $hasFile = !empty($_FILES['file_' . $option]['name']);
+            
+            if (!$hasFile) {
+                // Only require text if no file is uploaded
+                $this->form_validation->set_rules(
+                    'jawaban_' . $option,
+                    'Opsi ' . strtoupper($option),
+                    'required',
+                    ['required' => 'Opsi {field} harus diisi jika tidak menggunakan gambar/audio']
+                );
+            }
         }
 
         if ($this->form_validation->run() === FALSE) {
@@ -465,6 +474,21 @@ class Soal extends CI_Controller {
                 $data_soal[$db_file_opsi_field] = null;
             } elseif ($method === 'edit' && $soal_lama) {
                 $data_soal[$db_file_opsi_field] = $soal_lama->$db_file_opsi_field;
+            }
+        }
+
+        // When processing the data, check that at least one (text or file) exists
+        foreach ($abjad as $option) {
+            $hasText = !empty($this->input->post('jawaban_' . $option));
+            $hasFile = !empty($_FILES['file_' . $option]['name']);
+            
+            if (!$hasText && !$hasFile) {
+                $this->output_json([
+                    'status' => false, 
+                    'errors' => ['jawaban_' . $option => 'Opsi ' . strtoupper($option) . ' harus diisi dengan teks atau file'],
+                    'message' => 'Setiap opsi harus memiliki teks atau file'
+                ]);
+                return;
             }
         }
 

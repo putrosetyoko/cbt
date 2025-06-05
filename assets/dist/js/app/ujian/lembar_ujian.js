@@ -88,28 +88,29 @@ function initializeNavigation() {
   totalSoalUjian = parseInt(JUMLAH_SOAL_TOTAL_GLOBAL) || 0;
   idHUjianEnc = ID_H_UJIAN_ENC_GLOBAL;
 
-  try {
-    if (
-      typeof JAWABAN_TERSIMPAN_GLOBAL === 'object' &&
-      JAWABAN_TERSIMPAN_GLOBAL !== null
-    ) {
-      jawabanSiswaInternal = JAWABAN_TERSIMPAN_GLOBAL;
-    } else if (
-      typeof JAWABAN_TERSIMPAN_GLOBAL === 'string' &&
-      JAWABAN_TERSIMPAN_GLOBAL.trim() !== ''
-    ) {
-      jawabanSiswaInternal = JSON.parse(JAWABAN_TERSIMPAN_GLOBAL);
-    } else {
+  // Perbaiki inisialisasi jawaban
+  if (window.examConfig.JAWABAN_TERSIMPAN_GLOBAL) {
+    try {
+      if (typeof window.examConfig.JAWABAN_TERSIMPAN_GLOBAL === 'string') {
+        jawabanSiswaInternal = JSON.parse(
+          window.examConfig.JAWABAN_TERSIMPAN_GLOBAL
+        );
+      } else {
+        jawabanSiswaInternal = window.examConfig.JAWABAN_TERSIMPAN_GLOBAL;
+      }
+      console.log('Jawaban tersimpan berhasil diload:', jawabanSiswaInternal);
+    } catch (e) {
+      console.error('Gagal parse jawaban tersimpan:', e);
       jawabanSiswaInternal = {};
     }
-  } catch (e) {
-    console.error(
-      'Gagal parse JAWABAN_TERSIMPAN_GLOBAL:',
-      e,
-      JAWABAN_TERSIMPAN_GLOBAL
-    );
-    jawabanSiswaInternal = {};
   }
+
+  // Debug jawaban tersimpan
+  console.log(
+    'JAWABAN_TERSIMPAN_GLOBAL:',
+    window.examConfig.JAWABAN_TERSIMPAN_GLOBAL
+  );
+  console.log('jawabanSiswaInternal:', jawabanSiswaInternal);
 
   updateSemuaNavigasiSoalStyles();
 
@@ -411,15 +412,15 @@ function konfirmasiDanSelesaikanUjian() {
   }
 
   let pesanKonfirmasi =
-    'Anda yakin ingin menyelesaikan dan mengirimkan semua jawaban?';
+    'Setelah ujian diselesaikan, Anda tidak dapat mengubah jawaban Anda lagi.';
   if (belumDijawabCount > 0) {
     pesanKonfirmasi += `<br><strong style='color:red;'>Perhatian: Ada ${belumDijawabCount} soal yang belum Anda jawab.</strong>`;
   }
   if (raguRaguCount > 0) {
     pesanKonfirmasi += `<br><strong style='color:orange;'>Ada ${raguRaguCount} soal yang masih ditandai ragu-ragu.</strong>`;
   }
-  pesanKonfirmasi +=
-    '<br><br>Setelah ujian diselesaikan, Anda tidak dapat mengubah jawaban Anda lagi.';
+  // pesanKonfirmasi +=
+  //   '<br><br>';
 
   return Swal.fire({
     title: 'Konfirmasi Selesai Ujian',
@@ -587,3 +588,21 @@ function startTimer() {
     );
   }, 1000);
 }
+
+// Inisialisasi tampilan jawaban
+function initializeAnswers() {
+  for (let idSoal in jawabanSiswaInternal) {
+    if (jawabanSiswaInternal[idSoal].j) {
+      $(
+        `input[name="jawaban_soal_${idSoal}"][value="${jawabanSiswaInternal[idSoal].j}"]`
+      ).prop('checked', true);
+    }
+  }
+  updateSemuaNavigasiSoalStyles();
+}
+
+// Panggil saat dokumen ready
+$(document).ready(function () {
+  // ...existing code...
+  initializeAnswers();
+});

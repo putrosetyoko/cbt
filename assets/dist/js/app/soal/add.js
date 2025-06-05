@@ -103,4 +103,57 @@ $(document).ready(function () {
       },
     });
   });
+
+  // When file input changes
+  ['a', 'b', 'c', 'd', 'e'].forEach(function (option) {
+    $('#file_' + option + '_form').change(function () {
+      var hasFile = $(this).val() !== '';
+      var textArea = $('#jawaban_' + option + '_form');
+      var errorText = $('#error_jawaban_' + option);
+
+      if (hasFile) {
+        // If file exists, remove required from textarea
+        textArea.removeAttr('required');
+        textArea.closest('.form-group').find('label span.text-danger').hide();
+        errorText.text('');
+      } else {
+        // If no file, make textarea required
+        textArea.attr('required', 'required');
+        textArea.closest('.form-group').find('label span.text-danger').show();
+      }
+    });
+  });
+
+  // Form validation before submit
+  $('#formSoal').on('submit', function (e) {
+    var isValid = true;
+
+    ['a', 'b', 'c', 'd', 'e'].forEach(function (option) {
+      var hasFile = $('#file_' + option + '_form').val() !== '';
+      var hasText =
+        $('#jawaban_' + option + '_form')
+          .val()
+          .trim() !== '';
+
+      // Reset error message
+      $('#error_jawaban_' + option).text('');
+
+      // Check if at least one exists
+      if (!hasFile && !hasText) {
+        isValid = false;
+        $('#error_jawaban_' + option).text(
+          'Opsi ' + option.toUpperCase() + ' harus diisi dengan teks atau file'
+        );
+      }
+    });
+
+    if (!isValid) {
+      e.preventDefault();
+      Swal.fire({
+        icon: 'error',
+        title: 'Validasi Gagal',
+        text: 'Setiap opsi harus diisi dengan teks atau file',
+      });
+    }
+  });
 });
