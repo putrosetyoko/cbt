@@ -258,16 +258,13 @@ class Master_model extends CI_Model
 
         $this->db->select('DISTINCT(gmka.mapel_id)'); // Hanya pilih kolom mapel_id dari tabel gmka
         $this->db->from('guru_mapel_kelas_ajaran gmka');
-        // Tidak perlu join ke tabel mapel jika hanya butuh ID-nya untuk perbandingan
         $this->db->where('gmka.guru_id', $guru_id);
         $this->db->where('gmka.id_tahun_ajaran', $id_tahun_ajaran);
         $query = $this->db->get();
 
         log_message('debug', 'Master_model (getMapelDiajarGuru) - Last Query: ' . $this->db->last_query());
 
-        $result_objects = $query->result(); // Ini menghasilkan array objek: [{mapel_id:val1}, {mapel_id:val2}]
-        
-        // Ubah menjadi array ID sederhana (flat array): [val1, val2]
+        $result_objects = $query->result();
         $flat_mapel_ids = array_column($result_objects, 'mapel_id');
         
         log_message('debug', 'Master_model (getMapelDiajarGuru) - GuruID: '.$guru_id.', TA_ID: '.$id_tahun_ajaran.', Returned flat_mapel_ids: '.print_r($flat_mapel_ids, true));
@@ -608,5 +605,23 @@ class Master_model extends CI_Model
         return $available_mapels;
     }
 
-    
+    /**
+     * Mengambil daftar ID kelas yang diajar oleh seorang guru pada tahun ajaran tertentu.
+     * Digunakan untuk filter hasil ujian siswa bagi guru.
+     *
+     * @param int $id_guru ID guru
+     * @param int $id_tahun_ajaran ID tahun ajaran
+     * @return array Array berisi ID kelas
+     */
+    public function getKelasDiajarGuru($id_guru, $id_tahun_ajaran)
+    {
+        $this->db->select('kelas_id');
+        $this->db->from('guru_mapel_kelas_ajaran');
+        $this->db->where('guru_id', $id_guru);
+        $this->db->where('id_tahun_ajaran', $id_tahun_ajaran);
+        $this->db->distinct();
+        $query = $this->db->get();
+        return array_column($query->result_array(), 'kelas_id');
+    }
+
 }

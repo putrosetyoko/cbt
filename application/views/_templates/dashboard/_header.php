@@ -29,8 +29,16 @@
     <link rel="stylesheet" href="<?=base_url()?>assets/bower_components/froala_editor/css/themes/royal.min.css">
 	<!-- /texarea editor; -->
 
+	<!-- Summernote CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/dist/css/mystyle.css">
+
+	<!-- Di bagian head atau sebelum closing body -->
+	<!-- <link href="<?=base_url()?>assets/plugins/summernote/katex.min.css" rel="stylesheet">
+	<script src="<?=base_url()?>assets/plugins/summernote/katex.min.js"></script>
+	<script src="<?=base_url()?>assets/plugins/summernote/summernote-math.js"></script> -->
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,8 +47,13 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<!-- Load jQuery first -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<!-- Load Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<!-- Load Summernote JS -->
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<style>
     .small-box {
         transition: all 0.3s ease;
@@ -85,6 +98,8 @@
 
 <!-- Must Load First -->
 <script src="<?=base_url()?>assets/bower_components/jquery/jquery-3.3.1.min.js"></script>
+<script src="<?=base_url()?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="<?=base_url()?>assets/bower_components/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="<?=base_url()?>assets/bower_components/select2/js/select2.full.min.js"></script>
 <script src="<?=base_url()?>assets/bower_components/moment/min/moment.min.js"></script>

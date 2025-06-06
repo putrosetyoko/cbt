@@ -71,75 +71,109 @@ console.log('Debug waktu:', {
 
 <!-- Add CSS file reference in header -->
 <link rel="stylesheet" href="<?= base_url('assets/dist/css/ujian.css') ?>">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
 
-<div class="exam-container">
-    <div class="row">
-        <!-- Navigation Column -->
-        <div class="col-md-3">
-            <div class="exam-navigation">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Navigasi Soal</h3>
-                        <div class="timer-container pull-right">
-                            <i class="fa fa-clock-o"></i> 
-                            <span id="timer-ujian">
-                                <?= gmdate('H:i:s', max(0, strtotime($hasil_ujian->tgl_selesai) - time())) ?>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="box-body" id="panel-navigasi-soal" style="max-height: 450px; overflow-y: auto;">
-                        <?php if (!empty($soal_collection)): ?>
-                            <?php foreach ($soal_collection as $index => $soal_nav): ?>
-                                <?php
-                                    $no_display = $index + 1;
-                                    // Inisialisasi default
-                                    $status_jawaban_nav = 'default'; 
-                                    $id_soal_nav_item = $soal_nav->id_soal ?? null;
+<!-- Add CSS for new styling -->
+<!-- <style>
+.box.box-primary {
+    border-top: 3px solid #3c8dbc;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
 
-                                    if ($id_soal_nav_item && is_array($jawaban_tersimpan_php) && isset($jawaban_tersimpan_php[$id_soal_nav_item])) {
-                                        $jwb_item_nav = $jawaban_tersimpan_php[$id_soal_nav_item];
-                                        if (!empty($jwb_item_nav['j'])) {
-                                            $status_jawaban_nav = ($jwb_item_nav['r'] ?? 'N') == 'Y' ? 'warning' : 'success';
-                                        } elseif (($jwb_item_nav['r'] ?? 'N') == 'Y') {
-                                            $status_jawaban_nav = 'warning';
-                                        }
-                                    }
-                                ?>
-                                <button type="button" class="btn btn-<?= $status_jawaban_nav ?> btn-soal-nav" data-nomor="<?= $no_display ?>" data-id-soal="<?= $id_soal_nav_item ?>" style="margin:2px; width: 40px; height: 40px;">
-                                    <?= $no_display ?>
-                                </button>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="text-muted">Tidak ada soal.</p>
-                        <?php endif; ?>
+.badge.bg-blue {
+    background-color: #3c8dbc;
+}
+
+.badge.bg-red {
+    background-color: #dd4b39;
+}
+
+.box-header.with-border {
+    border-bottom: 1px solid #f4f4f4;
+    padding: 10px;
+}
+
+.action.btn {
+    margin: 0 2px;
+}
+</style> -->
+
+<div class="row">
+    <!-- Navigation Column -->
+    <div class="col-sm-3">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Navigasi Soal</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body" id="panel-navigasi-soal" style="max-height: 450px; overflow-y: auto;">
+                <?php if (!empty($soal_collection)): ?>
+                    <?php foreach ($soal_collection as $index => $soal_nav): ?>
+                        <?php
+                            $no_display = $index + 1;
+                            // Inisialisasi default
+                            $status_jawaban_nav = 'default'; 
+                            $id_soal_nav_item = $soal_nav->id_soal ?? null;
+
+                            if ($id_soal_nav_item && is_array($jawaban_tersimpan_php) && isset($jawaban_tersimpan_php[$id_soal_nav_item])) {
+                                $jwb_item_nav = $jawaban_tersimpan_php[$id_soal_nav_item];
+                                if (!empty($jwb_item_nav['j'])) {
+                                    $status_jawaban_nav = ($jwb_item_nav['r'] ?? 'N') == 'Y' ? 'warning' : 'success';
+                                } elseif (($jwb_item_nav['r'] ?? 'N') == 'Y') {
+                                    $status_jawaban_nav = 'warning';
+                                }
+                            }
+                        ?>
+                        <button type="button" class="btn btn-<?= $status_jawaban_nav ?> btn-soal-nav" data-nomor="<?= $no_display ?>" data-id-soal="<?= $id_soal_nav_item ?>" style="margin:2px; width: 40px; height: 40px;">
+                            <?= $no_display ?>
+                        </button>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-muted">Tidak ada soal.</p>
+                <?php endif; ?>
+            </div>
+            <div class="box-footer">
+                <div class="legend-container">
+                    <div class="legend-item">
+                        <h5>Keterangan:</h5>
+                        <span class="badge bg-green">&nbsp;</span> Sudah Dijawab
                     </div>
-                    <div class="box-footer">
-                        <div class="legend-container">
-                            <div class="legend-item">
-                                <span class="badge bg-green">&nbsp;</span> Sudah Dijawab
-                            </div>
-                            <div class="legend-item">
-                                <span class="badge bg-yellow">&nbsp;</span> Ragu-ragu
-                            </div>
-                            <div class="legend-item">
-                                <span class="badge bg-gray">&nbsp;</span> Belum Dijawab
-                            </div>
-                        </div>
+                    <div class="legend-item">
+                        <span class="badge bg-yellow">&nbsp;</span> Ragu-ragu
+                    </div>
+                    <div class="legend-item">
+                        <span class="badge bg-gray">&nbsp;</span> Belum Dijawab
                     </div>
                 </div>
-                <button type="button" id="btn-selesai-ujian" class="btn btn-success btn-lg btn-block btn-selesai">
-                    <i class="fa fa-check-circle"></i> SELESAIKAN UJIAN
-                </button>
             </div>
         </div>
+    </div>
 
-        <!-- Question Content Column -->
-        <div class="col-md-9">
-            <div class="exam-content">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Soal #<span id="display-nomor-soal">1</span> dari <?= count($soal_collection) ?></h3>
+    <!-- Question Content Column -->
+    <div class="col-sm-9">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <span class="badge bg-blue">
+                        No. <span id="display-nomor-soal">1</span> dari <?= count($soal_collection) ?> Soal
+                    </span>
+                </h3>
+                <div class="box-tools pull-right">
+                    <span class="badge bg-red">
+                        <i class="fa fa-clock-o"></i>   
+                        <span id="timer-ujian">
+                            <?= gmdate('H:i:s', max(0, strtotime($hasil_ujian->tgl_selesai) - time())) ?>
+                        </span>
+                    </span>
                 </div>
-                
+            </div>
+            
+            <div class="box-body">
                 <div id="area-soal-ujian">
                     <?php if (!empty($soal_collection)): ?>
                         <?php foreach ($soal_collection as $index => $soal_item): ?>
@@ -157,24 +191,33 @@ console.log('Debug waktu:', {
                                 <div class="box-body">
                                     <!-- Add this section for question content -->
                                     <div class="soal-content">
-                                        <!-- Question text -->
-                                        <div class="soal-text mb-3">
-                                            <?= $soal_item->soal ?>
-                                        </div>
                                         
                                         <!-- Question media/file if exists -->
                                         <?php if (!empty($soal_item->file)): ?>
-                                            <div class="soal-media text-center mb-3">
-                                                <?php
-                                                    $file_path = FCPATH . 'uploads/bank_soal/' . $soal_item->file;
-                                                    if (file_exists($file_path)) {
-                                                        echo tampil_media(base_url('uploads/bank_soal/' . $soal_item->file));
-                                                    } else {
-                                                        echo '<div class="alert alert-warning">File tidak ditemukan: ' . htmlspecialchars($soal_item->file) . '</div>';
-                                                    }
+                                            <div class="soal-media">
+                                                <?php 
+                                                $path_file_soal = 'uploads/bank_soal/' . $soal_item->file;
+                                                $file_url = base_url($path_file_soal);
+                                                $file_ext = strtolower(pathinfo($soal_item->file, PATHINFO_EXTENSION));
+                                                
+                                                if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])):
                                                 ?>
+                                                    <img 
+                                                        src="<?= $file_url ?>" 
+                                                        alt="Gambar Soal" 
+                                                        class="zoomable-image"
+                                                        data-zoomable
+                                                    >
+                                                <?php else: ?>
+                                                    <?= tampil_media($path_file_soal); ?>
+                                                <?php endif; ?>
                                             </div>
                                         <?php endif; ?>
+                                    </div>
+
+                                    <!-- Question text -->
+                                    <div class="soal-text mb-3">
+                                        <?= $soal_item->soal ?>
                                     </div>
 
                                     <!-- Bagian opsi jawaban -->
@@ -230,15 +273,24 @@ console.log('Debug waktu:', {
                         <div class="box-body"><p class="text-center text-danger">Tidak ada soal yang dimuat untuk ujian ini.</p></div>
                     <?php endif; ?>
                 </div> 
-                <div class="nav-buttons text-center">
-                    <button type="button" class="btn btn-default btn-nav-soal" id="btn-prev-soal" data-navigasi="prev" style="display:none;">
-                        <i class="fa fa-chevron-left"></i> Sebelumnya
+                <div class="box-footer text-center">
+                    <button type="button" class="action back btn btn-default" id="btn-prev-soal" data-navigasi="prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i> Back
                     </button>
-                    <button type="button" class="btn btn-warning btn-nav-soal" id="btn-ragu-ragu">
+                    <button type="button" class="btn btn-warning" id="btn-ragu-ragu">
                         <i class="fa fa-question-circle"></i> Ragu-ragu
                     </button>
-                    <button type="button" class="btn btn-primary btn-nav-soal" id="btn-next-soal" data-navigasi="next">
-                        Soal Berikutnya <i class="fa fa-chevron-right"></i>
+                    <?php 
+                    // Get total number of questions
+                    $total_soal = count($soal_collection);
+                    ?>
+                    <span id="selesai-ujian-wrapper" style="display: none;">
+                        <button type="button" class="btn btn-success" id="btn-selesai-ujian">
+                            <i class="glyphicon glyphicon-stop"></i> Selesai
+                        </button>
+                    </span>
+                    <button type="button" class="action next btn bg-blue" id="btn-next-soal" data-navigasi="next">
+                        Next <i class="glyphicon glyphicon-chevron-right"></i>
                     </button>
                 </div>
             </div>
@@ -266,3 +318,49 @@ console.log('Debug data jawaban:', {
         </pre>
     </div>
 <?php endif; ?>
+<script>
+$(document).ready(function() {
+    // Show/hide SELESAI button based on current question
+    function toggleSelesaiButton(currentQuestionNumber) {
+        var totalQuestions = <?= $total_soal ?>;
+        $('#selesai-ujian-wrapper').toggle(currentQuestionNumber === totalQuestions);
+    }
+
+    // Call this when navigating questions
+    $('.btn-soal-nav, #btn-prev-soal, #btn-next-soal').on('click', function() {
+        var currentNumber = parseInt($('#display-nomor-soal').text());
+        toggleSelesaiButton(currentNumber);
+    });
+
+    // Initial check
+    toggleSelesaiButton(1);
+
+    // Make sure both SELESAI buttons do the same thing
+    $('#btn-selesai-ujian-inline').on('click', function() {
+        $('#btn-selesai-ujian').trigger('click');
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Inisialisasi zoom untuk gambar dengan data-zoomable
+    const zoomable = mediumZoom('[data-zoomable]', {
+        margin: 20,
+        background: '#000000e6',
+        scrollOffset: 0,
+        // Remove template configuration
+    });
+
+    // Handle navigation events
+    const navigationButtons = document.querySelectorAll('.btn-soal-nav, #btn-prev-soal, #btn-next-soal');
+    navigationButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Close zoom if open
+            zoomable.close();
+        });
+    });
+
+    // Debug log
+    console.log('Zoom initialized for', document.querySelectorAll('[data-zoomable]').length, 'images');
+});
+</script>

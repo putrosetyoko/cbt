@@ -13,7 +13,7 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
             <div class="box-header with-border">
                 <h3 class="box-title"><?= htmlspecialchars($subjudul ?? 'Buat Soal Baru'); ?></h3>
                 <div class="box-tools pull-right">
-                    <a href="<?=base_url('soal')?>" class="btn btn-sm btn-warning btn-flat"><i class="fa fa-arrow-left"></i> Batal</a>
+                    <a href="<?=base_url('soal')?>" class="btn btn-sm btn-warning btn-flat"><i class="fa fa-arrow-left"></i> Kembali ke Bank Soal</a>
                 </div>
             </div>
             <div class="box-body">
@@ -48,12 +48,12 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
                         
                         <div class="form-group">
                             <label for="soal_text_form">Isi Soal <span class="text-danger">*</span></label>
-                            <textarea name="soal" id="soal_text_form" class="form-control summernote" placeholder="Ketik isi soal di sini..."></textarea>
+                            <textarea class="summernote" id="soal_text_form" name="soal"></textarea>
                             <small class="help-block text-danger" id="error_soal"></small>
                         </div>
 
                         <div class="form-group">
-                            <label for="file_soal_form">File Pendukung Soal (Gambar/Audio)</label>
+                            <label for="file_soal_form">File Pendukung Soal (Gambar/Video/Audio)</label>
                             <input type="file" name="file_soal" id="file_soal_form" class="form-control">
                             <small class="help-block">Kosongkan jika tidak ada. Tipe: jpg, png, mp3, mp4. Max: 2MB.</small>
                             <small class="help-block text-danger" id="error_file_soal"></small>
@@ -69,12 +69,9 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
                         <div class="form-group">
                             <label for="jawaban_<?= $abj; ?>_form">
                                 Opsi Jawaban <?= $ABJ; ?>
-                                <small class="text-muted">(Teks atau File)</small>
+                                <!-- <small class="text-muted">(Teks atau File)</small> -->
                             </label>
-                            <textarea name="jawaban_<?= $abj; ?>" 
-                                    id="jawaban_<?= $abj; ?>_form" 
-                                    class="form-control summernote_opsi" 
-                                    placeholder="Isi opsi <?= $ABJ; ?>... (Opsional jika menggunakan gambar/audio)"></textarea>
+                            <textarea class="summernote" id="jawaban_<?= $abj; ?>_form" name="jawaban_<?= $abj; ?>"></textarea>
                             <small class="help-block text-danger" id="error_jawaban_<?= $abj; ?>"></small>
                         </div>
 
@@ -84,7 +81,7 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
                                    name="file_<?= $abj; ?>" 
                                    id="file_<?= $abj; ?>_form" 
                                    class="form-control">
-                            <small class="help-block">Upload file jika ingin menggunakan gambar/audio sebagai jawaban</small>
+                            <small class="help-block">Upload file jika ingin menggunakan gambar/audio sebagai jawaban.</small>
                         </div>
                         <hr>
                         <?php endforeach; ?>
@@ -113,55 +110,41 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
             <div class="box-footer">
                 <div class="col-sm-8 col-sm-offset-2 text-right">
                     <a href="<?=base_url('soal')?>" class="btn btn-flat btn-warning"><i class="fa fa-arrow-left"></i> Batal</a>
-                    <button type="submit" id="submitBtnSoal" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan Soal</button>
+                    <button type="submit" id="submitBtnSoal" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </div>
         </div>
         <?=form_close();?>
     </div>
 </div>
-
-<script src="<?=base_url()?>assets/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<?=base_url()?>assets/dist/js/app/soal/add.js"></script>
 <script>
 $(document).ready(function() {
-    if($.fn.select2){ $('.select2').select2({ placeholder: "-- Pilih --", allowClear: true }); }
-    if($.fn.summernote) { 
-        $('.summernote').summernote({
-            height: 150,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['fontname', ['fontname']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']], // Hapus 'picture' jika upload file terpisah
-                ['view', ['fullscreen', 'codeview', 'help']],
-            ],
-            callbacks: {
-                // Jika ingin menangani paste sebagai plain text
-                onPaste: function (e) {
-                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-                    e.preventDefault();
-                    document.execCommand('insertText', false, bufferText);
-                }
+    // Initialize Summernote
+    $('.summernote').summernote({
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link']],
+            ['view', ['fullscreen', 'codeview']]
+        ],
+        callbacks: {
+            onInit: function() {
+                console.log('Summernote initialized');
+            },
+            onError: function(e) {
+                console.error('Summernote error:', e);
             }
-        });
-        $('.summernote_opsi').summernote({
-            height: 75,
-            toolbar: [
-                ['font', ['bold', 'underline']],
-                ['insert', ['link']],
-            ],
-            callbacks: {
-                onPaste: function (e) {
-                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-                    e.preventDefault();
-                    document.execCommand('insertText', false, bufferText);
-                }
-            }
-        });
-    }
+        }
+    });
+
+    // Initialize Select2
+    $('.select2').select2();
 });
 </script>

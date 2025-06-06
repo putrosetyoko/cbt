@@ -6,6 +6,7 @@ class Ujian_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         // $this->load->database(); // Biasanya sudah autoload
+        $this->load->model('Master_model', 'master');
     }
 
     public function get_ujian_by_id_with_guru($id_ujian)
@@ -555,8 +556,7 @@ class Ujian_model extends CI_Model {
 
     /**
      * Mengambil soal-soal untuk ujian berdasarkan ID h_ujian
-     * 
-     * @param int $id_h_ujian ID dari h_ujian
+     * * @param int $id_h_ujian ID dari h_ujian
      * @return array Array berisi data soal-soal untuk ujian
      */
     public function get_soal_by_id_ujian($id_h_ujian) 
@@ -718,4 +718,137 @@ class Ujian_model extends CI_Model {
         }
     }
 
+    public function decrypt_examm_id($encrypted_hex_id)
+    {
+        $CI =& get_instance();
+        try {
+            if (empty($encrypted_hex_id) || !preg_match('/^[a-f0-9]+$/i', $encrypted_hex_id)) {
+                throw new Exception('Invalid encrypted ID format (not hex).');
+            }
+
+            // Gunakan AES_DECRYPT dari database
+            $decrypted_id_result = $this->db->query(
+                "SELECT CAST(AES_DECRYPT(UNHEX(?), ?) AS UNSIGNED) as decrypted_id",
+                [$encrypted_hex_id, $CI->config->item('encryption_key')]
+            )->row();
+            
+            if ($decrypted_id_result && isset($decrypted_id_result->decrypted_id) && is_numeric($decrypted_id_result->decrypted_id)) {
+                return (int)$decrypted_id_result->decrypted_id;
+            } else {
+                // Ini akan menghasilkan log "Failed to decrypt ID"
+                throw new Exception('Failed to decrypt ID (DB method returned null/invalid).');
+            }
+        } catch (Exception $e) {
+            log_message('error', 'Error decrypting exam ID (DB method): ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    // ========================================================================
+    // PENAMBAHAN METHOD UNTUK FITUR HASIL UJIAN SISWA (GURU/ADMIN)
+    // ========================================================================
+
+    public function getHasilUjianDatatables($filters = [], $context = [])
+    {
+        $CI =& get_instance();
+        $CI->load->config('config');
+
+        // PENTING: Gunakan FALSE sebagai parameter kedua pada select()
+        // agar 'DISTINCT' tidak di-escape dengan backticks.
+        $this->datatables->select('
+            DISTINCT h.id,
+            s.nisn,
+            s.nama as nama_siswa,
+            k.nama_kelas,
+            j.nama_jenjang,
+            m.nama_mapel,
+            u.nama_ujian,
+            h.jml_benar,
+            h.nilai,
+            h.status,
+            u.id_ujian,
+            h.siswa_id,
+            ta.id_tahun_ajaran as id_tahun_ajaran_ujian,
+            sk.kelas_id as kelas_id_siswa,
+            u.mapel_id,
+            HEX(AES_ENCRYPT(CAST(h.id AS CHAR), "'.$CI->config->item('encryption_key').'")) as id_hasil_ujian_encrypted
+        ', FALSE); // <--- INI PERBAIKAN UTAMANYA: Tambahkan FALSE di sini.
+        
+        $this->datatables->from('h_ujian h');
+        $this->datatables->join('m_ujian u', 'h.ujian_id = u.id_ujian');
+        $this->datatables->join('mapel m', 'u.mapel_id = m.id_mapel');
+        $this->datatables->join('siswa s', 'h.siswa_id = s.id_siswa');
+        $this->datatables->join('siswa_kelas_ajaran sk', 's.id_siswa = sk.siswa_id AND u.id_tahun_ajaran = sk.id_tahun_ajaran'); 
+        $this->datatables->join('kelas k', 'sk.kelas_id = k.id_kelas');
+        $this->datatables->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left');
+        $this->datatables->join('tahun_ajaran ta', 'u.id_tahun_ajaran = ta.id_tahun_ajaran', 'left');
+
+        $this->datatables->where('h.status', 'completed');
+
+        if (!empty($filters['id_tahun_ajaran']) && $filters['id_tahun_ajaran'] !== 'all') {
+            $this->datatables->where('u.id_tahun_ajaran', $filters['id_tahun_ajaran']);
+        }
+        if (!empty($filters['kelas_id']) && $filters['kelas_id'] !== 'all') {
+            $this->datatables->where('sk.kelas_id', $filters['kelas_id']);
+        }
+        if (!empty($filters['mapel_id']) && $filters['mapel_id'] !== 'all') {
+            $this->datatables->where('u.mapel_id', $filters['mapel_id']);
+        }
+
+        if (!$context['is_admin'] && $context['is_guru']) {
+            if ($context['id_guru'] && $context['tahun_ajaran_aktif_id']) {
+                $this->datatables->join(
+                    'guru_mapel_kelas_ajaran gmka_filter', 
+                    'gmka_filter.mapel_id = u.mapel_id AND gmka_filter.kelas_id = sk.kelas_id AND gmka_filter.id_tahun_ajaran = u.id_tahun_ajaran', 
+                    'inner'
+                );
+                $this->datatables->where('gmka_filter.guru_id', $context['id_guru']);
+            } else {
+                $this->datatables->where('1', '0'); 
+            }
+        }
+        
+        $this->datatables->add_column('kelas_lengkap', '$1 $2', 'nama_jenjang, nama_kelas');
+        
+        $this->datatables->add_column('aksi', '
+            <a href="'.base_url('ujian/detail_hasil_ujian/$1').'" class="btn btn-info btn-xs">Lihat Hasil</a>
+        ', 'id_hasil_ujian_encrypted'); 
+        
+        return $this->datatables->generate();
+    }
+
+    public function get_hasil_ujian_detail_for_guru_admin($id_h_ujian) {
+        $this->db->select('
+            h.id, h.ujian_id, h.siswa_id, h.list_soal, h.list_jawaban, h.jml_benar, h.nilai_bobot, h.nilai, h.status,
+            DATE_FORMAT(h.tgl_mulai, "%d %M %Y %H:%i") as tgl_mulai_formatted,
+            DATE_FORMAT(h.tgl_selesai, "%d %M %Y %H:%i") as tgl_selesai_formatted,
+            s.nisn, s.nama as nama_siswa,
+            k.nama_kelas, j.nama_jenjang, sk.kelas_id as kelas_id_siswa,
+            u.nama_ujian, u.jumlah_soal as jumlah_soal_ujian, u.mapel_id, u.guru_id as guru_pembuat_ujian_id,
+            m.nama_mapel,
+            g.nama_guru as nama_guru_pembuat_ujian,
+            ta.nama_tahun_ajaran
+        ');
+        $this->db->from('h_ujian h');
+        $this->db->join('m_ujian u', 'h.ujian_id = u.id_ujian');
+        $this->db->join('mapel m', 'u.mapel_id = m.id_mapel');
+        $this->db->join('siswa s', 'h.siswa_id = s.id_siswa');
+        $this->db->join('siswa_kelas_ajaran sk', 's.id_siswa = sk.siswa_id AND u.id_tahun_ajaran = sk.id_tahun_ajaran');
+        $this->db->join('kelas k', 'sk.kelas_id = k.id_kelas');
+        $this->db->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left');
+        $this->db->join('guru g', 'u.guru_id = g.id_guru', 'left'); // Guru pembuat ujian
+        $this->db->join('tahun_ajaran ta', 'u.id_tahun_ajaran = ta.id_tahun_ajaran', 'left');
+        $this->db->where('h.id', $id_h_ujian);
+        return $this->db->get()->row();
+    }
+
+    public function get_soal_details_with_kunci_and_bobot($list_soal_ids) {
+        if (empty($list_soal_ids)) {
+            return [];
+        }
+        $this->db->select('id_soal, soal, file, tipe_file, opsi_a, opsi_b, opsi_c, opsi_d, opsi_e, file_a, file_b, file_c, file_d, file_e, jawaban, bobot');
+        $this->db->from('tb_soal');
+        $this->db->where_in('id_soal', $list_soal_ids);
+        return $this->db->get()->result();
+    }
 }

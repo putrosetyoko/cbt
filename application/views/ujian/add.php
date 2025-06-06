@@ -139,7 +139,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn bg-purple btn-flat"><i class="fa fa-save"></i> Simpan & Lanjut Tambah Soal</button>
+                        <button type="submit" class="btn bg-purple btn-flat"><i class="fa fa-save"></i> Simpan</button>
                         <button type="reset" class="btn btn-default btn-flat"><i class="fa fa-refresh"></i> Reset</button>
                     </div>
                 </div>

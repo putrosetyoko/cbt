@@ -15,7 +15,7 @@
 }
 
 .btn-soal-nav {
-  border-radius: 50%;
+  border-radius: 12px;
   margin: 3px;
   width: 45px;
   height: 45px;
@@ -55,16 +55,92 @@
   margin-bottom: 15px;
 }
 
-.soal-media {
-  margin: 15px 0;
+/* Zoom styling */
+.medium-zoom-overlay {
+  z-index: 1050;
+  background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
-.soal-media img,
-.opsi-media img {
+[data-zoomable] {
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+
+.medium-zoom-image--opened {
+  z-index: 1051;
+  cursor: zoom-out;
+}
+
+/* Container styling */
+.soal-media {
+  position: relative;
+  width: 100%;
+  margin: 15px 0;
+  overflow: visible !important;
+}
+
+.soal-media img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Loading state */
+.soal-media.loading::after,
+.opsi-media.loading::after {
+  content: 'Memuat gambar...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #666;
+  font-size: 14px;
+}
+
+/* Error state */
+.soal-media.error::after,
+.opsi-media.error::after {
+  content: 'Gagal memuat gambar';
+  color: #dc3545;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .soal-media {
+    margin: 10px 0;
+  }
+
+  .soal-media img {
+    max-height: 70vh; /* Limit height on mobile */
+    object-fit: contain;
+  }
+
+  /* Zoom overlay styles */
+  .medium-zoom-overlay {
+    z-index: 1050;
+  }
+
+  .medium-zoom-image--opened {
+    z-index: 1051;
+  }
+}
+
+/* Loading indicator */
+.soal-media::after {
+  content: 'Loading...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  color: #666;
+  font-size: 14px;
+}
+
+.soal-media.loading::after {
+  display: block;
 }
 
 .soal-media video,
@@ -112,9 +188,9 @@
 }
 
 .opsi-file-attachment img {
-  max-width: 100%;
-  max-height: 200px;
-  border-radius: 4px;
+  max-width: 100% !important; /* Tambahkan !important */
+  border-radius: 4px !important; /* Tambahkan !important */
+  border: 2px solid red !important; /* Tambahkan border untuk debug */
 }
 
 .opsi-file-attachment audio,
@@ -129,7 +205,7 @@
   align-items: flex-start;
   padding: 12px 15px 12px 50px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-bottom: 8px;
   transition: all 0.3s ease;
 }
@@ -174,9 +250,18 @@
   border-radius: 8px;
 }
 
-.legend-container {
-  margin: 5px 0;
-  padding: 1px;
+.legend-container .legend-item {
+  margin: 10px 0;
+  /* padding: 1px; */
+
   /* background: #f1f1f1; */
-  border-radius: 8px;
+  /* border-radius: 20px; */
+}
+
+.legend-container .badge {
+  border-radius: 5px;
+}
+
+.box-footer .btn {
+  border-radius: 12px;
 }

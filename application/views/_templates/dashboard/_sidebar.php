@@ -3,17 +3,31 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN MENU</li>
             <?php 
-            $page = $this->uri->segment(1);
-            $page2 = $this->uri->segment(2);
+            $page = $this->uri->segment(1); // Controller name (e.g., 'dashboard', 'ujian')
+            $page2 = $this->uri->segment(2); // Method name (e.g., 'hasil_ujian_siswa', 'list_ujian_siswa')
 
             // Grup menu untuk kelas 'active'
-            // Sesuaikan nama ini dengan nama controller Anda jika berbeda
             $master = ["tahunajaran", "jenjang", "kelas", "mapel", "guru", "siswa"];
-            // Contoh jika nama controller lebih panjang:
-            // $penugasan = ["siswakelasajaran", "gurumapelkelasajaran", "pjsoalajaran"]; 
-            $penugasan = ["siswakelas", "penugasanguru", "pjsoal"]; // Ini sudah OK jika controller Anda namanya itu
-            $manajemen_ujian = ["soal", "ujian"]; // Grup untuk Bank Soal dan Kelola Ujian
+            $penugasan = ["siswakelas", "penugasanguru", "pjsoal"]; 
+            $manajemen_ujian_controllers = ["soal", "ujian"]; // Kontroler yang masuk kategori manajemen ujian
             $users_settings = ["users", "settings"];
+
+            // Tentukan apakah menu "Hasil Ujian" sedang aktif
+            // Aktif jika di halaman 'ujian/hasil_ujian_siswa' atau 'ujian/detail_hasil_ujian'
+            $is_hasil_ujian_active = ($page === 'ujian' && ($page2 === 'hasil_ujian_siswa' || $page2 === 'detail_hasil_ujian'));
+
+            // Tentukan apakah menu "Kelola Ujian" (child of Manajemen Ujian) sedang aktif
+            // Aktif jika di halaman 'ujian' tanpa method spesifik (index) atau method 'add'/'edit'
+            $is_kelola_ujian_child_active = ($page === 'ujian' && ($page2 === '' || $page2 === 'index' || $page2 === 'add' || $page2 === 'edit'));
+
+            // Tentukan apakah grup menu "Manajemen Ujian" (parent) aktif
+            // Aktif jika salah satu anaknya (Bank Soal atau Kelola Ujian) aktif
+            // ATAU jika kita berada di halaman hasil ujian tapi bukan hasil_ujian_siswa/detail_hasil_ujian
+            // (ini adalah kasus lama yang mungkin tidak lagi relevan, tapi sebagai fallback)
+            $is_manajemen_ujian_parent_active = (
+                $page === 'soal' || // Jika di Bank Soal
+                $is_kelola_ujian_child_active // Jika di Kelola Ujian (indeks/add/edit)
+            );
             ?>
             <li class="<?= $page === 'dashboard' ? "active" : "" ?>">
                 <a href="<?=base_url('dashboard')?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
@@ -51,11 +65,6 @@
             </li>
             <?php endif; ?>
 
-            <?php 
-            // Variabel untuk menentukan apakah grup menu "Manajemen Ujian" aktif
-            // Grup ini aktif jika halaman saat ini adalah 'soal' ATAU ('ujian' dan sub-halamannya 'master')
-            $is_manajemen_ujian_parent_active = ($page === 'soal' || ($page === 'ujian'));
-            ?>
             <?php if( $this->ion_auth->is_admin() || $this->ion_auth->in_group('guru') ) : ?>
             <li class="treeview <?= $is_manajemen_ujian_parent_active ? "active menu-open" : "" ?>">
                 <a href="#"><i class="fa fa-edit"></i> <span>Manajemen Ujian</span>
@@ -65,26 +74,21 @@
                     <li class="<?=$page==='soal'?"active":""?>">
                         <a href="<?=base_url('soal')?>"><i class="fa fa-file-text-o"></i> Bank Soal</a>
                     </li>
-
-                    <?php if( $this->ion_auth->is_admin() || $this->ion_auth->in_group('guru') ) : ?> 
-                    <li class="<?=$page==='ujian'?"active":""?>"> 
+                    <li class="<?= $is_kelola_ujian_child_active ? "active" : "" ?>"> 
                         <a href="<?=base_url('ujian')?>"><i class="fa fa-pencil-square-o"></i> Kelola Ujian</a>
                     </li>
-                    <?php endif; ?>
                 </ul>
+            </li>
+
+            <li class="header">LAPORAN</li> 
+            <li class="<?= $is_hasil_ujian_active ? "active" : "" ?>">
+                <a href="<?=base_url('ujian/hasil_ujian_siswa')?>"><i class="fa fa-bar-chart"></i> <span>Hasil Ujian</span></a>
             </li>
             <?php endif; ?>
 
             <?php if( $this->ion_auth->in_group('siswa') ) : ?> 
-            <li class="<?=$page==='ujian' && ($page2 ==='list_ujian_siswa' || empty($page2)) ?"active":""?>"> 
+            <li class="<?=($page==='ujian' && ($page2 ==='list_ujian_siswa' || empty($page2) || $page2 === 'token' || $page2 === 'lembar_ujian')) ?"active":""?>"> 
                 <a href="<?=base_url('ujian/list_ujian_siswa')?>"><i class="fa fa-edit"></i> <span>Ujian Saya</span></a> 
-            </li>
-            <?php endif; ?>
-
-            <?php if( !$this->ion_auth->in_group('siswa') ) : ?> 
-            <li class="header">LAPORAN</li> 
-            <li class="<?=$page==='hasilujian'?"active":""?>">
-                <a href="<?=base_url('hasilujian')?>"><i class="fa fa-bar-chart"></i> <span>Hasil Ujian</span></a>
             </li>
             <?php endif; ?>
 

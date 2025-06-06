@@ -414,7 +414,7 @@ function konfirmasiDanSelesaikanUjian() {
   let pesanKonfirmasi =
     'Setelah ujian diselesaikan, Anda tidak dapat mengubah jawaban Anda lagi.';
   if (belumDijawabCount > 0) {
-    pesanKonfirmasi += `<br><strong style='color:red;'>Perhatian: Ada ${belumDijawabCount} soal yang belum Anda jawab.</strong>`;
+    pesanKonfirmasi += `<br><br><strong style='color:red;'>Perhatian: Ada ${belumDijawabCount} soal yang belum Anda jawab.</strong>`;
   }
   if (raguRaguCount > 0) {
     pesanKonfirmasi += `<br><strong style='color:orange;'>Ada ${raguRaguCount} soal yang masih ditandai ragu-ragu.</strong>`;
@@ -605,4 +605,60 @@ function initializeAnswers() {
 $(document).ready(function () {
   // ...existing code...
   initializeAnswers();
+});
+
+// Add after document ready
+$(document).ready(function () {
+  // Initialize zoom for all question images
+  const zoomableImages = document.querySelectorAll(
+    '.soal-media img, .opsi-media img'
+  );
+
+  mediumZoom(zoomableImages, {
+    margin: 24,
+    background: '#000000e6',
+    scrollOffset: 0,
+    container: {
+      width: '100%',
+      height: '100%',
+    },
+    template: `
+            <div class="zoom-container" data-zoom-container>
+                <img 
+                    class="zoom-img"
+                    src="{src}"
+                    alt="{alt}"
+                >
+            </div>
+        `,
+  });
+
+  // Handle image loading
+  function handleImageLoad(img) {
+    const container = img.closest('.soal-media, .opsi-media');
+    if (container) {
+      container.classList.remove('loading');
+    }
+  }
+
+  // Add loading state and handlers
+  zoomableImages.forEach((img) => {
+    const container = img.closest('.soal-media, .opsi-media');
+    if (container) {
+      container.classList.add('loading');
+    }
+
+    if (img.complete) {
+      handleImageLoad(img);
+    } else {
+      img.addEventListener('load', () => handleImageLoad(img));
+      img.addEventListener('error', () => {
+        const container = img.closest('.soal-media, .opsi-media');
+        if (container) {
+          container.classList.remove('loading');
+          container.classList.add('error');
+        }
+      });
+    }
+  });
 });

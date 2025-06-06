@@ -1422,4 +1422,238 @@ class Ujian extends MY_Controller {
             'nilai_bobot' => $total_bobot
         ];
     }
+
+    // ========================================================================
+    // FITUR HASIL UJIAN SISWA (UNTUK GURU DAN ADMIN)
+    // ========================================================================
+
+    /**
+     * Halaman utama untuk menampilkan daftar hasil ujian siswa (bagi guru dan admin).
+     * URL: /ujian/hasil_ujian_siswa
+     */
+    public function hasil_ujian_siswa()
+    {
+        // Akses hanya untuk Admin atau Guru
+        if (!$this->is_admin && !$this->is_guru) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses ke halaman ini.');
+            redirect('dashboard');
+        }
+
+        $data = [
+            'user'          => $this->ion_auth->user()->row(),
+            'judul'         => 'Hasil Ujian Siswa',
+            'subjudul'      => 'Daftar Hasil Ujian',
+            'is_admin'      => $this->is_admin,
+            'is_guru'       => $this->is_guru,
+            'guru_data'     => $this->guru_data,
+            'pj_mapel_data' => $this->pj_mapel_data,
+        ];
+
+        // Filter Options
+        $data['filter_tahun_ajaran_options'] = $this->master->getAllTahunAjaran();
+        $data['filter_jenjang_options']      = $this->master->getAllJenjang();
+        
+        if ($this->is_admin) {
+            $data['filter_mapel_options'] = $this->master->getAllMapel();
+            $data['filter_kelas_options'] = $this->master->getAllKelas(); // Admin bisa filter semua kelas
+        } elseif ($this->is_guru && $this->guru_data) {
+            // Guru hanya melihat mapel dan kelas yang diajarnya di tahun ajaran aktif
+            $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif();
+            if ($tahun_ajaran_aktif) {
+                $mapel_diajar = $this->master->getMapelDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
+                if (!empty($mapel_diajar)) {
+                    $data['filter_mapel_options'] = $this->db->where_in('id_mapel', $mapel_diajar)->get('mapel')->result();
+                } else {
+                    $data['filter_mapel_options'] = [];
+                }
+                
+                $kelas_diajar = $this->master->getKelasDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
+                if (!empty($kelas_diajar)) {
+                    $data['filter_kelas_options'] = $this->db->where_in('id_kelas', $kelas_diajar)->get('kelas')->result();
+                } else {
+                    $data['filter_kelas_options'] = [];
+                }
+            } else {
+                $data['filter_mapel_options'] = [];
+                $data['filter_kelas_options'] = [];
+            }
+        } else {
+            $data['filter_mapel_options'] = [];
+            $data['filter_kelas_options'] = [];
+        }
+
+
+        $this->load->view('_templates/dashboard/_header.php', $data);
+        $this->load->view('ujian/hasil_ujian_siswa', $data);
+        $this->load->view('_templates/dashboard/_footer.php');
+    }
+
+    /**
+     * Endpoint AJAX untuk DataTables daftar hasil ujian siswa.
+     * URL: /ujian/data_hasil_ujian_siswa
+     */
+    public function data_hasil_ujian_siswa()
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404(); return;
+        }
+
+        $filters = [
+            'id_tahun_ajaran' => $this->input->post('filter_tahun_ajaran', true),
+            'kelas_id'        => $this->input->post('filter_kelas', true),
+            'mapel_id'        => $this->input->post('filter_mapel', true),
+        ];
+
+        $context = [
+            'is_admin'  => $this->is_admin,
+            'is_guru'   => $this->is_guru,
+            'id_guru'   => ($this->is_guru && $this->guru_data) ? $this->guru_data->id_guru : null,
+            'tahun_ajaran_aktif_id' => $this->master->getTahunAjaranAktif()->id_tahun_ajaran ?? null
+        ];
+        
+        $this->output_json($this->ujian_m->getHasilUjianDatatables($filters, $context));
+    }
+
+    /**
+     * Halaman detail hasil ujian siswa.
+     * URL: /ujian/detail_hasil_ujian/{id_h_ujian_encrypted}
+     */
+    public function detail_hasil_ujian($id_h_ujian_enc = null)
+    {
+        // Akses hanya untuk Admin atau Guru
+        if (!$this->is_admin && !$this->is_guru) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses ke halaman ini.');
+            redirect('dashboard');
+            return; // Penting: Tambahkan return setelah redirect
+        }
+
+        if (empty($id_h_ujian_enc)) {
+            show_404(); 
+            return;
+        }
+
+        try {
+            log_message('debug', 'detail_hasil_ujian: REQUESTED Encrypted ID = ' . ($id_h_ujian_enc ?? 'NULL'));
+
+            $id_h_ujian = $this->ujian_m->decrypt_examm_id($id_h_ujian_enc);
+            log_message('debug', 'detail_hasil_ujian: Decrypted ID H Ujian (after decrypt_exam_id) = ' . ($id_h_ujian ?? 'NULL'));
+            log_message('debug', 'detail_hasil_ujian: Type of Decrypted ID = ' . gettype($id_h_ujian));
+
+            if (!$id_h_ujian || !is_numeric($id_h_ujian)) { 
+                log_message('error', 'detail_hasil_ujian: Decrypted ID is not valid or not numeric: ' . ($id_h_ujian ?? 'NULL'));
+                $this->session->set_flashdata('error', 'ID hasil ujian tidak valid atau tidak dapat diproses.');
+                redirect('ujian/hasil_ujian_siswa');
+                return;
+            }
+
+            $hasil_ujian = $this->ujian_m->get_hasil_ujian_detail_for_guru_admin($id_h_ujian);
+            log_message('debug', 'detail_hasil_ujian: Hasil Ujian Data (from model) = ' . print_r($hasil_ujian, true));
+
+            if (!$hasil_ujian) {
+                log_message('error', 'detail_hasil_ujian: Data hasil ujian tidak ditemukan untuk ID: ' . $id_h_ujian);
+                $this->session->set_flashdata('error', 'Data hasil ujian tidak ditemukan.');
+                redirect('ujian/hasil_ujian_siswa');
+                return;
+            }
+
+            // Validasi hak akses guru ke hasil ujian ini
+            if ($this->is_guru && !$this->is_admin) {
+                $can_view = false;
+                $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif();
+                
+                log_message('debug', 'detail_hasil_ujian (Guru Access Check): Current Guru ID = ' . ($this->guru_data->id_guru ?? 'N/A'));
+                log_message('debug', 'detail_hasil_ujian (Guru Access Check): TA Aktif ID = ' . ($tahun_ajaran_aktif->id_tahun_ajaran ?? 'N/A'));
+                log_message('debug', 'detail_hasil_ujian (Guru Access Check): Hasil Ujian Mapel ID = ' . ($hasil_ujian->mapel_id ?? 'N/A'));
+                log_message('debug', 'detail_hasil_ujian (Guru Access Check): Hasil Ujian Siswa Kelas ID = ' . ($hasil_ujian->kelas_id_siswa ?? 'N/A'));
+
+                if ($tahun_ajaran_aktif && isset($this->guru_data->id_guru)) {
+                    $mapel_diajar = $this->master->getMapelDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
+                    $kelas_diajar = $this->master->getKelasDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
+
+                    log_message('debug', 'detail_hasil_ujian (Guru Access Check): Mapel Diajar (from Master_model) = ' . print_r($mapel_diajar, true));
+                    log_message('debug', 'detail_hasil_ujian (Guru Access Check): Kelas Diajar (from Master_model) = ' . print_r($kelas_diajar, true));
+
+                    if (in_array($hasil_ujian->mapel_id, $mapel_diajar) && in_array($hasil_ujian->kelas_id_siswa, $kelas_diajar)) {
+                        $can_view = true;
+                    } else {
+                        log_message('debug', 'detail_hasil_ujian (Guru Access Check): Mapel/Kelas tidak cocok.');
+                    }
+                } else {
+                    log_message('debug', 'detail_hasil_ujian (Guru Access Check): Data guru atau TA aktif tidak lengkap.');
+                }
+
+                if (!$can_view) {
+                    log_message('error', 'detail_hasil_ujian: Akses ditolak untuk guru ini ke hasil ujian ID: ' . $id_h_ujian);
+                    $this->session->set_flashdata('error', 'Anda tidak memiliki hak untuk melihat hasil ujian ini.');
+                    redirect('ujian/hasil_ujian_siswa');
+                    return;
+                }
+            }
+            log_message('debug', 'detail_hasil_ujian: Validasi akses berhasil. Memuat detail ujian.');
+
+            // Ambil list soal dan jawaban siswa
+            $list_soal_ids = json_decode($hasil_ujian->list_soal, true);
+            $list_jawaban_siswa = json_decode($hasil_ujian->list_jawaban, true);
+
+            // Ambil detail soal dari bank soal (termasuk kunci jawaban dan bobot)
+            $soal_details = $this->ujian_m->get_soal_details_with_kunci_and_bobot($list_soal_ids);
+            
+            // Map soal details to be ordered by list_soal_ids and include student answers
+            $ordered_soal_data = [];
+            foreach ($list_soal_ids as $soal_id) {
+                $found_soal = null;
+                foreach ($soal_details as $detail) {
+                    if ($detail->id_soal == $soal_id) {
+                        $found_soal = $detail;
+                        break;
+                    }
+                }
+
+                if ($found_soal) {
+                    $jawaban_siswa_soal_ini = $list_jawaban_siswa[$soal_id]['j'] ?? '';
+                    $is_correct = (strtoupper($jawaban_siswa_soal_ini) === strtoupper($found_soal->jawaban));
+                    $poin_diperoleh = $is_correct ? $found_soal->bobot : 0;
+
+                    $found_soal->jawaban_siswa = $jawaban_siswa_soal_ini;
+                    $found_soal->is_correct = $is_correct;
+                    $found_soal->poin_diperoleh = $poin_diperoleh;
+                    $found_soal->opsi_display = []; // Init untuk ditampilkan
+                    // Populating options for display
+                    $options = ['A', 'B', 'C', 'D', 'E'];
+                    foreach($options as $opt) {
+                        $opsi_prop = 'opsi_' . strtolower($opt);
+                        $file_prop = 'file_' . strtolower($opt);
+                        if (!empty($found_soal->$opsi_prop) || !empty($found_soal->$file_prop)) { // Cek opsi atau file opsi ada
+                            $found_soal->opsi_display[$opt] = [
+                                'teks' => $found_soal->$opsi_prop,
+                                'file' => $found_soal->$file_prop
+                            ];
+                        }
+                    }
+                    $ordered_soal_data[] = $found_soal;
+                }
+            }
+            
+            $data = [
+                'user'          => $this->ion_auth->user()->row(),
+                'judul'         => 'Detail Hasil Ujian',
+                'subjudul'      => 'Hasil Ujian ' . htmlspecialchars($hasil_ujian->nama_siswa),
+                'hasil_ujian'   => $hasil_ujian,
+                'soal_data'     => $ordered_soal_data,
+                'path_bank_soal_files' => base_url('uploads/bank_soal/') // Path untuk gambar/audio soal
+            ];
+
+            // VVVVVV TAMBAHKAN BARIS INI VVVVVV
+            $this->load->view('_templates/dashboard/_header.php', $data);
+            $this->load->view('ujian/detail_hasil_ujian', $data);
+            $this->load->view('_templates/dashboard/_footer.php');
+            // ^^^^^^ TAMBAHKAN BARIS INI ^^^^^^
+
+        } catch (Exception $e) {
+            log_message('error', 'Error in detail_hasil_ujian (overall catch): ' . $e->getMessage());
+            $this->session->set_flashdata('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            redirect('ujian/hasil_ujian_siswa');
+            return;
+        }
+    }
 }

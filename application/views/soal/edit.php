@@ -64,7 +64,7 @@ if (isset($is_guru) && $is_guru && isset($pj_mapel_data) && $pj_mapel_data) {
                         </div>
 
                         <div class="form-group">
-                            <label for="file_soal_form_edit">File Pendukung Soal (Gambar/Audio)</label>
+                            <label for="file_soal_form_edit">File Pendukung Soal (Gambar/Video/Audio)</label>
                             <input type="file" name="file_soal" id="file_soal_form_edit" class="form-control">
                             <small class="help-block">Kosongkan jika tidak ingin mengubah. Tipe: jpg, png, mp3, mp4. Max: 2MB.</small>
                             <?php if (!empty($soal->file)) : ?>
@@ -83,13 +83,13 @@ if (isset($is_guru) && $is_guru && isset($pj_mapel_data) && $pj_mapel_data) {
                         ?>
                         <div class="form-group">
                             <label for="jawaban_<?= $abj; ?>_form_edit">Opsi Jawaban <?= $ABJ; ?> <span class="text-danger">*</span></label>
-                            <textarea name="jawaban_<?= $abj; ?>" id="jawaban_<?= $abj; ?>_form_edit" class="form-control summernote_opsi"><?= htmlspecialchars_decode($soal->$opsi_field ?? ''); ?></textarea>
+                            <textarea name="jawaban_<?= $abj; ?>" id="jawaban_<?= $abj; ?>_form_edit" class="form-control summernote"><?= htmlspecialchars_decode($soal->$opsi_field ?? ''); ?></textarea>
                             <small class="help-block text-danger" id="error_jawaban_<?= $abj; ?>"></small>
                         </div>
                         <div class="form-group">
-                            <label for="file_<?= $abj; ?>_form_edit">File Pendukung Opsi <?= $ABJ; ?> (Gambar/Audio)</label>
+                            <label for="file_<?= $abj; ?>_form_edit">File Pendukung Opsi <?= $ABJ; ?></label>
                             <input type="file" name="file_<?= $abj; ?>" id="file_<?= $abj; ?>_form_edit" class="form-control">
-                            <small class="help-block">Kosongkan jika tidak ingin mengubah.</small>
+                            <small class="help-block">Biarkan jika tidak ingin mengubah apapun.</small>
                             <?php if (!empty($soal->$file_opsi_field)) : ?>
                                 <div class="mt-2">
                                     File Opsi <?= $ABJ ?> saat ini: <a href="<?= base_url('uploads/bank_soal/'.$soal->$file_opsi_field) ?>" target="_blank"><?= $soal->$file_opsi_field ?></a>
@@ -122,8 +122,8 @@ if (isset($is_guru) && $is_guru && isset($pj_mapel_data) && $pj_mapel_data) {
             </div>
             <div class="box-footer">
                 <div class="col-sm-10 col-sm-offset-1 text-right">
-                    <a href="<?=base_url('soal')?>" class="btn btn-flat btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
-                    <button type="submit" id="submitBtnSoalEdit" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan Perubahan</button>
+                    <a href="<?=base_url('soal')?>" class="btn btn-flat btn-warning"><i class="fa fa-arrow-left"></i> Batal</a>
+                    <button type="submit" id="submitBtnSoalEdit" class="btn btn-flat bg-purple"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </div>
         </div>
@@ -131,14 +131,44 @@ if (isset($is_guru) && $is_guru && isset($pj_mapel_data) && $pj_mapel_data) {
     </div>
 </div>
 
-<script src="<?=base_url()?>assets/plugins/summernote/summernote-bs4.min.js"></script>
 <script src="<?=base_url()?>assets/dist/js/app/soal/edit.js"></script>
 <script>
 $(document).ready(function() {
-    if($.fn.select2){ $('.select2').select2({ placeholder: "-- Pilih --", allowClear: true }); }
+    // Initialize Select2
+    if($.fn.select2){ 
+        $('.select2').select2({ 
+            placeholder: "-- Pilih --", 
+            allowClear: true 
+        }); 
+    }
+
+    // Initialize Summernote for both questions and answers
     if($.fn.summernote) { 
-        $('.summernote').summernote({ /* ... konfigurasi summernote ... */ });
-        $('.summernote_opsi').summernote({ /* ... konfigurasi summernote opsi ... */ });
+        // Configuration for main question
+        $('.summernote').summernote({
+            placeholder: 'Tulis soal di sini...',
+            tabsize: 2,
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link']],
+                ['paragraph', ['paragraph', 'left', 'center', 'right', 'justify']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
+            callbacks: {
+                onInit: function() {
+                    console.log('Summernote main question initialized');
+                }
+            }
+        });
+    } else {
+        console.error('Summernote plugin not loaded');
     }
 });
 </script>

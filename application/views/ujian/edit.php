@@ -169,7 +169,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-save"></i> Simpan</button>
+                        <button type="submit" class="btn bg-purple btn-flat"><i class="fa fa-save"></i> Simpan</button>
                     </div>
                 </div>
             </div>
