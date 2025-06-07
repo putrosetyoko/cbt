@@ -54,7 +54,7 @@ $url = base_url('ujian/lembar_ujian/' . urlencode($encrypted_id));
                                 <th class="text-center" width="3%">No.</th>
                                 <th>Nama Ujian</th>
                                 <th>Mata Pelajaran</th>
-                                <th>Pembuat</th>
+                                <th>Guru Mapel</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Waktu</th>
                                 <th class="text-center">Status</th>

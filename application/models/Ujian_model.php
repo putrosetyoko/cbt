@@ -195,15 +195,14 @@ class Ujian_model extends CI_Model {
         return $this->db->get()->row();
     }
 
-    public function get_list_ujian_for_siswa_dt($id_siswa, $id_kelas_siswa, $id_jenjang_siswa, $id_tahun_ajaran_siswa) 
+    public function get_list_ujian_for_siswa_dt($id_siswa, $id_kelas_siswa, $id_jenjang_siswa, $id_tahun_ajaran_siswa)
     {
         try {
             $CI = &get_instance();
             $CI->load->config('config');
 
-            // Handle encryption using HEX representation instead of raw binary
             $this->datatables->select(
-                'u.id_ujian, u.nama_ujian, m.nama_mapel, g.nama_guru AS nama_pembuat_ujian, '.
+                'u.id_ujian, u.nama_ujian, m.nama_mapel, '.
                 'u.jumlah_soal, u.waktu, '.
                 'u.tgl_mulai AS tgl_mulai_server_format, '.
                 'u.terlambat AS terlambat_server_format, '.
@@ -213,12 +212,25 @@ class Ujian_model extends CI_Model {
                 // Convert encrypted IDs to HEX
                 'HEX(AES_ENCRYPT(CAST(u.id_ujian AS CHAR), "'.$CI->config->item('encryption_key').'")) as id_ujian_encrypted, '.
                 '(SELECT HEX(AES_ENCRYPT(CAST(hu.id AS CHAR), "'.$CI->config->item('encryption_key').'")) FROM h_ujian hu WHERE hu.ujian_id = u.id_ujian AND hu.siswa_id = '.$this->db->escape($id_siswa).') AS id_hasil_ujian_encrypted, '.
-                '(SELECT UNIX_TIMESTAMP(hu.tgl_selesai) FROM h_ujian hu WHERE hu.ujian_id = u.id_ujian AND hu.siswa_id = '.$this->db->escape($id_siswa).') AS tgl_selesai_pengerjaan_timestamp'
-            );
-            
+                '(SELECT UNIX_TIMESTAMP(hu.tgl_selesai) FROM h_ujian hu WHERE hu.ujian_id = u.id_ujian AND hu.siswa_id = '.$this->db->escape($id_siswa).') AS tgl_selesai_pengerjaan_timestamp, '.
+
+                // START: Tambahan untuk Guru Mata Pelajaran yang mengajar di mapel dan kelas target ujian
+                // Mengambil guru yang mengajar mapel ini di kelas target ujian (kelas siswa yang login)
+                // Ini akan menghasilkan string nama guru yang dipisahkan koma jika ada lebih dari satu
+                '(SELECT GROUP_CONCAT(g_pengajar.nama_guru ORDER BY g_pengajar.nama_guru ASC)
+                  FROM guru_mapel_kelas_ajaran gmka_pengajar
+                  JOIN guru g_pengajar ON gmka_pengajar.guru_id = g_pengajar.id_guru
+                  WHERE gmka_pengajar.mapel_id = u.mapel_id
+                  AND gmka_pengajar.kelas_id = '.$this->db->escape($id_kelas_siswa).'
+                  AND gmka_pengajar.id_tahun_ajaran = u.id_tahun_ajaran
+                ) AS nama_guru_pengajar'.
+                // END: Tambahan untuk Guru Mata Pelajaran
+            '', FALSE); // FALSE agar tidak meng-escape DISTINCT atau GROUP_CONCAT
+
             $this->datatables->from('m_ujian u');
             $this->datatables->join('mapel m', 'u.mapel_id = m.id_mapel');
-            $this->datatables->join('guru g', 'u.guru_id = g.id_guru');
+            // Menghapus join ke guru g karena nama_pembuat_ujian akan diganti dengan nama_guru_pengajar
+            // $this->datatables->join('guru g', 'u.guru_id = g.id_guru'); 
             
             $this->datatables->where('u.aktif', 'Y');
             $this->datatables->where('u.id_tahun_ajaran', $id_tahun_ajaran_siswa);
@@ -226,7 +238,6 @@ class Ujian_model extends CI_Model {
             
             $result = $this->datatables->generate();
             
-            // Validate JSON before returning
             $decoded = json_decode($result);
             if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
                 log_message('error', 'JSON Error: ' . json_last_error_msg());
@@ -753,8 +764,6 @@ class Ujian_model extends CI_Model {
         $CI =& get_instance();
         $CI->load->config('config');
 
-        // PENTING: Gunakan FALSE sebagai parameter kedua pada select()
-        // agar 'DISTINCT' tidak di-escape dengan backticks.
         $this->datatables->select('
             DISTINCT h.id,
             s.nisn,
@@ -765,25 +774,27 @@ class Ujian_model extends CI_Model {
             u.nama_ujian,
             h.jml_benar,
             h.nilai,
-            h.status,
-            u.id_ujian,
-            h.siswa_id,
+            h.status AS status_pengerjaan_raw, /* Raw status from h_ujian */
+            h.ujian_id, /* Menggunakan h.ujian_id karena FROM utamanya h_ujian */
+            h.siswa_id, /* Menggunakan h.siswa_id */
             ta.id_tahun_ajaran as id_tahun_ajaran_ujian,
             sk.kelas_id as kelas_id_siswa,
             u.mapel_id,
+            u.tgl_mulai, /* Needed for dynamic status */
+            u.terlambat, /* Needed for dynamic status */
             HEX(AES_ENCRYPT(CAST(h.id AS CHAR), "'.$CI->config->item('encryption_key').'")) as id_hasil_ujian_encrypted
-        ', FALSE); // <--- INI PERBAIKAN UTAMANYA: Tambahkan FALSE di sini.
-        
+        ', FALSE); // <-- Pastikan FALSE di sini.
         $this->datatables->from('h_ujian h');
         $this->datatables->join('m_ujian u', 'h.ujian_id = u.id_ujian');
         $this->datatables->join('mapel m', 'u.mapel_id = m.id_mapel');
         $this->datatables->join('siswa s', 'h.siswa_id = s.id_siswa');
-        $this->datatables->join('siswa_kelas_ajaran sk', 's.id_siswa = sk.siswa_id AND u.id_tahun_ajaran = sk.id_tahun_ajaran'); 
+        $this->datatables->join('siswa_kelas_ajaran sk', 's.id_siswa = sk.siswa_id AND u.id_tahun_ajaran = sk.id_tahun_ajaran');
         $this->datatables->join('kelas k', 'sk.kelas_id = k.id_kelas');
         $this->datatables->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left');
         $this->datatables->join('tahun_ajaran ta', 'u.id_tahun_ajaran = ta.id_tahun_ajaran', 'left');
 
-        $this->datatables->where('h.status', 'completed');
+        // Komentar ini (sekarang di luar string SELECT) tidak akan menyebabkan masalah SQL.
+        // Anda sudah menghapus WHERE h.status = 'completed', jadi ini sudah benar untuk menampilkan semua status.
 
         if (!empty($filters['id_tahun_ajaran']) && $filters['id_tahun_ajaran'] !== 'all') {
             $this->datatables->where('u.id_tahun_ajaran', $filters['id_tahun_ajaran']);
@@ -798,22 +809,22 @@ class Ujian_model extends CI_Model {
         if (!$context['is_admin'] && $context['is_guru']) {
             if ($context['id_guru'] && $context['tahun_ajaran_aktif_id']) {
                 $this->datatables->join(
-                    'guru_mapel_kelas_ajaran gmka_filter', 
-                    'gmka_filter.mapel_id = u.mapel_id AND gmka_filter.kelas_id = sk.kelas_id AND gmka_filter.id_tahun_ajaran = u.id_tahun_ajaran', 
+                    'guru_mapel_kelas_ajaran gmka_filter',
+                    'gmka_filter.mapel_id = u.mapel_id AND gmka_filter.kelas_id = sk.kelas_id AND gmka_filter.id_tahun_ajaran = u.id_tahun_ajaran',
                     'inner'
                 );
                 $this->datatables->where('gmka_filter.guru_id', $context['id_guru']);
             } else {
-                $this->datatables->where('1', '0'); 
+                $this->datatables->where('1', '0');
             }
         }
-        
+
         $this->datatables->add_column('kelas_lengkap', '$1 $2', 'nama_jenjang, nama_kelas');
-        
+
         $this->datatables->add_column('aksi', '
             <a href="'.base_url('ujian/detail_hasil_ujian/$1').'" class="btn btn-info btn-xs">Lihat Hasil</a>
-        ', 'id_hasil_ujian_encrypted'); 
-        
+        ', 'id_hasil_ujian_encrypted');
+
         return $this->datatables->generate();
     }
 
@@ -850,5 +861,153 @@ class Ujian_model extends CI_Model {
         $this->db->from('tb_soal');
         $this->db->where_in('id_soal', $list_soal_ids);
         return $this->db->get()->result();
+    }
+
+    /**
+     * Mengambil data ringkasan ujian berdasarkan filter.
+     * Digunakan untuk display di atas tabel hasil ujian.
+     *
+     * @param array $filters Filter: id_tahun_ajaran, mapel_id, kelas_id
+     * @param array $context Konteks user: is_admin, is_guru, id_guru, tahun_ajaran_aktif_id
+     * @return object|null Data ringkasan (nama_ujian, nama_mapel, nama_guru_pembuat, dll.)
+     */
+    public function getSummaryUjianData($filters = [], $context = [])
+    {
+        // Hapus semua komentar dari dalam string SELECT
+        $this->db->select('
+            u.id_ujian,
+            u.nama_ujian,
+            m.nama_mapel,
+            g.nama_guru AS nama_guru_pembuat,
+            u.jumlah_soal,
+            u.waktu,
+            u.tgl_mulai,
+            u.terlambat,
+            u.mapel_id AS mapel_id_raw,
+            u.id_tahun_ajaran AS id_tahun_ajaran_raw,
+            AVG(h.nilai) AS rata_rata_nilai,
+            MIN(h.nilai) AS nilai_terendah,
+            MAX(h.nilai) AS nilai_tertinggi,
+            COUNT(h.id) AS total_peserta_selesai
+        ');
+
+        $this->db->from('m_ujian u');
+        $this->db->join('mapel m', 'u.mapel_id = m.id_mapel');
+        $this->db->join('guru g', 'u.guru_id = g.id_guru');
+        $this->db->join('tahun_ajaran ta', 'u.id_tahun_ajaran = ta.id_tahun_ajaran');
+        
+        $this->db->join('h_ujian h', 'h.ujian_id = u.id_ujian AND h.status = "completed"', 'left');
+        $this->db->join('siswa s', 'h.siswa_id = s.id_siswa', 'left');
+        $this->db->join('siswa_kelas_ajaran sk', 's.id_siswa = sk.siswa_id AND u.id_tahun_ajaran = sk.id_tahun_ajaran', 'left');
+        $this->db->join('kelas k', 'sk.kelas_id = k.id_kelas', 'left');
+
+        // Apply filters
+        if (!empty($filters['id_tahun_ajaran']) && $filters['id_tahun_ajaran'] !== 'all') {
+            $this->db->where('u.id_tahun_ajaran', $filters['id_tahun_ajaran']);
+        }
+        if (!empty($filters['mapel_id']) && $filters['mapel_id'] !== 'all') {
+            $this->db->where('u.mapel_id', $filters['mapel_id']);
+        }
+        if (!empty($filters['kelas_id']) && $filters['kelas_id'] !== 'all') {
+            $this->db->where('sk.kelas_id', $filters['kelas_id']);
+        }
+
+        // Apply guru-specific filters (same as Datatables)
+        if (!$context['is_admin'] && $context['is_guru']) {
+            if ($context['id_guru'] && $context['tahun_ajaran_aktif_id']) {
+                $this->db->join(
+                    'guru_mapel_kelas_ajaran gmka_filter',
+                    'gmka_filter.mapel_id = u.mapel_id AND gmka_filter.kelas_id = sk.kelas_id AND gmka_filter.id_tahun_ajaran = u.id_tahun_ajaran',
+                    'inner'
+                );
+                $this->db->where('gmka_filter.guru_id', $context['id_guru']);
+            } else {
+                return null;
+            }
+        }
+        
+        // Group by semua kolom non-agregat untuk mendapatkan satu baris ringkasan per ujian unik.
+        $this->db->group_by('u.id_ujian, u.nama_ujian, m.nama_mapel, g.nama_guru, u.jumlah_soal, u.waktu, u.tgl_mulai, u.terlambat, u.mapel_id, u.id_tahun_ajaran');
+        
+        $query = $this->db->get();
+        
+        return $query->row();
+    }
+
+    // Revisi get_nilai_terendah
+    public function get_nilai_terendah($filters = [], $context = []) {
+        $this->db->select_min('h.nilai', 'nilai_terendah');
+        $this->_apply_summary_filters_and_joins($filters, $context); // Gunakan helper join baru
+        $this->db->where('h.status', 'completed'); // Hanya hitung dari yang selesai
+        $query = $this->db->get('h_ujian h');
+        log_message('debug', 'get_nilai_terendah Query: ' . $this->db->last_query());
+        return $query->row();
+    }
+
+    // Revisi get_nilai_tertinggi
+    public function get_nilai_tertinggi($filters = [], $context = []) {
+        $this->db->select_max('h.nilai', 'nilai_tertinggi');
+        $this->_apply_summary_filters_and_joins($filters, $context); // Gunakan helper join baru
+        $this->db->where('h.status', 'completed'); // Hanya hitung dari yang selesai
+        $query = $this->db->get('h_ujian h');
+        log_message('debug', 'get_nilai_tertinggi Query: ' . $this->db->last_query());
+        return $query->row();
+    }
+
+    // Revisi get_siswa_dengan_nilai
+    public function get_siswa_dengan_nilai($nilai, $filters = [], $context = []) {
+        if ($nilai === null || $nilai === '-') { // Jika nilai tidak valid, kembalikan kosong
+            return [];
+        }
+        $this->db->select('s.nama as nama_siswa');
+        $this->_apply_summary_filters_and_joins($filters, $context); // Gunakan helper join baru
+        $this->db->where('h.nilai', $nilai);
+        $this->db->where('h.status', 'completed'); // Hanya dari yang selesai
+        $this->db->group_by('s.id_siswa, s.nama'); // Group by untuk nama unik
+        $query = $this->db->get('h_ujian h'); // Dari h_ujian
+        
+        log_message('debug', 'get_siswa_dengan_nilai Query: ' . $this->db->last_query());
+        $result_names = [];
+        foreach ($query->result() as $row) {
+            $result_names[] = $row->nama_siswa;
+        }
+        return $result_names;
+    }
+
+    // New helper method to apply common joins and filters for summary-related queries
+    private function _apply_summary_filters_and_joins($filters = [], $context = []) {
+        $this->db->join('m_ujian u', 'h.ujian_id = u.id_ujian');
+        $this->db->join('mapel m', 'u.mapel_id = m.id_mapel');
+        $this->db->join('siswa s', 'h.siswa_id = s.id_siswa'); // Join ke siswa
+        $this->db->join('siswa_kelas_ajaran sk', 's.id_siswa = sk.siswa_id AND u.id_tahun_ajaran = sk.id_tahun_ajaran');
+        $this->db->join('kelas k', 'sk.kelas_id = k.id_kelas');
+        $this->db->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left');
+        $this->db->join('tahun_ajaran ta', 'u.id_tahun_ajaran = ta.id_tahun_ajaran', 'left');
+
+        // Apply filters
+        if (!empty($filters['id_tahun_ajaran']) && $filters['id_tahun_ajaran'] !== 'all') {
+            $this->db->where('u.id_tahun_ajaran', $filters['id_tahun_ajaran']);
+        }
+        if (!empty($filters['mapel_id']) && $filters['mapel_id'] !== 'all') {
+            $this->db->where('u.mapel_id', $filters['mapel_id']);
+        }
+        if (!empty($filters['kelas_id']) && $filters['kelas_id'] !== 'all') {
+            $this->db->where('sk.kelas_id', $filters['kelas_id']);
+        }
+
+        // Apply guru-specific filters
+        if (!$context['is_admin'] && $context['is_guru']) {
+            if ($context['id_guru'] && $context['tahun_ajaran_aktif_id']) {
+                $this->db->join(
+                    'guru_mapel_kelas_ajaran gmka_filter',
+                    'gmka_filter.mapel_id = u.mapel_id AND gmka_filter.kelas_id = sk.kelas_id AND gmka_filter.id_tahun_ajaran = u.id_tahun_ajaran',
+                    'inner'
+                );
+                $this->db->where('gmka_filter.guru_id', $context['id_guru']);
+            } else {
+                // If guru context is invalid, ensure no results
+                $this->db->where('1', '0');
+            }
+        }
     }
 }

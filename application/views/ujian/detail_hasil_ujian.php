@@ -31,14 +31,6 @@
                         <td><?= htmlspecialchars($hasil_ujian->jumlah_soal_ujian ?? 'N/A'); ?></td>
                     </tr>
                     <tr>
-                        <th>Waktu Mulai</th>
-                        <td><?= htmlspecialchars($hasil_ujian->tgl_mulai_formatted ?? 'N/A'); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Waktu Selesai</th>
-                        <td><?= htmlspecialchars($hasil_ujian->tgl_selesai_formatted ?? 'N/A'); ?></td>
-                    </tr>
-                    <tr>
                         <th colspan="2" class="text-center bg-gray">INFORMASI SISWA</th>
                     </tr>
                     <tr>
@@ -56,6 +48,14 @@
                     <tr>
                         <th>Tahun Ajaran</th>
                         <td><?= htmlspecialchars($hasil_ujian->nama_tahun_ajaran ?? 'N/A'); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Waktu Mulai</th>
+                        <td><?= htmlspecialchars($hasil_ujian->tgl_mulai_formatted ?? 'N/A'); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Waktu Selesai</th>
+                        <td><?= htmlspecialchars($hasil_ujian->tgl_selesai_formatted ?? 'N/A'); ?></td>
                     </tr>
                     <tr>
                         <th>Jumlah Jawaban Benar</th>

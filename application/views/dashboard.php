@@ -257,8 +257,8 @@ $ta_aktif = $tahun_ajaran_aktif_info ?? null;
                     <tr><th width="40%">NISN</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nisn ?? '-'); ?></td></tr>
                     <tr><th>Nama</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nama_siswa ?? '-'); ?></td></tr>
                     <tr><th>Jenis Kelamin</th><td>: <?= ($siswa_dashboard_info->jenis_kelamin ?? '') === 'Laki-laki' ? "Laki-laki" : (($siswa_dashboard_info->jenis_kelamin ?? '') === 'Perempuan' ? "Perempuan" : "-") ;?></td></tr>
-                    <tr><th>Tahun Ajaran Saat Ini</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nama_tahun_ajaran ?? '-'); ?></td></tr>
-                    <tr><th>Kelas Saat Ini</th><td>: <?= htmlspecialchars( (isset($siswa_dashboard_info->nama_jenjang) ? $siswa_dashboard_info->nama_jenjang . ' ' : '') . ($siswa_dashboard_info->nama_kelas ?? '-')) ?></td></tr>
+                    <!-- <tr><th>Tahun Ajaran Saat Ini</th><td>: <?= htmlspecialchars($siswa_dashboard_info->nama_tahun_ajaran ?? '-'); ?></td></tr> -->
+                    <tr><th>Kelas</th><td>: <?= htmlspecialchars( (isset($siswa_dashboard_info->nama_jenjang) ? $siswa_dashboard_info->nama_jenjang . ' ' : '') . ($siswa_dashboard_info->nama_kelas ?? '-')) ?></td></tr>
                 </table>
             </div>
         </div>
@@ -268,7 +268,7 @@ $ta_aktif = $tahun_ajaran_aktif_info ?? null;
                 <div class="box-body">
                     <p>Selamat datang di Ujian Online CBT!</p>
                     <ul style="padding-left: 20px;">
-                        <li>Periksa menu <a href="<?= base_url('ujian/list')?>"><b>Ujian Saya</b></a> untuk melihat daftar ujian yang tersedia.</li>
+                        <li>Periksa menu <a href="<?= base_url('ujian/list_ujian_siswa')?>"><b>Ujian Saya</b></a> untuk melihat daftar ujian yang tersedia.</li>
                         <li>Pastikan Anda memeriksa jadwal ujian dengan seksama.</li>
                         <li>Siapkan diri Anda dengan baik sebelum memulai ujian.</li>
                         <li>Periksa koneksi internet Anda sebelum memulai.</li>

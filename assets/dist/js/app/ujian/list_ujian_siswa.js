@@ -67,7 +67,7 @@ $(document).ready(function () {
       },
       { data: 'nama_ujian' },
       { data: 'nama_mapel' },
-      { data: 'nama_pembuat_ujian' },
+      { data: 'nama_guru_pengajar' },
       {
         data: 'tgl_mulai_formatted',
         className: 'text-center', // Jadwal ujian (mulai - selesai/terlambat)

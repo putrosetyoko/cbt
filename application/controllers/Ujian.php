@@ -1051,7 +1051,7 @@ class Ujian extends MY_Controller {
                     
                     $this->output_json([
                         'status' => true,
-                        'message' => 'Token valid, memulai ujian...',
+                        'message' => 'Token valid. Klik OK untuk memulai ujian.',
                         'redirect_url' => $redirect_url
                     ]);
                     return;
@@ -1433,11 +1433,14 @@ class Ujian extends MY_Controller {
      */
     public function hasil_ujian_siswa()
     {
-        // Akses hanya untuk Admin atau Guru
         if (!$this->is_admin && !$this->is_guru) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses ke halaman ini.');
             redirect('dashboard');
+            return;
         }
+
+        $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif(); // Dapatkan TA aktif
+        $default_ta_id = $tahun_ajaran_aktif ? $tahun_ajaran_aktif->id_tahun_ajaran : 'all'; // Default 'all' jika tidak ada yang aktif
 
         $data = [
             'user'          => $this->ion_auth->user()->row(),
@@ -1447,18 +1450,16 @@ class Ujian extends MY_Controller {
             'is_guru'       => $this->is_guru,
             'guru_data'     => $this->guru_data,
             'pj_mapel_data' => $this->pj_mapel_data,
+            'default_ta_id' => $default_ta_id, // Kirim ke view
         ];
 
-        // Filter Options
         $data['filter_tahun_ajaran_options'] = $this->master->getAllTahunAjaran();
-        $data['filter_jenjang_options']      = $this->master->getAllJenjang();
-        
+        $data['filter_jenjang_options']      = $this->master->getAllJenjang(); // Mungkin tidak terpakai jika filter hanya berdasarkan kelas
+
         if ($this->is_admin) {
             $data['filter_mapel_options'] = $this->master->getAllMapel();
-            $data['filter_kelas_options'] = $this->master->getAllKelas(); // Admin bisa filter semua kelas
+            $data['filter_kelas_options'] = $this->master->getAllKelas();
         } elseif ($this->is_guru && $this->guru_data) {
-            // Guru hanya melihat mapel dan kelas yang diajarnya di tahun ajaran aktif
-            $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif();
             if ($tahun_ajaran_aktif) {
                 $mapel_diajar = $this->master->getMapelDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
                 if (!empty($mapel_diajar)) {
@@ -1469,7 +1470,8 @@ class Ujian extends MY_Controller {
                 
                 $kelas_diajar = $this->master->getKelasDiajarGuru($this->guru_data->id_guru, $tahun_ajaran_aktif->id_tahun_ajaran);
                 if (!empty($kelas_diajar)) {
-                    $data['filter_kelas_options'] = $this->db->where_in('id_kelas', $kelas_diajar)->get('kelas')->result();
+                     // Get full kelas data (with jenjang) for dropdown
+                     $data['filter_kelas_options'] = $this->master->getKelasByIds($kelas_diajar);
                 } else {
                     $data['filter_kelas_options'] = [];
                 }
@@ -1482,10 +1484,95 @@ class Ujian extends MY_Controller {
             $data['filter_kelas_options'] = [];
         }
 
-
         $this->load->view('_templates/dashboard/_header.php', $data);
         $this->load->view('ujian/hasil_ujian_siswa', $data);
         $this->load->view('_templates/dashboard/_footer.php');
+    }
+
+    // B. Method `get_summary_hasil_ujian()`
+    // Modifikasi output untuk format tanggal/waktu dan menambahkan Guru Mata Pelajaran
+    public function get_summary_hasil_ujian()
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404(); return;
+        }
+
+        $filters = [
+            'id_tahun_ajaran' => $this->input->post('filter_tahun_ajaran', true),
+            'mapel_id'        => $this->input->post('filter_mapel', true),
+            'kelas_id'        => $this->input->post('filter_kelas', true),
+        ];
+
+        $context = [
+            'is_admin'  => $this->is_admin,
+            'is_guru'   => $this->is_guru,
+            'id_guru'   => ($this->is_guru && $this->guru_data) ? $this->guru_data->id_guru : null,
+            'tahun_ajaran_aktif_id' => $this->master->getTahunAjaranAktif()->id_tahun_ajaran ?? null
+        ];
+
+        $summary = $this->ujian_m->getSummaryUjianData($filters, $context);
+        
+        // Inisialisasi summary_output dengan nilai default
+        $summary_output = (object)[
+            'nama_ujian' => '-',
+            'jumlah_soal' => '-',
+            'waktu_ujian_formatted' => '-',
+            'hari_tanggal_formatted' => '-',
+            'nama_mapel' => '-',
+            'nama_guru_pembuat' => '-',
+            'guru_mapel_mengajar' => '-',
+            'nilai_terendah' => '-',
+            'nilai_tertinggi' => '-',
+            'rata_rata_nilai' => '-',
+            'total_peserta_selesai' => '-',
+            'siswa_nilai_terendah' => [], // Penting: Inisialisasi sebagai array kosong
+            'siswa_nilai_tertinggi' => [] // Penting: Inisialisasi sebagai array kosong
+        ];
+
+        if ($summary) {
+            // Format data dari $summary utama
+            $summary_output->nama_ujian = $summary->nama_ujian;
+            $summary_output->jumlah_soal = $summary->jumlah_soal;
+            $summary_output->waktu_ujian_formatted = ($summary->tgl_mulai && $summary->terlambat) ?
+                                                date('H.i', strtotime($summary->tgl_mulai)) . '-' . date('H.i', strtotime($summary->terlambat)) . ' WIB' : '-';
+            setlocale(LC_TIME, 'id_ID', 'Indonesian', 'id');
+            $summary_output->hari_tanggal_formatted = ($summary->tgl_mulai) ? strftime('%A, %d %B %Y', strtotime($summary->tgl_mulai)) : '-';
+            
+            $summary_output->nama_mapel = $summary->nama_mapel;
+            $summary_output->nama_guru_pembuat = $summary->nama_guru_pembuat;
+
+            // Ambil Guru Mata Pelajaran (yang mengajar mapel ujian di kelas tersebut)
+            $guru_mapel_mengajar = $this->master->getGuruMengajarMapelKelas(
+                $summary->mapel_id_raw,
+                $filters['kelas_id'], // Gunakan filter kelas yang dipilih
+                $summary->id_tahun_ajaran_raw
+            );
+            $summary_output->guru_mapel_mengajar = $guru_mapel_mengajar ? implode(', ', array_column($guru_mapel_mengajar, 'nama_guru')) : '-';
+
+            // Ambil nilai terendah dan tertinggi secara terpisah
+            // PENTING: Panggil get_nilai_terendah/tertinggi dengan filter dan context yang sama
+            $nilai_terendah_obj = $this->ujian_m->get_nilai_terendah($filters, $context);
+            $nilai_tertinggi_obj = $this->ujian_m->get_nilai_tertinggi($filters, $context);
+
+            $nilai_terendah_val = $nilai_terendah_obj ? $nilai_terendah_obj->nilai_terendah : null;
+            $nilai_tertinggi_val = $nilai_tertinggi_obj ? $nilai_tertinggi_obj->nilai_tertinggi : null;
+
+            $summary_output->nilai_terendah = ($nilai_terendah_val !== null) ? number_format($nilai_terendah_val, 2) : '-';
+            $summary_output->nilai_tertinggi = ($nilai_tertinggi_val !== null) ? number_format($nilai_tertinggi_val, 2) : '-';
+            
+            // Ambil nama siswa dengan nilai tersebut
+            $summary_output->siswa_nilai_terendah = $this->ujian_m->get_siswa_dengan_nilai($nilai_terendah_val, $filters, $context);
+            $summary_output->siswa_nilai_tertinggi = $this->ujian_m->get_siswa_dengan_nilai($nilai_tertinggi_val, $filters, $context);
+
+            $summary_output->rata_rata_nilai = ($summary->rata_rata_nilai !== null) ? number_format($summary->rata_rata_nilai, 2) : '-';
+            $summary_output->total_peserta_selesai = ($summary->total_peserta_selesai !== null) ? $summary->total_peserta_selesai : '-';
+
+        }
+        // Jika $summary (dari getSummaryUjianData) adalah null, maka summary_output tetap dengan nilai default '-'
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['status' => true, 'summary' => $summary_output, 'csrf_hash_new' => $this->security->get_csrf_hash()]));
     }
 
     /**

@@ -155,9 +155,9 @@ $(document).ready(function() {
                         title: 'Berhasil!',
                         text: response.message,
                         icon: 'success',
-                        allowOutsideClick: false,
+                        timer: 1500,
                         showConfirmButton: false,
-                        timer: 1500
+                        allowOutsideClick: false,
                     }).then(function() {
                         // Force redirect to lembar_ujian
                         window.location.href = response.redirect_url;

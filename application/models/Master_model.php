@@ -624,4 +624,36 @@ class Master_model extends CI_Model
         return array_column($query->result_array(), 'kelas_id');
     }
 
+    /**
+     * Mengambil daftar guru yang mengajar mapel di kelas tertentu pada tahun ajaran tertentu.
+     *
+     * @param int $mapel_id ID Mata Pelajaran
+     * @param int $kelas_id ID Kelas
+     * @param int $id_tahun_ajaran ID Tahun Ajaran
+     * @return array Array objek guru {id_guru, nama_guru}
+     */
+    public function getGuruMengajarMapelKelas($mapel_id, $kelas_id, $id_tahun_ajaran)
+    {
+        if (empty($mapel_id) || empty($kelas_id) || empty($id_tahun_ajaran)) {
+            return [];
+        }
+
+        // PERBAIKAN UTAMA: Tambahkan FALSE sebagai parameter kedua di select()
+        $this->db->select('DISTINCT g.id_guru, g.nama_guru', FALSE); // <-- Tambahkan FALSE di sini
+        $this->db->from('guru_mapel_kelas_ajaran gmka');
+        $this->db->join('guru g', 'gmka.guru_id = g.id_guru');
+        $this->db->where('gmka.mapel_id', $mapel_id);
+        $this->db->where('gmka.kelas_id', $kelas_id);
+        $this->db->where('gmka.id_tahun_ajaran', $id_tahun_ajaran);
+        $this->db->order_by('g.nama_guru', 'ASC');
+
+        $query = $this->db->get();
+
+        // Tambahkan logging untuk debugging
+        log_message('debug', 'Master_model (getGuruMengajarMapelKelas) - Query: ' . $this->db->last_query());
+        log_message('debug', 'Master_model (getGuruMengajarMapelKelas) - Result: ' . print_r($query->result(), true));
+
+        return $query->result();
+    }
+
 }
