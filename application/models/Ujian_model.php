@@ -9,27 +9,38 @@ class Ujian_model extends CI_Model {
         $this->load->model('Master_model', 'master');
     }
 
-    public function get_ujian_by_id_with_guru($id_ujian)
+    public function get_ujian_by_id_with_guru($id_ujian, $id_kelas_siswa = null) // Tambahkan parameter $id_kelas_siswa
     {
-        $this->db->select('m_ujian.*, mapel.nama_mapel, 
-                    g1.nama_guru as pembuat_soal,
-                    g2.nama_guru as guru_pengajar,
-                    jenjang.nama_jenjang')
-            ->from('m_ujian')
+        $this->db->select('m_ujian.*, mapel.nama_mapel,
+                            g1.nama_guru as pembuat_soal,
+                            jenjang.nama_jenjang'); // Hapus g2.nama_guru dari SELECT utama dulu
+
+        // Subquery untuk mendapatkan guru pengajar
+        // Menggunakan subquery agar bisa mendapatkan satu string guru saja,
+        // meskipun ada banyak guru mengajar mapel tersebut di kelas yang sama
+        $subquery_guru_pengajar = '(
+            SELECT GROUP_CONCAT(DISTINCT g_pengajar.nama_guru ORDER BY g_pengajar.nama_guru ASC)
+            FROM guru_mapel_kelas_ajaran gmka_pengajar
+            JOIN guru g_pengajar ON gmka_pengajar.guru_id = g_pengajar.id_guru
+            WHERE gmka_pengajar.mapel_id = m_ujian.mapel_id
+            AND gmka_pengajar.id_tahun_ajaran = m_ujian.id_tahun_ajaran';
+
+        if ($id_kelas_siswa !== null) {
+            $subquery_guru_pengajar .= ' AND gmka_pengajar.kelas_id = ' . $this->db->escape($id_kelas_siswa);
+        }
+        $subquery_guru_pengajar .= ') AS nama_guru_pengajar';
+        $this->db->select($subquery_guru_pengajar, FALSE); // FALSE agar tidak di-escape CodeIgniter
+
+        $this->db->from('m_ujian')
             ->join('mapel', 'mapel.id_mapel = m_ujian.mapel_id')
-            ->join('guru g1', 'g1.id_guru = m_ujian.guru_id')
+            ->join('guru g1', 'g1.id_guru = m_ujian.guru_id') // Guru pembuat ujian
             ->join('jenjang', 'jenjang.id_jenjang = m_ujian.id_jenjang_target', 'left')
-            // Join with guru_mapel_kelas_ajaran to get the teaching teacher
-            ->join('guru_mapel_kelas_ajaran gmka', 
-                'gmka.mapel_id = m_ujian.mapel_id AND 
-                gmka.id_tahun_ajaran = m_ujian.id_tahun_ajaran', 'left')
-            ->join('guru g2', 'g2.id_guru = gmka.guru_id', 'left')
             ->where('m_ujian.id_ujian', $id_ujian);
 
         // For debugging
         $result = $this->db->get()->row();
-        log_message('debug', 'SQL Query: ' . $this->db->last_query());
-        
+        log_message('debug', 'SQL Query for get_ujian_by_id_with_guru: ' . $this->db->last_query());
+
         return $result;
     }
 
@@ -218,11 +229,11 @@ class Ujian_model extends CI_Model {
                 // Mengambil guru yang mengajar mapel ini di kelas target ujian (kelas siswa yang login)
                 // Ini akan menghasilkan string nama guru yang dipisahkan koma jika ada lebih dari satu
                 '(SELECT GROUP_CONCAT(g_pengajar.nama_guru ORDER BY g_pengajar.nama_guru ASC)
-                  FROM guru_mapel_kelas_ajaran gmka_pengajar
-                  JOIN guru g_pengajar ON gmka_pengajar.guru_id = g_pengajar.id_guru
-                  WHERE gmka_pengajar.mapel_id = u.mapel_id
-                  AND gmka_pengajar.kelas_id = '.$this->db->escape($id_kelas_siswa).'
-                  AND gmka_pengajar.id_tahun_ajaran = u.id_tahun_ajaran
+                FROM guru_mapel_kelas_ajaran gmka_pengajar
+                JOIN guru g_pengajar ON gmka_pengajar.guru_id = g_pengajar.id_guru
+                WHERE gmka_pengajar.mapel_id = u.mapel_id
+                AND gmka_pengajar.kelas_id = '.$this->db->escape($id_kelas_siswa).'
+                AND gmka_pengajar.id_tahun_ajaran = u.id_tahun_ajaran
                 ) AS nama_guru_pengajar'.
                 // END: Tambahan untuk Guru Mata Pelajaran
             '', FALSE); // FALSE agar tidak meng-escape DISTINCT atau GROUP_CONCAT
@@ -254,9 +265,12 @@ class Ujian_model extends CI_Model {
 
     public function get_ujian_for_konfirmasi_siswa($id_ujian, $id_jenjang_siswa) {
         $this->db->select('u.id_ujian, u.nama_ujian, u.token, u.jumlah_soal, u.waktu, u.tgl_mulai, u.terlambat, u.aktif, m.nama_mapel, g.nama_guru as nama_pembuat_ujian');
+        // Tambahkan jenjang juga di sini untuk tampilan
+        $this->db->select('j.nama_jenjang');
         $this->db->from('m_ujian u');
         $this->db->join('mapel m', 'u.mapel_id = m.id_mapel', 'left');
         $this->db->join('guru g', 'u.guru_id = g.id_guru', 'left');
+        $this->db->join('jenjang j', 'u.id_jenjang_target = j.id_jenjang', 'left'); // JOIN ke tabel jenjang
         $this->db->where('u.id_ujian', $id_ujian);
         $this->db->where('u.id_jenjang_target', $id_jenjang_siswa);
         return $this->db->get()->row();

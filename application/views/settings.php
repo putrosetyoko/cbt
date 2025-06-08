@@ -37,7 +37,7 @@
                         if(response.status){
                             Swal({
                                 title: "Berhasil",
-                                text: "Semua table sudah dikosongkan, kecuali akun Admin pada table user.",
+                                text: "Semua table sudah dikosongkan, kecuali akun Admin pada table users.",
                                 type: "success",
                             });
                         }

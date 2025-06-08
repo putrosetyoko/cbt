@@ -50,6 +50,7 @@ $(document).ready(function () {
         data: 'id_mapel',
         orderable: false,
         searchable: false,
+        width: '3%',
       },
       { data: 'nama_mapel' },
     ],

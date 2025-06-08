@@ -34,7 +34,7 @@ $(document).ready(function () {
         if (data.status) {
           Swal({
             title: 'Sukses',
-            text: 'Data Tahun Ajaran Berhasil disimpan.',
+            text: 'Data Jenjang disimpan.',
             type: 'success',
           }).then((result) => {
             if (result.value) {

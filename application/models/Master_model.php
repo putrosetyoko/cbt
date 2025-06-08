@@ -31,7 +31,12 @@ class Master_model extends CI_Model
     public function delete($table, $data, $pk = null)
     {
         if (is_array($data)) {
-            $this->db->where($data);
+            if ($pk !== null) {
+                $this->db->where_in($pk, $data);
+            } else {
+                log_message('error', 'Master_model::delete() called with array data but no primary key (pk) specified.');
+                return false;
+            }
         } else {
             $this->db->where($pk, $data);
         }

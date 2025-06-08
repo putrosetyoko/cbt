@@ -57,7 +57,7 @@
 
 /* Zoom styling */
 .medium-zoom-overlay {
-  z-index: 1050;
+  z-index: 1050; /* Ini cukup standar dan aman */
   background-color: rgba(0, 0, 0, 0.9) !important;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .medium-zoom-image--opened {
-  z-index: 1051;
+  z-index: 1051; /* Gambar yang di-zoom di atas overlay */
   cursor: zoom-out;
 }
 
@@ -264,4 +264,33 @@
 
 .box-footer .btn {
   border-radius: 12px;
+}
+
+.blurred-content {
+  filter: blur(5px); /* Sesuaikan nilai blur sesuai keinginan */
+  pointer-events: none; /* Mencegah interaksi saat blur */
+  transition: filter 0.3s ease-in-out; /* Efek transisi halus */
+}
+
+/* Styling untuk watermark */
+#dynamic-watermark {
+  font-size: 1.5em; /* Sesuaikan ukuran font */
+  color: #cccccc; /* Warna teks yang sangat pudar */
+  opacity: 0.1; /* Transparansi */
+  z-index: 9998; /* Di bawah fullscreen prompt tapi di atas konten lain */
+  pointer-events: none; /* Penting: agar tidak mengganggu klik di bawahnya */
+  white-space: nowrap; /* Mencegah teks terpotong */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sedikit bayangan untuk keterbacaan */
+  /* Pastikan posisinya sudah fixed seperti di JS */
+  display: flex; /* Untuk memudahkan penataan span di dalamnya */
+  flex-wrap: wrap; /* Mengizinkan span untuk wrap */
+  justify-content: center; /* Menata span di tengah */
+  align-items: center; /* Menata span di tengah */
+  transform: rotate(-45deg); /* Rotasi watermark untuk efek visual */
+}
+
+/* Opsional: Tambahkan blur ke watermark juga saat konten ujian blur */
+.blurred-content #dynamic-watermark {
+  filter: blur(2px); /* Blur watermark juga saat konten blur */
+  opacity: 0.05; /* Kurangi opasitas saat blur */
 }

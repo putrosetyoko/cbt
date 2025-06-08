@@ -57,7 +57,30 @@ window.examConfig = {
     WAKTU_SELESAI: '<?= date('Y-m-d H:i:s', $waktu_terlambat) ?>',
     WAKTU_HABIS_TIMESTAMP_GLOBAL: <?= intval($waktu_terlambat) ?>, // Pastikan integer valid
     CSRF_TOKEN_NAME_GLOBAL: '<?= $this->security->get_csrf_token_name() ?>',
-    CSRF_HASH_GLOBAL: '<?= $this->security->get_csrf_hash() ?>'
+    CSRF_HASH_GLOBAL: '<?= $this->security->get_csrf_hash() ?>',
+
+    siswa: {
+        nisn: '<?= $siswa->nisn ?>',
+        nama: '<?= $siswa->nama_siswa ?>'
+    },
+    ujian: {
+        nama_ujian: '<?= $ujian->nama_ujian ?>'
+    },
+
+    // ANTI-CHEATING SETTINGS (NEW)
+    enableAntiCheating: true, // Set to false to disable these features
+    maxCheatAttempts: 3, // Jumlah maksimal pelanggaran sebelum ujian disubmit/logout
+    redirectUrlOnCheat: '<?= base_url('auth/logout') ?>', // Atau base_url('auth/logout')
+    confirmFinishMessage: 'Setelah ujian diselesaikan, Anda tidak dapat mengubah jawaban Anda lagi.',
+    unansweredWarning: 'Perhatian: Ada {count} soal yang belum Anda jawab.',
+    doubtfulWarning: 'Ada {count} soal yang masih ditandai ragu-ragu.',
+    // Tambahkan pesan konfirmasi untuk keluar dari fullscreen
+    exitFullscreenWarning: 'Anda keluar dari mode layar penuh. Ini akan dihitung sebagai pelanggaran!',
+    tabChangeWarning: 'Anda beralih tab atau keluar dari jendela browser. Ini akan dihitung sebagai pelanggaran!',
+    cheatAttemptExceeded: 'Anda telah melewati batas maksimal pelanggaran. Ujian akan diakhiri.',
+    
+    // Tambahkan timestamp mulai ujian (saat page loaded)
+    startTime: Date.now() // Timestamp saat halaman dimuat, untuk perhitungan waktu yang lebih akurat
 };
 
 // Debug log
@@ -68,6 +91,17 @@ console.log('Debug waktu:', {
     waktuTerlambatTimestamp: <?= intval($waktu_terlambat) ?>
 });
 </script>
+
+<style>
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
+}
+/* Opsional: Sembunyikan scrollbar jika fullscreen */
+/* html.fullscreen-mode, body.fullscreen-mode { overflow: hidden; } */
+</style>
 
 <!-- Add CSS file reference in header -->
 <link rel="stylesheet" href="<?= base_url('assets/dist/css/ujian.css') ?>">
@@ -98,6 +132,30 @@ console.log('Debug waktu:', {
     margin: 0 2px;
 }
 </style> -->
+<div id="fullscreen-prompt" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 20px;
+">
+    <h3>Ujian Siap Dimulai!</h3>
+    <p>Untuk menghindari kecurangan, ujian ini akan berjalan dalam mode layar penuh.</p>
+    <p>Pastikan Anda tidak beralih aplikasi/tab atau keluar dari mode layar penuh selama ujian. Pelanggaran akan dicatat.</p>
+    <button id="start-fullscreen-exam" class="btn btn-lg btn-success" style="margin-top: 20px;">
+        <i class="fa fa-play-circle"></i> Mulai Ujian dalam Layar Penuh
+    </button>
+</div>
 
 <div class="row">
     <!-- Navigation Column -->
@@ -341,6 +399,7 @@ $(document).ready(function() {
     });
 });
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi zoom untuk gambar dengan data-zoomable
@@ -348,7 +407,16 @@ document.addEventListener('DOMContentLoaded', function() {
         margin: 20,
         background: '#000000e6',
         scrollOffset: 0,
-        // Remove template configuration
+    });
+
+    // Tambahkan event listener untuk menutup zoom saat overlay diklik atau ketika zoom ditutup
+    // Ini adalah fallback jika event listener di tombol navigasi tidak cukup
+    zoomable.on('closed', () => {
+        // Fokuskan kembali ke dokumen atau elemen yang relevan jika perlu
+        // document.body.focus();
+        // Memastikan tidak ada sisa event dari zoom yang aktif
+        console.log('MediumZoom: Zoom overlay closed.');
+        // Mungkin refresh UI elemen jika perlu (misalnya re-enable button, tapi ini sudah dihandle oleh medium-zoom)
     });
 
     // Handle navigation events
@@ -357,7 +425,24 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', () => {
             // Close zoom if open
             zoomable.close();
+            console.log('MediumZoom: Navigation button clicked, closing zoom.');
         });
+    });
+
+    // Tambahan: Pastikan zoom ditutup jika pengguna mengklik di luar area gambar
+    // Medium-zoom sudah menangani ini secara internal, tetapi bisa ditambahkan sebagai lapisan keamanan
+    // jika ada masalah yang tidak terduga
+    document.addEventListener('click', function(e) {
+        if (zoomable.opened && !e.target.closest('[data-zoomable]')) {
+            // Jika zoom terbuka dan klik terjadi di luar gambar yang zoomable, tutup zoom
+            // HANYA jika klik terjadi di luar *overlay* itu sendiri, mediumZoom harus menutup.
+            // Jika masih bermasalah, mungkin perlu cara yang lebih agresif.
+            // const zoomOverlay = document.querySelector('.medium-zoom-overlay');
+            // if (zoomOverlay && !zoomOverlay.contains(e.target)) {
+            //     zoomable.close();
+            //     console.log('MediumZoom: Click outside zoomable image, closing zoom.');
+            // }
+        }
     });
 
     // Debug log

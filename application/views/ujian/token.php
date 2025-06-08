@@ -44,11 +44,11 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
             <div class="box-body">
                 <table class="table table-striped table-condensed">
                     <tr>
-                        <th>Nama</th>
+                        <th>Nama Siswa</th>
                         <td width="80%">: <?= $siswa->nama_siswa ?></td>
                     </tr>
                     <tr>
-                        <th>NIS</th>
+                        <th>NISN</th>
                         <td>: <?= $siswa->nisn ?></td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
                     </tr> 
                     <tr>
                         <th>Guru Mata Pelajaran</th>
-                        <td>: <?= $ujian->guru_pengajar ?? 'Belum ditentukan' ?></td>
+                        <td>: <?= $ujian->nama_guru_pengajar ?? 'Belum ditentukan' ?></td>
                     </tr> 
                     <tr>
                         <th>Hari/Tanggal</th>
@@ -102,7 +102,7 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
                 <h3 class="box-title"><i class="fa fa-key"></i> Masukkan Token Ujian</h3>
             </div>
             <div class="box-body">
-                <form id="formtoken" method="POST">
+                <form id="formToken" method="POST">
                     <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>">
                     <input type="hidden" name="id_ujian_enc" id="id_ujian_enc" value="<?=$encrypted_id_ujian?>">
                     
@@ -154,8 +154,8 @@ $(document).ready(function() {
                     Swal.fire({
                         title: 'Berhasil!',
                         text: response.message,
-                        icon: 'success',
-                        timer: 1500,
+                        type: 'success',
+                        timer: 2000,
                         showConfirmButton: false,
                         allowOutsideClick: false,
                     }).then(function() {
@@ -166,7 +166,7 @@ $(document).ready(function() {
                     Swal.fire({
                         title: 'Gagal!',
                         text: response.message,
-                        icon: 'error'
+                        type: 'error'
                     });
                 }
             },
@@ -174,7 +174,7 @@ $(document).ready(function() {
                 Swal.fire({
                     title: 'Error!',
                     text: 'Terjadi kesalahan saat memproses token',
-                    icon: 'error'
+                    type: 'error'
                 });
             }
         });
@@ -182,5 +182,5 @@ $(document).ready(function() {
 });
 </script>
 
-<script src="<?= base_url('assets/dist/js/app/ujian/token.js') ?>"></sc>
+<script src="<?= base_url('assets/dist/js/app/ujian/token.js') ?>"></script>
 

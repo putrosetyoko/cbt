@@ -3,32 +3,32 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN MENU</li>
             <?php 
-            $page = $this->uri->segment(1); // Controller name (e.g., 'dashboard', 'ujian')
-            $page2 = $this->uri->segment(2); // Method name (e.g., 'hasil_ujian_siswa', 'list_ujian_siswa')
+            // Ambil segmen URL
+            $page = $this->uri->segment(1);
+            $page2 = $this->uri->segment(2);
 
-            // Grup menu untuk kelas 'active'
+            // Definisikan grup menu untuk kemudahan
             $master = ["tahunajaran", "jenjang", "kelas", "mapel", "guru", "siswa"];
             $penugasan = ["siswakelas", "penugasanguru", "pjsoal"]; 
-            $manajemen_ujian_controllers = ["soal", "ujian"]; // Kontroler yang masuk kategori manajemen ujian
             $users_settings = ["users", "settings"];
 
-            // Tentukan apakah menu "Hasil Ujian" sedang aktif
-            // Aktif jika di halaman 'ujian/hasil_ujian_siswa' atau 'ujian/detail_hasil_ujian'
+            // --- Logika Baru untuk Menu Ujian ---
+
+            // 1. Kondisi untuk menu "Hasil Ujian" (Admin/Guru)
             $is_hasil_ujian_active = ($page === 'ujian' && ($page2 === 'hasil_ujian_siswa' || $page2 === 'detail_hasil_ujian'));
 
-            // Tentukan apakah menu "Kelola Ujian" (child of Manajemen Ujian) sedang aktif
-            // Aktif jika di halaman 'ujian' tanpa method spesifik (index) atau method 'add'/'edit'
-            $is_kelola_ujian_child_active = ($page === 'ujian' && ($page2 === '' || $page2 === 'index' || $page2 === 'add' || $page2 === 'edit'));
+            // 2. Kondisi untuk menu "Ujian Saya" (Siswa)
+            $is_ujian_siswa_active = ($page === 'ujian' && ($page2 === 'list_ujian_siswa' || $page2 === 'token' || $page2 === 'lembar_ujian'));
 
-            // Tentukan apakah grup menu "Manajemen Ujian" (parent) aktif
-            // Aktif jika salah satu anaknya (Bank Soal atau Kelola Ujian) aktif
-            // ATAU jika kita berada di halaman hasil ujian tapi bukan hasil_ujian_siswa/detail_hasil_ujian
-            // (ini adalah kasus lama yang mungkin tidak lagi relevan, tapi sebagai fallback)
-            $is_manajemen_ujian_parent_active = (
-                $page === 'soal' || // Jika di Bank Soal
-                $is_kelola_ujian_child_active // Jika di Kelola Ujian (indeks/add/edit)
-            );
+            // 3. Kondisi untuk "Kelola Ujian" (Prinsip Pengecualian)
+            // Aktif jika di controller 'ujian', TAPI BUKAN halaman "Hasil Ujian" dan BUKAN halaman "Ujian Saya".
+            $is_kelola_ujian_active = ($page === 'ujian' && !$is_hasil_ujian_active && !$is_ujian_siswa_active);
+            
+            // 4. Kondisi untuk parent "Manajemen Ujian"
+            // Aktif jika di controller 'soal' ATAU jika di "Kelola Ujian".
+            $is_manajemen_ujian_parent_active = ($page === 'soal' || $is_kelola_ujian_active);
             ?>
+            
             <li class="<?= $page === 'dashboard' ? "active" : "" ?>">
                 <a href="<?=base_url('dashboard')?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
             </li>
@@ -74,7 +74,7 @@
                     <li class="<?=$page==='soal'?"active":""?>">
                         <a href="<?=base_url('soal')?>"><i class="fa fa-file-text-o"></i> Bank Soal</a>
                     </li>
-                    <li class="<?= $is_kelola_ujian_child_active ? "active" : "" ?>"> 
+                    <li class="<?= $is_kelola_ujian_active ? "active" : "" ?>"> 
                         <a href="<?=base_url('ujian')?>"><i class="fa fa-pencil-square-o"></i> Kelola Ujian</a>
                     </li>
                 </ul>
@@ -87,7 +87,7 @@
             <?php endif; ?>
 
             <?php if( $this->ion_auth->in_group('siswa') ) : ?> 
-            <li class="<?=($page==='ujian' && ($page2 ==='list_ujian_siswa' || empty($page2) || $page2 === 'token' || $page2 === 'lembar_ujian')) ?"active":""?>"> 
+            <li class="<?= $is_ujian_siswa_active ? "active" : "" ?>"> 
                 <a href="<?=base_url('ujian/list_ujian_siswa')?>"><i class="fa fa-edit"></i> <span>Ujian Saya</span></a> 
             </li>
             <?php endif; ?>

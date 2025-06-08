@@ -902,7 +902,15 @@ class Ujian extends MY_Controller {
                 return;
             }
 
-            $ujian = $this->ujian_m->get_ujian_by_id_with_guru($id_ujian);
+            // Pastikan siswa_data sudah tersedia dan memiliki id_kelas
+            if (empty($this->siswa_data) || !isset($this->siswa_data->id_kelas)) {
+                log_message('error', 'UjianController->token(): Data siswa atau ID kelas tidak ditemukan untuk user: ' . ($this->ion_auth->user()->row()->username ?? 'N/A'));
+                $this->session->set_flashdata('error', 'Data profil siswa Anda tidak lengkap. Hubungi administrator.');
+                redirect('ujian/list_ujian_siswa'); // Redirect kembali jika data siswa tidak lengkap
+                return;
+            }
+
+            $ujian = $this->ujian_m->get_ujian_by_id_with_guru($id_ujian, $this->siswa_data->id_kelas);
             
             $data = [
                 'user'      => $this->ion_auth->user()->row(),
@@ -1051,7 +1059,7 @@ class Ujian extends MY_Controller {
                     
                     $this->output_json([
                         'status' => true,
-                        'message' => 'Token valid. Klik OK untuk memulai ujian.',
+                        'message' => 'Token valid.',
                         'redirect_url' => $redirect_url
                     ]);
                     return;

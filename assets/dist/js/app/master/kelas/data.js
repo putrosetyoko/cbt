@@ -53,7 +53,7 @@ $(document).ready(function () {
         data: 'id_kelas', // Atau null jika penomoran dari rowCallback
         orderable: false,
         searchable: false,
-        // width: '5%' // Atur lebar jika perlu
+        width: '3%', // Atur lebar jika perlu
       },
       {
         data: null,

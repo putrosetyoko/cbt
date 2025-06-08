@@ -63,7 +63,7 @@
                     </select>
                 </div>
             <?php endif; ?>
-            <div class="col-sm-6 text-right" style="padding-top:25px;">
+            <div class="col-sm-12 text-right" style="padding-top:25px;">
                  <?php if ($is_admin || ($is_guru && $pj_mapel_data)): // Hanya admin atau PJ yang bisa bulk delete ?>
                     <button onclick="bulk_delete()" class="btn btn-sm btn-flat btn-danger" type="button"><i class="fa fa-trash"></i> Delete</button>
                 <?php endif; ?>

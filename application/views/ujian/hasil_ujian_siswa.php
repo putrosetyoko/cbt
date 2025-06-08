@@ -67,7 +67,7 @@
                         <td id="summary_nama_mapel">-</td>
                     </tr>
                     <tr>
-                        <th>Guru Pembuat</th>
+                        <th>Guru Pembuat Ujian</th>
                         <td id="summary_nama_guru_pembuat">-</td>
                     </tr>
                     <tr>
