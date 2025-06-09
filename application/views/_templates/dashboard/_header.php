@@ -8,6 +8,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?=$judul?></title>
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<meta name="csrf-name" content="<?= $this->security->get_csrf_token_name(); ?>">
+  <meta name="csrf-hash" content="<?= $this->security->get_csrf_hash(); ?>">
 	
 	<!-- Required CSS -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -97,7 +99,7 @@
 </head>
 
 <!-- Must Load First -->
-<script src="<?=base_url()?>assets/bower_components/jquery/jquery-3.3.1.min.js"></script>
+<!-- <script src="<?=base_url()?>assets/bower_components/jquery/jquery-3.3.1.min.js"></script> -->
 <script src="<?=base_url()?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="<?=base_url()?>assets/bower_components/sweetalert2/sweetalert2.all.min.js"></script>

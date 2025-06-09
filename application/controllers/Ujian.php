@@ -1084,72 +1084,45 @@ class Ujian extends MY_Controller {
                 throw new Exception('ID ujian tidak ditemukan');
             }
 
-            // Use the consistent decryption method
             $id_h_ujian = $this->ujian_m->decrypt_exam_id($id_h_ujian_enc);
             
             if (!$id_h_ujian) {
                 throw new Exception('ID ujian tidak valid');
             }
 
-            // Get h_ujian data
             $h_ujian = $this->db->get_where('h_ujian', [
                 'id' => $id_h_ujian,
                 'siswa_id' => $this->siswa_data->id_siswa
-            ])
-            ->row();
+            ])->row();
 
             if (!$h_ujian) {
                 throw new Exception('Data ujian tidak ditemukan');
             }
+            
+            $m_ujian_master = $this->ujian_m->get_ujian_by_id($h_ujian->ujian_id); // Dapatkan data m_ujian
 
             // Cek status dan waktu
             $now = time();
-            $waktu_selesai = strtotime($h_ujian->tgl_selesai);
-
-            // Ambil data ujian dan master ujian
-            $h_ujian = $this->db->query("
-                SELECT h.*, u.terlambat as batas_masuk 
-                FROM h_ujian h 
-                JOIN m_ujian u ON h.ujian_id = u.id_ujian 
-                WHERE h.id = ? AND h.siswa_id = ?
-            ", [$id_h_ujian, $this->siswa_data->id_siswa])->row();
-
-            if (!$h_ujian) {
-                throw new Exception('Data ujian tidak ditemukan');
-            }
-
-            log_message('debug', 'Query result h_ujian: ' . print_r($h_ujian, true));
-
-            // Hitung sisa waktu berdasarkan batas terlambat
-            $waktu_sekarang = time();
-            $waktu_terlambat = strtotime($h_ujian->batas_masuk);
-            $sisa_waktu = max(0, $waktu_terlambat - $waktu_sekarang);
-
-            if ($waktu_terlambat === false) {
-                // Fallback ke waktu dari m_ujian jika parsing gagal
-                $waktu_terlambat = strtotime($ujian->terlambat);
-            }
+            $waktu_selesai_h_ujian_timestamp = strtotime($h_ujian->tgl_selesai); // Waktu selesai dari h_ujian
             
-            if ($waktu_terlambat === false) {
-                throw new Exception('Format waktu tidak valid');
+            if ($waktu_selesai_h_ujian_timestamp === false) { // Fallback jika parsing gagal
+                $waktu_selesai_h_ujian_timestamp = time() + (60 * 60); // Default 1 jam
+                log_message('error', 'lembar_ujian: Gagal parsing tgl_selesai dari h_ujian, defaulting to +1 hour.');
             }
 
-            // Set waktu selesai untuk ditampilkan di view
-            $data = $this->ujian_m->get_lembar_ujian_siswa($id_h_ujian, $this->siswa_data->id_siswa);
-            $data['waktu_selesai'] = date('Y-m-d H:i:s', $waktu_terlambat);
-            $data['sisa_waktu'] = $sisa_waktu;
+            $sisa_waktu = max(0, $waktu_selesai_h_ujian_timestamp - $now);
 
             if ($h_ujian->status == 'completed') {
                 redirect('ujian/list_ujian_siswa');
                 return;
             }
 
-            // Update waktu mulai saat pertama kali masuk ke lembar ujian
+            // Update waktu mulai saat pertama kali masuk ke lembar ujian (jika null)
             if ($h_ujian && $h_ujian->tgl_mulai === null) {
                 $this->db->where('id', $id_h_ujian)
-                        ->update('h_ujian', [
-                            'tgl_mulai' => date('Y-m-d H:i:s')
-                        ]);
+                         ->update('h_ujian', [
+                             'tgl_mulai' => date('Y-m-d H:i:s')
+                         ]);
             }
             
             // Set session with the encrypted ID
@@ -1159,59 +1132,77 @@ class Ujian extends MY_Controller {
                 'exam_token_verified' => true
             ]);
 
-            // Load data untuk view
-            $data = $this->ujian_m->get_lembar_ujian_siswa($id_h_ujian, $this->siswa_data->id_siswa);
-            
-            if (!$data) {
-                throw new Exception('Gagal memuat data ujian');
-            }
+            $list_soal_ids_from_h_ujian = json_decode($h_ujian->list_soal, true);
 
-            // Use the same encrypted ID
-            $data['id_h_ujian_enc'] = $this->session->userdata('active_exam_enc');
+            // Panggil model untuk mendapatkan detail soal
+            $soal_collection_raw = $this->ujian_m->get_soal_details_for_lembar_ujian(
+                $list_soal_ids_from_h_ujian,
+                ($m_ujian_master->acak_opsi ?? 'N') === 'Y' // Teruskan status acak_opsi
+            );
+
+            // === PERBAIKAN KRUSIAL DI CONTROLLER: PASTIKAN SOAL_COLLECTION ADALAH ARRAY OF ARRAYS ===
+            $soal_collection = [];
+            if (!empty($soal_collection_raw)) {
+                foreach ($soal_collection_raw as $soal_obj) {
+                    // Konversi objek soal utama ke array asosiatif
+                    $soal_arr = (array) $soal_obj;
+                    
+                    // Pastikan opsi_display juga dikonversi ke array asosiatif jika itu objek
+                    if (isset($soal_arr['opsi_display']) && is_object($soal_arr['opsi_display'])) {
+                        $soal_arr['opsi_display'] = (array) $soal_arr['opsi_display'];
+                        // Konversi elemen di dalam opsi_display (A, B, C, D, E) menjadi array juga
+                        foreach ($soal_arr['opsi_display'] as $key => $value) {
+                            if (is_object($value)) {
+                                $soal_arr['opsi_display'][$key] = (array) $value;
+                            }
+                        }
+                    }
+                    $soal_collection[] = $soal_arr;
+                }
+            }
+            // === AKHIR PERBAIKAN KRUSIAL DI CONTROLLER ===
+
+            // === DEBUG KRUSIAL DI CONTROLLER: $soal_collection sebelum diteruskan ke view ===
+            // log_message('debug', 'UjianController: $soal_collection received from model (raw): ' . print_r($soal_collection_raw, true));
+            // log_message('debug', 'UjianController: FINAL $soal_collection for view: ' . print_r($soal_collection, true));
+            // log_message('debug', 'UjianController: JSON representation of FINAL $soal_collection for view: ' . json_encode($soal_collection));
+
+            // if (!empty($soal_collection) && isset($soal_collection[0])) {
+            //     log_message('debug', 'UjianController: Type of $soal_collection[0][\'opsi_display\'] in Controller (final): ' . gettype($soal_collection[0]['opsi_display'] ?? null)); // Akses array
+            //     log_message('debug', 'UjianController: Content of $soal_collection[0][\'opsi_display\'] in Controller (final): ' . print_r($soal_collection[0]['opsi_display'] ?? null, true)); // Akses array
+            //     log_message('debug', 'UjianController: JSON of $soal_collection[0][\'opsi_display\'] in Controller (final): ' . json_encode($soal_collection[0]['opsi_display'] ?? null));
+            // } else {
+            //     log_message('debug', 'UjianController: $soal_collection is empty or first item is missing after conversion.');
+            // }
+            // === AKHIR DEBUG KRUSIAL ===
 
             $data = [
                 'user' => $this->ion_auth->user()->row(),
                 'siswa' => $this->siswa_data,
                 'judul' => 'Lembar Ujian',
-                'subjudul' => $h_ujian->nama_ujian,
-                'ujian' => $ujian,
+                'subjudul' => $m_ujian_master->nama_ujian ?? 'Ujian', // Gunakan nama ujian dari m_ujian_master
+                'ujian' => $m_ujian_master, // Teruskan objek m_ujian_master
                 'h_ujian' => $h_ujian,
-                'soal_collection' => $this->ujian_m->get_soal_by_id_ujian($id_h_ujian),
+                'soal_collection' => $soal_collection, // Ini yang diteruskan ke view
                 'jawaban_tersimpan_php' => json_decode($h_ujian->list_jawaban, true) ?: [],
                 'jawaban_tersimpan' => json_decode($h_ujian->list_jawaban, true) ?: [],
                 'id_h_ujian_enc' => $id_h_ujian_enc,
-                'waktu_selesai' => date('Y-m-d H:i:s', $waktu_terlambat),
+                'waktu_selesai' => date('Y-m-d H:i:s', $waktu_selesai_h_ujian_timestamp), // Pastikan ini adalah waktu selesai dari h_ujian
                 'sisa_waktu' => $sisa_waktu,
-                // Tambahkan debug
-                'debug_jawaban' => [
-                    'raw' => $h_ujian->list_jawaban,
-                    'decoded' => json_decode($h_ujian->list_jawaban, true)
-                ],
-                // Tambahan untuk debugging
-                'debug_info' => [
-                    'waktu_sekarang' => date('Y-m-d H:i:s', $waktu_sekarang),
-                    'waktu_terlambat' => date('Y-m-d H:i:s', $waktu_terlambat),
-                    'sisa_waktu' => $sisa_waktu
-                ],
             ];
-            $data['debug_soal'] = array_map(function($soal) {
-                return [
-                    'id_soal' => $soal->id_soal,
-                    'soal_text' => substr($soal->soal, 0, 100) . '...', // First 100 chars
-                    'has_file' => !empty($soal->file),
-                    'file_path' => !empty($soal->file) ? FCPATH . 'uploads/bank_soal/' . $soal->file : null,
-                    'file_exists' => !empty($soal->file) ? file_exists(FCPATH . 'uploads/bank_soal/' . $soal->file) : false
-                ];
-            }, $data['soal_collection']);
+
+            // Tambahkan debug (opsional, jika Anda ingin melihat di halaman)
+            // $data['debug_data_for_view'] = $data; 
 
             $this->load->view('_templates/topnav/_header.php', $data);
             $this->load->view('ujian/lembar_ujian', $data);
             $this->load->view('_templates/topnav/_footer.php');
 
         } catch (Exception $e) {
-            log_message('error', 'Error in lembar_ujian: ' . $e->getMessage());
-            $this->session->set_flashdata('error', $e->getMessage());
+            log_message('error', 'Error in lembar_ujian (overall catch): ' . $e->getMessage());
+            $this->session->set_flashdata('error', 'Terjadi kesalahan saat memuat ujian: ' . $e->getMessage());
             redirect('ujian/list_ujian_siswa');
+            return;
         }
     }
     
@@ -1750,5 +1741,78 @@ class Ujian extends MY_Controller {
             redirect('ujian/hasil_ujian_siswa');
             return;
         }
+    }
+
+    /**
+     * Helper untuk memastikan akses hanya untuk Admin atau Guru
+     */
+    private function _akses_admin_guru_required() {
+        if (!$this->is_admin && !$this->is_guru) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses ke halaman ini.');
+            redirect('dashboard');
+            exit;
+        }
+    }
+
+    /**
+     * Menghapus data hasil ujian (dari tabel h_ujian).
+     * Dapat menghapus tunggal atau massal.
+     * URL: /ujian/delete_hasil_ujian (Method POST)
+     */
+    public function delete_hasil_ujian()
+    {
+        $this->_akses_admin_guru_required(); // Pastikan pemanggilan ini ada
+
+        $response = ['status' => false, 'message' => ''];
+
+        if (!$this->input->is_ajax_request()) {
+            $response['message'] = 'Invalid request!';
+            echo json_encode($response);
+            return;
+        }
+
+        $ids = $this->input->post('ids', true); // Array of IDs from the checkboxes
+
+        if (empty($ids)) {
+            $response['message'] = 'Tidak ada data hasil ujian yang dipilih untuk dihapus.';
+            echo json_encode($response);
+            return;
+        }
+
+        // Pastikan $ids adalah array
+        if (!is_array($ids)) {
+            $ids = [$ids]; // Konversi ke array jika hanya satu ID
+        }
+        $clean_ids = array_map('intval', $ids); // Pastikan semua ID adalah integer
+
+        try {
+            $this->db->trans_start();
+
+            $deleted_count = $this->ujian_m->delete_hasil_ujian($clean_ids); // Pastikan nama method sudah benar
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === FALSE) {
+                // Ini akan menangkap kesalahan transaksi database
+                throw new Exception('Gagal menghapus data hasil ujian. Database error: ' . $this->db->error()['message']);
+            }
+
+            if ($deleted_count > 0) {
+                $response['status'] = true;
+                $response['message'] = $deleted_count . ' hasil ujian berhasil dihapus.';
+            } else {
+                $response['message'] = 'Tidak ada hasil ujian yang dihapus. Mungkin data tidak ditemukan atau sudah terhapus.';
+            }
+
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            $response['message'] = $e->getMessage();
+        }
+
+        $response['csrf_hash_new'] = $this->security->get_csrf_hash();
+
+        // Pastikan header content-type diatur agar browser tahu ini JSON
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+        // echo json_encode($response); // Hapus ini jika menggunakan set_output
     }
 }

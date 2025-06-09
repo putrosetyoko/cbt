@@ -84,12 +84,12 @@ window.examConfig = {
 };
 
 // Debug log
-console.log('Debug waktu:', {
-    waktuSekarang: new Date().toISOString(),
-    waktuTerlambat: new Date(<?= $waktu_terlambat * 1000 ?>).toISOString(),
-    sisaWaktuDetik: <?= $sisa_waktu ?>,
-    waktuTerlambatTimestamp: <?= intval($waktu_terlambat) ?>
-});
+// console.log('Debug waktu:', {
+//     waktuSekarang: new Date().toISOString(),
+//     waktuTerlambat: new Date(<?= $waktu_terlambat * 1000 ?>).toISOString(),
+//     sisaWaktuDetik: <?= $sisa_waktu ?>,
+//     waktuTerlambatTimestamp: <?= intval($waktu_terlambat) ?>
+// });
 </script>
 
 <style>
@@ -232,12 +232,13 @@ body {
             </div>
             
             <div class="box-body">
-                <div id="area-soal-ujian">
+            <div id="area-soal-ujian">
                     <?php if (!empty($soal_collection)): ?>
-                        <?php foreach ($soal_collection as $index => $soal_item): ?>
+                        <?php foreach ($soal_collection as $index => $soal_item): // $soal_item sekarang adalah ARRAY ?>
                             <?php
                                 $no_soal_aktual = $index + 1;
-                                $id_soal_item_current = $soal_item->id_soal ?? null;
+                                // UBAH INI: $soal_item->id_soal menjadi $soal_item['id_soal']
+                                $id_soal_item_current = $soal_item['id_soal'] ?? null; 
                                 $jawaban_tersimpan_untuk_soal_ini = '';
                                 $status_ragu_soal_ini = false;
                                 if ($id_soal_item_current && is_array($jawaban_tersimpan_php) && isset($jawaban_tersimpan_php[$id_soal_item_current])) {
@@ -247,82 +248,83 @@ body {
                             ?>
                             <div class="panel-soal" id="soal-<?= $no_soal_aktual ?>" data-id-soal="<?= $id_soal_item_current ?>" style="display: <?= $no_soal_aktual == 1 ? 'block' : 'none'; ?>;">
                                 <div class="box-body">
-                                    <!-- Add this section for question content -->
-                                    <div class="soal-content">
+                                <div class="soal-content">
                                         
-                                        <!-- Question media/file if exists -->
-                                        <?php if (!empty($soal_item->file)): ?>
+                                        <?php 
+                                        $cleaned_soal_file = trim($soal_item['file'] ?? ''); 
+                                        if (!empty($cleaned_soal_file)): 
+                                        ?>
                                             <div class="soal-media">
                                                 <?php 
-                                                $path_file_soal = 'uploads/bank_soal/' . $soal_item->file;
-                                                $file_url = base_url($path_file_soal);
-                                                $file_ext = strtolower(pathinfo($soal_item->file, PATHINFO_EXTENSION));
-                                                
-                                                if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])):
+                                                $relative_path_soal_file = 'uploads/bank_soal/' . $cleaned_soal_file;
                                                 ?>
-                                                    <img 
-                                                        src="<?= $file_url ?>" 
-                                                        alt="Gambar Soal" 
-                                                        class="zoomable-image"
-                                                        data-zoomable
-                                                    >
-                                                <?php else: ?>
-                                                    <?= tampil_media($path_file_soal); ?>
-                                                <?php endif; ?>
-                                            </div>
-                                        <?php endif; ?>
+                                                <?= tampil_media($relative_path_soal_file) ?>
+                                                </div>
+                                        <?php else: ?>
+                                            <?php endif; ?>
                                     </div>
 
-                                    <!-- Question text -->
                                     <div class="soal-text mb-3">
-                                        <?= $soal_item->soal ?>
+                                        <?= $soal_item['soal'] ?>
                                     </div>
 
-                                    <!-- Bagian opsi jawaban -->
                                     <div class="opsi-jawaban">
                                         <?php 
-                                        $opsi_untuk_render = $soal_item->opsi_display ?? [];
-                                        if(empty($opsi_untuk_render) && isset($soal_item)){
-                                            if (isset($soal_item->opsi_a) && $soal_item->opsi_a !== null) $opsi_untuk_render['A'] = ['teks' => $soal_item->opsi_a, 'file' => $soal_item->file_a, 'original_key' => 'A'];
-                                            if (isset($soal_item->opsi_b) && $soal_item->opsi_b !== null) $opsi_untuk_render['B'] = ['teks' => $soal_item->opsi_b, 'file' => $soal_item->file_b, 'original_key' => 'B'];
-                                            if (isset($soal_item->opsi_c) && $soal_item->opsi_c !== null) $opsi_untuk_render['C'] = ['teks' => $soal_item->opsi_c, 'file' => $soal_item->file_c, 'original_key' => 'C'];
-                                            if (isset($soal_item->opsi_d) && $soal_item->opsi_d !== null) $opsi_untuk_render['D'] = ['teks' => $soal_item->opsi_d, 'file' => $soal_item->file_d, 'original_key' => 'D'];
-                                            if (isset($soal_item->opsi_e) && $soal_item->opsi_e !== null) $opsi_untuk_render['E'] = ['teks' => $soal_item->opsi_e, 'file' => $soal_item->file_e, 'original_key' => 'E'];
+                                        // Ini sudah diubah di controller menjadi array asosiatif
+                                        $opsi_untuk_render_raw = $soal_item['opsi_display'] ?? []; 
+                                        
+                                        $opsi_untuk_render = [];
+                                        foreach($opsi_untuk_render_raw as $key => $value){
+                                            if(is_array($value)){ 
+                                                $opsi_untuk_render[$key] = $value;
+                                            } else if (is_object($value)){ 
+                                                $opsi_untuk_render[$key] = (array) $value;
+                                            }
                                         }
+
+                                        // echo "<p>DEBUG FINAL VIEW: \$opsi_untuk_render IS_ARRAY: " . (is_array($opsi_untuk_render) ? 'TRUE' : 'FALSE') . "</p>";
+                                        // echo "<pre>DEBUG FINAL VIEW: \$opsi_untuk_render CONTENT:\n";
+                                        // print_r($opsi_untuk_render);
+                                        echo "</pre>";
                                         ?>
                                         <?php foreach ($opsi_untuk_render as $key_opsi_render => $opsi_data): 
-        $id_radio = 'opsi_' . strtolower($key_opsi_render) . '_' . ($id_soal_item_current ?? 'unknown');
-        
-        // Cek jawaban tersimpan
-        $checked = '';
-        if (isset($jawaban_tersimpan[$id_soal_item_current]) && 
-            isset($jawaban_tersimpan[$id_soal_item_current]['j']) && 
-            $jawaban_tersimpan[$id_soal_item_current]['j'] === $opsi_data['original_key']) {
-            $checked = 'checked="checked"';
-        }
-    ?>
-    <div class="funkyradio">
-        <div class="funkyradio-success">
-            <input type="radio" 
-                name="jawaban_soal_<?= $id_soal_item_current ?>" 
-                id="<?= $id_radio ?>" 
-                value="<?= $opsi_data['original_key'] ?>" 
-                <?= $checked ?>
-                data-nomor-soal-display="<?= $no_soal_aktual ?>">
-            <label for="<?= $id_radio ?>">
-                <div class="huruf_opsi"><?= $key_opsi_render ?></div> 
-                <div class="opsi-konten">
-                    <div class="opsi-text"><?= $opsi_data['teks'] ?? '' ?></div>
-                    <?php if (!empty($opsi_data['file'])): ?>
-                        <div class="opsi-media mt-2">
-                            <?= tampil_media(base_url('uploads/bank_soal/' . $opsi_data['file'])) ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </label>
-        </div>
-    </div>
-    <?php endforeach; ?>
+                                            $id_radio = 'opsi_' . strtolower($key_opsi_render) . '_' . ($id_soal_item_current ?? 'unknown');
+                                            
+                                            $checked = '';
+                                            $original_key = $opsi_data['original_key'] ?? ''; 
+                                            if (isset($jawaban_tersimpan[$id_soal_item_current]) && 
+                                                isset($jawaban_tersimpan[$id_soal_item_current]['j']) && 
+                                                $jawaban_tersimpan[$id_soal_item_current]['j'] === $original_key) {
+                                                $checked = 'checked="checked"';
+                                            }
+                                        ?>
+                                            <div class="funkyradio">
+                                                <div class="funkyradio-success">
+                                                    <input type="radio" 
+                                                        name="jawaban_soal_<?= $id_soal_item_current ?>" 
+                                                        id="<?= $id_radio ?>" 
+                                                        value="<?= $original_key ?>" 
+                                                        <?= $checked ?>
+                                                        data-nomor-soal-display="<?= $no_soal_aktual ?>">
+                                                    <label for="<?= $id_radio ?>">
+                                                        <div class="huruf_opsi"><?= $key_opsi_render ?></div> 
+                                                        <div class="opsi-konten">
+                                                            <div class="opsi-text"><?= ($opsi_data['teks'] ?? '') ?></div>
+                                                            <?php
+                                                            $file_opsi = $opsi_data['file'] ?? null;
+                                                            if (!empty($file_opsi)): 
+                                                                $final_file_name = $file_opsi; 
+                                                            ?>
+                                                                <div class="opsi-media mt-2">
+                                                                    <?php $relative_path_opsi_file = 'uploads/bank_soal/' . $final_file_name; ?>
+                                                                    <?= tampil_media($relative_path_opsi_file) ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
                             </div>
@@ -358,11 +360,11 @@ body {
 <!-- Memuat file JS di akhir setelah semua elemen HTML ada -->
 <script src="<?= base_url('assets/dist/js/app/ujian/lembar_ujian.js') ?>"></script>
 <script>
-console.log('Debug data jawaban:', {
-    jawaban_tersimpan_php: <?= json_encode($jawaban_tersimpan_php) ?>,
-    jawaban_tersimpan: <?= json_encode($jawaban_tersimpan) ?>,
-    JAWABAN_TERSIMPAN_GLOBAL: <?= json_encode($jawaban_tersimpan) ?>
-});
+// console.log('Debug data jawaban:', {
+//     jawaban_tersimpan_php: <?= json_encode($jawaban_tersimpan_php) ?>,
+//     jawaban_tersimpan: <?= json_encode($jawaban_tersimpan) ?>,
+//     JAWABAN_TERSIMPAN_GLOBAL: <?= json_encode($jawaban_tersimpan) ?>
+// });
 </script>
 
 <!-- Debug data di bagian atas view -->

@@ -7,6 +7,49 @@ $(document).ready(function () {
     });
   }
 
+  $('.summernote').summernote({
+    height: 200,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'italic', 'underline', 'clear']],
+      ['fontname', ['fontname']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link']],
+      ['view', ['fullscreen', 'codeview']],
+    ],
+    callbacks: {
+      onInit: function () {
+        console.log('Summernote initialized');
+      },
+      onError: function (e) {
+        console.error('Summernote error:', e);
+      },
+      // === TAMBAHAN UNTUK FIX PASTE DARI WORD ===
+      onPaste: function (e) {
+        var bufferText = (
+          (e.originalEvent || e).clipboardData || window.clipboardData
+        ).getData('Text');
+        e.preventDefault(); // Mencegah paste default
+
+        // Masukkan teks mentah ke editor, tanpa format HTML
+        // Summernote akan menerapkan gaya defaultnya
+        setTimeout(function () {
+          document.execCommand('insertText', false, bufferText);
+        }, 10);
+      },
+      // === AKHIR TAMBAHAN ===
+    },
+    // Tambahan untuk mengatur default font dan ukuran (jika Summernote mendukungnya secara langsung)
+    // Ini mungkin perlu konfigurasi CSS atau di set programmatically setelah paste.
+    // fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Times New Roman'],
+    // fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '24', '30', '36', '48'],
+    // defaultFontName: 'Helvetica', // Tidak semua versi Summernote support defaultFontName
+    // defaultFontSize: '14px' // Tidak semua versi Summernote support defaultFontSize
+  });
+
   // Inisialisasi Summernote
   if ($.fn.summernote) {
     $('#soal_text_form').summernote({

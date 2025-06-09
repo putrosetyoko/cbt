@@ -10,6 +10,33 @@ if (isset($is_guru) && $is_guru && isset($pj_mapel_data) && $pj_mapel_data) {
     $nama_mapel_soal = $pj_mapel_data->nama_mapel;
 }
 ?>
+
+<style>
+    /* Untuk konten yang diedit di dalam Summernote */
+.note-editable {
+    font-family: Helvetica, sans-serif !important; /* Gunakan Helvetica atau font default sistem */
+    font-size: 14px !important;
+    line-height: 1.5; /* Jarak antar baris */
+    text-align: left !important; /* Pastikan rata kiri */
+    /* Menghilangkan margin default untuk paragraf yang bisa muncul dari paste */
+    padding: 10px; /* Padding di dalam editor */
+}
+
+/* Untuk paragraf di dalam editor */
+.note-editable p {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+}
+
+/* Untuk elemen div yang mungkin ditempel dari Word */
+.note-editable div {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+}
+</style>
+
 <div class="row">
     <div class="col-sm-12">
         <?=form_open_multipart('soal/save', array('id'=>'formSoalEdit'), array('method'=>'edit', 'id_soal' => $soal->id_soal));?>

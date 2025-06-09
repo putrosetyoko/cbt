@@ -99,30 +99,47 @@
         </div>
         <hr>
         <div class="table-responsive mt-3">
-            <table class="table table-bordered table-striped table-hover" id="hasilUjianTable" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="width: 5%">No.</th>
-                        <th>NISN</th>
-                        <th>Nama Siswa</th>
-                        <th>Kelas</th>
-                        <th>Mata Pelajaran</th>
-                        <th>Nama Ujian</th>
-                        <th>Benar</th>
-                        <th>Nilai Akhir</th>
-                        <th>Status</th>
-                        <th style="width: 10%">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <form id="form-hapus-hasil-ujian">
+                <div class="row dt-toolbar-top mb-2">
+                    <div class="col-sm-12 text-right">
+                        <div id="delete-button-placement" class="d-inline-block"></div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-hover" id="hasilUjianTable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">No.</th>
+                            <th>NISN</th>
+                            <th>Nama Siswa</th>
+                            <th>Kelas</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Nama Ujian</th>
+                            <th>Benar</th>
+                            <th>Nilai Akhir</th>
+                            <th>Status</th>
+                            <th style="width: 10%">Aksi</th>
+                            <th style="width: 5%">
+                                <input type="checkbox" id="check-all">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
     var table; // Deklarasi global
+
+    // Fungsi global untuk mendapatkan CSRF token terbaru
+    function getCsrfToken() {
+        const csrfName = $('meta[name="csrf-name"]').attr('content') || '<?= $this->security->get_csrf_token_name(); ?>';
+        const csrfHash = $('meta[name="csrf-hash"]').attr('content') || '<?= $this->security->get_csrf_hash(); ?>';
+        return { name: csrfName, hash: csrfHash };
+    }
 
     function showStudentNamesPopup(studentNames, title) {
         let content = '<ul>';
@@ -147,17 +164,17 @@
         $('#summary_nama_guru_pembuat').text(summary.nama_guru_pembuat);
         $('#summary_guru_mapel_mengajar').text(summary.guru_mapel_mengajar);
 
-        // Nilai Terendah dengan Pop-up
         let nilaiTerendahText = summary.nilai_terendah + ' ';
         if (summary.siswa_nilai_terendah && summary.siswa_nilai_terendah.length > 0) {
-            nilaiTerendahText += `<i class="fa fa-search text-blue" style="cursor: pointer;" onclick="showStudentNamesPopup(['${summary.siswa_nilai_terendah.join("','")}'], 'Siswa dengan Nilai Terendah')"></i>`;
+            const siswaTerendahString = summary.siswa_nilai_terendah.map(name => `'${name.replace(/'/g, "\\'")}'`).join(",");
+            nilaiTerendahText += `<i class="fa fa-search text-blue" style="cursor: pointer;" onclick="showStudentNamesPopup([${siswaTerendahString}], 'Siswa dengan Nilai Terendah')"></i>`;
         }
         $('#summary_nilai_terendah').html(nilaiTerendahText);
 
-        // Nilai Tertinggi dengan Pop-up
         let nilaiTertinggiText = summary.nilai_tertinggi + ' ';
         if (summary.siswa_nilai_tertinggi && summary.siswa_nilai_tertinggi.length > 0) {
-            nilaiTertinggiText += `<i class="fa fa-search text-blue" style="cursor: pointer;" onclick="showStudentNamesPopup(['${summary.siswa_nilai_tertinggi.join("','")}'], 'Siswa dengan Nilai Tertinggi')"></i>`;
+            const siswaTertinggiString = summary.siswa_nilai_tertinggi.map(name => `'${name.replace(/'/g, "\\'")}'`).join(",");
+            nilaiTertinggiText += `<i class="fa fa-search text-blue" style="cursor: pointer;" onclick="showStudentNamesPopup([${siswaTertinggiString}], 'Siswa dengan Nilai Tertinggi')"></i>`;
         }
         $('#summary_nilai_tertinggi').html(nilaiTertinggiText);
 
@@ -191,7 +208,7 @@
                         nama_ujian: '-', jumlah_soal: '-', waktu_ujian_formatted: '-', hari_tanggal_formatted: '-',
                         nama_mapel: '-', nama_guru_pembuat: '-', guru_mapel_mengajar: '-',
                         nilai_terendah: '-', nilai_tertinggi: '-', rata_rata_nilai: '-', total_peserta_selesai: '-',
-                        siswa_nilai_terendah: [], siswa_nilai_tertinggi: [] // Inisialisasi array
+                        siswa_nilai_terendah: [], siswa_nilai_tertinggi: []
                     });
                 }
             },
@@ -201,11 +218,83 @@
                         nama_ujian: '-', jumlah_soal: '-', waktu_ujian_formatted: '-', hari_tanggal_formatted: '-',
                         nama_mapel: '-', nama_guru_pembuat: '-', guru_mapel_mengajar: '-',
                         nilai_terendah: '-', nilai_tertinggi: '-', rata_rata_nilai: '-', total_peserta_selesai: '-',
-                        siswa_nilai_terendah: [], siswa_nilai_tertinggi: [] // Inisialisasi array
+                        siswa_nilai_terendah: [], siswa_nilai_tertinggi: []
                     });
             }
         });
     }
+
+    // Fungsi untuk mereset hasil ujian
+    function deleteHasilUjian(ids) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: `Anda akan reset ${ids.length} hasil ujian ini. Ini akan mereset ujian bagi siswa tersebut. Tindakan ini tidak dapat dibatalkan!`,
+            type: 'warning', // Gunakan 'type' untuk SweetAlert2 modern
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Reset!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            // --- DEBUGGING KRUSIAL DI SINI ---
+            console.log("SweetAlert result:", result); // Log seluruh objek result
+            // Menggunakan OR (||) untuk mencakup kedua kemungkinan jika SweetAlert2 mengembalikan result.value atau result.isConfirmed
+            // Yang paling tepat adalah memastikan hanya result.isConfirmed yang dicek
+            // karena log Anda menunjukkan {value: true}, kita bisa cek itu juga.
+            if (result.isConfirmed) { // Ini adalah cara yang direkomendasikan untuk SweetAlert2
+                console.log("User mengklik 'Ya, Reset!' (isConfirmed)");
+            } else if (result.value) { // Fallback untuk versi SweetAlert2 yang mengembalikan 'value'
+                console.log("User mengklik 'Ya, Reset!' (value)");
+            } else {
+                console.log("User mengklik 'Batal' atau menutup SweetAlert.");
+            }
+            // --- AKHIR DEBUGGING KRUSIAL ---
+
+            // Perubahan pada kondisi if (result.isConfirmed)
+            if (result.isConfirmed || result.value) { // <--- KRUSIAL: UBAH KONDISI INI
+                const csrfToken = getCsrfToken(); // Ambil token terbaru di sini
+
+                console.log("Mengirim AJAX delete dengan CSRF Token:", csrfToken.name, csrfToken.hash);
+                console.log("IDs yang akan di reset:", ids);
+
+                $.ajax({
+                    url: base_url + 'ujian/delete_hasil_ujian',
+                    type: 'POST',
+                    data: {
+                        ids: ids,
+                        [csrfToken.name]: csrfToken.hash
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        // Perbarui token setelah sukses
+                        if (response.csrf_hash_new) {
+                            window[csrfToken.name] = response.csrf_hash_new;
+                            $('meta[name="csrf-hash"]').attr('content', response.csrf_hash_new);
+                        }
+
+                        if (response.status) {
+                            Swal.fire('Di reset!', response.message, 'success');
+                            reload_ajax();
+                            loadSummaryData();
+                            $('#check-all').prop('checked', false);
+                        } else {
+                            Swal.fire('Gagal!', response.message, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error, xhr.responseText);
+                        Swal.fire('Error!', 'Terjadi kesalahan saat berkomunikasi dengan server. ' + xhr.status + ': ' + error, 'error');
+                        // Perbarui token jika ada error
+                        if (xhr.responseJSON && xhr.responseJSON.csrf_hash_new) {
+                            window[csrfToken.name] = xhr.responseJSON.csrf_hash_new;
+                            $('meta[name="csrf-hash"]').attr('content', xhr.responseJSON.csrf_hash_new);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 
     $(document).ready(function() {
         ajaxcsrf();
@@ -215,20 +304,29 @@
         table = $('#hasilUjianTable').DataTable({
             "initComplete": function() {
                 var api = this.api();
+                // Tidak perlu lagi memindahkan input search secara manual di sini
+                // Karena 'f' (Search) akan dipertahankan di dom
                 $('#hasilUjianTable_filter input')
                     .off('.DT')
                     .on('keyup.DT', function(e) {
                         api.search(this.value).draw();
                     });
             },
-            "dom": "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
+            // DOM disesuaikan:
+            // - r: Processing display element (hidden by default)
+            // - t: The table
+            // - <'row'>... : Baris atas dengan length menu (l), buttons (B), dan Search (f)
+            // - <'row'<'col-sm-12'tr>>: Baris tabel
+            // - <'row'<'col-sm-5'i><'col-sm-7'p>>: Baris bawah dengan info (i) dan pagination (p)
+            // Tombol delete akan diletakkan di div khusus di atas baris utama
+            "dom": "<'row'<'col-sm-3'l><'col-sm-5'B><'col-sm-4'f>>" + // l, B, dan f tetap sejajar
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
             "buttons": [
-                { extend: "copy", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8] } },
-                { extend: "print", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8] } },
-                { extend: "excel", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8] } },
-                { extend: "pdf", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8] } }
+                { extend: "copy", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] } },
+                { extend: "print", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] } },
+                { extend: "excel", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] } },
+                { extend: "pdf", exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] } },
             ],
             "oLanguage": {
                 "sProcessing": "loading..."
@@ -248,7 +346,6 @@
                     if (json.csrf_hash_new) {
                         window['<?= $this->security->get_csrf_token_name(); ?>'] = json.csrf_hash_new;
                     }
-                    // Tambahkan properti nilai_tertinggi dan nilai_terendah ke setiap baris
                     const nilaiTertinggi = json.nilai_tertinggi;
                     const nilaiTerendah = json.nilai_terendah;
                     json.data.forEach(row => {
@@ -260,15 +357,10 @@
             },
             "columns": [
                 {
-                    "data": function (row, type, set, meta) {
-                        if (type === 'sort' || type === 'filter' || type === 'display') {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
-                        return meta.row + 1;
-                    },
+                    "data": null, // Nomor urut
                     "orderable": false,
                     "searchable": false,
-                    "className": "text-center"
+                    "className": "text-center",
                 },
                 { "data": "nisn" },
                 { "data": "nama_siswa" },
@@ -312,28 +404,29 @@
                     }
                 },
                 {
-                    "data": "id_hasil_ujian_encrypted",
+                    "data": "aksi", // Kolom Aksi
                     "orderable": false,
                     "searchable": false,
+                    "className": "text-center",
                     "render": function(data, type, row) {
                         let actionButton = '';
-                        let buttonClass = 'btn bg-blue';
-                        let buttonText = 'Lihat Hasil';
-
-                        if (row.status_pengerjaan_raw === 'completed') {
-                            actionButton = `<a class="btn ${buttonClass} btn-xs" href="${base_url}ujian/detail_hasil_ujian/${data}">
-                                                <i class="fa fa-eye"></i> ${buttonText}
-                                            </a>`;
-                        } else {
-                            actionButton = `<button class="btn ${buttonClass} btn-xs disabled">
-                                                <i class="fa fa-eye"></i> ${buttonText}
-                                            </button>`;
-                        }
-                        return `<div class="text-center">${actionButton}</div>`;
+                        actionButton = `<a class="btn bg-blue btn-xs" href="${base_url}ujian/detail_hasil_ujian/${row.id_hasil_ujian_encrypted}">
+                                            <i class="fa fa-eye"></i> Lihat Hasil
+                                        </a>`;
+                        return `<div class="btn-group">${actionButton}</div>`;
+                    }
+                },
+                {
+                    "data": "id", // CHECKBOX DIPINDAHKAN KE SINI (PALING KANAN)
+                    "orderable": false,
+                    "searchable": false,
+                    "className": "text-center",
+                    "render": function(data, type, row) {
+                        return `<input type="checkbox" name="checked[]" value="${row.id}">`;
                     }
                 }
             ],
-            "order": [[1, "asc"]],
+            "order": [[1, "asc"]], // Urutkan berdasarkan NISN
             "rowId": function(a) {
                 return a.id;
             },
@@ -342,18 +435,46 @@
                 var page = info.iPage;
                 var length = info.iLength;
                 var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index);
+                $('td:eq(0)', row).html(index); // Nomor urut sekarang di kolom pertama (indeks 0)
 
-                // Tambahkan warna latar belakang
-                if (data.nilai === data.nilai_tertinggi) {
+                const nilaiSiswa = parseFloat(data.nilai);
+                const nilaiTertinggi = parseFloat(data.nilai_tertinggi);
+                const nilaiTerendah = parseFloat(data.nilai_terendah);
+
+                $(row).css('background-color', ''); // Reset warna
+
+                if (nilaiSiswa === nilaiTertinggi && nilaiSiswa !== null && !isNaN(nilaiSiswa) && data.status_pengerjaan_raw === 'completed') {
                     $(row).css('background-color', '#d4edda'); // Hijau pudar
-                } else if (data.nilai === data.nilai_terendah) {
+                } else if (nilaiSiswa === nilaiTerendah && nilaiSiswa !== null && !isNaN(nilaiSiswa) && data.status_pengerjaan_raw === 'completed') {
                     $(row).css('background-color', '#f8d7da'); // Merah pudar
                 }
             }
         });
 
-        table.buttons().container().appendTo('#hasilUjianTable_wrapper .col-sm-6:eq(0)');
+        // Tombol-tombol standar (Copy, Print, Excel, PDF) dipindahkan ke container defaultnya
+        // Mereka akan otomatis ditempatkan di 'B' di dom
+        table.buttons().container().appendTo($('#hasilUjianTable_wrapper .dt-buttons'));
+
+        // Buat tombol Delete Selected secara manual dan tempatkan di container khusus
+        $('<button>')
+            .text(' Reset')
+            .prepend('<i class="fa fa-refresh"></i>')
+            .addClass('btn btn-danger  btn-flat btn-sm')
+            .attr('id', 'btn-delete-selected')
+            .on('click', function(e) {
+                e.preventDefault();
+                const selectedIds = [];
+                $('input[name="checked[]"]:checked').each(function() {
+                    selectedIds.push($(this).val());
+                });
+
+                if (selectedIds.length === 0) {
+                    Swal.fire('Peringatan!', 'Tidak ada data yang dipilih untuk di reset.', 'warning');
+                    return;
+                }
+                deleteHasilUjian(selectedIds);
+            })
+            .appendTo('#delete-button-placement'); // Masukkan ke container yang telah dibuat
 
         $('.select2').select2({
             placeholder: "Pilih Filter",
@@ -364,5 +485,22 @@
             reload_ajax();
             loadSummaryData();
         });
+
+        loadSummaryData(); 
+        
+        // Logika Checkbox Massal
+        $('#check-all').on('click', function() {
+            $('input[name="checked[]"]').prop('checked', $(this).prop('checked'));
+        });
+
+        $('#hasilUjianTable tbody').on('change', 'input[name="checked[]"]', function() {
+            if (!$(this).prop('checked')) {
+                $('#check-all').prop('checked', false);
+            }
+        });
     });
+
+    function reload_ajax() {
+        table.ajax.reload(null, false);
+    }
 </script>

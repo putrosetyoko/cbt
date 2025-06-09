@@ -318,48 +318,100 @@ class Ujian_model extends CI_Model {
 
     public function get_soal_details_for_lembar_ujian($array_list_id_soal, $acak_opsi_bool = false) {
         if (empty($array_list_id_soal) || !is_array($array_list_id_soal)) {
+            log_message('debug', 'Ujian_model: $array_list_id_soal is empty or not an array. Returning empty.');
             return [];
         }
+        
+        log_message('debug', 'Ujian_model: Searching for soal IDs: ' . implode(', ', $array_list_id_soal));
+
         $this->db->select('id_soal, soal, file, tipe_file, opsi_a, opsi_b, opsi_c, opsi_d, opsi_e, file_a, file_b, file_c, file_d, file_e, jawaban, bobot');
         $this->db->from('tb_soal');
         $this->db->where_in('id_soal', $array_list_id_soal);
-        $result = $this->db->get()->result();
+
+        $query = $this->db->get();
+        $result = $query->result(); // Ini akan mengembalikan array of stdClass Objects
+
+        // === DEBUG KRUSIAL: Raw $result from DB query ===
+        // log_message('debug', 'Ujian_model: Raw $result from DB query: ' . print_r($result, true));
+        
+        // if (!empty($result)) {
+        //     foreach ($result as $idx => $item) {
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - file_a property: ' . (isset($item->file_a) ? ($item->file_a ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - opsi_a property: ' . (isset($item->opsi_a) ? ($item->opsi_a ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - file_b property: ' . (isset($item->file_b) ? ($item->file_b ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - opsi_b property: ' . (isset($item->opsi_b) ? ($item->opsi_b ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - file_c property: ' . (isset($item->file_c) ? ($item->file_c ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - opsi_c property: ' . (isset($item->opsi_c) ? ($item->opsi_c ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - file_d property: ' . (isset($item->file_d) ? ($item->file_d ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - opsi_d property: ' . (isset($item->opsi_d) ? ($item->opsi_d ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - file_e property: ' . (isset($item->file_e) ? ($item->file_e ?? 'NULL_VALUE') : 'NOT_SET'));
+        //         log_message('debug', 'Ujian_model: Soal ID ' . ($item->id_soal ?? 'N/A') . ' - opsi_e property: ' . (isset($item->opsi_e) ? ($item->opsi_e ?? 'NULL_VALUE') : 'NOT_SET'));
+        //     }
+        // } else {
+        //     log_message('debug', 'Ujian_model: Raw query result is EMPTY!');
+        // }
 
         if ($acak_opsi_bool) {
             foreach ($result as $key_soal => $soal_item) {
                 $opsi_tersedia = [];
-                if (isset($soal_item->opsi_a) && $soal_item->opsi_a !== null) $opsi_tersedia['A'] = ['teks' => $soal_item->opsi_a, 'file' => $soal_item->file_a];
-                if (isset($soal_item->opsi_b) && $soal_item->opsi_b !== null) $opsi_tersedia['B'] = ['teks' => $soal_item->opsi_b, 'file' => $soal_item->file_b];
-                if (isset($soal_item->opsi_c) && $soal_item->opsi_c !== null) $opsi_tersedia['C'] = ['teks' => $soal_item->opsi_c, 'file' => $soal_item->file_c];
-                if (isset($soal_item->opsi_d) && $soal_item->opsi_d !== null) $opsi_tersedia['D'] = ['teks' => $soal_item->opsi_d, 'file' => $soal_item->file_d];
-                if (isset($soal_item->opsi_e) && $soal_item->opsi_e !== null) $opsi_tersedia['E'] = ['teks' => $soal_item->opsi_e, 'file' => $soal_item->file_e];
+                $opsi_tersedia['A'] = ['teks' => ($soal_item->opsi_a ?? null), 'file' => trim($soal_item->file_a ?? '')];
+                $opsi_tersedia['B'] = ['teks' => ($soal_item->opsi_b ?? null), 'file' => trim($soal_item->file_b ?? '')];
+                $opsi_tersedia['C'] = ['teks' => ($soal_item->opsi_c ?? null), 'file' => trim($soal_item->file_c ?? '')];
+                $opsi_tersedia['D'] = ['teks' => ($soal_item->opsi_d ?? null), 'file' => trim($soal_item->file_d ?? '')];
+                $opsi_tersedia['E'] = ['teks' => ($soal_item->opsi_e ?? null), 'file' => trim($soal_item->file_e ?? '')];
                 
-                $kunci_opsi_asli = array_keys($opsi_tersedia);
+                $kunci_opsi_asli = array_keys(array_filter($opsi_tersedia, function($v) { return !empty($v['teks']) || !empty($v['file']); }));
                 shuffle($kunci_opsi_asli);
                 
-                $opsi_render = [];
+                $opsi_render = []; // Pastikan ini array asosiatif
                 $abjad_render = ['A', 'B', 'C', 'D', 'E'];
                 $idx_render = 0;
                 foreach($kunci_opsi_asli as $k_asli_acak){
                     if(isset($opsi_tersedia[$k_asli_acak]) && $idx_render < count($abjad_render)){
-                        $opsi_render[$abjad_render[$idx_render]] = $opsi_tersedia[$k_asli_acak];
+                        $opsi_render[$abjad_render[$idx_render]] = $opsi_tersedia[$k_asli_acak]; // Simpan sebagai array
                         $opsi_render[$abjad_render[$idx_render]]['original_key'] = $k_asli_acak;
                         $idx_render++;
                     }
                 }
-                $result[$key_soal]->opsi_display = $opsi_render;
+                $result[$key_soal]->opsi_display = $opsi_render; // Simpan array di properti objek
+                
+                // Unset properti asli setelah dipindahkan ke opsi_display
+                unset($result[$key_soal]->file_a);
+                unset($result[$key_soal]->file_b);
+                unset($result[$key_soal]->file_c);
+                unset($result[$key_soal]->file_d);
+                unset($result[$key_soal]->file_e);
+                unset($result[$key_soal]->opsi_a);
+                unset($result[$key_soal]->opsi_b);
+                unset($result[$key_soal]->opsi_c);
+                unset($result[$key_soal]->opsi_d);
+                unset($result[$key_soal]->opsi_e);
             }
         } else {
+            // Jika acak_opsi_bool FALSE, isi opsi_display secara manual
             foreach ($result as $key_soal => $soal_item) {
-                $opsi_render = [];
-                if (isset($soal_item->opsi_a) && $soal_item->opsi_a !== null) $opsi_render['A'] = ['teks' => $soal_item->opsi_a, 'file' => $soal_item->file_a, 'original_key' => 'A'];
-                if (isset($soal_item->opsi_b) && $soal_item->opsi_b !== null) $opsi_render['B'] = ['teks' => $soal_item->opsi_b, 'file' => $soal_item->file_b, 'original_key' => 'B'];
-                if (isset($soal_item->opsi_c) && $soal_item->opsi_c !== null) $opsi_render['C'] = ['teks' => $soal_item->opsi_c, 'file' => $soal_item->file_c, 'original_key' => 'C'];
-                if (isset($soal_item->opsi_d) && $soal_item->opsi_d !== null) $opsi_render['D'] = ['teks' => $soal_item->opsi_d, 'file' => $soal_item->file_d, 'original_key' => 'D'];
-                if (isset($soal_item->opsi_e) && $soal_item->opsi_e !== null) $opsi_render['E'] = ['teks' => $soal_item->opsi_e, 'file' => $soal_item->file_e, 'original_key' => 'E'];
-                $result[$key_soal]->opsi_display = $opsi_render;
+                $opsi_render = []; // Pastikan ini array asosiatif
+                $opsi_render['A'] = ['teks' => ($soal_item->opsi_a ?? null), 'file' => trim($soal_item->file_a ?? ''), 'original_key' => 'A'];
+                $opsi_render['B'] = ['teks' => ($soal_item->opsi_b ?? null), 'file' => trim($soal_item->file_b ?? ''), 'original_key' => 'B'];
+                $opsi_render['C'] = ['teks' => ($soal_item->opsi_c ?? null), 'file' => trim($soal_item->file_c ?? ''), 'original_key' => 'C'];
+                $opsi_render['D'] = ['teks' => ($soal_item->opsi_d ?? null), 'file' => trim($soal_item->file_d ?? ''), 'original_key' => 'D'];
+                $opsi_render['E'] = ['teks' => ($soal_item->opsi_e ?? null), 'file' => trim($soal_item->file_e ?? ''), 'original_key' => 'E'];
+                $result[$key_soal]->opsi_display = $opsi_render; // Simpan array di properti objek
+                
+                // Unset properti asli
+                unset($result[$key_soal]->file_a);
+                unset($result[$key_soal]->file_b);
+                unset($result[$key_soal]->file_c);
+                unset($result[$key_soal]->file_d);
+                unset($result[$key_soal]->file_e);
+                unset($result[$key_soal]->opsi_a);
+                unset($result[$key_soal]->opsi_b);
+                unset($result[$key_soal]->opsi_c);
+                unset($result[$key_soal]->opsi_d);
+                unset($result[$key_soal]->opsi_e);
             }
         }
+        log_message('debug', 'Ujian_model: Final processed soal details: ' . print_r($result, true));
         return $result;
     }
 
@@ -1023,5 +1075,19 @@ class Ujian_model extends CI_Model {
                 $this->db->where('1', '0');
             }
         }
+    }
+
+    /**
+     * Menghapus satu atau beberapa hasil ujian berdasarkan ID.
+     * @param array $ids Array berisi ID hasil ujian (id dari tabel h_ujian)
+     * @return int Jumlah baris yang berhasil dihapus
+     */
+    public function delete_hasil_ujian($ids) {
+        if (empty($ids) || !is_array($ids)) {
+            return 0;
+        }
+        $this->db->where_in('id', $ids); // Pastikan 'id' adalah nama kolom PRIMARY KEY di h_ujian
+        $this->db->delete('h_ujian');
+        return $this->db->affected_rows();
     }
 }

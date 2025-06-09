@@ -6,6 +6,33 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
     $nama_mapel_pj = $mapel_pj->nama_mapel;
 }
 ?>
+
+<style>
+    /* Untuk konten yang diedit di dalam Summernote */
+.note-editable {
+    font-family: Helvetica, sans-serif !important; /* Gunakan Helvetica atau font default sistem */
+    font-size: 14px !important;
+    line-height: 1.5; /* Jarak antar baris */
+    text-align: left !important; /* Pastikan rata kiri */
+    /* Menghilangkan margin default untuk paragraf yang bisa muncul dari paste */
+    padding: 10px; /* Padding di dalam editor */
+}
+
+/* Untuk paragraf di dalam editor */
+.note-editable p {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+}
+
+/* Untuk elemen div yang mungkin ditempel dari Word */
+.note-editable div {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+}
+</style>
+
 <div class="row">
     <div class="col-sm-12">
         <?=form_open_multipart('soal/save', array('id'=>'formSoal'), array('method'=>'add'));?>
@@ -78,9 +105,9 @@ if (isset($mapel_pj) && $mapel_pj) { // Jika yang login adalah Guru PJ Soal
                         <div class="form-group">
                             <label for="file_<?= $abj; ?>_form">File Pendukung Opsi <?= $ABJ; ?></label>
                             <input type="file" 
-                                   name="file_<?= $abj; ?>" 
-                                   id="file_<?= $abj; ?>_form" 
-                                   class="form-control">
+                                name="file_<?= $abj; ?>" 
+                                id="file_<?= $abj; ?>_form" 
+                                class="form-control">
                             <small class="help-block">Upload file jika ingin menggunakan gambar/audio sebagai jawaban.</small>
                         </div>
                         <hr>

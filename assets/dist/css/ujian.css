@@ -32,11 +32,12 @@
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
-  /* margin: 10px; */
+  /* margin: 10px; */ /* Dikomentari di kode asli, tetap dikomentari */
 }
 
 /* Styling untuk konten soal */
 .soal-content {
+  /* properti yang sudah ada */
   font-size: 16px;
   line-height: 1.6;
   color: #2c3e50;
@@ -47,12 +48,23 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.soal-content {
-  margin-bottom: 20px;
-}
-
 .soal-media {
   margin-bottom: 15px;
+  position: relative;
+  width: 100%; /* Memastikan container media soal mengambil 100% lebar parentnya */
+  overflow: visible !important;
+}
+
+.soal-media img {
+  /* --- MODIFIKASI KRUSIAL DI SINI --- */
+  /* Mengatur lebar gambar agar mengisi hampir seluruh ruang yang tersedia */
+  width: 95%; /* Mengisi 95% dari lebar container .soal-media */
+  max-width: 95%; /* Pastikan tidak ada batasan yang lebih kecil */
+  height: auto; /* Pertahankan rasio aspek */
+  display: block;
+  margin: 0 auto; /* Pusatkan gambar */
+  border-radius: 8px; /* Jaga border-radius */
+  /* --- AKHIR MODIFIKASI KRUSIAL --- */
 }
 
 /* Zoom styling */
@@ -71,20 +83,19 @@
   cursor: zoom-out;
 }
 
-/* Container styling */
-.soal-media {
-  position: relative;
-  width: 100%;
-  margin: 15px 0;
-  overflow: visible !important;
-}
-
+/* Container styling (menggabungkan yang terduplikasi) */
+/* Aturan yang sudah ada di .soal-media akan diterapkan di sini */
+/* Ini adalah blok utama untuk gambar soal */
 .soal-media img {
-  max-width: 100%;
+  max-width: 90%; /* Contoh: agar gambar mengambil 90% dari lebar parent. Sesuaikan jika perlu */
   height: auto;
   border-radius: 8px;
   display: block;
   margin: 0 auto;
+  /* width: auto; /* Pastikan lebar diatur otomatis jika max-width diterapkan */
+  /* height: auto; /* Pertahankan rasio aspek */
+  /* Jika ingin memaksa 100% lebar container */
+  /* width: 100%; */
 }
 
 /* Loading state */
@@ -115,16 +126,17 @@
   .soal-media img {
     max-height: 70vh; /* Limit height on mobile */
     object-fit: contain;
+    max-width: 100%; /* Untuk mobile, 100% biasanya paling baik */
   }
 
-  /* Zoom overlay styles */
-  .medium-zoom-overlay {
-    z-index: 1050;
-  }
+  /* Zoom overlay styles (terduplikasi, sudah digabungkan) */
+  /* .medium-zoom-overlay { */
+  /* z-index: 1050; */
+  /* } */
 
-  .medium-zoom-image--opened {
-    z-index: 1051;
-  }
+  /* .medium-zoom-image--opened { */
+  /* z-index: 1051; */
+  /* } */
 }
 
 /* Loading indicator */
@@ -166,11 +178,12 @@
   margin-top: 4px;
 }
 
-.opsi-konten {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+/* Menggabungkan properti flex-direction dan gap */
+/* .opsi-konten { */
+/* display: flex; */
+/* flex-direction: column; */
+/* gap: 10px; */
+/* } */
 
 .opsi-text {
   flex: 1;
@@ -188,9 +201,9 @@
 }
 
 .opsi-file-attachment img {
-  max-width: 100% !important; /* Tambahkan !important */
-  border-radius: 4px !important; /* Tambahkan !important */
-  border: 2px solid red !important; /* Tambahkan border untuk debug */
+  max-width: 100% !important;
+  border-radius: 4px !important;
+  /* border: 2px solid red !important; /* Dikomentari di kode asli, tetap dikomentari */
 }
 
 .opsi-file-attachment audio,
@@ -246,16 +259,15 @@
 }
 
 .btn-nav-soal {
-  /* padding: 10px 20px; */
+  /* padding: 10px 20px; */ /* Dikomentari di kode asli, tetap dikomentari */
   border-radius: 8px;
 }
 
 .legend-container .legend-item {
   margin: 10px 0;
-  /* padding: 1px; */
-
-  /* background: #f1f1f1; */
-  /* border-radius: 20px; */
+  /* padding: 1px; */ /* Dikomentari di kode asli, tetap dikomentari */
+  /* background: #f1f1f1; */ /* Dikomentari di kode asli, tetap dikomentari */
+  /* border-radius: 20px; */ /* Dikomentari di kode asli, tetap dikomentari */
 }
 
 .legend-container .badge {
