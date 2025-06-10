@@ -85,7 +85,7 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
                     </tr>
                     <tr>
                         <th>Waktu</th>
-                        <td>: <?= date('H.i', strtotime($ujian->tgl_mulai)) ?>-<?= date('H.i', strtotime($ujian->terlambat)) ?> WIB (<?= $ujian->waktu ?> menit)</td>
+                        <td>: <?= date('H.i', strtotime($ujian->tgl_mulai)) ?>-<?= date('H.i', strtotime($ujian->terlambat)) ?></td>
                     </tr>
                     <!-- <tr>
                         <th>Jumlah Soal</th>
@@ -115,7 +115,7 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
                                 maxlength="5"
                                 placeholder="•••••" required autocomplete="off">
                         </div>
-                        <small class="help-block text-center text-muted">Tanyakan token kepada pengawas ujian</small>
+                        <small class="help-block text-center text-muted">Token diberikan oleh Pengawas Ujian.</small>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 0;">

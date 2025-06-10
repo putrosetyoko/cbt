@@ -99,7 +99,7 @@
 </head>
 
 <!-- Must Load First -->
-<!-- <script src="<?=base_url()?>assets/bower_components/jquery/jquery-3.3.1.min.js"></script> -->
+<script src="<?=base_url()?>assets/bower_components/jquery/jquery-3.3.1.min.js"></script>
 <script src="<?=base_url()?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="<?=base_url()?>assets/bower_components/sweetalert2/sweetalert2.all.min.js"></script>

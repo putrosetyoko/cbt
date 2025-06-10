@@ -54,39 +54,27 @@ $ta_aktif = $tahun_ajaran_aktif_info ?? null;
                     <h3 class="box-title"><i class="fa fa-bolt"></i> Aksi Cepat</h3>
                 </div>
                 <div class="box-body">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="<?= base_url('guru/add')?>" class="btn bg-yellow btn-block btn-flat">
-                                <i class="fa fa-user-plus"></i> Tambah Guru
-                            </a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="<?= base_url('siswa/add')?>" class="btn bg-red btn-block btn-flat">
-                                <i class="fa fa-user-plus"></i> Tambah Siswa
-                            </a>
-                        </div>
-                    </div>
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-xs-6">
-                            <a href="<?= base_url('kelas')?>" class="btn bg-green btn-block btn-flat">
-                                <i class="fa fa-university"></i> Kelola Kelas
+                            <a href="<?= base_url('siswakelas')?>" class="btn bg-green btn-block btn-flat">
+                                <i class="fa fa-university"></i> Kelas - Siswa
                             </a>
                         </div>
                         <div class="col-xs-6">
-                            <a href="<?= base_url('mapel')?>" class="btn bg-blue btn-block btn-flat">
-                                <i class="fa fa-book"></i> Kelola Mapel
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-xs-6">
-                            <a href="<?= base_url('mapel')?>" class="btn bg-purple btn-block btn-flat">
-                                <i class="fa fa-book"></i> Kelas Siswa
-                            </a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="<?= base_url('mapel')?>" class="btn bg-navy btn-block btn-flat">
+                            <a href="<?= base_url('penugasanguru')?>" class="btn bg-yellow btn-block btn-flat">
                                 <i class="fa fa-book"></i> Penugasan Guru
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-xs-6">
+                            <a href="<?= base_url('pjsoal')?>" class="btn bg-blue btn-block btn-flat">
+                                <i class="fa fa-book"></i> PJ Soal/Ujian
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="<?= base_url('ujian')?>" class="btn bg-navy btn-block btn-flat">
+                                <i class="fa fa-book"></i> Kelola Ujian
                             </a>
                         </div>
                     </div>

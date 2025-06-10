@@ -39,14 +39,14 @@
                     <tr>
                         <th width="3%" class="text-center">No.</th>
                         <th>Tahun Ajaran</th>
-                        <th>Mata Pelajaran</th>
+                        <th>PJ Mapel</th>
                         <th>NIP Guru</th>
                         <th>Nama Guru</th>
                         <th>Keterangan</th>
                         <th width="120" class="text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody></tbody> 
             </table>
         </div>
     </div>

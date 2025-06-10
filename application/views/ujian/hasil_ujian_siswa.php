@@ -47,8 +47,8 @@
                         <td id="summary_nama_ujian">-</td>
                     </tr>
                     <tr>
-                        <th>Jumlah Soal</th>
-                        <td id="summary_jumlah_soal">-</td>
+                        <th width="30%">Mata Pelajaran</th>
+                        <td id="summary_nama_mapel">-</td>
                     </tr>
                     <tr>
                         <th>Waktu Ujian</th>
@@ -58,22 +58,22 @@
                         <th>Hari/Tanggal</th>
                         <td id="summary_hari_tanggal">-</td>
                     </tr>
+                    <tr>
+                        <th>Jumlah Soal</th>
+                        <td id="summary_jumlah_soal">-</td>
+                    </tr>
                 </table>
             </div>
             <div class="col-sm-6">
                 <table class="table table-striped table-sm">
                     <tr>
-                        <th width="30%">Mata Pelajaran</th>
-                        <td id="summary_nama_mapel">-</td>
-                    </tr>
-                    <tr>
                         <th>Guru Pembuat Ujian</th>
                         <td id="summary_nama_guru_pembuat">-</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>Guru Mata Pelajaran</th>
                         <td id="summary_guru_mapel_mengajar">-</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>Nilai Terendah</th>
                         <td id="summary_nilai_terendah">
@@ -255,7 +255,7 @@
                 const csrfToken = getCsrfToken(); // Ambil token terbaru di sini
 
                 console.log("Mengirim AJAX delete dengan CSRF Token:", csrfToken.name, csrfToken.hash);
-                console.log("IDs yang akan di reset:", ids);
+                console.log("IDs yang akan direset:", ids);
 
                 $.ajax({
                     url: base_url + 'ujian/delete_hasil_ujian',
@@ -273,7 +273,7 @@
                         }
 
                         if (response.status) {
-                            Swal.fire('Di reset!', response.message, 'success');
+                            Swal.fire('Berhasil!', response.message, 'success');
                             reload_ajax();
                             loadSummaryData();
                             $('#check-all').prop('checked', false);
@@ -469,7 +469,7 @@
                 });
 
                 if (selectedIds.length === 0) {
-                    Swal.fire('Peringatan!', 'Tidak ada data yang dipilih untuk di reset.', 'warning');
+                    Swal.fire('Peringatan!', 'Tidak ada data yang dipilih untuk direset.', 'warning');
                     return;
                 }
                 deleteHasilUjian(selectedIds);

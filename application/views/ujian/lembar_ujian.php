@@ -151,7 +151,7 @@ body {
 ">
     <h3>Ujian Siap Dimulai!</h3>
     <p>Untuk menghindari kecurangan, ujian ini akan berjalan dalam mode layar penuh.</p>
-    <p>Pastikan Anda tidak beralih aplikasi/tab atau keluar dari mode layar penuh selama ujian. Pelanggaran akan dicatat.</p>
+    <p>Pastikan Anda <b>TIDAK BERALIH APLIKASI/WEB</b> atau <b>KELUAR DARI MODE LAYAR PENUH</b> selama ujian. Pelanggaran akan DICATAT!</p>
     <button id="start-fullscreen-exam" class="btn btn-lg btn-success" style="margin-top: 20px;">
         <i class="fa fa-play-circle"></i> Mulai Ujian dalam Layar Penuh
     </button>

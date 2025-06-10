@@ -22,13 +22,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="kelas_id">Ubah ke Jenjang - Kelas <span class="text-danger">*</span></label>
+                    <label for="kelas_id">Kelas <span class="text-danger">*</span></label>
                     <select name="kelas_id" id="kelas_id" class="form-control select2" style="width: 100%;" required>
-                        <option value="">-- Pilih Jenjang - Kelas Baru --</option>
+                        <option value="">-- Pilih Kelas --</option>
                         <?php if (isset($all_kelas) && !empty($all_kelas)) : ?>
                             <?php foreach ($all_kelas as $k) : ?>
                                 <option value="<?= $k->id_kelas ?>" <?= ($k->id_kelas == $penempatan->kelas_id) ? 'selected' : ''; ?>>
-                                    <?= htmlspecialchars($k->nama_jenjang . ' - ' . $k->nama_kelas) ?>
+                                    <?= htmlspecialchars($k->nama_jenjang . ' ' . $k->nama_kelas) ?>
                                 </option>
                             <?php endforeach; ?>
                         <?php endif; ?>

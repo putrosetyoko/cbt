@@ -1774,7 +1774,7 @@ class Ujian extends MY_Controller {
         $ids = $this->input->post('ids', true); // Array of IDs from the checkboxes
 
         if (empty($ids)) {
-            $response['message'] = 'Tidak ada data hasil ujian yang dipilih untuk dihapus.';
+            $response['message'] = 'Tidak ada data hasil ujian yang dipilih untuk direset.';
             echo json_encode($response);
             return;
         }
@@ -1794,14 +1794,14 @@ class Ujian extends MY_Controller {
 
             if ($this->db->trans_status() === FALSE) {
                 // Ini akan menangkap kesalahan transaksi database
-                throw new Exception('Gagal menghapus data hasil ujian. Database error: ' . $this->db->error()['message']);
+                throw new Exception('Gagal reset data hasil ujian. Database error: ' . $this->db->error()['message']);
             }
 
             if ($deleted_count > 0) {
                 $response['status'] = true;
-                $response['message'] = $deleted_count . ' hasil ujian berhasil dihapus.';
+                $response['message'] = $deleted_count . ' hasil ujian berhasil direset.';
             } else {
-                $response['message'] = 'Tidak ada hasil ujian yang dihapus. Mungkin data tidak ditemukan atau sudah terhapus.';
+                $response['message'] = 'Tidak ada hasil ujian yang direset. Mungkin data tidak ditemukan atau sudah terhapus.';
             }
 
         } catch (Exception $e) {
