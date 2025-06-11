@@ -177,18 +177,21 @@ class Ujian extends MY_Controller {
             'mapel_ids_diajar' => []
         ];
 
-        if ($this->is_guru && !$this->pj_mapel_data && $this->guru_data) { // Guru Non-PJ
-            // Ambil TA dari filter jika ada, jika tidak, pakai TA aktif
+        if ($this->is_guru && !$this->pj_mapel_data && $this->guru_data) {
+            $tahun_ajaran_aktif = $this->master->getTahunAjaranAktif();
+            
             $id_ta_filter = ($filters['id_tahun_ajaran'] && $filters['id_tahun_ajaran'] !== 'all') 
                             ? $filters['id_tahun_ajaran'] 
-                            : ($this->master->getTahunAjaranAktif()->id_tahun_ajaran ?? null);
+                            : ($tahun_ajaran_aktif->id_tahun_ajaran ?? null);
             
             if ($id_ta_filter && isset($this->guru_data->id_guru)) {
                 $guru_context['mapel_ids_diajar'] = $this->master->getMapelDiajarGuru($this->guru_data->id_guru, $id_ta_filter);
             }
         }
         
-        $this->output_json($this->ujian_m->getUjianDatatables($filters, $guru_context));
+        // Panggil model dan kirim hasilnya langsung
+        // Model sekarang akan mengembalikan JSON string yang sudah diformat
+        $this->output_json($this->ujian_m->getUjianDatatables($filters, $guru_context), false); // FALSE karena model sudah meng-encode ke JSON
     }
 
     /**
@@ -777,7 +780,7 @@ class Ujian extends MY_Controller {
      * Endpoint AJAX untuk DataTables daftar ujian siswa.
      * URL: /ujian/data_list_siswa (menggantikan /ujian/list_json dari controller lama)
      */
-    public function data_list_siswa() 
+    public function data_list_siswa()    
     {
         if (!$this->input->is_ajax_request()) {
             show_404();
@@ -789,19 +792,30 @@ class Ujian extends MY_Controller {
                 throw new Exception('Data siswa tidak ditemukan.');
             }
 
-            $result = $this->ujian_m->get_list_ujian_for_siswa_dt(
+            // Panggil model dan biarkan model mengembalikan JSON string
+            $result_json_string = $this->ujian_m->get_list_ujian_for_siswa_dt(
                 $this->siswa_data->id_siswa,
                 $this->siswa_data->id_kelas,
                 $this->siswa_data->id_jenjang,
                 $this->siswa_data->id_tahun_ajaran
             );
 
-            // Ensure proper DataTables response format
+            // Karena model sudah mengembalikan JSON string, kita perlu decode dulu
+            // untuk mengambil properti draw, recordsTotal, recordsFiltered, dan data.
+            $decoded_result = json_decode($result_json_string, true);
+            
+            if ($decoded_result === null && json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('Invalid JSON response from model: ' . json_last_error_msg());
+            }
+
+            // DataTables expects 'data' to be an array of arrays
+            $data_for_datatables = $decoded_result['data'] ?? [];
+
             $response = [
                 'draw' => $this->input->post('draw'),
-                'recordsTotal' => $this->ujian_m->count_all(),
-                'recordsFiltered' => $this->ujian_m->count_filtered(),
-                'data' => json_decode($result, true)['data'] ?? []
+                'recordsTotal' => $decoded_result['recordsTotal'] ?? 0,
+                'recordsFiltered' => $decoded_result['recordsFiltered'] ?? 0,
+                'data' => $data_for_datatables
             ];
 
             $this->output

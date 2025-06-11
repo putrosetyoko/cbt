@@ -51,16 +51,20 @@
                         <td id="summary_nama_mapel">-</td>
                     </tr>
                     <tr>
-                        <th>Waktu Ujian</th>
-                        <td id="summary_waktu_ujian">-</td>
-                    </tr>
-                    <tr>
                         <th>Hari/Tanggal</th>
                         <td id="summary_hari_tanggal">-</td>
                     </tr>
                     <tr>
+                        <th>Waktu Ujian</th>
+                        <td id="summary_waktu_ujian">-</td>
+                    </tr>
+                    <tr>
                         <th>Jumlah Soal</th>
                         <td id="summary_jumlah_soal">-</td>
+                    </tr>
+                    <tr>
+                        <th>Guru Mata Pelajaran</th>
+                        <td id="summary_guru_mapel_mengajar">-</td>
                     </tr>
                 </table>
             </div>
@@ -70,10 +74,6 @@
                         <th>Guru Pembuat Ujian</th>
                         <td id="summary_nama_guru_pembuat">-</td>
                     </tr>
-                    <!-- <tr>
-                        <th>Guru Mata Pelajaran</th>
-                        <td id="summary_guru_mapel_mengajar">-</td>
-                    </tr> -->
                     <tr>
                         <th>Nilai Terendah</th>
                         <td id="summary_nilai_terendah">

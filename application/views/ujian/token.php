@@ -85,7 +85,7 @@ if (strpos(setlocale(LC_TIME, 'id_ID.UTF-8'), 'id_ID') === false) {
                     </tr>
                     <tr>
                         <th>Waktu</th>
-                        <td>: <?= date('H.i', strtotime($ujian->tgl_mulai)) ?>-<?= date('H.i', strtotime($ujian->terlambat)) ?></td>
+                        <td>: <?= date('H.i', strtotime($ujian->tgl_mulai)) ?>-<?= date('H.i', strtotime($ujian->terlambat)) ?> WIB</td>
                     </tr>
                     <!-- <tr>
                         <th>Jumlah Soal</th>

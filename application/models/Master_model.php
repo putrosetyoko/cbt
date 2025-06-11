@@ -183,6 +183,25 @@ class Master_model extends CI_Model
         return $this->db->get('siswa')->row(); // Hanya dari tabel siswa
     }
 
+    public function getSiswaDetailByNisnTahunAjaran($nisn, $id_tahun_ajaran_aktif)
+    {
+        if (empty($nisn) || empty($id_tahun_ajaran_aktif)) {
+            return null;
+        }
+
+        $this->db->select('s.id_siswa, s.nama as nama_siswa, s.nisn, s.jenis_kelamin, k.id_kelas, k.nama_kelas, j.id_jenjang, j.nama_jenjang, ska.id_tahun_ajaran, ta.nama_tahun_ajaran');
+        $this->db->from('siswa s');
+        $this->db->join('siswa_kelas_ajaran ska', 's.id_siswa = ska.siswa_id');
+        $this->db->join('kelas k', 'ska.kelas_id = k.id_kelas');
+        $this->db->join('jenjang j', 'k.id_jenjang = j.id_jenjang', 'left');
+        $this->db->join('tahun_ajaran ta', 'ska.id_tahun_ajaran = ta.id_tahun_ajaran');
+        $this->db->where('s.nisn', $nisn);
+        $this->db->where('ska.id_tahun_ajaran', $id_tahun_ajaran_aktif);
+        
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     /**
      * Data Guru
      */
@@ -209,6 +228,18 @@ class Master_model extends CI_Model
         // Hanya mengambil data dari tabel guru
         $this->db->where('id_guru', $id_guru);
         return $this->db->get('guru')->row();
+    }
+
+    public function count_siswa_by_guru_in_tahun_ajaran($guru_id, $id_tahun_ajaran)
+    {
+        $this->db->select('COUNT(DISTINCT sk.siswa_id) as total_siswa');
+        $this->db->from('guru_mapel_kelas_ajaran gmka');
+        $this->db->join('siswa_kelas_ajaran sk', 'gmka.kelas_id = sk.kelas_id AND gmka.id_tahun_ajaran = sk.id_tahun_ajaran');
+        $this->db->where('gmka.guru_id', $guru_id);
+        $this->db->where('gmka.id_tahun_ajaran', $id_tahun_ajaran);
+        $query = $this->db->get();
+        $result = $query->row();
+        return $result ? (int)$result->total_siswa : 0;
     }
     
 

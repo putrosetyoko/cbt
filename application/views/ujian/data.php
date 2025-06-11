@@ -86,8 +86,8 @@
                         <th>Jenjang</th>
                         <th>PJ/Pembuat</th>
                         <th>Jumlah Soal</th>
+                        <th>Hari/Tanggal</th>
                         <th>Waktu</th>
-                        <th>Tanggal Ujian</th>
                         <th>Token</th>
                         <th>Status</th>
                         <th width="15%" class="text-center">Aksi</th>

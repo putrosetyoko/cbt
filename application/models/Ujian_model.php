@@ -47,11 +47,19 @@ class Ujian_model extends CI_Model {
     public function getUjianDatatables($filters = [], $guru_context = []) {
         $this->datatables->select(
             'u.id_ujian, u.nama_ujian, m.nama_mapel, j.nama_jenjang AS nama_jenjang_target, '.
-            'g.nama_guru AS pembuat_ujian, u.jumlah_soal, u.waktu, u.token, '.
-            'DATE_FORMAT(u.tgl_mulai, "%d-%m-%Y %H:%i") as tgl_mulai_formatted, '.
+            'g.nama_guru AS pembuat_ujian, u.jumlah_soal, '.
+            // Modifikasi di sini: Tambahkan u.tgl_mulai dan u.terlambat sebagai raw data
+            // Lalu tambahkan kolom terformat untuk waktu
+            'u.tgl_mulai, u.terlambat, '. // Ambil raw tgl_mulai dan terlambat
+            'CONCAT(DATE_FORMAT(u.tgl_mulai, "%H:%i"), "-", DATE_FORMAT(u.terlambat, "%H:%i"), " WIB") as waktu_mulai_terlambat, '.
+            // Modifikasi di sini: Format Hari/Tanggal sepenuhnya di server
+            // Gunakan setlocale dan strftime untuk format bahasa Indonesia yang lebih baik
+            // Ini akan menghasilkan string seperti 'Rabu, 11 Juni 2025'
+            'DATE_FORMAT(u.tgl_mulai, "%Y-%m-%d") as tgl_mulai_for_date_format, '. // Ambil tanggal saja untuk formatting tanggal di PHP
+            'u.token, '.
             'CASE u.aktif WHEN "Y" THEN "Aktif" ELSE "Tidak Aktif" END as status_aktif, '.
             'ta.nama_tahun_ajaran, u.guru_id AS id_pembuat_ujian, u.mapel_id AS id_mapel_ujian'
-        , FALSE);
+        , FALSE); // FALSE agar tidak meng-escape custom SELECT
         $this->datatables->from('m_ujian u');
         $this->datatables->join('mapel m', 'u.mapel_id = m.id_mapel');
         $this->datatables->join('guru g', 'u.guru_id = g.id_guru');
@@ -77,7 +85,26 @@ class Ujian_model extends CI_Model {
                 $this->datatables->where('1', '0');
             }
         }
-        return $this->datatables->generate();
+        
+        $result_json = $this->datatables->generate();
+        $result_array = json_decode($result_json, true);
+
+        // Tambahkan formatting tanggal di PHP setelah DataTables generate JSON
+        if (isset($result_array['data'])) {
+            setlocale(LC_TIME, 'id_ID', 'Indonesian', 'id'); // Set locale untuk Bahasa Indonesia
+
+            foreach ($result_array['data'] as $key => $row) {
+                // Format Hari/Tanggal (contoh: Rabu, 11 Juni 2025)
+                if (!empty($row['tgl_mulai_for_date_format'])) {
+                    $timestamp = strtotime($row['tgl_mulai_for_date_format']);
+                    $result_array['data'][$key]['hari_tanggal_ujian'] = strftime('%A, %d %B %Y', $timestamp);
+                } else {
+                    $result_array['data'][$key]['hari_tanggal_ujian'] = '-';
+                }
+            }
+        }
+        
+        return json_encode($result_array);
     }
 
     public function create_ujian($data) {
@@ -217,17 +244,15 @@ class Ujian_model extends CI_Model {
                 'u.jumlah_soal, u.waktu, '.
                 'u.tgl_mulai AS tgl_mulai_server_format, '.
                 'u.terlambat AS terlambat_server_format, '.
+                'DATE_FORMAT(u.tgl_mulai, "%H:%i") as waktu_mulai, '. // Tambahkan waktu mulai
+                'DATE_FORMAT(u.terlambat, "%H:%i") as waktu_terlambat, '. // Tambahkan waktu terlambat
                 'DATE_FORMAT(u.tgl_mulai, "%d-%m-%Y %H:%i") as tgl_mulai_formatted, '.
                 'DATE_FORMAT(u.terlambat, "%d-%m-%Y %H:%i") as terlambat_formatted, '.
                 '(SELECT hu.status FROM h_ujian hu WHERE hu.ujian_id = u.id_ujian AND hu.siswa_id = '.$this->db->escape($id_siswa).') AS status_pengerjaan_siswa, '.
-                // Convert encrypted IDs to HEX
                 'HEX(AES_ENCRYPT(CAST(u.id_ujian AS CHAR), "'.$CI->config->item('encryption_key').'")) as id_ujian_encrypted, '.
                 '(SELECT HEX(AES_ENCRYPT(CAST(hu.id AS CHAR), "'.$CI->config->item('encryption_key').'")) FROM h_ujian hu WHERE hu.ujian_id = u.id_ujian AND hu.siswa_id = '.$this->db->escape($id_siswa).') AS id_hasil_ujian_encrypted, '.
                 '(SELECT UNIX_TIMESTAMP(hu.tgl_selesai) FROM h_ujian hu WHERE hu.ujian_id = u.id_ujian AND hu.siswa_id = '.$this->db->escape($id_siswa).') AS tgl_selesai_pengerjaan_timestamp, '.
 
-                // START: Tambahan untuk Guru Mata Pelajaran yang mengajar di mapel dan kelas target ujian
-                // Mengambil guru yang mengajar mapel ini di kelas target ujian (kelas siswa yang login)
-                // Ini akan menghasilkan string nama guru yang dipisahkan koma jika ada lebih dari satu
                 '(SELECT GROUP_CONCAT(g_pengajar.nama_guru ORDER BY g_pengajar.nama_guru ASC)
                 FROM guru_mapel_kelas_ajaran gmka_pengajar
                 JOIN guru g_pengajar ON gmka_pengajar.guru_id = g_pengajar.id_guru
@@ -235,13 +260,10 @@ class Ujian_model extends CI_Model {
                 AND gmka_pengajar.kelas_id = '.$this->db->escape($id_kelas_siswa).'
                 AND gmka_pengajar.id_tahun_ajaran = u.id_tahun_ajaran
                 ) AS nama_guru_pengajar'.
-                // END: Tambahan untuk Guru Mata Pelajaran
-            '', FALSE); // FALSE agar tidak meng-escape DISTINCT atau GROUP_CONCAT
+            '', FALSE); 
 
             $this->datatables->from('m_ujian u');
             $this->datatables->join('mapel m', 'u.mapel_id = m.id_mapel');
-            // Menghapus join ke guru g karena nama_pembuat_ujian akan diganti dengan nama_guru_pengajar
-            // $this->datatables->join('guru g', 'u.guru_id = g.id_guru'); 
             
             $this->datatables->where('u.aktif', 'Y');
             $this->datatables->where('u.id_tahun_ajaran', $id_tahun_ajaran_siswa);
@@ -249,13 +271,29 @@ class Ujian_model extends CI_Model {
             
             $result = $this->datatables->generate();
             
-            $decoded = json_decode($result);
+            $decoded = json_decode($result, true); // Decode to array for modification
             if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
                 log_message('error', 'JSON Error: ' . json_last_error_msg());
                 throw new Exception('Invalid JSON generated');
             }
+
+            // Tambahkan formatting Hari/Tanggal di PHP
+            if (isset($decoded['data'])) {
+                setlocale(LC_TIME, 'id_ID', 'Indonesian', 'id'); // Set locale untuk Bahasa Indonesia
+
+                foreach ($decoded['data'] as $key => $row) {
+                    if (!empty($row['tgl_mulai_server_format'])) {
+                        $timestamp = strtotime($row['tgl_mulai_server_format']);
+                        $decoded['data'][$key]['hari_tanggal_ujian'] = strftime('%A, %d %B %Y', $timestamp);
+                    } else {
+                        $decoded['data'][$key]['hari_tanggal_ujian'] = '-';
+                    }
+                    // Waktu sudah diformat di query SQL (`waktu_mulai` dan `waktu_terlambat`)
+                    $decoded['data'][$key]['waktu_ujian_formatted'] = $row['waktu_mulai'] . '-' . $row['waktu_terlambat'] . ' WIB';
+                }
+            }
             
-            return $result;
+            return json_encode($decoded); // Encode back to JSON
             
         } catch (Exception $e) {
             log_message('error', 'Error in get_list_ujian_for_siswa_dt: ' . $e->getMessage());

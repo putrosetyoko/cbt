@@ -98,7 +98,7 @@ $ta_aktif = $tahun_ajaran_aktif_info ?? null;
                         </li>
                         <li class="list-group-item">
                             <i class="fa fa-clock-o text-warning"></i> Server Time: 
-                            <strong><?= date('d M Y H:i:s') ?></strong>
+                            <strong><?= date('D, d M Y H:i:s') ?></strong>
                         </li>
                     </ul>
                 </div>

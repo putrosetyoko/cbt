@@ -71,13 +71,17 @@ $(document).ready(function () {
       { data: 'pembuat_ujian' }, // Nama guru PJ pembuat
       { data: 'jumlah_soal', className: 'text-center' },
       {
-        data: 'waktu',
+        // Kolom Tanggal Ujian: Ambil dari 'hari_tanggal_ujian' yang sudah diformat dari server
+        data: 'hari_tanggal_ujian', // <--- PENTING: Gunakan nama kolom baru ini
         className: 'text-center',
-        render: function (data) {
-          return data + ' Menit';
-        },
+        // Render function tidak lagi diperlukan karena sudah diformat di server
       },
-      { data: 'tgl_mulai_formatted' }, // Sudah diformat dari server
+      {
+        // Kolom Waktu: Ambil dari 'waktu_mulai_terlambat' yang sudah diformat dari server
+        data: 'waktu_mulai_terlambat', // <--- PENTING: Gunakan nama kolom baru ini
+        className: 'text-center',
+        // Render function tidak lagi diperlukan karena sudah diformat di server
+      },
       {
         data: 'token',
         className: 'text-center',
@@ -166,29 +170,27 @@ $(document).ready(function () {
       },
     ],
     columnDefs: [
-      {
-        targets: 7, // Index kolom created_on_formatted
-        render: function (data, type, row) {
-          if (type === 'display') {
-            // Split tanggal dan waktu
-            const [datePart] = row.tgl_mulai_formatted.split(' ');
-            // Split tanggal
-            const [day, month, year] = datePart.split('-');
-
-            // Buat objek Date dengan format yang benar (YYYY-MM-DD)
-            const date = new Date(`${year}-${month}-${day}`);
-
-            const options = {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-              timeZone: 'Asia/Jakarta',
-            };
-            return date.toLocaleDateString('id-ID', options);
-          }
-          return data;
-        },
-      },
+      // {
+      //   targets: 7, // Index kolom created_on_formatted
+      //   render: function (data, type, row) {
+      //     if (type === 'display') {
+      //       // Split tanggal dan waktu
+      //       const [datePart] = row.tgl_mulai_formatted.split(' ');
+      //       // Split tanggal
+      //       const [day, month, year] = datePart.split('-');
+      //       // Buat objek Date dengan format yang benar (YYYY-MM-DD)
+      //       const date = new Date(`${year}-${month}-${day}`);
+      //       const options = {
+      //         day: 'numeric',
+      //         month: 'long',
+      //         year: 'numeric',
+      //         timeZone: 'Asia/Jakarta',
+      //       };
+      //       return date.toLocaleDateString('id-ID', options);
+      //     }
+      //     return data;
+      //   },
+      // },
     ],
     order: [[2, 'asc']], // Default order by nama_ujian ASC
     rowId: function (row) {
