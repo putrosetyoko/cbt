@@ -2,94 +2,64 @@
 // File: application/views/ujian/lembar_ujian.php
 // Variabel yang diharapkan dari controller:
 // $user, $siswa, $judul, $subjudul
-// $ujian_master (objek detail m_ujian)
-// $hasil_ujian (objek dari h_ujian, berisi list_soal, list_jawaban, tgl_selesai, waktu_habis_timestamp)
+// $ujian (objek detail m_ujian, dari Ujian_model->get_ujian_by_id_with_guru)
+// $h_ujian (objek dari h_ujian, berisi list_soal, list_jawaban, tgl_selesai, waktu_habis_timestamp)
 // $soal_collection (array objek soal lengkap yang sudah diurutkan/diacak)
-// $jawaban_tersimpan (array jawaban yang sudah disimpan siswa)
-// $id_h_ujian_enc (ID h_ujian yang dienkripsi dan url-safe base64)
+// $jawaban_tersimpan_php (array jawaban yang sudah disimpan siswa, di-decode dari h_ujian->list_jawaban)
 
 // Calculate timestamps and prepare encrypted ID
-$waktu_selesai = strtotime($hasil_ujian->tgl_selesai);
-$waktu_selesai_format = date('Y-m-d H:i:s', $waktu_selesai);
+$waktu_selesai_ujian = strtotime($h_ujian->tgl_selesai); // Waktu selesai dari h_ujian
+$waktu_selesai_format_js = date('Y-m-d H:i:s', $waktu_selesai_ujian);
 
-// Ensure proper encryption
-$id_h_ujian_enc = strtr(base64_encode($this->encryption->encrypt($h_ujian->id)), '+/=', '-_,'); ?>
+// Ensure proper encryption for JS
+$id_h_ujian_enc_for_js = strtr(base64_encode($this->encryption->encrypt($h_ujian->id)), '+/=', '-_,');
 
-<?php if ($waktu_habis_ujian_timestamp_php > 0 && $waktu_habis_ujian_timestamp_php < time() && isset($hasil_ujian) && $hasil_ujian->status !== 'completed'): ?>
+// Hitung sisa waktu untuk tampilan awal timer
+$sisa_waktu_awal = max(0, $waktu_selesai_ujian - time());
+?>
+
+<?php if (isset($h_ujian) && $h_ujian->status !== 'completed' && $sisa_waktu_awal <= 0): ?>
     <div class="alert alert-danger text-center">
         <h4>WAKTU HABIS!</h4>
         <p>Waktu pengerjaan ujian Anda telah berakhir.</p>
         <p>Jawaban terakhir Anda akan otomatis diproses.</p>
-        <!-- JS akan menghandle redirect atau submit otomatis -->
     </div>
 <?php endif; ?>
 
-<?php
-// Di bagian atas file, setelah komentar variabel
-$waktu_sekarang = time();
-$waktu_terlambat = strtotime($h_ujian->batas_masuk);
-
-// Pastikan waktu valid
-if ($waktu_terlambat === false) {
-    // Jika parsing gagal, gunakan waktu dari tabel m_ujian
-    $waktu_terlambat = strtotime($ujian->terlambat);
-}
-
-// Hitung sisa waktu
-$sisa_waktu = max(0, $waktu_terlambat - $waktu_sekarang);
-
-// Debug waktu
-log_message('debug', 'Debug waktu: ' . print_r([
-    'waktu_sekarang' => date('Y-m-d H:i:s', $waktu_sekarang),
-    'waktu_terlambat' => date('Y-m-d H:i:s', $waktu_terlambat),
-    'sisa_waktu' => $sisa_waktu
-], true));
-?>
-
-<!-- Tambahkan ini di bagian head atau sebelum closing </head> -->
 <script type="text/javascript">
 // Inisialisasi konfigurasi ujian
 window.examConfig = {
     base_url: '<?= base_url() ?>',
-    ID_H_UJIAN_ENC_GLOBAL: '<?= $id_h_ujian_enc ?>',
+    ID_H_UJIAN_ENC_GLOBAL: '<?= $id_h_ujian_enc_for_js ?>',
     JUMLAH_SOAL_TOTAL_GLOBAL: <?= count($soal_collection) ?>,
-    JAWABAN_TERSIMPAN_GLOBAL: <?= json_encode($jawaban_tersimpan) ?>,
-    WAKTU_SELESAI: '<?= date('Y-m-d H:i:s', $waktu_terlambat) ?>',
-    WAKTU_HABIS_TIMESTAMP_GLOBAL: <?= intval($waktu_terlambat) ?>, // Pastikan integer valid
+    // PENTING: encode $jawaban_tersimpan_php sebagai objek JSON
+    JAWABAN_TERSIMPAN_GLOBAL: <?= json_encode($jawaban_tersimpan_php) ?>,
+    WAKTU_SELESAI: '<?= $waktu_selesai_format_js ?>', // Waktu selesai untuk ditampilkan
+    WAKTU_HABIS_TIMESTAMP_GLOBAL: <?= intval($waktu_selesai_ujian) ?>, // Unix timestamp untuk JS timer
     CSRF_TOKEN_NAME_GLOBAL: '<?= $this->security->get_csrf_token_name() ?>',
     CSRF_HASH_GLOBAL: '<?= $this->security->get_csrf_hash() ?>',
 
     siswa: {
-        nisn: '<?= $siswa->nisn ?>',
-        nama: '<?= $siswa->nama_siswa ?>'
+        nisn: '<?= htmlspecialchars($siswa->nisn ?? ''); ?>',
+        nama: '<?= htmlspecialchars($siswa->nama_siswa ?? ''); ?>'
     },
     ujian: {
-        nama_ujian: '<?= $ujian->nama_ujian ?>'
+        nama_ujian: '<?= htmlspecialchars($ujian->nama_ujian ?? ''); ?>'
     },
 
     // ANTI-CHEATING SETTINGS (NEW)
     enableAntiCheating: true, // Set to false to disable these features
-    maxCheatAttempts: 3, // Jumlah maksimal pelanggaran sebelum ujian disubmit/logout
-    redirectUrlOnCheat: '<?= base_url('auth/logout') ?>', // Atau base_url('auth/logout')
+    maxCheatAttempts: 3,
+    redirectUrlOnCheat: '<?= base_url('auth/logout') ?>',
     confirmFinishMessage: 'Setelah ujian diselesaikan, Anda tidak dapat mengubah jawaban Anda lagi.',
     unansweredWarning: 'Perhatian: Ada {count} soal yang belum Anda jawab.',
     doubtfulWarning: 'Ada {count} soal yang masih ditandai ragu-ragu.',
-    // Tambahkan pesan konfirmasi untuk keluar dari fullscreen
     exitFullscreenWarning: 'Anda keluar dari mode layar penuh. Ini akan dihitung sebagai pelanggaran!',
     tabChangeWarning: 'Anda beralih tab atau keluar dari jendela browser. Ini akan dihitung sebagai pelanggaran!',
     cheatAttemptExceeded: 'Anda telah melewati batas maksimal pelanggaran. Ujian akan diakhiri.',
     
-    // Tambahkan timestamp mulai ujian (saat page loaded)
     startTime: Date.now() // Timestamp saat halaman dimuat, untuk perhitungan waktu yang lebih akurat
 };
-
-// Debug log
-// console.log('Debug waktu:', {
-//     waktuSekarang: new Date().toISOString(),
-//     waktuTerlambat: new Date(<?= $waktu_terlambat * 1000 ?>).toISOString(),
-//     sisaWaktuDetik: <?= $sisa_waktu ?>,
-//     waktuTerlambatTimestamp: <?= intval($waktu_terlambat) ?>
-// });
 </script>
 
 <style>
@@ -103,35 +73,10 @@ body {
 /* html.fullscreen-mode, body.fullscreen-mode { overflow: hidden; } */
 </style>
 
-<!-- Add CSS file reference in header -->
 <link rel="stylesheet" href="<?= base_url('assets/dist/css/ujian.css') ?>">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js"></script>
 
-<!-- Add CSS for new styling -->
-<!-- <style>
-.box.box-primary {
-    border-top: 3px solid #3c8dbc;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-}
-
-.badge.bg-blue {
-    background-color: #3c8dbc;
-}
-
-.badge.bg-red {
-    background-color: #dd4b39;
-}
-
-.box-header.with-border {
-    border-bottom: 1px solid #f4f4f4;
-    padding: 10px;
-}
-
-.action.btn {
-    margin: 0 2px;
-}
-</style> -->
 <div id="fullscreen-prompt" style="
     position: fixed;
     top: 0;
@@ -158,7 +103,6 @@ body {
 </div>
 
 <div class="row">
-    <!-- Navigation Column -->
     <div class="col-sm-3">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -174,20 +118,23 @@ body {
                     <?php foreach ($soal_collection as $index => $soal_nav): ?>
                         <?php
                             $no_display = $index + 1;
-                            // Inisialisasi default
-                            $status_jawaban_nav = 'default'; 
-                            $id_soal_nav_item = $soal_nav->id_soal ?? null;
-
+                            $id_soal_nav_item = $soal_nav['id_soal'] ?? null;
+                            
+                            // Logika PHP untuk menentukan warna awal tombol navigasi
+                            $status_jawaban_nav_class = 'btn-default'; // Default: abu-abu (belum dijawab)
                             if ($id_soal_nav_item && is_array($jawaban_tersimpan_php) && isset($jawaban_tersimpan_php[$id_soal_nav_item])) {
                                 $jwb_item_nav = $jawaban_tersimpan_php[$id_soal_nav_item];
                                 if (!empty($jwb_item_nav['j'])) {
-                                    $status_jawaban_nav = ($jwb_item_nav['r'] ?? 'N') == 'Y' ? 'warning' : 'success';
+                                    $status_jawaban_nav_class = (($jwb_item_nav['r'] ?? 'N') == 'Y') ? 'btn-warning' : 'btn-success';
                                 } elseif (($jwb_item_nav['r'] ?? 'N') == 'Y') {
-                                    $status_jawaban_nav = 'warning';
+                                    $status_jawaban_nav_class = 'btn-warning';
                                 }
                             }
                         ?>
-                        <button type="button" class="btn btn-<?= $status_jawaban_nav ?> btn-soal-nav" data-nomor="<?= $no_display ?>" data-id-soal="<?= $id_soal_nav_item ?>" style="margin:2px; width: 40px; height: 40px;">
+                        <button type="button" class="btn <?= $status_jawaban_nav_class ?> btn-soal-nav" 
+                            data-nomor="<?= $no_display ?>" 
+                            data-id-soal="<?= $id_soal_nav_item ?>" 
+                            style="margin:2px; width: 40px; height: 40px;">
                             <?= $no_display ?>
                         </button>
                     <?php endforeach; ?>
@@ -212,7 +159,6 @@ body {
         </div>
     </div>
 
-    <!-- Question Content Column -->
     <div class="col-sm-9">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -223,109 +169,75 @@ body {
                 </h3>
                 <div class="box-tools pull-right">
                     <span class="badge bg-red">
-                        <i class="fa fa-clock-o"></i>   
+                        <i class="fa fa-clock-o"></i>   
                         <span id="timer-ujian">
-                            <?= gmdate('H:i:s', max(0, strtotime($hasil_ujian->tgl_selesai) - time())) ?>
+                            <?= gmdate('H:i:s', $sisa_waktu_awal) ?>
                         </span>
                     </span>
                 </div>
             </div>
             
             <div class="box-body">
-            <div id="area-soal-ujian">
+                <div id="area-soal-ujian">
                     <?php if (!empty($soal_collection)): ?>
-                        <?php foreach ($soal_collection as $index => $soal_item): // $soal_item sekarang adalah ARRAY ?>
+                        <?php foreach ($soal_collection as $index => $soal_item): ?>
                             <?php
                                 $no_soal_aktual = $index + 1;
-                                // UBAH INI: $soal_item->id_soal menjadi $soal_item['id_soal']
                                 $id_soal_item_current = $soal_item['id_soal'] ?? null; 
-                                $jawaban_tersimpan_untuk_soal_ini = '';
-                                $status_ragu_soal_ini = false;
-                                if ($id_soal_item_current && is_array($jawaban_tersimpan_php) && isset($jawaban_tersimpan_php[$id_soal_item_current])) {
-                                    $jawaban_tersimpan_untuk_soal_ini = $jawaban_tersimpan_php[$id_soal_item_current]['j'] ?? '';
-                                    $status_ragu_soal_ini = ($jawaban_tersimpan_php[$id_soal_item_current]['r'] ?? 'N') === 'Y';
-                                }
                             ?>
                             <div class="panel-soal" id="soal-<?= $no_soal_aktual ?>" data-id-soal="<?= $id_soal_item_current ?>" style="display: <?= $no_soal_aktual == 1 ? 'block' : 'none'; ?>;">
                                 <div class="box-body">
                                 <div class="soal-content">
-                                        
-                                        <?php 
-                                        $cleaned_soal_file = trim($soal_item['file'] ?? ''); 
-                                        if (!empty($cleaned_soal_file)): 
-                                        ?>
-                                            <div class="soal-media">
-                                                <?php 
-                                                $relative_path_soal_file = 'uploads/bank_soal/' . $cleaned_soal_file;
-                                                ?>
-                                                <?= tampil_media($relative_path_soal_file) ?>
-                                                </div>
-                                        <?php else: ?>
-                                            <?php endif; ?>
-                                    </div>
+                                    <?php 
+                                    $cleaned_soal_file = trim($soal_item['file'] ?? ''); 
+                                    if (!empty($cleaned_soal_file)): 
+                                    ?>
+                                        <div class="soal-media">
+                                            <?php $relative_path_soal_file = 'uploads/bank_soal/' . $cleaned_soal_file; ?>
+                                            <?= tampil_media($relative_path_soal_file) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
 
-                                    <div class="soal-text mb-3">
-                                        <?= $soal_item['soal'] ?>
-                                    </div>
+                                <div class="soal-text mb-3">
+                                    <?= $soal_item['soal'] ?>
+                                </div>
 
-                                    <div class="opsi-jawaban">
-                                        <?php 
-                                        // Ini sudah diubah di controller menjadi array asosiatif
-                                        $opsi_untuk_render_raw = $soal_item['opsi_display'] ?? []; 
-                                        
-                                        $opsi_untuk_render = [];
-                                        foreach($opsi_untuk_render_raw as $key => $value){
-                                            if(is_array($value)){ 
-                                                $opsi_untuk_render[$key] = $value;
-                                            } else if (is_object($value)){ 
-                                                $opsi_untuk_render[$key] = (array) $value;
-                                            }
-                                        }
-
-                                        // echo "<p>DEBUG FINAL VIEW: \$opsi_untuk_render IS_ARRAY: " . (is_array($opsi_untuk_render) ? 'TRUE' : 'FALSE') . "</p>";
-                                        // echo "<pre>DEBUG FINAL VIEW: \$opsi_untuk_render CONTENT:\n";
-                                        // print_r($opsi_untuk_render);
-                                        echo "</pre>";
-                                        ?>
-                                        <?php foreach ($opsi_untuk_render as $key_opsi_render => $opsi_data): 
-                                            $id_radio = 'opsi_' . strtolower($key_opsi_render) . '_' . ($id_soal_item_current ?? 'unknown');
-                                            
-                                            $checked = '';
-                                            $original_key = $opsi_data['original_key'] ?? ''; 
-                                            if (isset($jawaban_tersimpan[$id_soal_item_current]) && 
-                                                isset($jawaban_tersimpan[$id_soal_item_current]['j']) && 
-                                                $jawaban_tersimpan[$id_soal_item_current]['j'] === $original_key) {
-                                                $checked = 'checked="checked"';
-                                            }
-                                        ?>
-                                            <div class="funkyradio">
-                                                <div class="funkyradio-success">
-                                                    <input type="radio" 
-                                                        name="jawaban_soal_<?= $id_soal_item_current ?>" 
-                                                        id="<?= $id_radio ?>" 
-                                                        value="<?= $original_key ?>" 
-                                                        <?= $checked ?>
-                                                        data-nomor-soal-display="<?= $no_soal_aktual ?>">
-                                                    <label for="<?= $id_radio ?>">
-                                                        <div class="huruf_opsi"><?= $key_opsi_render ?></div> 
-                                                        <div class="opsi-konten">
-                                                            <div class="opsi-text"><?= ($opsi_data['teks'] ?? '') ?></div>
-                                                            <?php
-                                                            $file_opsi = $opsi_data['file'] ?? null;
-                                                            if (!empty($file_opsi)): 
-                                                                $final_file_name = $file_opsi; 
-                                                            ?>
-                                                                <div class="opsi-media mt-2">
-                                                                    <?php $relative_path_opsi_file = 'uploads/bank_soal/' . $final_file_name; ?>
-                                                                    <?= tampil_media($relative_path_opsi_file) ?>
-                                                                </div>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </label>
-                                                </div>
+                                <div class="opsi-jawaban">
+                                    <?php 
+                                    $opsi_untuk_render = $soal_item['opsi_display'] ?? []; 
+                                    ?>
+                                    <?php foreach ($opsi_untuk_render as $key_opsi_render => $opsi_data): 
+                                        $id_radio = 'opsi_' . strtolower($key_opsi_render) . '_' . ($id_soal_item_current ?? 'unknown');
+                                        $original_key = $opsi_data['original_key'] ?? ''; 
+                                    ?>
+                                        <div class="funkyradio">
+                                            <div class="funkyradio-success">
+                                                <input type="radio" 
+                                                    name="jawaban_soal_<?= $id_soal_item_current ?>" 
+                                                    id="<?= $id_radio ?>" 
+                                                    value="<?= $original_key ?>" 
+                                                    data-nomor-soal-display="<?= $no_soal_aktual ?>">
+                                                <label for="<?= $id_radio ?>">
+                                                    <div class="huruf_opsi"><?= $key_opsi_render ?></div> 
+                                                    <div class="opsi-konten">
+                                                        <div class="opsi-text"><?= ($opsi_data['teks'] ?? '') ?></div>
+                                                        <?php
+                                                        $file_opsi = $opsi_data['file'] ?? null;
+                                                        if (!empty($file_opsi)): 
+                                                            $final_file_name = $file_opsi; 
+                                                        ?>
+                                                            <div class="opsi-media mt-2">
+                                                                <?php $relative_path_opsi_file = 'uploads/bank_soal/' . $final_file_name; ?>
+                                                                <?= tampil_media($relative_path_opsi_file) ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        <?php endforeach; ?>
-                                    </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -340,10 +252,7 @@ body {
                     <button type="button" class="btn btn-warning" id="btn-ragu-ragu">
                         <i class="fa fa-question-circle"></i> Ragu-ragu
                     </button>
-                    <?php 
-                    // Get total number of questions
-                    $total_soal = count($soal_collection);
-                    ?>
+                    <?php $total_soal = count($soal_collection); ?>
                     <span id="selesai-ujian-wrapper" style="display: none;">
                         <button type="button" class="btn btn-success" id="btn-selesai-ujian">
                             <i class="glyphicon glyphicon-stop"></i> Selesai
@@ -357,27 +266,7 @@ body {
         </div>
     </div>
 </div>
-<!-- Memuat file JS di akhir setelah semua elemen HTML ada -->
 <script src="<?= base_url('assets/dist/js/app/ujian/lembar_ujian.js') ?>"></script>
-<script>
-// console.log('Debug data jawaban:', {
-//     jawaban_tersimpan_php: <?= json_encode($jawaban_tersimpan_php) ?>,
-//     jawaban_tersimpan: <?= json_encode($jawaban_tersimpan) ?>,
-//     JAWABAN_TERSIMPAN_GLOBAL: <?= json_encode($jawaban_tersimpan) ?>
-// });
-</script>
-
-<!-- Debug data di bagian atas view -->
-<?php if(ENVIRONMENT === 'development'): ?>
-    <div style="display:none">
-        <pre>
-        <?php 
-        echo "Debug File Info:\n";
-        print_r($debug_file_info);
-        ?>
-        </pre>
-    </div>
-<?php endif; ?>
 <script>
 $(document).ready(function() {
     // Show/hide SELESAI button based on current question
@@ -387,22 +276,26 @@ $(document).ready(function() {
     }
 
     // Call this when navigating questions
+    // This is already handled by initializeNavigation in lembar_ujian.js
+    // and showSoalPanel
+    /*
     $('.btn-soal-nav, #btn-prev-soal, #btn-next-soal').on('click', function() {
         var currentNumber = parseInt($('#display-nomor-soal').text());
         toggleSelesaiButton(currentNumber);
     });
+    */
 
-    // Initial check
-    toggleSelesaiButton(1);
+    // Initial check (this will be called by initializeNavigation now)
+    // toggleSelesaiButton(1);
 
     // Make sure both SELESAI buttons do the same thing
+    // If you have an inline "Selesai" button, ensure its ID is unique and target it correctly
+    // or remove it if not used. If #btn-selesai-ujian-inline exists, keep this:
     $('#btn-selesai-ujian-inline').on('click', function() {
         $('#btn-selesai-ujian').trigger('click');
     });
 });
-</script>
 
-<script>
 document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi zoom untuk gambar dengan data-zoomable
     const zoomable = mediumZoom('[data-zoomable]', {
@@ -411,43 +304,19 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollOffset: 0,
     });
 
-    // Tambahkan event listener untuk menutup zoom saat overlay diklik atau ketika zoom ditutup
-    // Ini adalah fallback jika event listener di tombol navigasi tidak cukup
     zoomable.on('closed', () => {
-        // Fokuskan kembali ke dokumen atau elemen yang relevan jika perlu
-        // document.body.focus();
-        // Memastikan tidak ada sisa event dari zoom yang aktif
         console.log('MediumZoom: Zoom overlay closed.');
-        // Mungkin refresh UI elemen jika perlu (misalnya re-enable button, tapi ini sudah dihandle oleh medium-zoom)
     });
 
     // Handle navigation events
     const navigationButtons = document.querySelectorAll('.btn-soal-nav, #btn-prev-soal, #btn-next-soal');
     navigationButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Close zoom if open
             zoomable.close();
             console.log('MediumZoom: Navigation button clicked, closing zoom.');
         });
     });
 
-    // Tambahan: Pastikan zoom ditutup jika pengguna mengklik di luar area gambar
-    // Medium-zoom sudah menangani ini secara internal, tetapi bisa ditambahkan sebagai lapisan keamanan
-    // jika ada masalah yang tidak terduga
-    document.addEventListener('click', function(e) {
-        if (zoomable.opened && !e.target.closest('[data-zoomable]')) {
-            // Jika zoom terbuka dan klik terjadi di luar gambar yang zoomable, tutup zoom
-            // HANYA jika klik terjadi di luar *overlay* itu sendiri, mediumZoom harus menutup.
-            // Jika masih bermasalah, mungkin perlu cara yang lebih agresif.
-            // const zoomOverlay = document.querySelector('.medium-zoom-overlay');
-            // if (zoomOverlay && !zoomOverlay.contains(e.target)) {
-            //     zoomable.close();
-            //     console.log('MediumZoom: Click outside zoomable image, closing zoom.');
-            // }
-        }
-    });
-
-    // Debug log
     console.log('Zoom initialized for', document.querySelectorAll('[data-zoomable]').length, 'images');
 });
 </script>

@@ -1,16 +1,14 @@
 // File: assets/dist/js/app/ujian/lembar_ujian.js
 
 // Variabel global yang diharapkan sudah didefinisikan di view PHP (melalui window.examConfig)
-// var base_url;
+// const base_url;
 // const ID_H_UJIAN_ENC_GLOBAL;
 // const JUMLAH_SOAL_TOTAL_GLOBAL;
-// const JAWABAN_TERSIMPAN_GLOBAL;
+// const JAWABAN_TERSIMPAN_GLOBAL; // Ini akan menjadi objek JS yang sudah di-parse
 // const WAKTU_HABIS_TIMESTAMP_GLOBAL;
-// const WAKTU_SELESAI; // Format YYYY-MM-DD HH:mm:ss dari PHP
+// const WAKTU_SELESAI;
 // const CSRF_TOKEN_NAME_GLOBAL;
 // const CSRF_HASH_GLOBAL;
-
-// ANTI-CHEATING SETTINGS (NEW)
 // const enableAntiCheating;
 // const maxCheatAttempts;
 // const redirectUrlOnCheat;
@@ -20,12 +18,12 @@
 // const exitFullscreenWarning;
 // const tabChangeWarning;
 // const cheatAttemptExceeded;
-// const startTime; // Timestamp saat halaman dimuat
+// const startTime;
 
 var currentSoalNomorDisplay = 1;
 var totalSoalUjian;
 var idHUjianEnc;
-var jawabanSiswaInternal = {};
+var jawabanSiswaInternal = {}; // Ini akan diisi dari JAWABAN_TERSIMPAN_GLOBAL
 var autoSaveTimer;
 var csrfTokenName;
 var csrfHash;
@@ -33,12 +31,12 @@ var csrfHash;
 // === ANTI-CHEATING VARIABLES ===
 let cheatAttempts = 0;
 let isFullscreen = false;
-let fullscreenPromptShown = false; // Flag to check if prompt was displayed
-let examEndedDueToCheat = false; // Flag to prevent multiple cheat triggers after exam ends
+let fullscreenPromptShown = false;
+let examEndedDueToCheat = false;
 let isContentBlurred = false;
-let currentZoomInstance;
+// let currentZoomInstance; // Ini harus dideklarasikan di scope global jika digunakan di luar ready, atau passed as argument
 
-// --- Helper Functions for Anti-Cheating ---
+// --- Helper Functions for Anti-Cheating (Tidak berubah signifikan) ---
 function requestFullscreen(element) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
@@ -69,7 +67,6 @@ function exitFullscreen() {
   }
 }
 
-// Function to handle cheat detection
 function handleCheatDetection(type) {
   if (!window.examConfig.enableAntiCheating || examEndedDueToCheat) return;
 
@@ -81,7 +78,7 @@ function handleCheatDetection(type) {
   Swal.fire({
     title: 'Pelanggaran!',
     html: `Anda mencoba ${type}.<br>Ini adalah pelanggaran ke-${cheatAttempts} dari ${window.examConfig.maxCheatAttempts} kali.<br><br>Mohon kembali ke mode layar penuh untuk melanjutkan.`,
-    type: 'warning', // Gunakan type (SweetAlert2)
+    type: 'warning', // Gunakan type (SweetAlert2 versi terbaru)
     allowOutsideClick: false,
     allowEscapeKey: false,
     showConfirmButton: true,
@@ -95,28 +92,19 @@ function handleCheatDetection(type) {
       });
     },
     willClose: () => {
-      // SweetAlert is about to close, but might still be visible
       $(document).off('keydown.swal');
-      // Logic to show fullscreen-prompt moved to .then() to ensure SweetAlert is fully gone
     },
   }).then((result) => {
-    // This callback fires AFTER SweetAlert is fully closed and animated away
-    // Jika user mengklik "Lanjutkan Ujian"
-    if (result.value) {
-      // result.value is true if 'confirmButton' was clicked
-      // Jika pelanggaran adalah keluar dari layar penuh DAN ujian belum berakhir karena cheat
+    if (result.isConfirmed) {
+      // Pakai isConfirmed untuk tombol OK
       if (
         type === window.examConfig.exitFullscreenWarning &&
         !examEndedDueToCheat
       ) {
         console.log('SweetAlert closed. Displaying fullscreen prompt again.');
-        $('#fullscreen-prompt').show(); // Tampilkan kembali fullscreen prompt
+        $('#fullscreen-prompt').show();
       }
     }
-    // Jika user menekan ESC (tapi kita sudah mencegahnya di didOpen) atau dismiss dengan cara lain,
-    // result.dismiss akan berisi 'cancel', 'backdrop', 'esc', 'timer'
-    // Untuk kasus ini, kita hanya ingin menampilkan prompt saat 'Lanjutkan Ujian' diklik
-    // dan itu dari pelanggaran keluar fullscreen.
   });
 
   if (cheatAttempts >= window.examConfig.maxCheatAttempts) {
@@ -152,45 +140,38 @@ function handleKeyboardEvents(e) {
   ) {
     e.preventDefault();
     handleCheatDetection('membuka Developer Tools');
-  }
-  // Cegah Ctrl+U (View Source)
+  } // Cegah Ctrl+U (View Source)
   if (e.ctrlKey && e.keyCode === 85) {
     e.preventDefault();
     handleCheatDetection('membuka View Source');
-  }
-  // Handle Print Screen (PrtSc) key - keyCode 44 (Best effort detection)
+  } // Handle Print Screen (PrtSc) key - keyCode 44 (Best effort detection)
   if (e.keyCode === 44) {
-    e.preventDefault(); // Coba cegah default action
+    e.preventDefault();
     handleCheatDetection('melakukan tangkapan layar (screenshot)');
-  }
-  // Handle ESC key (keyCode 27) - Ini akan memicu keluar dari fullscreen secara alami
+  } // Handle ESC key (keyCode 27) - Ini akan memicu keluar dari fullscreen secara alami
   if (e.keyCode === 27) {
-    // Jangan e.preventDefault() di sini untuk ESC
     console.log('Escape key detected. Browser will handle fullscreen exit.');
-  }
-  // Tambahan: Mencegah Ctrl+R atau F5 (Refresh)
+  } // Tambahan: Mencegah Ctrl+R atau F5 (Refresh)
   if ((e.ctrlKey && e.keyCode === 82) || e.keyCode === 116) {
-    // Ctrl+R atau F5
     e.preventDefault();
     handleCheatDetection('melakukan refresh halaman');
   }
 }
 
 function blurExamContent() {
-  if (isContentBlurred) return; // Prevent multiple blurs
+  if (isContentBlurred) return;
   const examContent = $('#area-soal-ujian');
   const navPanel = $('#panel-navigasi-soal');
   if (examContent.length) {
     examContent.addClass('blurred-content');
-    navPanel.addClass('blurred-content'); // Blur navigasi juga
+    navPanel.addClass('blurred-content');
     isContentBlurred = true;
     console.log('Exam content blurred.');
   }
 }
 
-// Function to unblur content
 function unblurExamContent() {
-  if (!isContentBlurred) return; // Prevent unblurring if not blurred
+  if (!isContentBlurred) return;
   const examContent = $('#area-soal-ujian');
   const navPanel = $('#panel-navigasi-soal');
   if (examContent.length) {
@@ -201,27 +182,20 @@ function unblurExamContent() {
   }
 }
 
-// Function to disable cheat detection listeners
 function disableCheatListeners() {
   $(document).off(
     'visibilitychange webkitvisibilitychange mozvisibilitychange msvisibilitychange'
   );
-  $(document).off('keydown', handleKeyboardEvents); // Menonaktifkan penanganan keyboard
-  $(document).off('contextmenu'); // Menonaktifkan klik kanan
+  $(document).off('keydown', handleKeyboardEvents);
+  $(document).off('contextmenu');
   $(document).off(
     'fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange'
   );
   $(window).off('blur focus');
   window.onbeforeunload = null;
-
-  // Tambahan: Menonaktifkan event copy/cut/paste
   $(document).off('copy cut paste');
-
-  // Tambahan: Menonaktifkan back/forward/refresh (dengan onbeforeunload yang nullified)
-  // dan pushState akan dihapus oleh redirect.
 }
 
-// Event listener for tab change / window blur
 function handleVisibilityChange() {
   if (
     document.hidden ||
@@ -229,16 +203,13 @@ function handleVisibilityChange() {
     document.mozHidden ||
     document.msHidden
   ) {
-    // Tab hidden or window blurred
     handleCheatDetection(window.examConfig.tabChangeWarning);
-    blurExamContent(); // Blur content when tab is hidden
+    blurExamContent();
   } else {
-    // Tab visible or window focused
-    unblurExamContent(); // Unblur content when tab is visible
+    unblurExamContent();
   }
 }
 
-// Event listener for fullscreen change
 function handleFullscreenChange() {
   if (
     !document.fullscreenElement &&
@@ -246,45 +217,18 @@ function handleFullscreenChange() {
     !document.mozFullScreenElement &&
     !document.msFullscreenElement
   ) {
-    // Exited fullscreen
     if (fullscreenPromptShown) {
       handleCheatDetection(window.examConfig.exitFullscreenWarning);
       isFullscreen = false;
-      blurExamContent(); // Blur content when exited fullscreen
+      blurExamContent();
     }
   } else {
-    // Entered fullscreen
     isFullscreen = true;
     console.log('Entered fullscreen mode.');
-    unblurExamContent(); // Unblur content when entered fullscreen
+    unblurExamContent();
   }
 }
 
-// Event listener for right-click and F12
-function handleRightClickAndF12(e) {
-  if (e.type === 'contextmenu') {
-    // Right-click
-    e.preventDefault();
-    handleCheatDetection('klik kanan');
-  } else if (e.type === 'keydown') {
-    // F12, Ctrl+Shift+I (devtools), Ctrl+Shift+J (console)
-    if (
-      e.keyCode === 123 ||
-      (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
-      (e.ctrlKey && e.shiftKey && e.keyCode === 74)
-    ) {
-      e.preventDefault();
-      handleCheatDetection('membuka Developer Tools');
-    }
-    // Cegah Ctrl+U (View Source)
-    if (e.ctrlKey && e.keyCode === 85) {
-      e.preventDefault();
-      handleCheatDetection('membuka View Source');
-    }
-  }
-}
-
-// Initialize anti-cheating listeners
 function initAntiCheating() {
   if (!window.examConfig.enableAntiCheating) {
     $('#fullscreen-prompt').hide();
@@ -293,7 +237,6 @@ function initAntiCheating() {
 
   $('#fullscreen-prompt').show();
   $('#start-fullscreen-exam').on('click', function () {
-    // Request fullscreen only if not already in it
     if (
       !document.fullscreenElement &&
       !document.webkitFullscreenElement &&
@@ -305,7 +248,6 @@ function initAntiCheating() {
     $('#fullscreen-prompt').hide();
     fullscreenPromptShown = true;
 
-    // Attach listeners
     $(document).on('visibilitychange', handleVisibilityChange);
     $(document).on('webkitvisibilitychange', handleVisibilityChange);
     $(document).on('mozvisibilitychange', handleVisibilityChange);
@@ -320,35 +262,29 @@ function initAntiCheating() {
       e.preventDefault();
       handleCheatDetection('klik kanan');
     });
-    $(document).on('keydown', handleKeyboardEvents); // Menggunakan fungsi keyboard events yang lebih komprehensif
+    $(document).on('keydown', handleKeyboardEvents);
 
-    // Menonaktifkan copy/cut/paste
     $(document).on('copy cut paste', function (e) {
       e.preventDefault();
       handleCheatDetection('melakukan salin/tempel');
     });
 
-    // Mengunci orientasi layar untuk perangkat mobile (opsional)
     lockScreenOrientation();
 
     window.onbeforeunload = function () {
       return 'Anda yakin ingin meninggalkan halaman ujian? Jawaban Anda mungkin tidak tersimpan.';
     };
-    unblurExamContent(); // Pastikan konten tidak blur saat ujian dimulai
+    unblurExamContent();
 
-    // Menambahkan entri ke history API untuk mencegah tombol back/forward yang tidak terkontrol
     window.history.pushState(null, null, window.location.href);
     $(window).on('popstate', function (event) {
       handleCheatDetection('menggunakan tombol navigasi browser');
-      // Dorong state lagi untuk mencegah navigasi
       window.history.pushState(null, null, window.location.href);
     });
 
-    // Tampilkan watermark dinamis
     startDynamicWatermark();
-  });
+  }); // Handle initial state if user is already in fullscreen (e.g., refresh)
 
-  // Handle initial state if user is already in fullscreen (e.g., refresh)
   if (
     document.fullscreenElement ||
     document.webkitFullscreenElement ||
@@ -359,7 +295,6 @@ function initAntiCheating() {
     $('#fullscreen-prompt').hide();
     fullscreenPromptShown = true;
 
-    // Attach listeners directly
     $(document).on('visibilitychange', handleVisibilityChange);
     $(document).on('webkitvisibilitychange', handleVisibilityChange);
     $(document).on('mozvisibilitychange', handleVisibilityChange);
@@ -374,22 +309,20 @@ function initAntiCheating() {
       e.preventDefault();
       handleCheatDetection('klik kanan');
     });
-    $(document).on('keydown', handleKeyboardEvents); // Menggunakan fungsi keyboard events yang lebih komprehensif
+    $(document).on('keydown', handleKeyboardEvents);
 
-    // Menonaktifkan copy/cut/paste
     $(document).on('copy cut paste', function (e) {
       e.preventDefault();
       handleCheatDetection('melakukan salin/tempel');
     });
 
-    lockScreenOrientation(); // Lock orientation on refresh if already in fullscreen
+    lockScreenOrientation();
 
     window.onbeforeunload = function () {
       return 'Anda yakin ingin meninggalkan halaman ujian? Jawaban Anda mungkin tidak tersimpan.';
     };
-    unblurExamContent(); // Pastikan konten tidak blur jika user refresh di fullscreen
+    unblurExamContent();
 
-    // Menambahkan entri ke history API untuk mencegah tombol back/forward yang tidak terkontrol
     window.history.pushState(null, null, window.location.href);
     $(window).on('popstate', function (event) {
       handleCheatDetection('menggunakan tombol navigasi browser');
@@ -398,7 +331,6 @@ function initAntiCheating() {
 
     startDynamicWatermark();
   } else {
-    // Jika user tidak di fullscreen saat halaman dimuat (atau refresh di luar fullscreen), blur konten
     blurExamContent();
   }
 }
@@ -414,15 +346,11 @@ function lockScreenOrientation() {
         console.warn('Could not lock screen orientation:', err);
       });
   } else if (screen.lockOrientation) {
-    // Old API
     screen.lockOrientation('portrait');
   }
-  // Jika tidak ada dukungan API, tidak ada yang terjadi.
 }
 
-// Fungsi untuk membuat watermark dinamis
 function startDynamicWatermark() {
-  // Buat elemen watermark jika belum ada
   if ($('#dynamic-watermark').length === 0) {
     $('body').append(
       '<div id="dynamic-watermark" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.1; z-index: 9998; overflow: hidden;"></div>'
@@ -430,30 +358,24 @@ function startDynamicWatermark() {
   }
 
   const watermarkElement = $('#dynamic-watermark');
-  // Akses data siswa dan ujian dari window.examConfig
   const userIdentifier = `${window.examConfig.siswa.nisn} - ${window.examConfig.siswa.nama}`;
   const examName = window.examConfig.ujian.nama_ujian;
 
-  // Pastikan $siswa dan $ujian tersedia di lembar_ujian.php dan data valid
-
-  // Buat banyak watermark text
   let watermarkContent = '';
   for (let i = 0; i < 50; i++) {
     watermarkContent += `<span style="display: inline-block; white-space: nowrap; margin: 50px; transform: rotate(-45deg);">${userIdentifier} | ${examName}</span>`;
   }
   watermarkElement.html(watermarkContent);
 
-  // Gerakkan watermark secara acak atau dalam pola
   let x = 0;
   let y = 0;
-  let dx = 1; // Kecepatan gerakan horizontal
-  let dy = 1; // Kecepatan gerakan vertikal
+  let dx = 1;
+  let dy = 1;
 
   setInterval(() => {
     x += dx;
     y += dy;
 
-    // Bounce off edges
     if (x + watermarkElement.width() > $(window).width() || x < 0) {
       dx = -dx;
     }
@@ -469,18 +391,16 @@ function startDynamicWatermark() {
 
 // Initial check for "Selesai" button visibility
 function toggleSelesaiButton(currentQuestionNumber) {
-  var totalQuestions = totalSoalUjian; // Use the global variable
+  var totalQuestions = totalSoalUjian;
   $('#selesai-ujian-wrapper').toggle(currentQuestionNumber === totalQuestions);
 }
-toggleSelesaiButton(currentSoalNomorDisplay); // Initial call for question 1
+
 // --- CORE EXAM LOGIC FUNCTIONS ---
 
 function initializeNavigation() {
-  // Inisialisasi variabel global dari PHP
   let initSuccess = true;
   let missingVarsLog = [];
 
-  // Extract variables from config
   const {
     base_url,
     ID_H_UJIAN_ENC_GLOBAL,
@@ -490,10 +410,9 @@ function initializeNavigation() {
     WAKTU_SELESAI,
     CSRF_TOKEN_NAME_GLOBAL,
     CSRF_HASH_GLOBAL,
-    startTime, // Get startTime from config
+    startTime,
   } = window.examConfig;
 
-  // Validate required variables
   const requiredVars = [
     { value: base_url, name: 'base_url' },
     { value: ID_H_UJIAN_ENC_GLOBAL, name: 'ID_H_UJIAN_ENC_GLOBAL' },
@@ -506,11 +425,15 @@ function initializeNavigation() {
     { value: WAKTU_SELESAI, name: 'WAKTU_SELESAI' },
     { value: CSRF_TOKEN_NAME_GLOBAL, name: 'CSRF_TOKEN_NAME_GLOBAL' },
     { value: CSRF_HASH_GLOBAL, name: 'CSRF_HASH_GLOBAL' },
-    { value: startTime, name: 'startTime' }, // Validate startTime
+    { value: startTime, name: 'startTime' },
   ];
 
   requiredVars.forEach(({ value, name }) => {
-    if (typeof value === 'undefined' || value === null || value === '') {
+    if (
+      typeof value === 'undefined' ||
+      value === null ||
+      (name !== 'JAWABAN_TERSIMPAN_GLOBAL' && value === '')
+    ) {
       missingVarsLog.push(name);
       initSuccess = false;
     }
@@ -522,8 +445,6 @@ function initializeNavigation() {
       missingVarsLog.join(', ');
     console.error(errorMessage);
     Swal.fire('Error', errorMessage, 'error');
-    // Prevent exam from starting if essential config is missing
-    // Disable UI elements to prevent interaction
     $('#area-soal-ujian').html(
       '<p class="text-center text-danger">Gagal memuat ujian. Harap hubungi administrator.</p>'
     );
@@ -533,30 +454,32 @@ function initializeNavigation() {
     return;
   }
 
-  // Assign global variables
   totalSoalUjian = parseInt(JUMLAH_SOAL_TOTAL_GLOBAL) || 0;
   idHUjianEnc = ID_H_UJIAN_ENC_GLOBAL;
   csrfTokenName = CSRF_TOKEN_NAME_GLOBAL;
   csrfHash = CSRF_HASH_GLOBAL;
 
-  // Perbaiki inisialisasi jawaban
   try {
     if (typeof JAWABAN_TERSIMPAN_GLOBAL === 'string') {
       jawabanSiswaInternal = JSON.parse(JAWABAN_TERSIMPAN_GLOBAL);
-    } else {
+    } else if (
+      typeof JAWABAN_TERSIMPAN_GLOBAL === 'object' &&
+      JAWABAN_TERSIMPAN_GLOBAL !== null
+    ) {
       jawabanSiswaInternal = JAWABAN_TERSIMPAN_GLOBAL;
+    } else {
+      jawabanSiswaInternal = {};
     }
     console.log('Jawaban tersimpan berhasil diload:', jawabanSiswaInternal);
   } catch (e) {
-    console.error('Gagal parse jawaban tersimpan:', e);
+    console.error('Gagal parse atau inisialisasi jawaban tersimpan:', e);
     jawabanSiswaInternal = {};
-  }
+  } // PENTING: Inisialisasi tampilan jawaban dari yang tersimpan
 
-  // Inisialisasi tampilan jawaban dari yang tersimpan
-  initializeAnswers();
-  updateSemuaNavigasiSoalStyles();
+  initializeAnswers(); // Panggil di sini
+  // Lalu panggil updateSemuaNavigasiSoalStyles() setelah inisialisasi jawaban
+  updateSemuaNavigasiSoalStyles(); // Setup timer
 
-  // Setup timer
   const timerElement = $('#timer-ujian');
   if (timerElement.length) {
     let endTimeUnixTimestamp = parseInt(WAKTU_HABIS_TIMESTAMP_GLOBAL);
@@ -575,9 +498,8 @@ function initializeNavigation() {
     }
   } else {
     console.warn('Elemen #timer-ujian tidak ditemukan.');
-  }
+  } // Tampilkan soal pertama atau pesan jika tidak ada soal
 
-  // Tampilkan soal pertama atau pesan jika tidak ada soal
   if (totalSoalUjian > 0) {
     showSoalPanel(currentSoalNomorDisplay);
   } else {
@@ -589,9 +511,10 @@ function initializeNavigation() {
     ).hide();
   }
   updateTombolNavigasiUtama();
-  updateTombolRaguRaguUtama();
+  updateTombolRaguRaguUtama(); // PENTING: Panggil toggleSelesaiButton setelah showSoalPanel() pertama kali.
 
-  // Event listeners untuk navigasi soal
+  toggleSelesaiButton(currentSoalNomorDisplay); // Event listeners untuk navigasi soal
+
   $('#panel-navigasi-soal').on('click', '.btn-soal-nav', function () {
     let nomorSoal = parseInt($(this).data('nomor'));
     currentSoalNomorDisplay = nomorSoal;
@@ -610,12 +533,11 @@ function initializeNavigation() {
       currentSoalNomorDisplay++;
       showSoalPanel(currentSoalNomorDisplay);
     }
-  });
+  }); // Event listener untuk pilihan jawaban radio button
 
-  // Event listener untuk pilihan jawaban radio button
   $('#area-soal-ujian').on('change', 'input[type="radio"]', function () {
     let panelSoalAktif = $('.panel-soal:visible');
-    if (!panelSoalAktif.length) return; // Safeguard
+    if (!panelSoalAktif.length) return;
     let idSoal = panelSoalAktif.data('id-soal');
     let jawabanDipilih = $(this).val();
 
@@ -624,15 +546,15 @@ function initializeNavigation() {
     }
     jawabanSiswaInternal[idSoal].j = jawabanDipilih;
 
+    // Panggil updateNavigasiSoalSingle di sini juga
     updateNavigasiSoalSingle(currentSoalNomorDisplay, idSoal);
     updateTombolRaguRaguUtama();
     triggerAutoSave(idSoal, jawabanDipilih, jawabanSiswaInternal[idSoal].r);
-  });
+  }); // Event listener untuk tombol Ragu-ragu
 
-  // Event listener untuk tombol Ragu-ragu
   $('#btn-ragu-ragu').on('click', function () {
     let panelSoalAktif = $('.panel-soal:visible');
-    if (!panelSoalAktif.length) return; // Safeguard
+    if (!panelSoalAktif.length) return;
     let idSoalAktif = panelSoalAktif.data('id-soal');
 
     if (!jawabanSiswaInternal[idSoalAktif]) {
@@ -641,6 +563,7 @@ function initializeNavigation() {
     jawabanSiswaInternal[idSoalAktif].r =
       jawabanSiswaInternal[idSoalAktif].r === 'N' ? 'Y' : 'N';
 
+    // Panggil updateNavigasiSoalSingle di sini juga
     updateNavigasiSoalSingle(currentSoalNomorDisplay, idSoalAktif);
     updateTombolRaguRaguUtama();
     triggerAutoSave(
@@ -648,9 +571,8 @@ function initializeNavigation() {
       jawabanSiswaInternal[idSoalAktif].j,
       jawabanSiswaInternal[idSoalAktif].r
     );
-  });
+  }); // Event listener untuk tombol Selesai Ujian
 
-  // Event listener untuk tombol Selesai Ujian
   $('#btn-selesai-ujian').on('click', function () {
     konfirmasiDanSelesaikanUjian();
   });
@@ -677,7 +599,6 @@ function showSoalPanel(nomorSoal) {
   updateTombolNavigasiUtama();
   updateTombolRaguRaguUtama();
 
-  // Toggle "Selesai" button visibility
   toggleSelesaiButton(currentSoalNomorDisplay);
 }
 
@@ -715,36 +636,37 @@ function updateNavigasiSoalSingle(nomorDisplay, idSoal) {
   let navButton = $(
     '#panel-navigasi-soal .btn-soal-nav[data-nomor="' + nomorDisplay + '"]'
   );
-  if (!navButton.length) return;
-  navButton.removeClass('btn-default btn-success btn-warning active');
-  if (currentSoalNomorDisplay == nomorDisplay) {
-    navButton.addClass('active');
-  }
+  if (!navButton.length) return; // Hapus semua kelas status sebelumnya kecuali 'active'
+
+  navButton.removeClass('btn-default btn-success btn-warning');
+
   if (jawabanSiswaInternal[idSoal]) {
     if (jawabanSiswaInternal[idSoal].j !== '') {
+      // Jika ada jawaban
       navButton.addClass(
         jawabanSiswaInternal[idSoal].r === 'Y' ? 'btn-warning' : 'btn-success'
       );
     } else if (jawabanSiswaInternal[idSoal].r === 'Y') {
+      // Hanya ragu-ragu
       navButton.addClass('btn-warning');
     } else {
-      navButton.addClass('btn-default');
+      navButton.addClass('btn-default'); // Belum dijawab dan tidak ragu
     }
   } else {
-    navButton.addClass('btn-default');
+    navButton.addClass('btn-default'); // Belum ada data jawaban untuk soal ini
   }
 }
 
 function updateSemuaNavigasiSoalStyles() {
   if (totalSoalUjian > 0) {
-    for (let i = 1; i <= totalSoalUjian; i++) {
-      let idSoalPadaNav = $(
-        '#panel-navigasi-soal .btn-soal-nav[data-nomor="' + i + '"]'
-      ).data('id-soal');
+    $('#panel-navigasi-soal .btn-soal-nav').each(function () {
+      let nomorDisplay = $(this).data('nomor');
+      let idSoalPadaNav = $(this).data('id-soal'); // Ambil id_soal langsung dari tombol navigasi
+
       if (idSoalPadaNav) {
-        updateNavigasiSoalSingle(i, idSoalPadaNav);
+        updateNavigasiSoalSingle(nomorDisplay, idSoalPadaNav);
       }
-    }
+    });
   }
 }
 
@@ -757,7 +679,6 @@ function triggerAutoSave(idSoal, jawaban, raguStatus) {
 
 function simpanJawabanAjax(idSoal, jawaban, raguStatus) {
   if (examEndedDueToCheat) {
-    // Prevent save if exam already ended due to cheat
     console.log('SimpanJawabanAjax: Exam ended due to cheat, preventing save.');
     return;
   }
@@ -803,7 +724,7 @@ function simpanJawabanAjax(idSoal, jawaban, raguStatus) {
         console.log('Jawaban berhasil disimpan');
         if (response.csrf_hash_new) {
           window.examConfig.CSRF_HASH_GLOBAL = response.csrf_hash_new;
-          csrfHash = response.csrf_hash_new; // Update local variable as well
+          csrfHash = response.csrf_hash_new;
         }
       } else {
         console.error('Gagal simpan jawaban:', response);
@@ -875,7 +796,7 @@ function konfirmasiDanSelesaikanUjian() {
   return Swal.fire({
     title: 'Konfirmasi Selesai Ujian',
     html: pesanKonfirmasi,
-    type: 'warning', // Use type instead of type for newer SweetAlert2
+    type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
@@ -891,7 +812,6 @@ function konfirmasiDanSelesaikanUjian() {
 
 function prosesSelesaikanUjianFinal() {
   if (examEndedDueToCheat) {
-    // Prevent multiple finalizations
     console.log('ProsesSelesaikanUjianFinal: Exam already ended due to cheat.');
     return Promise.resolve({
       status: true,
@@ -918,7 +838,6 @@ function prosesSelesaikanUjianFinal() {
       let panelSoal = $('#soal-' + i);
       if (panelSoal.length) {
         let idSoal = panelSoal.data('id-soal');
-        // Ambil jawaban dari radio button yang terpilih, jika tidak ada, ambil dari internal state, jika masih kosong, default ke ''
         let currentAnswer =
           $(`input[name="jawaban_soal_${idSoal}"]:checked`).val() ||
           jawabanSiswaInternal[idSoal]?.j ||
@@ -941,7 +860,6 @@ function prosesSelesaikanUjianFinal() {
       dataType: 'json',
       success: function (response) {
         if (response.status) {
-          // Update CSRF hash
           if (response.csrf_hash_new) {
             window.examConfig.CSRF_HASH_GLOBAL = response.csrf_hash_new;
             csrfHash = response.csrf_hash_new;
@@ -987,9 +905,9 @@ function prosesSelesaikanUjianFinal() {
 function waktuHabis() {
   console.log('Fungsi waktuHabis() dipanggil.');
   if (
-    $('#area-soal-ujian').length > 0 && // Check if content area is present
-    !$('#btn-selesai-ujian').is(':disabled') && // Check if button is not already disabled
-    !examEndedDueToCheat // Ensure not already ended by cheat
+    $('#area-soal-ujian').length > 0 &&
+    !$('#btn-selesai-ujian').is(':disabled') &&
+    !examEndedDueToCheat
   ) {
     Swal.fire({
       title: 'Waktu Habis!',
@@ -1012,7 +930,6 @@ function waktuHabis() {
   }
 }
 
-// Tambahkan fungsi timer
 function startTimer(endTimeUnixTimestamp) {
   const timerElement = $('#timer-ujian');
   if (!timerElement.length) {
@@ -1021,8 +938,8 @@ function startTimer(endTimeUnixTimestamp) {
   }
 
   const timer = setInterval(function () {
-    const now = Date.now(); // Use Date.now() for milliseconds
-    const distance = endTimeUnixTimestamp * 1000 - now; // Convert to milliseconds for comparison
+    const now = Date.now();
+    const distance = endTimeUnixTimestamp * 1000 - now;
 
     if (distance <= 0) {
       clearInterval(timer);
@@ -1047,16 +964,53 @@ function startTimer(endTimeUnixTimestamp) {
   }, 1000);
 }
 
-// Inisialisasi tampilan jawaban
+// Inisialisasi tampilan jawaban saat halaman pertama kali dimuat
 function initializeAnswers() {
+  // Loop melalui semua tombol navigasi soal
+  $('#panel-navigasi-soal .btn-soal-nav').each(function () {
+    let nomorSoalDisplay = $(this).data('nomor');
+    let idSoal = $(this).data('id-soal');
+
+    // Pastikan idSoal ada dan data jawaban untuk soal tersebut tersedia
+    if (idSoal && jawabanSiswaInternal.hasOwnProperty(idSoal)) {
+      const jawabanData = jawabanSiswaInternal[idSoal];
+
+      // Hapus kelas warna default/success/warning
+      $(this).removeClass('btn-default btn-success btn-warning');
+
+      if (jawabanData.j !== '') {
+        // Jika ada jawaban
+        if (jawabanData.r === 'Y') {
+          // Dan ditandai ragu-ragu
+          $(this).addClass('btn-warning');
+        } else {
+          // Dijawab dan tidak ragu-ragu
+          $(this).addClass('btn-success');
+        }
+      } else if (jawabanData.r === 'Y') {
+        // Hanya ragu-ragu (belum dijawab)
+        $(this).addClass('btn-warning');
+      } else {
+        // Belum dijawab dan tidak ragu-ragu
+        $(this).addClass('btn-default');
+      }
+    } else {
+      // Jika tidak ada data jawaban atau idSoal tidak valid, set ke default
+      $(this).removeClass('btn-success btn-warning').addClass('btn-default');
+    }
+  });
+
+  // PENTING: Juga set radio button yang dipilih
   for (let idSoal in jawabanSiswaInternal) {
     if (jawabanSiswaInternal[idSoal].j) {
+      // Gunakan selector yang lebih spesifik untuk radio button soal
+      // Karena `id` radio button sekarang unik (misal: opsi_a_123)
+      // Kita perlu menemukan radio button berdasarkan name dan value
       $(
         `input[name="jawaban_soal_${idSoal}"][value="${jawabanSiswaInternal[idSoal].j}"]`
       ).prop('checked', true);
     }
   }
-  updateSemuaNavigasiSoalStyles();
 }
 
 // --- Main Document Ready Block ---
@@ -1068,15 +1022,12 @@ $(document).ready(function () {
     return;
   }
 
-  console.log('Initializing exam with config:', window.examConfig);
+  console.log('Initializing exam with config:', window.examConfig); // Call initializeNavigation to setup main exam UI and data
 
-  // Call initializeNavigation to setup main exam UI and data
-  initializeNavigation();
+  initializeNavigation(); // Call anti-cheating specific initialization
 
-  // Call anti-cheating specific initialization
-  initAntiCheating();
+  initAntiCheating(); // Initialize Medium-Zoom (Moved here to ensure it runs after general init)
 
-  // Initialize Medium-Zoom (Moved here to ensure it runs after general init)
   const zoomableImages = document.querySelectorAll(
     '.soal-media img, .opsi-media img'
   );
@@ -1086,27 +1037,22 @@ $(document).ready(function () {
     margin: 24,
     background: '#000000e6',
     scrollOffset: 0,
-    // No 'template' property needed as discussed
-  });
+  }); // Attach Medium-Zoom event listeners
 
-  // Attach Medium-Zoom event listeners
   currentZoomInstance.on('open', () => {
     console.log('MediumZoom: Zoom opened.');
   });
 
   currentZoomInstance.on('closed', () => {
     console.log('MediumZoom: Zoom closed.');
-    // Safeguard: Remove residual overlay if still present
     const zoomOverlay = document.querySelector('.medium-zoom-overlay');
     if (zoomOverlay) {
       zoomOverlay.remove();
       console.log('MediumZoom: Removed residual overlay.');
     }
-    // Attempt to re-focus on an interactive element to prevent 'lock'
     $('#btn-prev-soal').focus();
-  });
+  }); // Ensure navigation buttons can close the zoom
 
-  // Ensure navigation buttons can close the zoom
   const navigationButtons = document.querySelectorAll(
     '.btn-soal-nav, #btn-prev-soal, #btn-next-soal'
   );
@@ -1117,9 +1063,8 @@ $(document).ready(function () {
         console.log('MediumZoom: Navigation button clicked, closing zoom.');
       }
     });
-  });
+  }); // Handle image loading states (remains as is)
 
-  // Handle image loading states (remains as is)
   function handleImageLoad(img) {
     const container = img.closest('.soal-media, .opsi-media');
     if (container) {
